@@ -2620,9 +2620,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$app_id = ! empty( $accounts_data[$service][$name]['client_id'] ) ? $accounts_data[$service][$name]['client_id'] : '';
 			$username = ! empty( $accounts_data[$service][$name]['username'] ) ? $accounts_data[$service][$name]['username'] : '';
 			$password = ! empty( $accounts_data[$service][$name]['password'] ) ? $accounts_data[$service][$name]['password'] : '';
-            $account_id = ! empty( $accounts_data[$service][$name]['account_id'] ) ? $accounts_data[$service][$name]['account_id'] : '';
-            $public_key = ! empty( $accounts_data[$service][$name]['public_key'] ) ? $accounts_data[$service][$name]['public_key'] : '';
-            $private_key = ! empty( $accounts_data[$service][$name]['private_key'] ) ? $accounts_data[$service][$name]['private_key'] : '';
+            $account_id = ! empty( $accounts_data[$service][$name]['username'] ) ? $accounts_data[$service][$name]['username'] : '';
+            $public_key = ! empty( $accounts_data[$service][$name]['api_key'] ) ? $accounts_data[$service][$name]['api_key'] : '';
+            $private_key = ! empty( $accounts_data[$service][$name]['client_id'] ) ? $accounts_data[$service][$name]['client_id'] : '';
 		} else {
 			$api_key = ! empty( $_POST['rapidology_api_key'] ) ? sanitize_text_field( $_POST['rapidology_api_key'] ) : '';
 			$token = ! empty( $_POST['rapidology_constant_token'] ) ? sanitize_text_field( $_POST['rapidology_constant_token'] ) : '';

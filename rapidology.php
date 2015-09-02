@@ -3237,15 +3237,16 @@ class RAD_Rapidology extends RAD_Dashboard {
         }
         $lists = new HubSpot_Lists_Rapidology($api_key);
         try {
-            $error_message = 'success';
+
             $some_lists = $lists->get_static_lists(array('offset'=>0));
             $list_array = array();
             foreach ($some_lists->lists as $list) {
+                if (!preg_match("/^(Workflow:)/i", $list->name, $matchs)) { //weed out workflows
+                    $list_array[$list->listId]['name'] = $list->name;
+                    $list_array[$list->listId]['subscribers_count'] = $list->metaData->size;
+                    $list_array[$list->listId]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('campaign_monitor_' . $list->listId));
 
-                $list_array[$list->listId]['name'] = $list->name;
-                $list_array[$list->listId]['subscribers_count'] = $list->metaData->size;
-                $list_array[$list->listId]['growth_week'] = sanitize_text_field( $this->calculate_growth_rate( 'campaign_monitor_' . $list->listId ) );
-
+                }
             }
 
 
@@ -3254,6 +3255,7 @@ class RAD_Rapidology extends RAD_Dashboard {
                 'lists' => $list_array,
                 'is_authorized' => 'true',
             ));
+            $error_message = 'success';
             return $error_message;
 
         } catch (exception $e) {

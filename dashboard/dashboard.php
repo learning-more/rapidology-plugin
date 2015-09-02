@@ -629,7 +629,7 @@ class RAD_Dashboard {
 		// activate screen if not activated
 		$activated = get_option('rad_rapidology_activated');
 
-		if ($activated !== 'rapidology_activated' && IS_WP_REPO === TRUE) {
+		if ($activated !== 'rapidology_activated' && IS_WP_REPO === FALSE) {
 			echo '
 
 	<div class="rad_act_scr rad_act_scr_mode_get_code">

@@ -2865,8 +2865,11 @@ class RAD_Rapidology extends RAD_Dashboard {
         $new_contact_id = $infusion_app->addWithDupCheck($contact_details, $checkType = 'Email');
         $infusion_app->optIn($contact_details['Email']);
         $response = $infusion_app->grpAssign( $new_contact_id, $list_id );
-        
-        $error_message = 'success';
+        if($response) {
+            $error_message = 'success';
+        }else{
+            $error_message = esc_html__( 'Already In List', 'rapidology' );
+        }
 
 
 		return $error_message;

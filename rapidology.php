@@ -3303,7 +3303,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
         $added_contacts = $lists->add_contacts_to_list($contacts_to_add,$list_id);
         $response = json_decode($added_contacts);
-        
+
         if(!empty($response->updated)){
             $error_message = 'success';
         }else{
@@ -5373,7 +5373,7 @@ STRING;
     function get_power_button($mode) {
         return '<div class="rad_power rad_power_mode_' . $mode . '">
 					<span class="rad_power_box_mode_' . $mode . '">
-						<a href="http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=powered-by-badge" target="_blank">Powered by<span class="rad_power_logo">&nbsp</span><span class="rad_power_text">Rapidology</span></a>
+						<a href="http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=powered-by-badge" target="_blank">Powered by<span class="rad_power_logo">&nbsp</span><span class="rad_power_text rad_power_text_'.$mode.'">Rapidology</span></a>
 					</span>
 				</div>';
     }

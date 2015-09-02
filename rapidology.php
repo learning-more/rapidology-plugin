@@ -2899,7 +2899,7 @@ class RAD_Rapidology extends RAD_Dashboard {
         }
 
         if ( empty( $error_message ) ) {
-            $contact_data = $infusion_app->dsQuery( 'Contact', 1, 0, array( 'Email' => $email ), array( 'Id', 'Groups' ) );
+            $contact_data = $infusion_app->dsQuery( 'Contact', 1, 0, array( 'Email' => $email ), array( 'Id', 'Groups' ) ); //TODO add with dupe check then add optin function
             if ( 0 < count( $contact_data ) ) {
                 if ( false === strpos( $contact_data[0]['Groups'], $list_id ) ) {
                     $infusion_app->grpAssign( $contact_data[0]['Id'], $list_id );

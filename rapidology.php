@@ -2872,8 +2872,8 @@ class RAD_Rapidology extends RAD_Dashboard {
         }
 
 				$error_message = 'success';
-			}
-		}
+
+		
 
 		return $error_message;
 	}

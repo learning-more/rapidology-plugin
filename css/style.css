@@ -765,6 +765,12 @@
     color: #ffffff !important;
     font-size:14px !important;
 }
+.rad_power_box_mode_flyin a, .rad_power_text_flyin  {
+    color:#fff;
+    font-size:10px !important;
+    vertical-align: top !important;
+}
+
 .rad_power a .rad_power_logo:after {
 	font-family: 'rapidology-cirlogo' !important;
 	content:"\e601" !important;
@@ -773,6 +779,10 @@
     margin-left:5px;
 	line-height: 35px !important;
     vertical-align: middle !important;
+}
+
+.rad_power_box_mode_flyin a .rad_power_logo:after{
+    vertical-align: top !important;
 }
 
 .rad_power a:active,
@@ -788,8 +798,17 @@
     margin-right: 20px !important;
 }
 .rad_power_mode_flyin {
+    line-height: 10px;
     position: absolute;
-	margin-top: -40px !important;
+	margin-top: -30px !important;
+    background-color: rgba(0, 0, 0, 0.2);
+    width:100%;
+}
+
+.tab_power{
+    height: 30px !important;
+    display: inline-block;
+    vertical-align: top !important;
 }
 .rad_power_mode_widget {
 

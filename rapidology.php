@@ -3218,11 +3218,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$some_lists    = $lists->get_static_lists( array( 'offset' => 0 ) );
 			$list_array    = array();
 			foreach ( $some_lists->lists as $list ) {
-				$list_array[ $list->listId ]['name']              = $list->name;
-				$list_array[ $list->listId ]['subscribers_count'] = $list->metaData->size;
-				$list_array[ $list->listId ]['growth_week']       = sanitize_text_field( $this->calculate_growth_rate( 'campaign_monitor_' . $list->listId ) );
-			}
+				if ( ! preg_match( "/^(Workflow:)/i", $list->name, $matchs ) ) { //weed out workflows
+					$list_array[ $list->listId ]['name']              = $list->name;
+					$list_array[ $list->listId ]['subscribers_count'] = $list->metaData->size;
+					$list_array[ $list->listId ]['growth_week']       = sanitize_text_field( $this->calculate_growth_rate( 'campaign_monitor_' . $list->listId ) );
 
+				}
+			}
 
 			$this->update_account( 'hubspot', sanitize_text_field( $name ), array(
 				'api_key'       => sanitize_text_field( $api_key ),

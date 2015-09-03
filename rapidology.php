@@ -186,7 +186,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 	}
 
 	function add_menu_link() {
-        $menu_page = add_menu_page( __( 'Rapidology', 'rapidology' ), __( 'Rapidology', 'rapidology' ), 'manage_options', 'rad_rapidology_options', array( $this, 'options_page' ) );
+		$menu_page = add_menu_page(
+			__( 'Rapidology', 'rapidology' ),
+			__( 'Rapidology', 'rapidology' ),
+			'manage_options',
+			'rad_rapidology_options',
+			array( $this, 'options_page' )
+		);
 		add_submenu_page( 'rad_rapidology_options', __( 'Optin Forms', 'rapidology' ), __( 'Optin Forms', 'rapidology' ), 'manage_options', 'rad_rapidology_options' );
 		add_submenu_page( 'rad_rapidology_options', __( 'Email Accounts', 'rapidology' ), __( 'Email Accounts', 'rapidology' ), 'manage_options', 'admin.php?page=rad_rapidology_options#tab_rad_dashboard_tab_content_header_accounts' );
 		add_submenu_page( 'rad_rapidology_options', __( 'Statistics', 'rapidology' ), __( 'Statistics', 'rapidology' ), 'manage_options', 'admin.php?page=rad_rapidology_options#tab_rad_dashboard_tab_content_header_stats' );
@@ -2675,12 +2681,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 			case 'infusionsoft' :
 				$error_message = $this->get_infusionsoft_lists( $app_id, $api_key, $name );
 				break;
-            case 'emma' :
-                $error_message = $this->get_emma_groups($public_key, $private_key, $account_id, $name);
-                break;
-            case 'hubspot' :
-                $error_message = $this->get_hubspot_lists($api_key, $name);
-                break;
+			case 'emma' :
+				$error_message = $this->get_emma_groups( $public_key, $private_key, $account_id, $name );
+				break;
+			case 'hubspot' :
+				$error_message = $this->get_hubspot_lists( $api_key, $name );
+				break;
 
 
 		}
@@ -2837,7 +2843,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 			while ( true == $need_request ) {
 				$error_message = 'success';
-                $lists_data = $infusion_app->dsQuery( 'ContactGroup', 1000, $page, array( 'Id' => '%' ), array( 'Id', 'GroupName' ) );
+				$lists_data = $infusion_app->dsQuery(
+					'ContactGroup',
+					1000,
+					$page,
+					array( 'Id' => '%' ),
+					array( 'Id', 'GroupName' )
+				);
 				$all_lists     = array_merge( $all_lists, $lists_data );
 
 				if ( 1000 > count( $lists_data ) ) {
@@ -2889,7 +2901,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 
 		if ( empty( $error_message ) ) {
-            $contact_data = $infusion_app->dsQuery( 'Contact', 1, 0, array( 'Email' => $email ), array( 'Id', 'Groups' ) ); //TODO add with dupe check then add optin function
+			$contact_data = $infusion_app->dsQuery(
+				'Contact',
+				1,
+				0,
+				array( 'Email' => $email ),
+				array( 'Id', 'Groups' )
+			); //TODO add with dupe check then add optin function
 			if ( 0 < count( $contact_data ) ) {
 				if ( false === strpos( $contact_data[0]['Groups'], $list_id ) ) {
 					$infusion_app->grpAssign( $contact_data[0]['Id'], $list_id );
@@ -3203,7 +3221,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$list_array[ $list->listId ]['name']              = $list->name;
 				$list_array[ $list->listId ]['subscribers_count'] = $list->metaData->size;
 				$list_array[ $list->listId ]['growth_week']       = sanitize_text_field( $this->calculate_growth_rate( 'campaign_monitor_' . $list->listId ) );
-            }
+			}
 
 
 			$this->update_account( 'hubspot', sanitize_text_field( $name ), array(
@@ -3211,6 +3229,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				'lists'         => $list_array,
 				'is_authorized' => 'true',
 			) );
+
 			return $error_message;
 
 		} catch ( exception $e ) {
@@ -3294,7 +3313,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		curl_setopt_array( $curl, array(
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_URL            => $request_url,
-            CURLOPT_SSL_VERIFYPEER => FALSE, //we need this option since we perform request to https
+			CURLOPT_SSL_VERIFYPEER => false, //we need this option since we perform request to https
 			CURLOPT_USERPWD        => $api_key . ':x'
 		) );
 		// Send the request & save response to $resp
@@ -3462,7 +3481,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$error_message = __( 'Already subscribed', 'rapidology' );
 			}
 		} else {
-			$error_message = $this->get_error_message( $theme_request, $response_code, "foo" );
+			// TODO: Figure out how to handle this better, since $theme_request and $response_code are undef here
+			$error_message = $this->get_error_message( $theme_request, $response_code, null);
 		}
 
 		return $error_message;
@@ -4289,11 +4309,11 @@ STRING;
 			// Set some options
 			curl_setopt_array( $curl, array(
 				CURLOPT_RETURNTRANSFER => 1,
-                CURLOPT_HEADER         => FALSE,
+				CURLOPT_HEADER         => false,
 				CURLOPT_URL            => "https://api.ontraport.com/cdata.php",
-                CURLOPT_POST           => TRUE,
+				CURLOPT_POST           => true,
 				CURLOPT_POSTFIELDS     => $postargs,
-                CURLOPT_SSL_VERIFYPEER => FALSE, //we need this option since we perform request to https
+				CURLOPT_SSL_VERIFYPEER => false, //we need this option since we perform request to https
 			) );
 			// Send the request & save response to $resp
 			$response = curl_exec( $curl );
@@ -6163,7 +6183,10 @@ STRING;
 							case 'below_post' :
 								if ( 0 === $below_count ) {
 									add_filter( 'the_content', array( $this, 'display_below_post' ), 9999 );
-                                    add_action( 'woocommerce_after_single_product_summary', array( $this, 'display_on_wc_page' ) );
+									add_action(
+										'woocommerce_after_single_product_summary',
+										array( $this, 'display_on_wc_page' )
+									);
 									$below_count ++;
 								}
 

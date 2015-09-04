@@ -2899,28 +2899,21 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$error_message = $e->getMessage();
 		}
 
-		if ( empty( $error_message ) ) {
-			$contact_data = $infusion_app->dsQuery( 'Contact', 1, 0, array( 'Email' => $email ), array( 'Id', 'Groups' ) ); //TODO add with dupe check then add optin function
-			if ( 0 < count( $contact_data ) ) {
-				if ( false === strpos( $contact_data[0]['Groups'], $list_id ) ) {
-					$infusion_app->grpAssign( $contact_data[0]['Id'], $list_id );
-					$error_message = 'success';
-				} else {
-					$error_message = __( 'Already subscribed', 'rapidology' );
-				}
-			} else {
-				$contact_details = array(
-					'FirstName' => $name,
-					'LastName'  => $last_name,
-					'Email'     => $email,
-				);
 
-				$new_contact_id = $infusion_app->dsAdd( 'Contact', $contact_details );
-				$infusion_app->grpAssign( $new_contact_id, $list_id );
-
-				$error_message = 'success';
-			}
+		$contact_details = array(
+			'FirstName' => $name,
+			'LastName'  => $last_name,
+			'Email'     => $email,
+		);
+		$new_contact_id = $infusion_app->addWithDupCheck($contact_details, $checkType = 'Email');
+		$infusion_app->optIn($contact_details['Email']);
+		$response = $infusion_app->grpAssign( $new_contact_id, $list_id );
+		if($response) {
+			$error_message = 'success';
+		}else{
+			$error_message = esc_html__( 'Already In List', 'rapidology' );
 		}
+
 
 		return $error_message;
 	}

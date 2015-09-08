@@ -2900,34 +2900,21 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$error_message = $e->getMessage();
 		}
 
-		if ( empty( $error_message ) ) {
-			$contact_data = $infusion_app->dsQuery(
-				'Contact',
-				1,
-				0,
-				array( 'Email' => $email ),
-				array( 'Id', 'Groups' )
-			); //TODO add with dupe check then add optin function
-			if ( 0 < count( $contact_data ) ) {
-				if ( false === strpos( $contact_data[0]['Groups'], $list_id ) ) {
-					$infusion_app->grpAssign( $contact_data[0]['Id'], $list_id );
-					$error_message = 'success';
-				} else {
-					$error_message = __( 'Already subscribed', 'rapidology' );
-				}
-			} else {
-				$contact_details = array(
-					'FirstName' => $name,
-					'LastName'  => $last_name,
-					'Email'     => $email,
-				);
 
-				$new_contact_id = $infusion_app->dsAdd( 'Contact', $contact_details );
-				$infusion_app->grpAssign( $new_contact_id, $list_id );
-
-				$error_message = 'success';
-			}
+		$contact_details = array(
+			'FirstName' => $name,
+			'LastName'  => $last_name,
+			'Email'     => $email,
+		);
+		$new_contact_id = $infusion_app->addWithDupCheck($contact_details, $checkType = 'Email');
+		$infusion_app->optIn($contact_details['Email']);
+		$response = $infusion_app->grpAssign( $new_contact_id, $list_id );
+		if($response) {
+			$error_message = 'success';
+		}else{
+			$error_message = esc_html__( 'Already In List', 'rapidology' );
 		}
+
 
 		return $error_message;
 	}
@@ -3214,14 +3201,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 		$lists = new HubSpot_Lists_Rapidology( $api_key );
 		try {
-			$error_message = 'success';
-			$some_lists    = $lists->get_static_lists( array( 'offset' => 0 ) );
-			$list_array    = array();
-			foreach ( $some_lists->lists as $list ) {
-				if ( ! preg_match( "/^(Workflow:)/i", $list->name, $matchs ) ) { //weed out workflows
-					$list_array[ $list->listId ]['name']              = $list->name;
-					$list_array[ $list->listId ]['subscribers_count'] = $list->metaData->size;
-					$list_array[ $list->listId ]['growth_week']       = sanitize_text_field( $this->calculate_growth_rate( 'campaign_monitor_' . $list->listId ) );
+
+			$some_lists = $lists->get_static_lists(array('offset'=>0));
+			$list_array = array();
+			foreach ($some_lists->lists as $list) {
+				if (!preg_match("/^(Workflow:)/i", $list->name, $matchs)) { //weed out workflows
+					$list_array[$list->listId]['name'] = $list->name;
+					$list_array[$list->listId]['subscribers_count'] = $list->metaData->size;
+					$list_array[$list->listId]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('campaign_monitor_' . $list->listId));
 
 				}
 			}
@@ -3230,8 +3217,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 				'api_key'       => sanitize_text_field( $api_key ),
 				'lists'         => $list_array,
 				'is_authorized' => 'true',
-			) );
-
+			));
+			$error_message = 'success';
 			return $error_message;
 
 		} catch ( exception $e ) {
@@ -5319,7 +5306,7 @@ STRING;
 	function get_power_button( $mode ) {
 		return '<div class="rad_power rad_power_mode_' . $mode . '">
 					<span class="rad_power_box_mode_' . $mode . '">
-						<a href="http://www.rapidology.com?utm_campaign=rp-lp&utm_medium=powered-by-badge" target="_blank">Powered by<span class="rad_power_logo">&nbsp</span><span class="rad_power_text">Rapidology</span></a>
+						<a href="http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=powered-by-badge" target="_blank">Powered by<span class="rad_power_logo">&nbsp</span><span class="rad_power_text">Rapidology</span></a>
 					</span>
 				</div>';
 	}
@@ -5348,10 +5335,11 @@ STRING;
 					}
 
 					printf(
-						'<div class="rad_rapidology_flyin rad_rapidology_optin rad_rapidology_resize rad_rapidology_flyin_%6$s rad_rapidology_%5$s%17$s%1$s%2$s%18$s%19$s%20$s%22$s"%3$s%4$s%16$s%21$s>
+						'<div class="rad_rapidology_flyin rad_rapidology_optin rad_rapidology_resize rad_rapidology_flyin_%6$s rad_rapidology_%5$s%17$s%1$s%2$s%18$s%19$s%20$s%21$s"%22$s%3$s%4$s%16$s>
 							<div class="rad_rapidology_form_container%7$s%8$s%9$s%10$s%12$s%13$s%14$s%15$s%23$s%24$s%25$s">
-								%27$s
+		
 								%11$s
+								%27$s
 							</div>
 						</div>',
 						true == $details['post_bottom'] ? ' rad_rapidology_trigger_bottom' : '',

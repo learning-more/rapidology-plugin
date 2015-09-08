@@ -2059,7 +2059,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		add_filter( 'admin_body_class', array( $this, 'add_admin_body_class' ) );
 		wp_enqueue_script( 'rad_rapidology-uniform-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/jquery.uniform.min.js', array( 'jquery' ), $this->plugin_version, true );
-		wp_enqueue_script( 'rad-color-parse', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/colorParse.js', array(), '1.0.0', true );
 		wp_enqueue_style( 'rad-open-sans-700', "{$this->protocol}://fonts.googleapis.com/css?family=Open+Sans:700", array(), $this->plugin_version );
 		wp_enqueue_style( 'rad-montserrat-700', "{$this->protocol}://fonts.googleapis.com/css?family=Montserrat:400,700", array(), $this->plugin_version );
 		wp_enqueue_style( 'rad-rapidology-css', RAD_RAPIDOLOGY_PLUGIN_URI . '/css/admin.css', array(), $this->plugin_version );
@@ -4773,7 +4772,6 @@ STRING;
 
 	function load_scripts_styles() {
 		wp_enqueue_script( 'rad_rapidology-uniform-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/jquery.uniform.min.js', array( 'jquery' ), $this->plugin_version, true );
-		wp_enqueue_script( 'rad_rapidology-color-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/colorParse.js', array(  ), $this->plugin_version, true );
 		wp_enqueue_script( 'rad_rapidology-custom-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/custom.js', array( 'jquery' ), $this->plugin_version, true );
 		wp_enqueue_script( 'rad_rapidology-idle-timer-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/idle-timer.min.js', array( 'jquery' ), $this->plugin_version, true );
 		wp_enqueue_style( 'rad_rapidology-open-sans', esc_url_raw( "{$this->protocol}://fonts.googleapis.com/css?family=Open+Sans:400,700" ), array(), null );

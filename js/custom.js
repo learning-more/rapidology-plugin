@@ -169,7 +169,13 @@
 					var scroll_pos = current_popup_bottom.data( 'scroll_pos' ) > 100 ? 100 : current_popup_bottom.data( 'scroll_pos' ),
 						scroll_trigger = 100 == scroll_pos ? $( document ).height() - 50 : $( document ).height() * scroll_pos / 100;
 				}
-
+                //check document height vs window height( if its the same or less assume mobile and show slidein after 5 seconds)
+                if ($(document).height() <= $(window).height()){
+                    setTimeout(
+                        function(){
+                            make_popup_visible ( current_popup_bottom, 0, '', '' );
+                        }, 5000
+                    );
 				$( window ).scroll( function(){
 					if ( ( ( false !== cookies_expire_bottom && ! checkCookieValue( 'etRapidologyCookie_' + optin_id, 'true' ) ) || false == cookies_expire_bottom ) && ! $already_subscribed ) {
 						if( $( window ).scrollTop() + $( window ).height() > scroll_trigger ) {

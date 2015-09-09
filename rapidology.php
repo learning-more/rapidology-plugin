@@ -2693,6 +2693,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 			case 'hubspot' :
 				$error_message = $this->get_hubspot_lists($api_key, $name);
 				break;
+			case 'salesforce' :
+				$error_message = $this->get_salesforce_campagins($api_key, $name);
+				break;
 
 
 		}
@@ -3306,6 +3309,18 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 		return $error_message;
 	}
+
+
+	/**
+	 * Retrieves the campaigns via Salesforce api and updates the data in DB.
+	 * @return string
+	 */
+
+	function get_salesforce_campagins($url, $version, $client_key, $client_secret, $username,$password, $token){
+
+	}
+
+
 
 	/**
 	 * Retrieves the lists via Campaign Monitor API and updates the data in DB.

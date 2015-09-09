@@ -2625,6 +2625,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$account_id = ! empty( $accounts_data[$service][$name]['username'] ) ? $accounts_data[$service][$name]['username'] : '';
 			$public_key = ! empty( $accounts_data[$service][$name]['api_key'] ) ? $accounts_data[$service][$name]['api_key'] : '';
 			$private_key = ! empty( $accounts_data[$service][$name]['client_id'] ) ? $accounts_data[$service][$name]['client_id'] : '';
+			//salesforce start
+			$url = ! empty( $accounts_data[$service][$name]['url'] ) ? $accounts_data[$service][$name]['url'] : '';
+			$version = ! empty( $accounts_data[$service][$name]['version'] ) ? $accounts_data[$service][$name]['version'] : '';
+			$client_key = ! empty( $accounts_data[$service][$name]['client_key'] ) ? $accounts_data[$service][$name]['client_key'] : '';
+			$client_secret = ! empty( $accounts_data[$service][$name]['client_secret'] ) ? $accounts_data[$service][$name]['client_secret'] : '';
+			$username = ! empty( $accounts_data[$service][$name]['username'] ) ? $accounts_data[$service][$name]['username'] : '';
+			$password = ! empty( $accounts_data[$service][$name]['password'] ) ? $accounts_data[$service][$name]['password'] : '';
+			$token = ! empty( $accounts_data[$service][$name]['token'] ) ? $accounts_data[$service][$name]['token'] : '';
+			//end salesforce
 		} else {
 			$api_key = ! empty( $_POST['rapidology_api_key'] ) ? sanitize_text_field( $_POST['rapidology_api_key'] ) : '';
 			$token = ! empty( $_POST['rapidology_constant_token'] ) ? sanitize_text_field( $_POST['rapidology_constant_token'] ) : '';
@@ -2634,6 +2643,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$account_id = ! empty( $_POST['rapidology_username'] ) ? sanitize_text_field( $_POST['rapidology_username'] ) : '';
 			$public_key = ! empty( $_POST['rapidology_api_key'] ) ? sanitize_text_field( $_POST['rapidology_api_key'] ) : '';
 			$private_key = ! empty( $_POST['rapidology_client_id'] ) ? sanitize_text_field( $_POST['rapidology_client_id'] ) : '';
+			//start salesforce
+			$url = ! empty( $_POST['rapidology_url'] ) ? sanitize_text_field( $_POST['rapidology_url'] ) : '';
+			$version = ! empty( $_POST['rapidology_version'] ) ? sanitize_text_field( $_POST['rapidology_version'] ) : '';
+			$client_key = ! empty( $_POST['rapidology_client_key'] ) ? sanitize_text_field( $_POST['rapidology_client_key'] ) : '';
+			$client_secret = ! empty( $_POST['rapidology_client_secret'] ) ? sanitize_text_field( $_POST['rapidology_client_secret'] ) : '';
+			$username = ! empty( $_POST['rapidology_client_username'] ) ? sanitize_text_field( $_POST['rapidology_client_username'] ) : '';
+			$password = ! empty( $_POST['rapidology_client_password'] ) ? sanitize_text_field( $_POST['rapidology_client_password'] ) : '';
+			$token = ! empty( $_POST['rapidology_client_token'] ) ? sanitize_text_field( $_POST['rapidology_client_token'] ) : '';
+			//end salesforce
 
 		}
 
@@ -2694,7 +2712,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$error_message = $this->get_hubspot_lists($api_key, $name);
 				break;
 			case 'salesforce' :
-				$error_message = $this->get_salesforce_campagins($api_key, $name);
+				$error_message = $this->get_salesforce_campagins($url, $version, $client_key, $client_secret, $username,$password, $token);
 				break;
 
 
@@ -3182,7 +3200,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 			foreach ($response as $obj){
 				$all_lists[$obj->member_group_id]['name'] = $obj->group_name;
 				$all_lists[$obj->member_group_id]['subscribers_count'] = sanitize_text_field($obj->active_count);
-				$all_lists[$obj->member_group_id]['growth_week'] = sanitize_text_field( $this->calculate_growth_rate( 'campaign_monitor_' . $obj->account_id ) );
+				$all_lists[$obj->member_group_id]['growth_week'] = sanitize_text_field( $this->calculate_growth_rate( 'emma_' . $obj->account_id ) );
 			}
 			$this->update_account( 'emma', sanitize_text_field( $name ), array(
 				'api_key'       => sanitize_text_field( $public_key ),
@@ -3242,7 +3260,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				if (!preg_match("/^(Workflow:)/i", $list->name, $matchs)) { //weed out workflows
 					$list_array[$list->listId]['name'] = $list->name;
 					$list_array[$list->listId]['subscribers_count'] = $list->metaData->size;
-					$list_array[$list->listId]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('campaign_monitor_' . $list->listId));
+					$list_array[$list->listId]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('hubspot_' . $list->listId));
 
 				}
 			}
@@ -3323,7 +3341,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 		preg_match("/^https:\/\/[a-z0-9]+.salesforce.com$/", $url, $matches);
 		//if matches from preg_match is 0 that means that there is something wrong with the url
 		if(sizeof($matches) == 0){
-			$error_message = "Please check your url. It should be https://{yoursalesforceserver}.salesforce.com. <br /> This will also be the url you are at once you login to salesforce.";
+			$error_message = "Please check your url. It should be https://naXX.salesforce.com. <br /> This will also be the url you are at once you login to salesforce.";
+			return $error_message;
+		}
+		//ensure version has a . in it so 34.0 vs 34 etc
+		preg_match("/[0-9]+[\.]+[0-9]+/", $version, $version_matches);
+		if(sizeof($version_matches) == 0){
+			$error_message = "Please check your version. It must be formatted as XX.X Example 34.0  The trailing .0 after 34 are needed";
 			return $error_message;
 		}
 		//instantiate new salesforce class and login with your user. User needs to have access to campagins and leads
@@ -3331,9 +3355,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$salesforce->login($username, $password, $token);
 
 		//perform soql query to get all lead information
-		$campagins = $salesforce->searchSOQL('select id, name, StartDate, EndDate, NumberOfLeads, NumberOfContacts from campaign where EndDate >= TODAY or EndDate = null');
+		$campagins = $salesforce->searchSOQL('select id, name, NumberOfLeads, NumberOfContacts from campaign where EndDate >= TODAY or EndDate = null');
 
-		print_r($campagins);exit;
+		$campagin_list = array();
+		foreach($campagins->records as $campaign){
+			$campagin_list[$campaign->Id]['name'] = $campaign->Name;
+			$campagin_list[$campaign->Id]['subscribers_count'] = $campaign->NumberOfLeads;
+			$campagin_list[$campaign->Id]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('salesforce_' . $campaign->Id));
+		}
 
 	}
 

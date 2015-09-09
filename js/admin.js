@@ -1015,6 +1015,15 @@
                 public_api_key = $( $container ).find( '#api_key_' + $service ),
                 private_api_key = $( $container ).find( '#client_id_' + $service ),
                 account_id = $( $container ).find( '#username_' + $service ),
+                //salesforce items
+                url = $( $container ).find( '#url_' + $service ),
+                version = $( $container ).find( '#version_' + $service ),
+                client_key = $( $container ).find( '#client_key_' + $service ),
+                client_secret = $( $container ).find( '#client_secret_' + $service ),
+                username = $( $container ).find( '#username_' + $service ),
+                password = $( $container ).find( '#password_' + $service ),
+                token = $( $container ).find( '#token_' + $service ),
+                //end salesforce items
 				account_name_val = '' == $account_name ? $( $container ).find( '#name_' + $service ).val() : $account_name;
 
 			$( $container ).find( 'input' ).css( { 'border' : 'none' } );
@@ -1055,7 +1064,18 @@
 						rapidology_account_exists : $account_exists,
                         rapidology_public_api_key : public_api_key.val(),
                         rapidology_private_api_key : private_api_key.val(),
-                        rapidology_account_id : account_id.val()
+                        rapidology_account_id : account_id.val(),
+                        //salesforce start
+                        rapidology_url : url.val(),
+                        rapidology_version : version.val(),
+                        rapidology_client_key : client_key.val(),
+                        rapidology_client_secret : client_secret.val(),
+                        rapidology_username : username.val(),
+                        rapidology_password : password.val(),
+                        rapidology_token : token.val(),
+                        //salesforce end
+
+
 					},
 					beforeSend: function( data ) {
 						$( $container ).find( 'span.spinner' ).addClass( 'rad_dashboard_spinner_visible' );

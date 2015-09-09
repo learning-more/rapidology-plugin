@@ -3317,6 +3317,23 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 */
 
 	function get_salesforce_campagins($url, $version, $client_key, $client_secret, $username,$password, $token){
+		$error_message='';
+		require_once 'subscription/salesforce/SalesforceAPI.php';
+		//test to make sure the url appears to be properly formatted
+		preg_match("/^https:\/\/[a-z0-9]+.salesforce.com$/", $url, $matches);
+		//if matches from preg_match is 0 that means that there is something wrong with the url
+		if(sizeof($matches) == 0){
+			$error_message = "Please check your url. It should be https://{yoursalesforceserver}.salesforce.com. <br /> This will also be the url you are at once you login to salesforce.";
+			return $error_message;
+		}
+		//instantiate new salesforce class and login with your user. User needs to have access to campagins and leads
+		$salesforce = new SalesforceAPI($url, $version, $client_key, $client_secret);
+		$salesforce->login($username, $password, $token);
+
+		//perform soql query to get all lead information
+		$campagins = $salesforce->searchSOQL('select id, name, StartDate, EndDate, NumberOfLeads, NumberOfContacts from campaign where EndDate >= TODAY or EndDate = null');
+
+		print_r($campagins);exit;
 
 	}
 

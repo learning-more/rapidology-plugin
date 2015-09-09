@@ -1582,6 +1582,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 							<select>
 								<option value="empty" selected>%2$s</option>
 								<option value="mailchimp">%3$s</option>
+								<option value="hubspot">%17$s</option>
+								<option value="salesforce">%18$s</option>
 								<option value="aweber">%4$s</option>
 								<option value="constant_contact">%5$s</option>
 								<option value="campaign_monitor">%6$s</option>
@@ -1594,7 +1596,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 								<option value="feedblitz">%14$s</option>
 								<option value="infusionsoft">%15$s</option>
 								<option value="emma">%16$s</option>
-								<option value="hubspot">%17$s</option>
 							</select>
 						</li>
 					</ul>
@@ -1617,7 +1618,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 				esc_html__( 'Feedblitz', 'rapidology' ),
 				esc_html__( 'Infusionsoft', 'rapidology' ),
 				esc_html__( 'Emma', 'rapidology' ),
-				esc_html__( 'HubSpot', 'rapidology' )
+				esc_html__( 'HubSpot', 'rapidology' ),
+				esc_html__( 'Salesforce', 'rapidology' )
 
 			);
 		}
@@ -4547,6 +4549,68 @@ STRING;
 					)
 				);
 				break;
+			case 'salesforce' :
+				$form_fields .= sprintf('
+					<div class="rad_dashboard_account_row">
+						<label for="%1$s">%8$s</label>
+						<input type="text" value="%15$s" id="%1$s">%22$s
+					</div>
+					<div class="rad_dashboard_account_row">
+						<label for="%2$s">%9$s</label>
+						<input type="text" value="%16$s" id="%2$s">%22$s
+					</div>
+					<div class="rad_dashboard_account_row">
+						<label for="%3$s">%10$s</label>
+						<input type="text" value="%17$s" id="%3$s">%22$s
+					</div>
+					<div class="rad_dashboard_account_row">
+						<label for="%4$s">%11$s</label>
+						<input type="text" value="%18$s" id="%4$s">%22$s
+					</div>
+					<div class="rad_dashboard_account_row">
+						<label for="%5$s">%12$s</label>
+						<input type="text" value="%19$s" id="%5$s">%22$s
+					</div>
+					<div class="rad_dashboard_account_row">
+						<label for="%6$s">%13$s</label>
+						<input type="text" value="%20$s" id="%6$s">%22$s
+					</div>
+					<div class="rad_dashboard_account_row">
+						<label for="%7$s">%14$s</label>
+						<input type="text" value="%21$s" id="%7$s">%22$s
+					</div>',
+					esc_attr('url_'.$service),#1
+					esc_attr('version_'.$service),#2
+					esc_attr('client_key_'.service),#3
+					esc_attr('client_secret_'.$service),#4
+					esc_attr('username_'.$service),#5
+					esc_attr('password_'.$service),#6
+					esc_attr('token_'.$service),#7
+					__('Salesforce url', 'rapidology'),#8
+					__('Salesforce version #', 'rapidology'),#9
+					__('Consumer key', 'rapidology'),#10
+					__('Consumer secret', 'rapidology'),#11
+					__('Salesforce username', 'rapidology'),#12
+					__('Salesforce password', 'rapidology'),#13
+					__('Secuirty token', 'rapidology'),#14
+					( '' !== $field_values && isset( $field_values['url'] ) ) ? esc_attr( $field_values['url'] ) : '',#15
+					( '' !== $field_values && isset( $field_values['version'] ) ) ? esc_attr( $field_values['version'] ) : '',#16
+					( '' !== $field_values && isset( $field_values['client_key'] ) ) ? esc_attr( $field_values['client_key'] ) : '',#17
+					( '' !== $field_values && isset( $field_values['client_secret'] ) ) ? esc_attr( $field_values['client_secret'] ) : '',#18
+					( '' !== $field_values && isset( $field_values['username'] ) ) ? esc_attr( $field_values['username'] ) : '',#19
+					( '' !== $field_values && isset( $field_values['password'] ) ) ? esc_attr( $field_values['password'] ) : '',#20
+					( '' !== $field_values && isset( $field_values['token'] ) ) ? esc_attr( $field_values['token'] ) : '',#21
+					RAD_Rapidology::generate_hint( sprintf(
+						'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+						__( 'Click here for more information', 'rapidology' )
+					), false
+					)#22
+
+
+				);
+			break;
+
+
 			case 'mailchimp' :
 			case 'hubspot'  :
 			case 'constant_contact' :

@@ -2515,6 +2515,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return void
 	 */
 	function update_account( $service, $name, $data_array = array() ) {
+
 		if ( '' !== $service && '' !== $name ) {
 			$name = str_replace( array( '"', "'" ), '', stripslashes( $name ) );
 			$options_array = RAD_Rapidology::grad_rapidology_options();
@@ -2612,7 +2613,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$service = ! empty( $_POST['rapidology_upd_service'] ) ? sanitize_text_field( $_POST['rapidology_upd_service'] ) : '';
 		$name = ! empty( $_POST['rapidology_upd_name'] ) ? sanitize_text_field( $_POST['rapidology_upd_name'] ) : '';
 		$update_existing = ! empty( $_POST['rapidology_account_exists'] ) ? sanitize_text_field( $_POST['rapidology_account_exists'] ) : '';
-
+		
 		if ( 'true' == $update_existing ) {
 			$options_array = RAD_Rapidology::grad_rapidology_options();
 			$accounts_data = $options_array['accounts'];
@@ -2630,8 +2631,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$version = ! empty( $accounts_data[$service][$name]['version'] ) ? $accounts_data[$service][$name]['version'] : '';
 			$client_key = ! empty( $accounts_data[$service][$name]['client_key'] ) ? $accounts_data[$service][$name]['client_key'] : '';
 			$client_secret = ! empty( $accounts_data[$service][$name]['client_secret'] ) ? $accounts_data[$service][$name]['client_secret'] : '';
-			$username = ! empty( $accounts_data[$service][$name]['username'] ) ? $accounts_data[$service][$name]['username'] : '';
-			$password = ! empty( $accounts_data[$service][$name]['password'] ) ? $accounts_data[$service][$name]['password'] : '';
+			$username_sf = ! empty( $accounts_data[$service][$name]['username_sf'] ) ? $accounts_data[$service][$name]['username_sf'] : '';
+			$password_sf = ! empty( $accounts_data[$service][$name]['password_sf'] ) ? $accounts_data[$service][$name]['password_sf'] : '';
 			$token = ! empty( $accounts_data[$service][$name]['token'] ) ? $accounts_data[$service][$name]['token'] : '';
 			//end salesforce
 		} else {
@@ -2648,9 +2649,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$version = ! empty( $_POST['rapidology_version'] ) ? sanitize_text_field( $_POST['rapidology_version'] ) : '';
 			$client_key = ! empty( $_POST['rapidology_client_key'] ) ? sanitize_text_field( $_POST['rapidology_client_key'] ) : '';
 			$client_secret = ! empty( $_POST['rapidology_client_secret'] ) ? sanitize_text_field( $_POST['rapidology_client_secret'] ) : '';
-			$username = ! empty( $_POST['rapidology_client_username'] ) ? sanitize_text_field( $_POST['rapidology_client_username'] ) : '';
-			$password = ! empty( $_POST['rapidology_client_password'] ) ? sanitize_text_field( $_POST['rapidology_client_password'] ) : '';
-			$token = ! empty( $_POST['rapidology_client_token'] ) ? sanitize_text_field( $_POST['rapidology_client_token'] ) : '';
+			$username_sf = ! empty( $_POST['rapidology_username_sf'] ) ? sanitize_text_field( $_POST['rapidology_username_sf'] ) : '';
+			$password_sf = ! empty( $_POST['rapidology_password_sf'] ) ? sanitize_text_field( $_POST['rapidology_password_sf'] ) : '';
+			$token = ! empty( $_POST['rapidology_token'] ) ? sanitize_text_field( $_POST['rapidology_token'] ) : '';
 			//end salesforce
 
 		}
@@ -2712,7 +2713,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$error_message = $this->get_hubspot_lists($api_key, $name);
 				break;
 			case 'salesforce' :
-				$error_message = $this->get_salesforce_campagins($url, $version, $client_key, $client_secret, $username,$password, $token);
+				$error_message = $this->get_salesforce_campagins($url, $version, $client_key, $client_secret, $username_sf, $password_sf, $token, $name);
 				break;
 
 
@@ -3334,8 +3335,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 
-	function get_salesforce_campagins($url, $version, $client_key, $client_secret, $username,$password, $token){
+	function get_salesforce_campagins($url, $version, $client_key, $client_secret, $username_sf, $password_sf, $token, $name){
 		$error_message='';
+		
 		require_once 'subscription/salesforce/SalesforceAPI.php';
 		//test to make sure the url appears to be properly formatted
 		preg_match("/^https:\/\/[a-z0-9]+.salesforce.com$/", $url, $matches);
@@ -3352,7 +3354,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 		//instantiate new salesforce class and login with your user. User needs to have access to campagins and leads
 		$salesforce = new SalesforceAPI($url, $version, $client_key, $client_secret);
-		$salesforce->login($username, $password, $token);
+		$salesforce->login($username_sf, $password_sf, $token);
 
 		//perform soql query to get all lead information
 		$campagins = $salesforce->searchSOQL('select id, name, NumberOfLeads, NumberOfContacts from campaign where EndDate >= TODAY or EndDate = null');
@@ -3363,7 +3365,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$campagin_list[$campaign->Id]['subscribers_count'] = $campaign->NumberOfLeads;
 			$campagin_list[$campaign->Id]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('salesforce_' . $campaign->Id));
 		}
-
+		//echo '<pre>';print_r($campagin_list);
+		$this->update_account('salesforce', sanitize_text_field($name), array(
+			'api_key' => $client_key,
+			'lists' => $campagin_list,
+			'is_authorized' => 'true',
+		));
+		$error_message = 'success';
+		return $error_message;
 	}
 
 
@@ -4642,10 +4651,10 @@ STRING;
 					</div>',
 					esc_attr('url_'.$service),#1
 					esc_attr('version_'.$service),#2
-					esc_attr('client_key_'.service),#3
+					esc_attr('client_key_'.$service),#3
 					esc_attr('client_secret_'.$service),#4
-					esc_attr('username_'.$service),#5
-					esc_attr('password_'.$service),#6
+					esc_attr('username_sf_'.$service),#5
+					esc_attr('password_sf_'.$service),#6
 					esc_attr('token_'.$service),#7
 					__('Salesforce url', 'rapidology'),#8
 					__('Salesforce version #', 'rapidology'),#9
@@ -4658,8 +4667,8 @@ STRING;
 					( '' !== $field_values && isset( $field_values['version'] ) ) ? esc_attr( $field_values['version'] ) : '',#16
 					( '' !== $field_values && isset( $field_values['client_key'] ) ) ? esc_attr( $field_values['client_key'] ) : '',#17
 					( '' !== $field_values && isset( $field_values['client_secret'] ) ) ? esc_attr( $field_values['client_secret'] ) : '',#18
-					( '' !== $field_values && isset( $field_values['username'] ) ) ? esc_attr( $field_values['username'] ) : '',#19
-					( '' !== $field_values && isset( $field_values['password'] ) ) ? esc_attr( $field_values['password'] ) : '',#20
+					( '' !== $field_values && isset( $field_values['username_sf'] ) ) ? esc_attr( $field_values['username'] ) : '',#19
+					( '' !== $field_values && isset( $field_values['password_sf'] ) ) ? esc_attr( $field_values['password'] ) : '',#20
 					( '' !== $field_values && isset( $field_values['token'] ) ) ? esc_attr( $field_values['token'] ) : '',#21
 					RAD_Rapidology::generate_hint( sprintf(
 						'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',

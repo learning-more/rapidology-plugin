@@ -1020,8 +1020,8 @@
                 version = $( $container ).find( '#version_' + $service ),
                 client_key = $( $container ).find( '#client_key_' + $service ),
                 client_secret = $( $container ).find( '#client_secret_' + $service ),
-                username = $( $container ).find( '#username_' + $service ),
-                password = $( $container ).find( '#password_' + $service ),
+                username_sf = $( $container ).find( '#username_sf_' + $service ),
+                password_sf = $( $container ).find( '#password_sf_' + $service ),
                 token = $( $container ).find( '#token_' + $service ),
                 //end salesforce items
 				account_name_val = '' == $account_name ? $( $container ).find( '#name_' + $service ).val() : $account_name;
@@ -1070,8 +1070,8 @@
                         rapidology_version : version.val(),
                         rapidology_client_key : client_key.val(),
                         rapidology_client_secret : client_secret.val(),
-                        rapidology_username : username.val(),
-                        rapidology_password : password.val(),
+                        rapidology_username_sf : username_sf.val(),
+                        rapidology_password_sf : password_sf.val(),
                         rapidology_token : token.val(),
                         //salesforce end
 

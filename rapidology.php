@@ -3177,7 +3177,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 			foreach ($response as $obj){
 				$all_lists[$obj->member_group_id]['name'] = $obj->group_name;
 				$all_lists[$obj->member_group_id]['subscribers_count'] = sanitize_text_field($obj->active_count);
-				$all_lists[$obj->member_group_id]['growth_week'] = sanitize_text_field( $this->calculate_growth_rate( 'campaign_monitor_' . $obj->account_id ) );
+				$all_lists[$obj->member_group_id]['growth_week'] = sanitize_text_field( $this->calculate_growth_rate( 'emma_' . $obj->account_id ) );
 			}
 			$this->update_account( 'emma', sanitize_text_field( $name ), array(
 				'api_key'       => sanitize_text_field( $public_key ),
@@ -3237,7 +3237,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				if (!preg_match("/^(Workflow:)/i", $list->name, $matchs)) { //weed out workflows
 					$list_array[$list->listId]['name'] = $list->name;
 					$list_array[$list->listId]['subscribers_count'] = $list->metaData->size;
-					$list_array[$list->listId]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('campaign_monitor_' . $list->listId));
+					$list_array[$list->listId]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('hubspot_' . $list->listId));
 
 				}
 			}

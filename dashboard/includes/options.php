@@ -43,6 +43,12 @@ $rad_all_sections = array(
  *
  */
 
+$more_info_hint_text = sprintf(
+	'<a href="%2$s" target="_blank">%1$s</a>',
+	__( 'Click here for more information', 'rapidology' ),
+	esc_url( 'http://www.rapidology.com' )
+);
+
 $rad_dashboard_options_all = array(
 	'optin_name' => array(
 		'section_start' => array(
@@ -605,7 +611,6 @@ $rad_dashboard_options_all = array(
 				'slideright'   => __( 'Slide Right', 'rapidology' ),
 				'slideup'      => __( 'Slide Up', 'rapidology' ),
 				'slidedown'    => __( 'Slide Down', 'rapidology' ),
-				'slideup'      => __( 'Slide Up', 'rapidology' ),
 				'lightspeedin' => __( 'Light Speed', 'rapidology' ),
 				'zoomin'       => __( 'Zoom In', 'rapidology' ),
 				'flipinx'      => __( 'Flip', 'rapidology' ),
@@ -898,11 +903,7 @@ $rad_dashboard_options_all = array(
 			'default'              => '',
 			'class'                => 'api_option api_option_key',
 			'hide_contents'        => true,
-			'hint_text'            => sprintf(
-				'<a href="%2$s" target="_blank">%1$s</a>',
-				__( 'Click here for more information', 'rapidology' ),
-				esc_url( 'http://www.rapidology.com' )
-			),
+			'hint_text'            => $more_info_hint_text,
 			'hint_text_with_links' => 'on',
 			'validation_type'      => 'simple_text',
 		),
@@ -929,11 +930,7 @@ $rad_dashboard_options_all = array(
 			'default'              => '',
 			'class'                => 'api_option api_option_key',
 			'hide_contents'        => true,
-			'hint_text'            => sprintf(
-				'<a href="%2$s" target="_blank">%1$s</a>',
-				__( 'Click here for more information', 'rapidology' ),
-				esc_url( 'http://www.rapidology.com' )
-			),
+			'hint_text'            => $more_info_hint_text,
 			'hint_text_with_links' => 'on',
 			'validation_type'      => 'simple_text',
 		),

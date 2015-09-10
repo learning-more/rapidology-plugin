@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Rapidology By LeadPages
  * Plugin URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
- * Version: 1.1
+ * Version: 0.8
  * Description: 100% Free List Building & Popup Plugin...With Over 100 Responsive Templates & 6 Different Display Types For Growing Your Email Newsletter
  * Author: Rapidology
  * Author URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
@@ -13,18 +13,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit; // Exit if accessed directly
 }
 
-
-
-
-
-
-define( 'RAD_RAPIDOLOGY_PLUGIN_DIR', trailingslashit( dirname(__FILE__) ) );
-define( 'RAD_RAPIDOLOGY_PLUGIN_URI', plugins_url('', __FILE__) );
+define( 'RAD_RAPIDOLOGY_PLUGIN_DIR', trailingslashit( dirname( __FILE__ ) ) );
+define( 'RAD_RAPIDOLOGY_PLUGIN_URI', plugins_url( '', __FILE__ ) );
 
 if ( ! class_exists( 'RAD_Dashboard' ) ) {
 	require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'dashboard/dashboard.php' );
 }
-
 
 class RAD_Rapidology extends RAD_Dashboard {
 	var $plugin_version = '1.0';
@@ -53,7 +47,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		add_action( 'plugins_loaded', array( $this, 'add_localization' ) );
 
-		add_action('admin_init',array( $this, 'execute_footer_text'));
+		add_action( 'admin_init', array( $this, 'execute_footer_text' ) );
 
 		add_filter( 'rad_rapidology_import_sub_array', array( $this, 'import_settings' ) );
 		add_filter( 'rad_rapidology_import_array', array( $this, 'import_filter' ) );
@@ -61,15 +55,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_filter( 'rad_rapidology_save_button_class', array( $this, 'save_btn_class' ) );
 
 
-
-
-
 		// generate home tab in dashboard
 		add_action( 'rad_rapidology_after_header_options', array( $this, 'generate_home_tab' ) );
 
 		add_action( 'rad_rapidology_after_main_options', array( $this, 'generate_premade_templates' ) );
 
-		add_action( 'rad_rapidology_after_save_button', array( $this, 'add_next_button') );
+		add_action( 'rad_rapidology_after_save_button', array( $this, 'add_next_button' ) );
 
 		$plugin_file = plugin_basename( __FILE__ );
 		add_filter( "plugin_action_links_{$plugin_file}", array( $this, 'add_settings_link' ) );
@@ -78,7 +69,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$dashboard_args = array(
 			'rad_dashboard_options_pagename'  => $this->_options_pagename,
 			'rad_dashboard_plugin_name'       => 'rapidology',
-			'rad_dashboard_save_button_text'  => 	__( 'Save & Exit', 'rapidology' ),
+			'rad_dashboard_save_button_text'  => __( 'Save & Exit', 'rapidology' ),
 			'rad_dashboard_plugin_class_name' => 'rad_rapidology',
 			'rad_dashboard_options_path'      => RAD_RAPIDOLOGY_PLUGIN_DIR . '/dashboard/includes/options.php',
 			'rad_dashboard_options_page'      => 'toplevel_page',
@@ -160,7 +151,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		$this->frontend_register_locations();
 
-		foreach ( array('post.php','post-new.php') as $hook ) {
+		foreach ( array( 'post.php', 'post-new.php' ) as $hook ) {
 			add_action( "admin_head-$hook", array( $this, 'tiny_mce_vars' ) );
 			add_action( "admin_head-$hook", array( $this, 'add_mce_button_filters' ) );
 		}
@@ -194,11 +185,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 		return self::$_this;
 	}
 
-
-
-
 	function add_menu_link() {
-		$menu_page = add_menu_page( __( 'Rapidology', 'rapidology' ), __( 'Rapidology', 'rapidology' ), 'manage_options', 'rad_rapidology_options', array( $this, 'options_page' ) );
+		$menu_page = add_menu_page(
+			__( 'Rapidology', 'rapidology' ),
+			__( 'Rapidology', 'rapidology' ),
+			'manage_options',
+			'rad_rapidology_options',
+			array( $this, 'options_page' )
+		);
 		add_submenu_page( 'rad_rapidology_options', __( 'Optin Forms', 'rapidology' ), __( 'Optin Forms', 'rapidology' ), 'manage_options', 'rad_rapidology_options' );
 		add_submenu_page( 'rad_rapidology_options', __( 'Email Accounts', 'rapidology' ), __( 'Email Accounts', 'rapidology' ), 'manage_options', 'admin.php?page=rad_rapidology_options#tab_rad_dashboard_tab_content_header_accounts' );
 		add_submenu_page( 'rad_rapidology_options', __( 'Statistics', 'rapidology' ), __( 'Statistics', 'rapidology' ), 'manage_options', 'admin.php?page=rad_rapidology_options#tab_rad_dashboard_tab_content_header_stats' );
@@ -229,6 +223,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	function add_settings_link( $links ) {
 		$settings_link = sprintf( '<a href="admin.php?page=rad_rapidology_options">%1$s</a>', __( 'Settings', 'rapidology' ) );
 		array_unshift( $links, $settings_link );
+
 		return $links;
 	}
 
@@ -246,6 +241,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 	function filter_export_settings( $options ) {
 		$updated_array = array_merge( $options, array( 'accounts' ) );
+
 		return $updated_array;
 	}
 
@@ -289,7 +285,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Retrieves the Rapidology options from DB and makes it available outside the class
 	 * @return array
 	 */
-	public static function grad_rapidology_options() {
+	public static function get_rapidology_options() {
 		return get_option( 'rad_rapidology_options' ) ? get_option( 'rad_rapidology_options' ) : array();
 	}
 
@@ -298,7 +294,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return void
 	 */
 	public static function update_rapidology_options( $update_array ) {
-		$dashboard_options = RAD_Rapidology::grad_rapidology_options();
+		$dashboard_options = RAD_Rapidology::get_rapidology_options();
 
 		$updated_options = array_merge( $dashboard_options, $update_array );
 		update_option( 'rad_rapidology_options', $updated_options );
@@ -311,17 +307,17 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 */
 	function import_filter( $options_array ) {
 		$updated_array = array();
-		$new_id = $this->generate_optin_id( false );
+		$new_id        = $this->generate_optin_id( false );
 
 		foreach ( $options_array as $key => $value ) {
-			$updated_array['optin_' . $new_id] = $options_array[$key];
+			$updated_array[ 'optin_' . $new_id ] = $options_array[ $key ];
 
 			//reset accounts settings and make all new optins inactive
-			$updated_array['optin_' . $new_id]['email_provider'] = 'empty';
-			$updated_array['optin_' . $new_id]['account_name'] = 'empty';
-			$updated_array['optin_' . $new_id]['email_list'] = 'empty';
-			$updated_array['optin_' . $new_id]['optin_status'] = 'inactive';
-			$new_id++;
+			$updated_array[ 'optin_' . $new_id ]['email_provider'] = 'empty';
+			$updated_array[ 'optin_' . $new_id ]['account_name']   = 'empty';
+			$updated_array[ 'optin_' . $new_id ]['email_list']     = 'empty';
+			$updated_array[ 'optin_' . $new_id ]['optin_status']   = 'inactive';
+			$new_id ++;
 		}
 
 		return $updated_array;
@@ -355,9 +351,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Pass locked_optins and inline_optins lists to tiny-MCE script
 	 */
 	function tiny_mce_vars() {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$locked_array = array();
-		$inline_array = array();
+		$options_array = RAD_Rapidology::get_rapidology_options();
+		$locked_array  = array();
+		$inline_array  = array();
 		if ( ! empty( $options_array ) ) {
 			foreach ( $options_array as $optin_id => $details ) {
 				if ( 'accounts' !== $optin_id ) {
@@ -390,11 +386,11 @@ class RAD_Rapidology extends RAD_Dashboard {
 		<!-- TinyMCE Shortcode Plugin -->
 		<script type='text/javascript'>
 			var rapidology = {
-				'locked_optins' : '<?php echo json_encode( $locked_array ); ?>',
-				'inline_optins' : '<?php echo json_encode( $inline_array ); ?>',
-				'rapidology_tooltip' : '<?php _e( "insert rapidology Opt-In", "rapidology" ); ?>',
-				'inline_text'   : '<?php _e( "Inline Opt-In", "rapidology" ); ?>',
-				'locked_text'   : '<?php _e( "Locked Content Opt-In", "rapidology" ); ?>'
+				'locked_optins': '<?php echo json_encode( $locked_array ); ?>',
+				'inline_optins': '<?php echo json_encode( $inline_array ); ?>',
+				'rapidology_tooltip': '<?php _e( "insert rapidology Opt-In", "rapidology" ); ?>',
+				'inline_text': '<?php _e( "Inline Opt-In", "rapidology" ); ?>',
+				'locked_text': '<?php _e( "Locked Content Opt-In", "rapidology" ); ?>'
 			}
 		</script>
 		<!-- TinyMCE Shortcode Plugin -->
@@ -457,7 +453,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 						<h1>%2$s</h1>
 						<button class="rad_dashboard_icon">%1$s</button>
 						<input type="hidden" name="action" value="new_optin" />
-					</div>' ,
+					</div>',
 					esc_html__( 'new optin', 'rapidology' ),
 					esc_html__( 'Active Optins', 'rapidology' )
 				);
@@ -522,7 +518,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 						<h1>%2$s</h1>
 						<button class="rad_dashboard_icon">%1$s</button>
 						<input type="hidden" name="action" value="new_account" />
-					</div>' ,
+					</div>',
 					esc_html__( 'new account', 'rapidology' ),
 					esc_html__( 'My Accounts', 'rapidology' )
 				);
@@ -580,7 +576,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	}
 
 	function generate_premade_grid() {
-		wp_verify_nonce( $_POST['rapidology_premade_nonce'] , 'rapidology_premade' );
+		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
 
 		require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php' );
 		$output = '';
@@ -590,7 +586,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 			$output .= '<div class="rad_rapidology_premade_grid">';
 
-			foreach( $all_layouts as $layout_id => $layout_options ) {
+			foreach ( $all_layouts as $layout_id => $layout_options ) {
 				$output .= sprintf( '
 					<div class="rad_rapidology_premade_item%2$s rad_rapidology_premade_id_%1$s" data-layout="%1$s">
 						<div class="rad_rapidology_premade_item_inner">
@@ -601,7 +597,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					0 == $i ? ' rad_rapidology_layout_selected' : '',
 					esc_attr( RAD_RAPIDOLOGY_PLUGIN_URI . '/images/thumb_' . $layout_id . '.svg' )
 				);
-				$i++;
+				$i ++;
 			}
 
 			$output .= '</div>';
@@ -614,16 +610,16 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Gets the layouts data, converts it to json string and passes back to js script to fill the form with predefined values
 	 */
 	function get_premade_values() {
-		wp_verify_nonce( $_POST['rapidology_premade_nonce'] , 'rapidology_premade' );
+		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
 
-		$premade_data_json = str_replace( '\\', '' ,  $_POST['premade_data_array'] );
-		$premade_data = json_decode( $premade_data_json, true );
-		$layout_id = $premade_data['id'];
+		$premade_data_json = str_replace( '\\', '', $_POST['premade_data_array'] );
+		$premade_data      = json_decode( $premade_data_json, true );
+		$layout_id         = $premade_data['id'];
 
 		require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php' );
 
-		if ( isset( $all_layouts[$layout_id] ) ) {
-			$options_set = json_encode( $all_layouts[$layout_id] );
+		if ( isset( $all_layouts[ $layout_id ] ) ) {
+			$options_set = json_encode( $all_layouts[ $layout_id ] );
 		}
 
 		die( $options_set );
@@ -633,7 +629,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Generates output for the Stats tab
 	 */
 	function generate_stats_tab() {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
+		$options_array = RAD_Rapidology::get_rapidology_options();
 
 		$output = sprintf( '
 			<div class="rad_dashboard_stats_contents rad_dashboard_stats_ready">
@@ -689,7 +685,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function reset_stats() {
-		wp_verify_nonce( $_POST['rapidology_stats_nonce'] , 'rapidology_stats' );
+		wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
 		$force_update = ! empty( $_POST['rapidology_force_upd_stats'] ) ? sanitize_text_field( $_POST['rapidology_force_upd_stats'] ) : '';
 
 		if ( get_option( 'rad_rapidology_stats_cache' ) && 'true' !== $force_update ) {
@@ -720,7 +716,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return void
 	 */
 	function clear_stats() {
-		wp_verify_nonce( $_POST['rapidology_stats_nonce'] , 'rapidology_stats' );
+		wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
 
 		global $wpdb;
 
@@ -737,8 +733,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function generate_all_lists_select() {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$output = sprintf( '<option value="all">%1$s</option>', __( 'All lists', 'rapidology' ) );
+		$options_array = RAD_Rapidology::get_rapidology_options();
+		$output        = sprintf( '<option value="all">%1$s</option>', __( 'All lists', 'rapidology' ) );
 
 		if ( ! empty( $options_array['accounts'] ) ) {
 			foreach ( $options_array['accounts'] as $service => $accounts ) {
@@ -804,9 +800,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function generate_optins_stats_table( $orderby = 'conversion_rate', $include_header = false ) {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$optins_count = 0;
-		$output = '';
+		$options_array     = RAD_Rapidology::get_rapidology_options();
+		$optins_count      = 0;
+		$output            = '';
 		$total_impressions = 0;
 		$total_conversions = 0;
 
@@ -837,7 +833,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$total_impressions += $impressions = $this->stats_count( $optin_id, 'imp' );
 				$total_conversions += $conversions = $this->stats_count( $optin_id, 'con' );
 
-				$unsorted_optins[$optin_id] = array(
+				$unsorted_optins[ $optin_id ] = array(
 					'name'            => $value['optin_name'],
 					'impressions'     => $impressions,
 					'conversions'     => $conversions,
@@ -846,7 +842,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					'status'          => $value['optin_status'],
 					'child_of'        => $value['child_of'],
 				);
-				$optins_count++;
+				$optins_count ++;
 
 			}
 		}
@@ -856,7 +852,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 			foreach ( $sorted_optins as $id => $details ) {
 				if ( '' !== $details['child_of'] ) {
-					$status = $options_array[$details['child_of']]['optin_status'];
+					$status = $options_array[ $details['child_of'] ]['optin_status'];
 				} else {
 					$status = $details['status'];
 				}
@@ -907,7 +903,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	function sort_array( $unsorted_array, $orderby, $order = SORT_DESC ) {
 		$temp_array = array();
 		foreach ( $unsorted_array as $ma ) {
-			$temp_array[] = $ma[$orderby];
+			$temp_array[] = $ma[ $orderby ];
 		}
 
 		array_multisort( $temp_array, $order, $unsorted_array );
@@ -922,23 +918,23 @@ class RAD_Rapidology extends RAD_Dashboard {
 	function generate_pages_stats() {
 		$all_pages_id = $this->get_all_stats_pages();
 		$con_by_pages = array();
-		$output = '';
+		$output       = '';
 
 		if ( empty( $all_pages_id ) ) {
 			return;
 		}
 
-		foreach( $all_pages_id as $page ) {
-			$con_by_pages[$page['page_id']] = $this->get_unique_optins_by_page( $page['page_id'] );
+		foreach ( $all_pages_id as $page ) {
+			$con_by_pages[ $page['page_id'] ] = $this->get_unique_optins_by_page( $page['page_id'] );
 		}
 
 		if ( ! empty( $con_by_pages ) ) {
 			foreach ( $con_by_pages as $page_id => $optins ) {
 				$unique_optins = array();
-				foreach( $optins as $optin_id ) {
+				foreach ( $optins as $optin_id ) {
 					if ( ! in_array( $optin_id, $unique_optins ) ) {
-						$unique_optins[] = $optin_id;
-						$rate_by_pages[$page_id][] = array(
+						$unique_optins[]             = $optin_id;
+						$rate_by_pages[ $page_id ][] = array(
 							$optin_id => $this->conversion_rate( $optin_id, '0', '0', $page_id ),
 						);
 					}
@@ -948,58 +944,58 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$i = 0;
 
 			foreach ( $rate_by_pages as $page_id => $rate ) {
-				$page_rate = 0;
+				$page_rate   = 0;
 				$rates_count = 0;
 				$optins_data = array();
-				$j = 0;
+				$j           = 0;
 
 				foreach ( $rate as $current_optin ) {
 					foreach ( $current_optin as $optin_id => $current_rate ) {
 						$page_rate = $page_rate + $current_rate;
-						$rates_count++;
+						$rates_count ++;
 
-						$optins_data[$j] = array(
-							'optin_id' => $optin_id,
+						$optins_data[ $j ] = array(
+							'optin_id'   => $optin_id,
 							'optin_rate' => $current_rate,
 						);
 
 					}
-					$j++;
+					$j ++;
 				}
 
-				$average_rate = 0 != $rates_count ? round( $page_rate / $rates_count, 1 ) : 0;
-				$rate_by_pages_unsorted[$i]['page_id'] = $page_id;
-				$rate_by_pages_unsorted[$i]['page_rate'] = $average_rate;
-				$rate_by_pages_unsorted[$i]['optins_data'] = $this->sort_array( $optins_data, 'optin_rate', $order = SORT_DESC );
+				$average_rate                                = 0 != $rates_count ? round( $page_rate / $rates_count, 1 ) : 0;
+				$rate_by_pages_unsorted[ $i ]['page_id']     = $page_id;
+				$rate_by_pages_unsorted[ $i ]['page_rate']   = $average_rate;
+				$rate_by_pages_unsorted[ $i ]['optins_data'] = $this->sort_array( $optins_data, 'optin_rate', $order = SORT_DESC );
 
-				$i++;
+				$i ++;
 			}
 
 			$rate_by_pages_sorted = $this->sort_array( $rate_by_pages_unsorted, 'page_rate', $order = SORT_DESC );
-			$output = '';
+			$output               = '';
 
 			if ( ! empty( $rate_by_pages_sorted ) ) {
-				$options_array = RAD_Rapidology::grad_rapidology_options();
+				$options_array  = RAD_Rapidology::get_rapidology_options();
 				$table_contents = '<ul>';
 
-				for ( $i = 0; $i < 5; $i++ ) {
-					if ( ! empty( $rate_by_pages_sorted[$i] ) ) {
+				for ( $i = 0; $i < 5; $i ++ ) {
+					if ( ! empty( $rate_by_pages_sorted[ $i ] ) ) {
 						$table_contents .= sprintf(
 							'<li class="rad_table_page_row">
 								<div class="rad_dashboard_table_name rad_dashboard_table_column rad_table_page_row">%1$s</div>
 								<div class="rad_dashboard_table_pages_rate rad_dashboard_table_column">%2$s</div>
 								<div style="clear: both;"></div>
 							</li>',
-							-1 == $rate_by_pages_sorted[$i]['page_id']
+							- 1 == $rate_by_pages_sorted[ $i ]['page_id']
 								? __( 'Homepage', 'rapidology' )
-								: esc_html( get_the_title( $rate_by_pages_sorted[$i]['page_id'] ) ),
-							esc_html( $rate_by_pages_sorted[$i]['page_rate'] ) . '%'
+								: esc_html( get_the_title( $rate_by_pages_sorted[ $i ]['page_id'] ) ),
+							esc_html( $rate_by_pages_sorted[ $i ]['page_rate'] ) . '%'
 						);
-						foreach ( $rate_by_pages_sorted[$i]['optins_data'] as $optin_details ) {
-							if ( isset( $options_array[$optin_details['optin_id']]['child_of'] ) && '' !== $options_array[$optin_details['optin_id']]['child_of'] ) {
-								$status = $options_array[$options_array[$optin_details['optin_id']]['child_of']]['optin_status'];
+						foreach ( $rate_by_pages_sorted[ $i ]['optins_data'] as $optin_details ) {
+							if ( isset( $options_array[ $optin_details['optin_id'] ]['child_of'] ) && '' !== $options_array[ $optin_details['optin_id'] ]['child_of'] ) {
+								$status = $options_array[ $options_array[ $optin_details['optin_id'] ]['child_of'] ]['optin_status'];
 							} else {
-								$status = isset( $options_array[$optin_details['optin_id']]['optin_status'] ) ? $options_array[$optin_details['optin_id']]['optin_status'] : 'inactive';
+								$status = isset( $options_array[ $optin_details['optin_id'] ]['optin_status'] ) ? $options_array[ $optin_details['optin_id'] ]['optin_status'] : 'inactive';
 							}
 
 							$table_contents .= sprintf(
@@ -1008,12 +1004,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 									<div class="rad_dashboard_table_pages_rate rad_dashboard_table_column">%2$s</div>
 									<div style="clear: both;"></div>
 								</li>',
-								( isset( $options_array[$optin_details['optin_id']]['optin_name'] ) )
-									? esc_html( $options_array[$optin_details['optin_id']]['optin_name'] )
+								( isset( $options_array[ $optin_details['optin_id'] ]['optin_name'] ) )
+									? esc_html( $options_array[ $optin_details['optin_id'] ]['optin_name'] )
 									: '',
 								esc_html( $optin_details['optin_rate'] ) . '%',
-								( isset( $options_array[$optin_details['optin_id']]['optin_type'] ) )
-									? esc_attr( $options_array[$optin_details['optin_id']]['optin_type'] )
+								( isset( $options_array[ $optin_details['optin_id'] ]['optin_type'] ) )
+									? esc_attr( $options_array[ $optin_details['optin_id'] ]['optin_type'] )
 									: '',
 								esc_attr( $status )
 							);
@@ -1051,9 +1047,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function generate_lists_stats_table( $orderby = 'count', $include_header = false ) {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$optins_count = 0;
-		$output = '';
+		$options_array     = RAD_Rapidology::get_rapidology_options();
+		$optins_count      = 0;
+		$output            = '';
 		$total_subscribers = 0;
 
 		if ( ! empty( $options_array['accounts'] ) ) {
@@ -1092,7 +1088,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 								'growth'  => $list_data['growth_week'],
 							);
 
-							$optins_count++;
+							$optins_count ++;
 						}
 					}
 				}
@@ -1152,7 +1148,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$current_impression = '0' === $imp_data ? $this->stats_count( $optin_id, 'imp', $page_id ) : $imp_data;
 
 		if ( 0 < $current_impression ) {
-			$conversion_rate = 	( $current_conversion * 100 )/$current_impression;
+			$conversion_rate = ( $current_conversion * 100 ) / $current_impression;
 		}
 
 		$conversion_rate_output = round( $conversion_rate, 1 );
@@ -1169,13 +1165,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 		global $wpdb;
 
 		$stats_count = 0;
-		$optin_id = 'all' == $optin_id ? '*' : $optin_id;
+		$optin_id    = 'all' == $optin_id ? '*' : $optin_id;
 
 		$table_name = $wpdb->prefix . 'rad_rapidology_stats';
 
 		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) == $table_name ) {
 			// construct sql query to get all the conversions from db
-			$sql = "SELECT COUNT(*) FROM $table_name WHERE record_type = %s AND optin_id = %s";
+			$sql      = "SELECT COUNT(*) FROM $table_name WHERE record_type = %s AND optin_id = %s";
 			$sql_args = array(
 				sanitize_text_field( $type ),
 				sanitize_text_field( $optin_id )
@@ -1231,24 +1227,25 @@ class RAD_Rapidology extends RAD_Dashboard {
 	function get_unique_optins_by_page( $page_id ) {
 		global $wpdb;
 
-		$all_optins = array();
+		$all_optins       = array();
 		$all_optins_final = array();
 
 		$table_name = $wpdb->prefix . 'rad_rapidology_stats';
 
 		if ( $wpdb->get_var( "SHOW TABLES LIKE '$table_name'" ) == $table_name ) {
 			// construct sql query to get all the conversions from db
-			$sql = "SELECT DISTINCT optin_id FROM $table_name where page_id = %s";
+			$sql      = "SELECT DISTINCT optin_id FROM $table_name where page_id = %s";
 			$sql_args = array( sanitize_text_field( $page_id ) );
 
 			// cache the data from conversions table
 			$all_optins = $wpdb->get_results( $wpdb->prepare( $sql, $sql_args ), ARRAY_A );
 		}
 		if ( ! empty( $all_optins ) ) {
-			foreach( $all_optins as $optin ) {
+			foreach ( $all_optins as $optin ) {
 				$all_optins_final[] = $optin['optin_id'];
 			}
 		}
+
 		return $all_optins_final;
 	}
 
@@ -1259,19 +1256,19 @@ class RAD_Rapidology extends RAD_Dashboard {
 	function calculate_growth_rate( $list_id ) {
 		$list_id = 'all' == $list_id ? '' : $list_id;
 
-		$stats = $this->generate_stats_by_period( 28, 'day', $this->get_conversions(), $list_id );
+		$stats             = $this->generate_stats_by_period( 28, 'day', $this->get_conversions(), $list_id );
 		$total_subscribers = $stats['total_subscribers_28'];
-		$oldest_record = -1;
+		$oldest_record     = - 1;
 
-		for ( $i = 28; $i > 0; $i-- ) {
-			if ( !empty( $stats[$i] ) ) {
-				if ( -1 === $oldest_record ) {
+		for ( $i = 28; $i > 0; $i -- ) {
+			if ( ! empty( $stats[ $i ] ) ) {
+				if ( - 1 === $oldest_record ) {
 					$oldest_record = $i;
 				}
 			}
 		}
 
-		if ( -1 === $oldest_record ) {
+		if ( - 1 === $oldest_record ) {
 			$growth_rate = 0;
 		} else {
 			$weeks_count = round( ( $oldest_record ) / 7, 0 );
@@ -1287,14 +1284,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function calculate_subscribers( $period, $service = '', $account_name = '', $list_id = '' ) {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
+		$options_array     = RAD_Rapidology::get_rapidology_options();
 		$subscribers_count = 0;
 
 		if ( 'all' === $period ) {
-			if ( ! empty( $options_array['accounts']) ) {
+			if ( ! empty( $options_array['accounts'] ) ) {
 				foreach ( $options_array['accounts'] as $service => $accounts ) {
 					foreach ( $accounts as $name => $details ) {
-						foreach( $details['lists'] as $id => $list_details ) {
+						foreach ( $details['lists'] as $id => $list_details ) {
 							if ( ! empty( $list_details['subscribers_count'] ) ) {
 								$subscribers_count += $list_details['subscribers_count'];
 							}
@@ -1327,28 +1324,28 @@ class RAD_Rapidology extends RAD_Dashboard {
 	function generate_stats_by_period( $period, $day_or_month, $input_data, $list_id = '' ) {
 		$subscribers = array();
 
-		$j = 0;
+		$j                 = 0;
 		$count_subscribers = 0;
 
-		for( $i = 1; $i <= $period; $i++ ) {
+		for ( $i = 1; $i <= $period; $i ++ ) {
 			if ( array_key_exists( $j, $input_data ) ) {
 				$count_subtotal = 1;
 
-				while ( array_key_exists( $j, $input_data ) && strtotime( 'now' ) <= strtotime( sprintf( '+ %d %s', $i, 'day' == $day_or_month ? 'days' : 'month' ), strtotime( $input_data[ $j ][ 'record_date' ] ) ) ) {
+				while ( array_key_exists( $j, $input_data ) && strtotime( 'now' ) <= strtotime( sprintf( '+ %d %s', $i, 'day' == $day_or_month ? 'days' : 'month' ), strtotime( $input_data[ $j ]['record_date'] ) ) ) {
 
-					if ( '' === $list_id || ( '' !== $list_id && $list_id === $input_data[$j]['list_id'] ) ) {
-						$subscribers[$i]['subtotal'] = $count_subtotal++;
+					if ( '' === $list_id || ( '' !== $list_id && $list_id === $input_data[ $j ]['list_id'] ) ) {
+						$subscribers[ $i ]['subtotal'] = $count_subtotal ++;
 
-						$count_subscribers++;
+						$count_subscribers ++;
 
-						if ( array_key_exists( $i, $subscribers ) && array_key_exists( $input_data[$j]['list_id'], $subscribers[$i] ) ) {
-							$subscribers[$i][$input_data[$j]['list_id']]['count']++;
+						if ( array_key_exists( $i, $subscribers ) && array_key_exists( $input_data[ $j ]['list_id'], $subscribers[ $i ] ) ) {
+							$subscribers[ $i ][ $input_data[ $j ]['list_id'] ]['count'] ++;
 						} else {
-							$subscribers[$i][$input_data[$j]['list_id']]['count'] = 1;
+							$subscribers[ $i ][ $input_data[ $j ]['list_id'] ]['count'] = 1;
 						}
 					}
 
-					$j++;
+					$j ++;
 				}
 			}
 
@@ -1359,7 +1356,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				}
 			} else {
 				if ( $i == 12 ) {
-					$subscribers[ 'total_subscribers_12' ] = $count_subscribers;
+					$subscribers['total_subscribers_12'] = $count_subscribers;
 				}
 			}
 		}
@@ -1379,17 +1376,17 @@ class RAD_Rapidology extends RAD_Dashboard {
 		);
 		$bars_count = 0;
 
-		for ( $i = 1; $i <= $period ; $i++ ) {
+		for ( $i = 1; $i <= $period; $i ++ ) {
 			$result .= sprintf( '<li%1$s>',
 				$period == $i ? ' class="rad_rapidology_graph_last"' : ''
 			);
 
 			if ( array_key_exists( $i, $data ) ) {
 				$result .= sprintf( '<div value="%1$s" class="rad_rapidology_graph_bar">',
-					esc_attr( $data[$i]['subtotal'] )
+					esc_attr( $data[ $i ]['subtotal'] )
 				);
 
-				$bars_count++;
+				$bars_count ++;
 
 				$result .= '</div>';
 			} else {
@@ -1402,7 +1399,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$result .= '</ul>';
 
 		if ( 0 < $bars_count ) {
-			$per_day = round( $data['total_subscribers_' . $period] / $bars_count, 0 );
+			$per_day = round( $data[ 'total_subscribers_' . $period ] / $bars_count, 0 );
 		} else {
 			$per_day = 0;
 		}
@@ -1414,7 +1411,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 			</div>',
 			sprintf(
 				'%1$s %2$s',
-				esc_html( $data['total_subscribers_' . $period] ),
+				esc_html( $data[ 'total_subscribers_' . $period ] ),
 				esc_html__( 'New Signups', 'rapidology' )
 			),
 			sprintf(
@@ -1434,12 +1431,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Generates the lists stats graph and passes it to jQuery
 	 */
 	function get_stats_graph_ajax() {
-		wp_verify_nonce( $_POST['rapidology_stats_nonce'] , 'rapidology_stats' );
+		wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
 		$list_id = ! empty( $_POST['rapidology_list'] ) ? sanitize_text_field( $_POST['rapidology_list'] ) : '';
-		$period = ! empty( $_POST['rapidology_period'] ) ? sanitize_text_field( $_POST['rapidology_period'] ) : '';
+		$period  = ! empty( $_POST['rapidology_period'] ) ? sanitize_text_field( $_POST['rapidology_period'] ) : '';
 
 		$day_or_month = '30' == $period ? 'day' : 'month';
-		$list_id = 'all' == $list_id ? '' : $list_id;
+		$list_id      = 'all' == $list_id ? '' : $list_id;
 
 		$output = $this->generate_lists_stats_graph( $period, $day_or_month, $list_id );
 
@@ -1450,9 +1447,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Generates the optins stats table and passes it to jQuery
 	 */
 	function refresh_optins_stats_table() {
-		wp_verify_nonce( $_POST['rapidology_stats_nonce'] , 'rapidology_stats' );
+		wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
 		$orderby = ! empty( $_POST['rapidology_orderby'] ) ? sanitize_text_field( $_POST['rapidology_orderby'] ) : '';
-		$table = ! empty( $_POST['rapidology_stats_table'] ) ? sanitize_text_field( $_POST['rapidology_stats_table'] ) : '';
+		$table   = ! empty( $_POST['rapidology_stats_table'] ) ? sanitize_text_field( $_POST['rapidology_stats_table'] ) : '';
 
 		if ( 'optins' === $table ) {
 			$output = $this->generate_optins_stats_table( $orderby );
@@ -1497,7 +1494,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Generates the fields set for new account based on service and passes it to jQuery
 	 */
 	function generate_new_account_fields() {
-		wp_verify_nonce( $_POST['accounts_tab_nonce'] , 'accounts_tab' );
+		wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' );
 		$service = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
 
 		if ( 'empty' == $service ) {
@@ -1525,11 +1522,11 @@ class RAD_Rapidology extends RAD_Dashboard {
 	/**
 	 * Generates the fields set for account editing form based on service and account name and passes it to jQuery
 	 */
-	function generate_edit_account_page(){
-		wp_verify_nonce( $_POST['accounts_tab_nonce'] , 'accounts_tab' );
+	function generate_edit_account_page() {
+		wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' );
 		$edit_account = ! empty( $_POST['rapidology_edit_account'] ) ? sanitize_text_field( $_POST['rapidology_edit_account'] ) : '';
 		$account_name = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
-		$service = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
+		$service      = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
 
 		echo '<div id="rad_dashboard_edit_account_tab">';
 
@@ -1631,9 +1628,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Generates the list of Lists for specific account and passes it to jQuery
 	 */
 	function generate_current_lists() {
-		wp_verify_nonce( $_POST['accounts_tab_nonce'] , 'accounts_tab' );
+		wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' );
 		$service = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
-		$name = ! empty( $_POST['rapidology_upd_name'] ) ? sanitize_text_field( $_POST['rapidology_upd_name'] ) : '';
+		$name    = ! empty( $_POST['rapidology_upd_name'] ) ? sanitize_text_field( $_POST['rapidology_upd_name'] ) : '';
 
 		echo $this->display_currrent_lists( $service, $name );
 
@@ -1645,12 +1642,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function display_currrent_lists( $service = '', $name = '' ) {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$all_lists = array();
-		$name = str_replace( array( '"', "'" ), '', stripslashes( $name ) );
+		$options_array = RAD_Rapidology::get_rapidology_options();
+		$all_lists     = array();
+		$name          = str_replace( array( '"', "'" ), '', stripslashes( $name ) );
 
-		if ( ! empty( $options_array['accounts'][$service][$name]['lists'] ) ) {
-			foreach ( $options_array['accounts'][$service][$name]['lists'] as $id => $list_details ) {
+		if ( ! empty( $options_array['accounts'][ $service ][ $name ]['lists'] ) ) {
+			foreach ( $options_array['accounts'][ $service ][ $name ]['lists'] as $id => $list_details ) {
 				$all_lists[] = $list_details['name'];
 			}
 		}
@@ -1674,15 +1671,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Saves the account data during editing/creating account
 	 */
 	function save_account_tab() {
-		wp_verify_nonce( $_POST['accounts_tab_nonce'] , 'accounts_tab' );
+		wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' );
 		$service = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
-		$name = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
+		$name    = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
 
-		$options_array = RAD_Rapidology::grad_rapidology_options();
+		$options_array = RAD_Rapidology::get_rapidology_options();
 
-		if ( ! isset( $options_array['accounts'][$service][$name] ) ) {
+		if ( ! isset( $options_array['accounts'][ $service ][ $name ] ) ) {
 			$this->update_account( $service, $name, array(
-				'lists' => array(),
+				'lists'         => array(),
 				'is_authorized' => 'false',
 			) );
 		}
@@ -1693,15 +1690,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 	/**
 	 * Generates and displays the table with all accounts for Accounts tab
 	 */
-	function display_accounts_table(){
-		$options_array = RAD_Rapidology::grad_rapidology_options();
+	function display_accounts_table() {
+		$options_array = RAD_Rapidology::get_rapidology_options();
 
 		echo '<div class="rad_dashboard_accounts_content">';
-		if( ! empty( $options_array['accounts'] ) ) {
+		if ( ! empty( $options_array['accounts'] ) ) {
 			foreach ( $options_array['accounts'] as $service => $details ) {
 				if ( ! empty( $details ) ) {
 					$optins_count = 0;
-					$output = '';
+					$output       = '';
 					printf(
 						'<div class="rad_dashboard_row rad_dashboard_accounts_title">
 							<span class="rad_dashboard_service_logo_%1$s"></span>
@@ -1736,7 +1733,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 							esc_html( $account_name )
 						);
 
-						$output .= sprintf(	'
+						$output .= sprintf( '
 								<div class="rad_dashboard_table_actions rad_dashboard_table_column">
 									<span class="rad_dashboard_icon_edit_account rad_optin_buttonoptin_button rad_dashboard_icon" title="%8$s" data-account_name="%1$s" data-service="%2$s"></span>
 									<span class="rad_dashboard_icon_delete rad_optin_button rad_dashboard_icon" title="%4$s"><span class="rad_dashboard_confirmation">%5$s</span></span>
@@ -1801,7 +1798,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 							);
 						}
 
-						$optins_count++;
+						$optins_count ++;
 					}
 
 					echo $output;
@@ -1819,7 +1816,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 */
 	function display_home_tab_tables() {
 
-		$options_array = RAD_Rapidology::grad_rapidology_options();
+		$options_array = RAD_Rapidology::get_rapidology_options();
 
 		echo '<div class="rad_dashboard_home_tab_content">';
 
@@ -1835,7 +1832,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Generates tables of Active and Inactive optins on homepage and passes it to jQuery
 	 */
 	function home_tab_tables() {
-		wp_verify_nonce( $_POST['home_tab_nonce'] , 'home_tab' );
+		wp_verify_nonce( $_POST['home_tab_nonce'], 'home_tab' );
 		$this->display_home_tab_tables();
 		die();
 	}
@@ -1844,7 +1841,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Generates accounts tables and passes it to jQuery
 	 */
 	function reset_accounts_table() {
-		wp_verify_nonce( $_POST['accounts_tab_nonce'] , 'accounts_tab' );
+		wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' );
 		$this->display_accounts_table();
 		die();
 	}
@@ -1853,8 +1850,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Generates optins table for homepage. Can generate table for active or inactive optins
 	 */
 	function generate_optins_list( $options_array = array(), $status = 'active' ) {
-		$optins_count = 0;
-		$output = '';
+		$optins_count      = 0;
+		$output            = '';
 		$total_impressions = 0;
 		$total_conversions = 0;
 		foreach ( $options_array as $optin_id => $value ) {
@@ -1884,12 +1881,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 				if ( ! empty( $value['child_optins'] ) && 'active' == $status ) {
 					$optins_data = array();
 
-					foreach( $value['child_optins'] as $id ) {
+					foreach ( $value['child_optins'] as $id ) {
 						$total_impressions += $impressions = $this->stats_count( $id, 'imp' );
 						$total_conversions += $conversions = $this->stats_count( $id, 'con' );
 
 						$optins_data[] = array(
-							'name'        => $options_array[$id]['optin_name'],
+							'name'        => $options_array[ $id ]['optin_name'],
 							'id'          => $id,
 							'rate'        => $this->conversion_rate( $id, $conversions, $impressions ),
 							'impressions' => $impressions,
@@ -1901,7 +1898,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 					$child_row = '<ul class="rad_dashboard_child_row">';
 
-					foreach( $child_optins_data as $child_details ) {
+					foreach ( $child_optins_data as $child_details ) {
 						$child_row .= sprintf(
 							'<li class="rad_dashboard_optins_item rad_dashboard_child_item" data-optin_id="%1$s">
 								<div class="rad_dashboard_table_name rad_dashboard_table_column">%2$s</div>
@@ -2010,7 +2007,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 						? ' rad_rapidology_no_account'
 						: '' //#16
 				);
-				$optins_count++;
+				$optins_count ++;
 			}
 		}
 
@@ -2065,34 +2062,34 @@ class RAD_Rapidology extends RAD_Dashboard {
 		wp_enqueue_style( 'rad_rapidology-preview-css', RAD_RAPIDOLOGY_PLUGIN_URI . '/css/style.css', array(), $this->plugin_version );
 		wp_enqueue_script( 'rad-rapidology-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/admin.js', array( 'jquery' ), $this->plugin_version, true );
 		wp_localize_script( 'rad-rapidology-js', 'rapidology_settings', array(
-			'rapidology_nonce'          => wp_create_nonce( 'rapidology_nonce' ),
-			'ajaxurl'              => admin_url( 'admin-ajax.php', $this->protocol ),
-			'reset_options'        => wp_create_nonce( 'reset_options' ),
-			'remove_option'        => wp_create_nonce( 'remove_option' ),
-			'duplicate_option'     => wp_create_nonce( 'duplicate_option' ),
-			'home_tab'             => wp_create_nonce( 'home_tab' ),
-			'toggle_status'        => wp_create_nonce( 'toggle_status' ),
-			'optin_type_title'     => __( 'select optin type to begin', 'rapidology' ),
-			'shortcode_text'       => __( 'Shortcode for this optin:', 'rapidology' ),
-			'get_lists'            => wp_create_nonce( 'get_lists' ),
-			'add_account'          => wp_create_nonce( 'add_account' ),
-			'accounts_tab'         => wp_create_nonce( 'accounts_tab' ),
-			'retrieve_lists'       => wp_create_nonce( 'retrieve_lists' ),
-			'ab_test'              => wp_create_nonce( 'ab_test' ),
-			'rapidology_stats'          => wp_create_nonce( 'rapidology_stats_nonce' ),
-			'redirect_url'         => rawurlencode( admin_url( 'admin.php?page=' . $this->_options_pagename, $this->protocol ) ),
-			'authorize_text'       => __( 'Authorize', 'rapidology' ),
-			'reauthorize_text'     => __( 'Re-Authorize', 'rapidology' ),
-			'no_account_name_text' => __( 'Account name is not defined', 'rapidology' ),
-			'ab_test_pause_text'   => __( 'Pause test', 'rapidology' ),
-			'ab_test_start_text'   => __( 'Start test', 'rapidology' ),
-			'rapidology_premade_nonce'  => wp_create_nonce( 'rapidology_premade' ),
-			'preview_nonce'        => wp_create_nonce( 'rapidology_preview' ),
-			'no_account_text'      => __( 'You Have Not Added An Email List. Before your opt-in can be activated, you must first add an account and select an email list. You can save and exit, but the opt-in will remain inactive until an account is added.', 'rapidology' ),
-			'add_account_button'   => __( 'Add An Account', 'rapidology' ),
-			'save_inactive_button' => __( 'Save As Inactive', 'rapidology' ),
-			'cannot_activate_text' => __( 'You Have Not Added An Email List. Before your opt-in can be activated, you must first add an account and select an email list.', 'rapidology' ),
-			'save_settings'        => wp_create_nonce( 'save_settings' ),
+			'rapidology_nonce'         => wp_create_nonce( 'rapidology_nonce' ),
+			'ajaxurl'                  => admin_url( 'admin-ajax.php', $this->protocol ),
+			'reset_options'            => wp_create_nonce( 'reset_options' ),
+			'remove_option'            => wp_create_nonce( 'remove_option' ),
+			'duplicate_option'         => wp_create_nonce( 'duplicate_option' ),
+			'home_tab'                 => wp_create_nonce( 'home_tab' ),
+			'toggle_status'            => wp_create_nonce( 'toggle_status' ),
+			'optin_type_title'         => __( 'select optin type to begin', 'rapidology' ),
+			'shortcode_text'           => __( 'Shortcode for this optin:', 'rapidology' ),
+			'get_lists'                => wp_create_nonce( 'get_lists' ),
+			'add_account'              => wp_create_nonce( 'add_account' ),
+			'accounts_tab'             => wp_create_nonce( 'accounts_tab' ),
+			'retrieve_lists'           => wp_create_nonce( 'retrieve_lists' ),
+			'ab_test'                  => wp_create_nonce( 'ab_test' ),
+			'rapidology_stats'         => wp_create_nonce( 'rapidology_stats_nonce' ),
+			'redirect_url'             => rawurlencode( admin_url( 'admin.php?page=' . $this->_options_pagename, $this->protocol ) ),
+			'authorize_text'           => __( 'Authorize', 'rapidology' ),
+			'reauthorize_text'         => __( 'Re-Authorize', 'rapidology' ),
+			'no_account_name_text'     => __( 'Account name is not defined', 'rapidology' ),
+			'ab_test_pause_text'       => __( 'Pause test', 'rapidology' ),
+			'ab_test_start_text'       => __( 'Start test', 'rapidology' ),
+			'rapidology_premade_nonce' => wp_create_nonce( 'rapidology_premade' ),
+			'preview_nonce'            => wp_create_nonce( 'rapidology_preview' ),
+			'no_account_text'          => __( 'You Have Not Added An Email List. Before your opt-in can be activated, you must first add an account and select an email list. You can save and exit, but the opt-in will remain inactive until an account is added.', 'rapidology' ),
+			'add_account_button'       => __( 'Add An Account', 'rapidology' ),
+			'save_inactive_button'     => __( 'Save As Inactive', 'rapidology' ),
+			'cannot_activate_text'     => __( 'You Have Not Added An Email List. Before your opt-in can be activated, you must first add an account and select an email list.', 'rapidology' ),
+			'save_settings'            => wp_create_nonce( 'save_settings' ),
 		) );
 	}
 
@@ -2102,11 +2099,11 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 */
 	function generate_optin_id( $full_id = true ) {
 
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$form_id = (int) 0;
+		$options_array = RAD_Rapidology::get_rapidology_options();
+		$form_id       = (int) 0;
 
-		if( ! empty( $options_array ) ) {
-			foreach ( $options_array as $key => $value) {
+		if ( ! empty( $options_array ) ) {
+			foreach ( $options_array as $key => $value ) {
 				$keys_array[] = (int) str_replace( 'optin_', '', $key );
 			}
 
@@ -2124,9 +2121,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function rapidology_reset_options_page() {
-		wp_verify_nonce( $_POST['reset_options_nonce'] , 'reset_options' );
+		wp_verify_nonce( $_POST['reset_options_nonce'], 'reset_options' );
 
-		$optin_id = ! empty( $_POST['reset_optin_id'] )
+		$optin_id           = ! empty( $_POST['reset_optin_id'] )
 			? sanitize_text_field( $_POST['reset_optin_id'] )
 			: $this->generate_optin_id();
 		$additional_options = '';
@@ -2141,8 +2138,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function duplicate_optin() {
-		wp_verify_nonce( $_POST['duplicate_option_nonce'] , 'duplicate_option' );
-		$duplicate_optin_id = ! empty( $_POST['duplicate_optin_id'] ) ? sanitize_text_field( $_POST['duplicate_optin_id'] ) : '';
+		wp_verify_nonce( $_POST['duplicate_option_nonce'], 'duplicate_option' );
+		$duplicate_optin_id   = ! empty( $_POST['duplicate_optin_id'] ) ? sanitize_text_field( $_POST['duplicate_optin_id'] ) : '';
 		$duplicate_optin_type = ! empty( $_POST['duplicate_optin_type'] ) ? sanitize_text_field( $_POST['duplicate_optin_type'] ) : '';
 
 		$this->perform_option_duplicate( $duplicate_optin_id, $duplicate_optin_type, false );
@@ -2155,7 +2152,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function add_variant() {
-		wp_verify_nonce( $_POST['duplicate_option_nonce'] , 'duplicate_option' );
+		wp_verify_nonce( $_POST['duplicate_option_nonce'], 'duplicate_option' );
 		$duplicate_optin_id = ! empty( $_POST['duplicate_optin_id'] ) ? sanitize_text_field( $_POST['duplicate_optin_id'] ) : '';
 
 		$variant_id = $this->perform_option_duplicate( $duplicate_optin_id, '', true );
@@ -2168,20 +2165,20 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return void
 	 */
 	function ab_test_actions() {
-		wp_verify_nonce( $_POST['ab_test_nonce'] , 'ab_test' );
-		$parent_id = ! empty( $_POST['parent_id'] ) ? sanitize_text_field( $_POST['parent_id'] ) : '';
-		$action = ! empty( $_POST['test_action'] ) ? sanitize_text_field( $_POST['test_action'] ) : '';
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$update_test_status[$parent_id] = $options_array[$parent_id];
+		wp_verify_nonce( $_POST['ab_test_nonce'], 'ab_test' );
+		$parent_id                        = ! empty( $_POST['parent_id'] ) ? sanitize_text_field( $_POST['parent_id'] ) : '';
+		$action                           = ! empty( $_POST['test_action'] ) ? sanitize_text_field( $_POST['test_action'] ) : '';
+		$options_array                    = RAD_Rapidology::get_rapidology_options();
+		$update_test_status[ $parent_id ] = $options_array[ $parent_id ];
 
-		switch( $action ) {
+		switch ( $action ) {
 			case 'start' :
-				$update_test_status[$parent_id]['test_status'] = 'active';
-				$result = 'ok';
+				$update_test_status[ $parent_id ]['test_status'] = 'active';
+				$result                                          = 'ok';
 				break;
 			case 'pause' :
-				$update_test_status[$parent_id]['test_status'] = 'inactive';
-				$result = 'ok';
+				$update_test_status[ $parent_id ]['test_status'] = 'inactive';
+				$result                                          = 'ok';
 				break;
 
 			case 'end' :
@@ -2199,16 +2196,16 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function generate_end_test_modal( $parent_id ) {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$test_optins = $options_array[$parent_id]['child_optins'];
+		$options_array = RAD_Rapidology::get_rapidology_options();
+		$test_optins   = $options_array[ $parent_id ]['child_optins'];
 		$test_optins[] = $parent_id;
-		$output = '';
+		$output        = '';
 
 		if ( ! empty( $test_optins ) ) {
-			foreach( $test_optins as $id ) {
+			foreach ( $test_optins as $id ) {
 				$optins_data[] = array(
-					'name' => $options_array[$id]['optin_name'],
-					'id' => $id,
+					'name' => $options_array[ $id ]['optin_name'],
+					'id'   => $id,
 					'rate' => $this->conversion_rate( $id ),
 				);
 			}
@@ -2228,7 +2225,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				esc_attr( $parent_id )
 			);
 
-			foreach( $optins_data as $single ) {
+			foreach ( $optins_data as $single ) {
 				$table .= sprintf(
 					'<li class="rad_dashboard_content_row" data-optin_id="%1$s">
 						<div class="rad_dashboard_table_column">%2$s</div>
@@ -2272,34 +2269,34 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return void
 	 */
 	function pick_winner_optin() {
-		wp_verify_nonce( $_POST['remove_option_nonce'] , 'remove_option' );
+		wp_verify_nonce( $_POST['remove_option_nonce'], 'remove_option' );
 
-		$winner_id = ! empty( $_POST['winner_id'] ) ? sanitize_text_field( $_POST['winner_id'] ) : '';
+		$winner_id  = ! empty( $_POST['winner_id'] ) ? sanitize_text_field( $_POST['winner_id'] ) : '';
 		$optins_set = ! empty( $_POST['optins_set'] ) ? sanitize_text_field( $_POST['optins_set'] ) : '';
-		$parent_id = ! empty( $_POST['parent_id'] ) ? sanitize_text_field( $_POST['parent_id'] ) : '';
+		$parent_id  = ! empty( $_POST['parent_id'] ) ? sanitize_text_field( $_POST['parent_id'] ) : '';
 
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$temp_array = $options_array[$winner_id];
+		$options_array = RAD_Rapidology::get_rapidology_options();
+		$temp_array    = $options_array[ $winner_id ];
 
-		$temp_array['test_status'] = 'inactive';
-		$temp_array['child_optins'] = array();
-		$temp_array['child_of'] = '';
-		$temp_array['next_optin'] = '-1';
-		$temp_array['display_on'] = $options_array[$parent_id]['display_on'];
-		$temp_array['post_types'] = $options_array[$parent_id]['post_types'];
-		$temp_array['post_categories'] = $options_array[$parent_id]['post_categories'];
-		$temp_array['pages_exclude'] = $options_array[$parent_id]['pages_exclude'];
-		$temp_array['pages_include'] = $options_array[$parent_id]['pages_include'];
-		$temp_array['posts_exclude'] = $options_array[$parent_id]['posts_exclude'];
-		$temp_array['posts_include'] = $options_array[$parent_id]['posts_include'];
-		$temp_array['email_provider'] = $options_array[$parent_id]['email_provider'];
-		$temp_array['account_name'] = $options_array[$parent_id]['account_name'];
-		$temp_array['email_list'] = $options_array[$parent_id]['email_list'];
-		$temp_array['custom_html'] = $options_array[$parent_id]['custom_html'];
+		$temp_array['test_status']     = 'inactive';
+		$temp_array['child_optins']    = array();
+		$temp_array['child_of']        = '';
+		$temp_array['next_optin']      = '-1';
+		$temp_array['display_on']      = $options_array[ $parent_id ]['display_on'];
+		$temp_array['post_types']      = $options_array[ $parent_id ]['post_types'];
+		$temp_array['post_categories'] = $options_array[ $parent_id ]['post_categories'];
+		$temp_array['pages_exclude']   = $options_array[ $parent_id ]['pages_exclude'];
+		$temp_array['pages_include']   = $options_array[ $parent_id ]['pages_include'];
+		$temp_array['posts_exclude']   = $options_array[ $parent_id ]['posts_exclude'];
+		$temp_array['posts_include']   = $options_array[ $parent_id ]['posts_include'];
+		$temp_array['email_provider']  = $options_array[ $parent_id ]['email_provider'];
+		$temp_array['account_name']    = $options_array[ $parent_id ]['account_name'];
+		$temp_array['email_list']      = $options_array[ $parent_id ]['email_list'];
+		$temp_array['custom_html']     = $options_array[ $parent_id ]['custom_html'];
 
-		$updated_array[$parent_id] = $temp_array;
+		$updated_array[ $parent_id ] = $temp_array;
 
-		if ( $parent_id != $winner_id ){
+		if ( $parent_id != $winner_id ) {
 			$this->update_stats_for_winner( $parent_id, $winner_id );
 		}
 
@@ -2340,31 +2337,31 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 */
 	function perform_option_duplicate( $duplicate_optin_id, $duplicate_optin_type = '', $is_child = false ) {
 		$new_optin_id = $this->generate_optin_id();
-		$suffix = true == $is_child ? '_child' : '_copy';
+		$suffix       = true == $is_child ? '_child' : '_copy';
 
 		if ( '' !== $duplicate_optin_id ) {
-			$options_array = RAD_Rapidology::grad_rapidology_options();
-			$new_option[$new_optin_id] = $options_array[$duplicate_optin_id];
-			$new_option[$new_optin_id]['optin_name'] = $new_option[$new_optin_id]['optin_name'] . $suffix;
-			$new_option[$new_optin_id]['optin_status'] = 'active';
+			$options_array                               = RAD_Rapidology::get_rapidology_options();
+			$new_option[ $new_optin_id ]                 = $options_array[ $duplicate_optin_id ];
+			$new_option[ $new_optin_id ]['optin_name']   = $new_option[ $new_optin_id ]['optin_name'] . $suffix;
+			$new_option[ $new_optin_id ]['optin_status'] = 'active';
 
 			if ( true == $is_child ) {
-				$new_option[$new_optin_id]['child_of'] = $duplicate_optin_id;
-				$updated_optin[$duplicate_optin_id] = $options_array[$duplicate_optin_id];
-				unset( $new_option[$new_optin_id]['child_optins'] );
-				$updated_optin[$duplicate_optin_id]['child_optins'] = isset( $options_array[$duplicate_optin_id]['child_optins'] ) ? array_merge( $options_array[$duplicate_optin_id]['child_optins'], array( $new_optin_id ) ) : array( $new_optin_id );
+				$new_option[ $new_optin_id ]['child_of'] = $duplicate_optin_id;
+				$updated_optin[ $duplicate_optin_id ]    = $options_array[ $duplicate_optin_id ];
+				unset( $new_option[ $new_optin_id ]['child_optins'] );
+				$updated_optin[ $duplicate_optin_id ]['child_optins'] = isset( $options_array[ $duplicate_optin_id ]['child_optins'] ) ? array_merge( $options_array[ $duplicate_optin_id ]['child_optins'], array( $new_optin_id ) ) : array( $new_optin_id );
 				RAD_Rapidology::update_option( $updated_optin );
 			} else {
-				$new_option[$new_optin_id]['optin_type'] = $duplicate_optin_type;
-				unset( $new_option[$new_optin_id]['child_optins'] );
+				$new_option[ $new_optin_id ]['optin_type'] = $duplicate_optin_type;
+				unset( $new_option[ $new_optin_id ]['child_optins'] );
 			}
 
-			if ( 'breakout_edge' === $new_option[$new_optin_id]['edge_style'] && 'pop_up' !== $duplicate_optin_type ) {
-				$new_option[$new_optin_id]['edge_style'] = 'basic_edge';
+			if ( 'breakout_edge' === $new_option[ $new_optin_id ]['edge_style'] && 'pop_up' !== $duplicate_optin_type ) {
+				$new_option[ $new_optin_id ]['edge_style'] = 'basic_edge';
 			}
 
 			if ( ! ( 'flyin' === $duplicate_optin_type || 'pop_up' === $duplicate_optin_type ) ) {
-				unset( $new_option[$new_optin_id]['display_on'] );
+				unset( $new_option[ $new_optin_id ]['display_on'] );
 			}
 
 			RAD_Rapidology::update_option( $new_option );
@@ -2377,12 +2374,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Handles optin/account removal function called via jQuery
 	 */
 	function remove_optin() {
-		wp_verify_nonce( $_POST['remove_option_nonce'] , 'remove_option' );
+		wp_verify_nonce( $_POST['remove_option_nonce'], 'remove_option' );
 
-		$optin_id = ! empty( $_POST['remove_optin_id'] ) ? sanitize_text_field( $_POST['remove_optin_id'] ) : '';
+		$optin_id   = ! empty( $_POST['remove_optin_id'] ) ? sanitize_text_field( $_POST['remove_optin_id'] ) : '';
 		$is_account = ! empty( $_POST['is_account'] ) ? sanitize_text_field( $_POST['is_account'] ) : '';
-		$service = ! empty( $_POST['service'] ) ? sanitize_text_field( $_POST['service'] ) : '';
-		$parent_id = ! empty( $_POST['parent_id'] ) ? sanitize_text_field( $_POST['parent_id'] ) : '';
+		$service    = ! empty( $_POST['service'] ) ? sanitize_text_field( $_POST['service'] ) : '';
+		$parent_id  = ! empty( $_POST['parent_id'] ) ? sanitize_text_field( $_POST['parent_id'] ) : '';
 
 		$this->perform_optin_removal( $optin_id, $is_account, $service, $parent_id );
 
@@ -2394,21 +2391,21 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return void
 	 */
 	function perform_optin_removal( $optin_id, $is_account = false, $service = '', $parent_id = '', $remove_child = true ) {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
+		$options_array = RAD_Rapidology::get_rapidology_options();
 
 		if ( '' !== $optin_id ) {
 			if ( 'true' == $is_account ) {
 				if ( '' !== $service ) {
-					if ( isset( $options_array['accounts'][$service][$optin_id] ) ){
-						unset( $options_array['accounts'][$service][$optin_id] );
+					if ( isset( $options_array['accounts'][ $service ][ $optin_id ] ) ) {
+						unset( $options_array['accounts'][ $service ][ $optin_id ] );
 
 						foreach ( $options_array as $id => $details ) {
 							if ( 'accounts' !== $id ) {
 								if ( $optin_id == $details['account_name'] ) {
-									$options_array[$id]['email_provider'] = 'empty';
-									$options_array[$id]['account_name'] = 'empty';
-									$options_array[$id]['email_list'] = 'empty';
-									$options_array[$id]['optin_status'] = 'inactive';
+									$options_array[ $id ]['email_provider'] = 'empty';
+									$options_array[ $id ]['account_name']   = 'empty';
+									$options_array[ $id ]['email_list']     = 'empty';
+									$options_array[ $id ]['optin_status']   = 'inactive';
 								}
 							}
 						}
@@ -2418,26 +2415,26 @@ class RAD_Rapidology extends RAD_Dashboard {
 				}
 			} else {
 				if ( '' != $parent_id ) {
-					$updated_array[$parent_id] = $options_array[$parent_id];
-					$new_child_optins = array();
+					$updated_array[ $parent_id ] = $options_array[ $parent_id ];
+					$new_child_optins            = array();
 
-					foreach( $updated_array[$parent_id]['child_optins'] as $child ) {
+					foreach ( $updated_array[ $parent_id ]['child_optins'] as $child ) {
 						if ( $child != $optin_id ) {
 							$new_child_optins[] = $child;
 						}
 					}
 
-					$updated_array[$parent_id]['child_optins'] = $new_child_optins;
+					$updated_array[ $parent_id ]['child_optins'] = $new_child_optins;
 
 					// change test status to 'inactive' if there is no child options after removal.
 					if ( empty( $new_child_optins ) ) {
-						$updated_array[$parent_id]['test_status'] = 'inactive';
+						$updated_array[ $parent_id ]['test_status'] = 'inactive';
 					}
 
 					RAD_Rapidology::update_option( $updated_array );
 				} else {
-					if ( ! empty( $options_array[$optin_id]['child_optins'] ) && true == $remove_child ) {
-						foreach( $options_array[$optin_id]['child_optins'] as $single_optin ) {
+					if ( ! empty( $options_array[ $optin_id ]['child_optins'] ) && true == $remove_child ) {
+						foreach ( $options_array[ $optin_id ]['child_optins'] as $single_optin ) {
 							RAD_Rapidology::remove_option( $single_optin );
 							$this->remove_optin_from_db( $single_optin );
 						}
@@ -2475,14 +2472,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return void
 	 */
 	function toggle_optin_status() {
-		wp_verify_nonce( $_POST['toggle_status_nonce'] , 'toggle_status' );
-		$optin_id = ! empty( $_POST['status_optin_id'] ) ? sanitize_text_field( $_POST['status_optin_id'] ) : '';
+		wp_verify_nonce( $_POST['toggle_status_nonce'], 'toggle_status' );
+		$optin_id  = ! empty( $_POST['status_optin_id'] ) ? sanitize_text_field( $_POST['status_optin_id'] ) : '';
 		$toggle_to = ! empty( $_POST['status_new'] ) ? sanitize_text_field( $_POST['status_new'] ) : '';
 
 		if ( '' !== $optin_id ) {
-			$options_array = RAD_Rapidology::grad_rapidology_options();
-			$update_option[$optin_id] = $options_array[$optin_id];
-			$update_option[$optin_id]['optin_status'] = 'active' === $toggle_to ? 'active' : 'inactive';
+			$options_array                              = RAD_Rapidology::get_rapidology_options();
+			$update_option[ $optin_id ]                 = $options_array[ $optin_id ];
+			$update_option[ $optin_id ]['optin_status'] = 'active' === $toggle_to ? 'active' : 'inactive';
 
 			RAD_Rapidology::update_option( $update_option );
 		}
@@ -2495,15 +2492,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return void
 	 */
 	function add_new_account() {
-		wp_verify_nonce( $_POST['add_account_nonce'] , 'add_account' );
-		$service = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
-		$name = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
+		wp_verify_nonce( $_POST['add_account_nonce'], 'add_account' );
+		$service     = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
+		$name        = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
 		$new_account = array();
 
 		if ( '' !== $service && '' !== $name ) {
-			$options_array = RAD_Rapidology::grad_rapidology_options();
-			$new_account['accounts'] = isset( $options_array['accounts'] ) ? $options_array['accounts'] : array();
-			$new_account['accounts'][$service][$name] = array();
+			$options_array                                = RAD_Rapidology::get_rapidology_options();
+			$new_account['accounts']                      = isset( $options_array['accounts'] ) ? $options_array['accounts'] : array();
+			$new_account['accounts'][ $service ][ $name ] = array();
 			RAD_Rapidology::update_option( $new_account );
 		}
 	}
@@ -2514,11 +2511,11 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 */
 	function update_account( $service, $name, $data_array = array() ) {
 		if ( '' !== $service && '' !== $name ) {
-			$name = str_replace( array( '"', "'" ), '', stripslashes( $name ) );
-			$options_array = RAD_Rapidology::grad_rapidology_options();
-			$new_account['accounts'] = isset( $options_array['accounts'] ) ? $options_array['accounts'] : array();
-			$new_account['accounts'][$service][$name] = isset( $new_account['accounts'][$service][$name] )
-				? array_merge( $new_account['accounts'][$service][$name], $data_array )
+			$name                                         = str_replace( array( '"', "'" ), '', stripslashes( $name ) );
+			$options_array                                = RAD_Rapidology::get_rapidology_options();
+			$new_account['accounts']                      = isset( $options_array['accounts'] ) ? $options_array['accounts'] : array();
+			$new_account['accounts'][ $service ][ $name ] = isset( $new_account['accounts'][ $service ][ $name ] )
+				? array_merge( $new_account['accounts'][ $service ][ $name ], $data_array )
 				: $data_array;
 
 			RAD_Rapidology::update_option( $new_account );
@@ -2530,7 +2527,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * In case of errors adds record to WP log
 	 */
 	function perform_auto_refresh() {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
+		$options_array = RAD_Rapidology::get_rapidology_options();
 		if ( isset( $options_array['accounts'] ) ) {
 			foreach ( $options_array['accounts'] as $service => $account ) {
 				foreach ( $account as $name => $details ) {
@@ -2605,32 +2602,31 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function authorize_account() {
-
-		wp_verify_nonce( $_POST['get_lists_nonce'] , 'get_lists' );
-		$service = ! empty( $_POST['rapidology_upd_service'] ) ? sanitize_text_field( $_POST['rapidology_upd_service'] ) : '';
-		$name = ! empty( $_POST['rapidology_upd_name'] ) ? sanitize_text_field( $_POST['rapidology_upd_name'] ) : '';
+		wp_verify_nonce( $_POST['get_lists_nonce'], 'get_lists' );
+		$service         = ! empty( $_POST['rapidology_upd_service'] ) ? sanitize_text_field( $_POST['rapidology_upd_service'] ) : '';
+		$name            = ! empty( $_POST['rapidology_upd_name'] ) ? sanitize_text_field( $_POST['rapidology_upd_name'] ) : '';
 		$update_existing = ! empty( $_POST['rapidology_account_exists'] ) ? sanitize_text_field( $_POST['rapidology_account_exists'] ) : '';
 
 		if ( 'true' == $update_existing ) {
-			$options_array = RAD_Rapidology::grad_rapidology_options();
+			$options_array = RAD_Rapidology::get_rapidology_options();
 			$accounts_data = $options_array['accounts'];
 
-			$api_key = ! empty( $accounts_data[$service][$name]['api_key'] ) ? $accounts_data[$service][$name]['api_key'] : '';
-			$token = ! empty( $accounts_data[$service][$name]['token'] ) ? $accounts_data[$service][$name]['token'] : '';
-			$app_id = ! empty( $accounts_data[$service][$name]['client_id'] ) ? $accounts_data[$service][$name]['client_id'] : '';
-			$username = ! empty( $accounts_data[$service][$name]['username'] ) ? $accounts_data[$service][$name]['username'] : '';
-			$password = ! empty( $accounts_data[$service][$name]['password'] ) ? $accounts_data[$service][$name]['password'] : '';
-			$account_id = ! empty( $accounts_data[$service][$name]['username'] ) ? $accounts_data[$service][$name]['username'] : '';
-			$public_key = ! empty( $accounts_data[$service][$name]['api_key'] ) ? $accounts_data[$service][$name]['api_key'] : '';
-			$private_key = ! empty( $accounts_data[$service][$name]['client_id'] ) ? $accounts_data[$service][$name]['client_id'] : '';
+			$api_key     = ! empty( $accounts_data[ $service ][ $name ]['api_key'] ) ? $accounts_data[ $service ][ $name ]['api_key'] : '';
+			$token       = ! empty( $accounts_data[ $service ][ $name ]['token'] ) ? $accounts_data[ $service ][ $name ]['token'] : '';
+			$app_id      = ! empty( $accounts_data[ $service ][ $name ]['client_id'] ) ? $accounts_data[ $service ][ $name ]['client_id'] : '';
+			$username    = ! empty( $accounts_data[ $service ][ $name ]['username'] ) ? $accounts_data[ $service ][ $name ]['username'] : '';
+			$password    = ! empty( $accounts_data[ $service ][ $name ]['password'] ) ? $accounts_data[ $service ][ $name ]['password'] : '';
+			$account_id  = ! empty( $accounts_data[ $service ][ $name ]['username'] ) ? $accounts_data[ $service ][ $name ]['username'] : '';
+			$public_key  = ! empty( $accounts_data[ $service ][ $name ]['api_key'] ) ? $accounts_data[ $service ][ $name ]['api_key'] : '';
+			$private_key = ! empty( $accounts_data[ $service ][ $name ]['client_id'] ) ? $accounts_data[$service][$name]['client_id'] : '';
 		} else {
-			$api_key = ! empty( $_POST['rapidology_api_key'] ) ? sanitize_text_field( $_POST['rapidology_api_key'] ) : '';
-			$token = ! empty( $_POST['rapidology_constant_token'] ) ? sanitize_text_field( $_POST['rapidology_constant_token'] ) : '';
-			$app_id = ! empty( $_POST['rapidology_client_id'] ) ? sanitize_text_field( $_POST['rapidology_client_id'] ) : '';
-			$username = ! empty( $_POST['rapidology_username'] ) ? sanitize_text_field( $_POST['rapidology_username'] ) : '';
-			$password = ! empty( $_POST['rapidology_password'] ) ? sanitize_text_field( $_POST['rapidology_password'] ) : '';
-			$account_id = ! empty( $_POST['rapidology_username'] ) ? sanitize_text_field( $_POST['rapidology_username'] ) : '';
-			$public_key = ! empty( $_POST['rapidology_api_key'] ) ? sanitize_text_field( $_POST['rapidology_api_key'] ) : '';
+			$api_key     = ! empty( $_POST['rapidology_api_key'] ) ? sanitize_text_field( $_POST['rapidology_api_key'] ) : '';
+			$token       = ! empty( $_POST['rapidology_constant_token'] ) ? sanitize_text_field( $_POST['rapidology_constant_token'] ) : '';
+			$app_id      = ! empty( $_POST['rapidology_client_id'] ) ? sanitize_text_field( $_POST['rapidology_client_id'] ) : '';
+			$username    = ! empty( $_POST['rapidology_username'] ) ? sanitize_text_field( $_POST['rapidology_username'] ) : '';
+			$password    = ! empty( $_POST['rapidology_password'] ) ? sanitize_text_field( $_POST['rapidology_password'] ) : '';
+			$account_id  = ! empty( $_POST['rapidology_username'] ) ? sanitize_text_field( $_POST['rapidology_username'] ) : '';
+			$public_key  = ! empty( $_POST['rapidology_api_key'] ) ? sanitize_text_field( $_POST['rapidology_api_key'] ) : '';
 			$private_key = ! empty( $_POST['rapidology_client_id'] ) ? sanitize_text_field( $_POST['rapidology_client_id'] ) : '';
 
 		}
@@ -2686,10 +2682,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$error_message = $this->get_infusionsoft_lists( $app_id, $api_key, $name );
 				break;
 			case 'emma' :
-				$error_message = $this->get_emma_groups($public_key, $private_key, $account_id, $name);
+				$error_message = $this->get_emma_groups( $public_key, $private_key, $account_id, $name );
 				break;
 			case 'hubspot' :
-				$error_message = $this->get_hubspot_lists($api_key, $name);
+				$error_message = $this->get_hubspot_lists( $api_key, $name );
 				break;
 
 
@@ -2706,62 +2702,62 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Handles subscribe action and sends the success or error message to jQuery.
 	 */
 	function subscribe() {
-		wp_verify_nonce( $_POST['subscribe_nonce'] , 'subscribe' );
+		wp_verify_nonce( $_POST['subscribe_nonce'], 'subscribe' );
 
-		$subscribe_data_json = str_replace( '\\', '' ,  $_POST[ 'subscribe_data_array' ] );
+		$subscribe_data_json  = str_replace( '\\', '', $_POST['subscribe_data_array'] );
 		$subscribe_data_array = json_decode( $subscribe_data_json, true );
 
-		$service = sanitize_text_field( $subscribe_data_array['service'] );
+		$service      = sanitize_text_field( $subscribe_data_array['service'] );
 		$account_name = sanitize_text_field( $subscribe_data_array['account_name'] );
-		$name = isset( $subscribe_data_array['name'] ) ? sanitize_text_field( $subscribe_data_array['name'] ) : '';
-		$last_name = isset( $subscribe_data_array['last_name'] ) ? sanitize_text_field( $subscribe_data_array['last_name'] ) : '';
-		$email = sanitize_email( $subscribe_data_array['email'] );
-		$list_id = sanitize_text_field( $subscribe_data_array['list_id'] );
-		$page_id = sanitize_text_field( $subscribe_data_array['page_id'] );
-		$optin_id = sanitize_text_field( $subscribe_data_array['optin_id'] );
-		$result = '';
+		$name         = isset( $subscribe_data_array['name'] ) ? sanitize_text_field( $subscribe_data_array['name'] ) : '';
+		$last_name    = isset( $subscribe_data_array['last_name'] ) ? sanitize_text_field( $subscribe_data_array['last_name'] ) : '';
+		$email        = sanitize_email( $subscribe_data_array['email'] );
+		$list_id      = sanitize_text_field( $subscribe_data_array['list_id'] );
+		$page_id      = sanitize_text_field( $subscribe_data_array['page_id'] );
+		$optin_id     = sanitize_text_field( $subscribe_data_array['optin_id'] );
+		$result       = '';
 
 		if ( is_email( $email ) ) {
-			$options_array = RAD_Rapidology::grad_rapidology_options();
+			$options_array = RAD_Rapidology::get_rapidology_options();
 
 			switch ( $service ) {
 				case 'mailchimp' :
-					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
+					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$error_message = $this->subscribe_mailchimp( $api_key, $list_id, $email, $name, $last_name );
 					break;
 				case 'hubspot' :
-					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
-					$error_message = $this->hubspot_subscribe($api_key, $email, $list_id);
+					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
+					$error_message = $this->hubspot_subscribe( $api_key, $email, $list_id );
 					break;
 
 				case 'constant_contact' :
-					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
-					$token = $options_array['accounts'][$service][$account_name]['token'];
+					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
+					$token         = $options_array['accounts'][ $service ][ $account_name ]['token'];
 					$error_message = $this->subscribe_constant_contact( $email, $api_key, $token, $list_id, $name, $last_name );
 					break;
 
 				case 'madmimi' :
-					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
-					$username = $options_array['accounts'][$service][$account_name]['username'];
+					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
+					$username      = $options_array['accounts'][ $service ][ $account_name ]['username'];
 					$error_message = $this->subscribe_madmimi( $username, $api_key, $list_id, $email, $name, $last_name );
 					break;
 
 				case 'icontact' :
-					$app_id = $options_array['accounts'][$service][$account_name]['client_id'];
-					$username = $options_array['accounts'][$service][$account_name]['username'];
-					$password = $options_array['accounts'][$service][$account_name]['password'];
-					$folder_id = $options_array['accounts'][$service][$account_name]['lists'][$list_id]['folder_id'];
-					$account_id = $options_array['accounts'][$service][$account_name]['lists'][$list_id]['account_id'];
+					$app_id        = $options_array['accounts'][ $service ][ $account_name ]['client_id'];
+					$username      = $options_array['accounts'][ $service ][ $account_name ]['username'];
+					$password      = $options_array['accounts'][ $service ][ $account_name ]['password'];
+					$folder_id     = $options_array['accounts'][ $service ][ $account_name ]['lists'][ $list_id ]['folder_id'];
+					$account_id    = $options_array['accounts'][ $service ][ $account_name ]['lists'][ $list_id ]['account_id'];
 					$error_message = $this->subscribe_icontact( $app_id, $username, $password, $folder_id, $account_id, $list_id, $email, $name, $last_name );
 					break;
 
 				case 'getresponse' :
-					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
+					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$error_message = $this->subscribe_get_response( $list_id, $email, $api_key, $name );
 					break;
 
 				case 'sendinblue' :
-					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
+					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$error_message = $this->subscribe_sendinblue( $api_key, $email, $list_id, $name, $last_name );
 					break;
 
@@ -2774,32 +2770,32 @@ class RAD_Rapidology extends RAD_Dashboard {
 					break;
 
 				case 'campaign_monitor' :
-					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
+					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$error_message = $this->subscribe_campaign_monitor( $api_key, $email, $list_id, $name );
 					break;
 
 				case 'ontraport' :
-					$app_id = $options_array['accounts'][$service][$account_name]['client_id'];
-					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
+					$app_id        = $options_array['accounts'][ $service ][ $account_name ]['client_id'];
+					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$error_message = $this->subscribe_ontraport( $app_id, $api_key, $name, $email, $list_id, $last_name );
 					break;
 
 				case 'feedblitz' :
-					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
+					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$error_message = $this->subscribe_feedblitz( $api_key, $list_id, $name, $email, $last_name );
 					break;
 
 				case 'infusionsoft' :
-					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
-					$app_id = $options_array['accounts'][$service][$account_name]['client_id'];
+					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
+					$app_id        = $options_array['accounts'][ $service ][ $account_name ]['client_id'];
 					$error_message = $this->subscribe_infusionsoft( $api_key, $app_id, $list_id, $email, $name, $last_name );
 					break;
 
 				case 'emma' :
-					$public_key = $options_array['accounts'][$service][$account_name]['api_key'];
-					$private_key = $options_array['accounts'][$service][$account_name]['client_id'];
-					$account_id = $options_array['accounts'][$service][$account_name]['username'];
-					$error_message = $this->emma_member_subscribe($public_key, $private_key, $account_id, $email, $list_id, $name);
+					$public_key    = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
+					$private_key   = $options_array['accounts'][ $service ][ $account_name ]['client_id'];
+					$account_id    = $options_array['accounts'][ $service ][ $account_name ]['username'];
+					$error_message = $this->emma_member_subscribe( $public_key, $private_key, $account_id, $email, $list_id, $name );
 
 					break;
 			}
@@ -2836,35 +2832,41 @@ class RAD_Rapidology extends RAD_Dashboard {
 		try {
 			$infusion_app = new iSDK();
 			$infusion_app->cfgCon( $app_id, $api_key, 'throw' );
-		} catch( iSDKException $e ){
+		} catch ( iSDKException $e ) {
 			$error_message = $e->getMessage();
 		}
 
 		if ( empty( $error_message ) ) {
 			$need_request = true;
-			$page = 0;
-			$all_lists = array();
+			$page         = 0;
+			$all_lists    = array();
 
 			while ( true == $need_request ) {
 				$error_message = 'success';
-				$lists_data = $infusion_app->dsQuery( 'ContactGroup', 1000, $page, array( 'Id' => '%' ), array( 'Id', 'GroupName' ) );
-				$all_lists = array_merge( $all_lists, $lists_data );
+				$lists_data = $infusion_app->dsQuery(
+					'ContactGroup',
+					1000,
+					$page,
+					array( 'Id' => '%' ),
+					array( 'Id', 'GroupName' )
+				);
+				$all_lists     = array_merge( $all_lists, $lists_data );
 
 				if ( 1000 > count( $lists_data ) ) {
 					$need_request = false;
 				} else {
-					$page++;
+					$page ++;
 				}
 			}
 		}
 
 		if ( ! empty( $all_lists ) ) {
-			foreach( $all_lists as $list ) {
-				$group_query = '%' . $list['Id'] . '%';
-				$subscribers_count = $infusion_app->dsCount( 'Contact', array( 'Groups' => $group_query ) );
-				$lists[$list['Id']]['name'] = sanitize_text_field( $list['GroupName'] );
-				$lists[$list['Id']]['subscribers_count'] = sanitize_text_field( $subscribers_count );
-				$lists[$list['Id']]['growth_week'] = sanitize_text_field( $this->calculate_growth_rate( 'infusionsoft_' . $list['Id'] ) );
+			foreach ( $all_lists as $list ) {
+				$group_query                               = '%' . $list['Id'] . '%';
+				$subscribers_count                         = $infusion_app->dsCount( 'Contact', array( 'Groups' => $group_query ) );
+				$lists[ $list['Id'] ]['name']              = sanitize_text_field( $list['GroupName'] );
+				$lists[ $list['Id'] ]['subscribers_count'] = sanitize_text_field( $subscribers_count );
+				$lists[ $list['Id'] ]['growth_week']       = sanitize_text_field( $this->calculate_growth_rate( 'infusionsoft_' . $list['Id'] ) );
 			}
 
 			$this->update_account( 'infusionsoft', sanitize_text_field( $name ), array(
@@ -2894,7 +2896,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		try {
 			$infusion_app = new iSDK();
 			$infusion_app->cfgCon( $app_id, $api_key, 'throw' );
-		} catch( iSDKException $e ){
+		} catch ( iSDKException $e ) {
 			$error_message = $e->getMessage();
 		}
 
@@ -2946,9 +2948,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 				if ( ! empty( $retval['data'] ) ) {
 					foreach ( $retval['data'] as $list ) {
-						$lists[$list['id']]['name'] = sanitize_text_field( $list['name'] );
-						$lists[$list['id']]['subscribers_count'] = sanitize_text_field( $list['stats']['member_count'] );
-						$lists[$list['id']]['growth_week'] = sanitize_text_field( $this->calculate_growth_rate( 'mailchimp_' . $list['id'] ) );
+						$lists[ $list['id'] ]['name']              = sanitize_text_field( $list['name'] );
+						$lists[ $list['id'] ]['subscribers_count'] = sanitize_text_field( $list['stats']['member_count'] );
+						$lists[ $list['id'] ]['growth_week']       = sanitize_text_field( $this->calculate_growth_rate( 'mailchimp_' . $list['id'] ) );
 					}
 				}
 				$this->update_account( 'mailchimp', sanitize_text_field( $name ), array(
@@ -2959,7 +2961,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 			} else {
 				if ( ! empty( $retval['errors'] ) ) {
 					$errors = '';
-					foreach( $retval['errors'] as $error ) {
+					foreach ( $retval['errors'] as $error ) {
 						$errors .= $error . ' ';
 					}
 					$error_message = $errors;
@@ -3004,11 +3006,11 @@ class RAD_Rapidology extends RAD_Dashboard {
 			'LNAME' => $last_name,
 		);
 
-		$retval =  $mailchimp->call( 'lists/subscribe', array(
+		$retval = $mailchimp->call( 'lists/subscribe', array(
 			'id'         => $list_id,
 			'email'      => $email,
 			'merge_vars' => $merge_vars,
-		));
+		) );
 
 		if ( isset( $retval['error'] ) ) {
 			if ( '214' == $retval['code'] ) {
@@ -3028,7 +3030,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function get_constant_contact_lists( $api_key, $token, $name ) {
-		$lists = array();
+		$lists         = array();
+		$error_message = '';
 
 		$request_url = esc_url_raw( 'https://api.constantcontact.com/v2/lists?api_key=' . $api_key );
 
@@ -3039,7 +3042,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		$response_code = wp_remote_retrieve_response_code( $theme_request );
 
-		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ){
+		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
 			$theme_response = wp_remote_retrieve_body( $theme_request );
 			if ( ! empty( $theme_response ) ) {
 				$error_message = 'success';
@@ -3048,9 +3051,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 				foreach ( $response as $key => $value ) {
 					if ( isset( $value['id'] ) ) {
-						$lists[$value['id']]['name'] = sanitize_text_field( $value['name'] );
-						$lists[$value['id']]['subscribers_count'] = sanitize_text_field( $value['contact_count'] );
-						$lists[$value['id']]['growth_week'] = sanitize_text_field( $this->calculate_growth_rate( 'constant_contact_' . $value['id'] ) );
+						$lists[ $value['id'] ]['name']              = sanitize_text_field( $value['name'] );
+						$lists[ $value['id'] ]['subscribers_count'] = sanitize_text_field( $value['contact_count'] );
+						$lists[ $value['id'] ]['growth_week']       = sanitize_text_field( $this->calculate_growth_rate( 'constant_contact_' . $value['id'] ) );
 					}
 				}
 
@@ -3064,23 +3067,11 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$error_message .= __( 'empty response', 'rapidology' );
 			}
 		} else {
-			if ( is_wp_error( $theme_request ) ) {
-				$error_message = $theme_request->get_error_message();
-			} else {
-				switch ( $response_code ) {
-					case '401' :
-						$error_message = __( 'Invalid Token', 'rapidology' );
-						break;
-
-					case '403' :
-						$error_message = __( 'Invalid API key', 'rapidology' );
-						break;
-
-					default :
-						$error_message = $response_code;
-						break;
-				}
-			}
+			$error_map     = array(
+				"401" => 'Invalid Token',
+				"403" => 'Invalid API key'
+			);
+			$error_message = $this->get_error_message( $theme_request, $response_code, $error_map );
 		}
 
 		return $error_message;
@@ -3091,7 +3082,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function subscribe_constant_contact( $email, $api_key, $token, $list_id, $name = '', $last_name = '' ) {
-		$request_url = esc_url_raw( 'https://api.constantcontact.com/v2/contacts?email=' . $email . '&api_key=' . $api_key );
+		$request_url   = esc_url_raw( 'https://api.constantcontact.com/v2/contacts?email=' . $email . '&api_key=' . $api_key );
 		$error_message = '';
 
 		$theme_request = wp_remote_get( $request_url, array(
@@ -3100,120 +3091,100 @@ class RAD_Rapidology extends RAD_Dashboard {
 		) );
 		$response_code = wp_remote_retrieve_response_code( $theme_request );
 
-		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ){
+		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
 			$theme_response = wp_remote_retrieve_body( $theme_request );
-			$response = json_decode( $theme_response, true );
+			$response       = json_decode( $theme_response, true );
 
 			if ( empty( $response['results'] ) ) {
-				$request_url = esc_url_raw( 'https://api.constantcontact.com/v2/contacts?api_key=' . $api_key );
-				$body_request = '{"email_addresses":[{"email_address": "' . $email . '" }], "lists":[{"id": "' . $list_id . '"}], "first_name": "' . $name . '", "last_name" : "' . $last_name .'" }';
+				$request_url   = esc_url_raw( 'https://api.constantcontact.com/v2/contacts?api_key=' . $api_key );
+				$body_request  = '{"email_addresses":[{"email_address": "' . $email . '" }], "lists":[{"id": "' . $list_id . '"}], "first_name": "' . $name . '", "last_name" : "' . $last_name . '" }';
 				$theme_request = wp_remote_post( $request_url, array(
 					'timeout' => 30,
 					'headers' => array(
 						'Authorization' => 'Bearer ' . $token,
-						'content-type' => 'application/json',
+						'content-type'  => 'application/json',
 					),
-					'body' => $body_request,
+					'body'    => $body_request,
 				) );
 				$response_code = wp_remote_retrieve_response_code( $theme_request );
 				if ( ! is_wp_error( $theme_request ) && $response_code == 201 ) {
 					$error_message = 'success';
 				} else {
-					if ( is_wp_error( $theme_request ) ) {
-						$error_message = $theme_request->get_error_message();
-					} else {
-						switch ( $response_code ) {
-							case '409' :
-								$error_message = __( 'Already subscribed', 'rapidology' );
-								break;
-
-							default :
-								$error_message = $response_code;
-								break;
-						}
-					}
+					$error_map     = array(
+						"409" => 'Already subscribed'
+					);
+					$error_message = $this->get_error_message( $theme_request, $response_code, $error_map );
 				}
 			} else {
 				$error_message = __( 'Already subscribed', 'rapidology' );
 			}
 		} else {
-			if ( is_wp_error( $theme_request ) ) {
-				$error_message = $theme_request->get_error_message();
-			} else {
-				switch ( $response_code ) {
-					case '401' :
-						$error_message = __( 'Invalid Token', 'rapidology' );
-						break;
-
-					case '403' :
-						$error_message = __( 'Invalid API key', 'rapidology' );
-						break;
-
-					default :
-						$error_message = $response_code;
-						break;
-				}
-			}
+			$error_map     = array(
+				"401" => 'Invalid Token',
+				"403" => 'Invalid API key'
+			);
+			$error_message = $this->get_error_message( $theme_request, $response_code, $error_map );
 		}
 
 		return $error_message;
 	}
 
 
-
-
-	function get_emma_groups($public_key, $private_key, $account_id, $name){
-		if(!class_exists('Emma_Rapidology')){
+	function get_emma_groups( $public_key, $private_key, $account_id, $name ) {
+		if ( ! class_exists( 'Emma_Rapidology' ) ) {
 			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/emma/Emma.php' );
 		}
 
-		$emma = new Emma_Rapidology($account_id, $public_key, $private_key, false); //true set for debug
+		$emma = new Emma_Rapidology( $account_id, $public_key, $private_key, false ); //true set for debug
 		try {
 			$error_message = 'success';
-			$response = $emma->myGroups();
-			$response = json_decode($response);
+			$response      = $emma->myGroups();
+			$response      = json_decode( $response );
 
 			$all_lists = array();
-			foreach ($response as $obj){
-				$all_lists[$obj->member_group_id]['name'] = $obj->group_name;
-				$all_lists[$obj->member_group_id]['subscribers_count'] = sanitize_text_field($obj->active_count);
-				$all_lists[$obj->member_group_id]['growth_week'] = sanitize_text_field( $this->calculate_growth_rate( 'emma_' . $obj->account_id ) );
+			foreach ( $response as $obj ) {
+				$all_lists[ $obj->member_group_id ]['name']              = $obj->group_name;
+				$all_lists[ $obj->member_group_id ]['subscribers_count'] = sanitize_text_field( $obj->active_count );
+				$all_lists[ $obj->member_group_id ]['growth_week']       = sanitize_text_field( $this->calculate_growth_rate( 'campaign_monitor_' . $obj->account_id ) );
 			}
 			$this->update_account( 'emma', sanitize_text_field( $name ), array(
 				'api_key'       => sanitize_text_field( $public_key ),
-				'client_id'       => sanitize_text_field( $private_key ),
-				'username'       => sanitize_text_field( $account_id),
+				'client_id'     => sanitize_text_field( $private_key ),
+				'username'      => sanitize_text_field( $account_id ),
 				'lists'         => $all_lists,
 				'is_authorized' => 'true',
 			) );
+
 			return $error_message;
-		}catch(exception $e){
+		} catch ( exception $e ) {
 			$error_message = $e;
+
 			return $error_message;
 		}
-
 
 
 	}
 
-	function emma_member_subscribe($public_key, $private_key, $account_id, $email, $list_id){
-		if(!class_exists('Emma_Rapidology')){
+	function emma_member_subscribe( $public_key, $private_key, $account_id, $email, $list_id ) {
+		if ( ! class_exists( 'Emma_Rapidology' ) ) {
 			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/emma/Emma.php' );
 		}
 		//TODO add some checking into see if they are already part of the group they are opting into skilled because it adds extra seemingly unneed processing
-		$emma = new Emma_Rapidology($account_id, $public_key, $private_key, false); //true set for debug
+		$emma = new Emma_Rapidology( $account_id, $public_key, $private_key, false ); //true set for debug
 		//arguments to pass to send to emma to sign up user
-		$args=array(
-			'email' => $email,
+		$args = array(
+			'email'     => $email,
 			'group_ids' => array(
 				$list_id
 			)
 		);
 		try {
-			$emma->membersAddSingle($args);
+			$emma->membersAddSingle( $args );
+
 			return $error_message = "success";
-		}catch(exception $e){
+		} catch ( exception $e ) {
 			$error_message = $e;
+
 			return $error_message;
 		}
 
@@ -3223,12 +3194,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Retrieves the lists via HubSpot API and updates the data in DB.
 	 * @return string
 	 */
-	function get_hubspot_lists($api_key, $name){
+	function get_hubspot_lists( $api_key, $name ) {
 
-		if(!class_exists('HubSpot_Lists_Rapidology')) {
-			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.lists.php');
+		if ( ! class_exists( 'HubSpot_Lists_Rapidology' ) ) {
+			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.lists.php' );
 		}
-		$lists = new HubSpot_Lists_Rapidology($api_key);
+		$lists = new HubSpot_Lists_Rapidology( $api_key );
 		try {
 
 			$some_lists = $lists->get_static_lists(array('offset'=>0));
@@ -3237,71 +3208,71 @@ class RAD_Rapidology extends RAD_Dashboard {
 				if (!preg_match("/^(Workflow:)/i", $list->name, $matchs)) { //weed out workflows
 					$list_array[$list->listId]['name'] = $list->name;
 					$list_array[$list->listId]['subscribers_count'] = $list->metaData->size;
-					$list_array[$list->listId]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('hubspot_' . $list->listId));
+					$list_array[$list->listId]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('campaign_monitor_' . $list->listId));
 
 				}
 			}
 
-
-			$this->update_account('hubspot', sanitize_text_field($name), array(
-				'api_key' => sanitize_text_field($api_key),
-				'lists' => $list_array,
+			$this->update_account( 'hubspot', sanitize_text_field( $name ), array(
+				'api_key'       => sanitize_text_field( $api_key ),
+				'lists'         => $list_array,
 				'is_authorized' => 'true',
 			));
 			$error_message = 'success';
 			return $error_message;
 
-		} catch (exception $e) {
+		} catch ( exception $e ) {
 			$error_message = $e;
+
 			return $error_message;
 		}
 
 	}
 
 
-
-	function hubspot_subscribe($api_key, $email, $list_id){
-		if(!class_exists('HubSpot_Lists_Rapidology')) {
-			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.lists.php');
+	function hubspot_subscribe( $api_key, $email, $list_id ) {
+		if ( ! class_exists( 'HubSpot_Lists_Rapidology' ) ) {
+			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.lists.php' );
 		}
-		if(!class_exists('HubSpot_Contacts_Rapidology')){
-			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.contacts.php');
+		if ( ! class_exists( 'HubSpot_Contacts_Rapidology' ) ) {
+			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.contacts.php' );
 		}
-		$contacts = new HubSpot_Contacts_Rapidology($api_key);
-		$lists = new HubSpot_Lists_Rapidology($api_key);
+		$contacts = new HubSpot_Contacts_Rapidology( $api_key );
+		$lists    = new HubSpot_Lists_Rapidology( $api_key );
 
 
 		//see if contact exists
 		$contact_exists = false;
-		$contact_id = '';
-		$error_message = '';
+		$contact_id     = '';
+		$error_message  = '';
 
-		$contactByEmail = $contacts->get_contact_by_email($email);
+		$contactByEmail = $contacts->get_contact_by_email( $email );
 
-		if(!empty($contactByEmail) && isset($contactByEmail->vid)){
+		if ( ! empty( $contactByEmail ) && isset( $contactByEmail->vid ) ) {
 			$contact_exists = true;
-			$contact_id = $contactByEmail->vid;
+			$contact_id     = $contactByEmail->vid;
 		}
 
 		//add contact
-		if($contact_exists == false){
-			$args =  array('email' => $email, 'firstname' => '' );
-			$new_contact = $contacts->create_contact($args);
-			$contact_id = $new_contact->vid;
+		if ( $contact_exists == false ) {
+			$args        = array( 'email' => $email, 'firstname' => '' );
+			$new_contact = $contacts->create_contact( $args );
+			$contact_id  = $new_contact->vid;
 		}
 
 		//add contact to list
 
-		$contacts_to_add = array($contact_id);
+		$contacts_to_add = array( $contact_id );
 
-		$added_contacts = $lists->add_contacts_to_list($contacts_to_add,$list_id);
-		$response = json_decode($added_contacts);
+		$added_contacts = $lists->add_contacts_to_list( $contacts_to_add, $list_id );
+		$response       = json_decode( $added_contacts );
 
-		if(!empty($response->updated)){
+		if ( ! empty( $response->updated ) ) {
 			$error_message = 'success';
-		}else{
+		} else {
 			$error_message = 'Email address already exists in list';
 		}
+
 		return $error_message;
 	}
 
@@ -3317,9 +3288,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 			'api_key' => $api_key,
 		);
 
-		$request_url = esc_url_raw( 'https://api.createsend.com/api/v3.1/clients.json?pretty=true' );
+		$request_url    = esc_url_raw( 'https://api.createsend.com/api/v3.1/clients.json?pretty=true' );
 		$all_clients_id = array();
-		$all_lists = array();
+		$all_lists      = array();
 
 		if ( ! function_exists( 'curl_init' ) ) {
 			return __( 'curl_init is not defined ', 'rapidology' );
@@ -3331,11 +3302,11 @@ class RAD_Rapidology extends RAD_Dashboard {
 		curl_setopt_array( $curl, array(
 			CURLOPT_RETURNTRANSFER => 1,
 			CURLOPT_URL            => $request_url,
-			CURLOPT_SSL_VERIFYPEER => FALSE, //we need this option since we perform request to https
+			CURLOPT_SSL_VERIFYPEER => false, //we need this option since we perform request to https
 			CURLOPT_USERPWD        => $api_key . ':x'
 		) );
 		// Send the request & save response to $resp
-		$resp = curl_exec( $curl );
+		$resp     = curl_exec( $curl );
 		$httpCode = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
 		// Close request to clear up some resources
 		curl_close( $curl );
@@ -3345,22 +3316,22 @@ class RAD_Rapidology extends RAD_Dashboard {
 		if ( '200' == $httpCode ) {
 			$error_message = 'success';
 
-			foreach( $clients_array as $client => $client_details ) {
+			foreach ( $clients_array as $client => $client_details ) {
 				$all_clients_id[] = $client_details['ClientID'];
 			}
 
 			if ( ! empty( $all_clients_id ) ) {
-				foreach( $all_clients_id as $client ) {
-					$wrap = new CS_REST_Clients( $client,  $auth );
+				foreach ( $all_clients_id as $client ) {
+					$wrap       = new CS_REST_Clients( $client, $auth );
 					$lists_data = $wrap->get_lists();
 
 					foreach ( $lists_data->response as $list => $single_list ) {
-						$all_lists[$single_list->ListID]['name'] = $single_list->Name;
+						$all_lists[ $single_list->ListID ]['name'] = $single_list->Name;
 
-						$wrap_stats = new CS_REST_Lists( $single_list->ListID, $auth );
-						$result_stats = $wrap_stats->get_stats();
-						$all_lists[$single_list->ListID]['subscribers_count'] = sanitize_text_field( $result_stats->response->TotalActiveSubscribers );
-						$all_lists[$single_list->ListID]['growth_week'] = sanitize_text_field( $this->calculate_growth_rate( 'campaign_monitor_' . $single_list->ListID ) );
+						$wrap_stats                                             = new CS_REST_Lists( $single_list->ListID, $auth );
+						$result_stats                                           = $wrap_stats->get_stats();
+						$all_lists[ $single_list->ListID ]['subscribers_count'] = sanitize_text_field( $result_stats->response->TotalActiveSubscribers );
+						$all_lists[ $single_list->ListID ]['growth_week']       = sanitize_text_field( $this->calculate_growth_rate( 'campaign_monitor_' . $single_list->ListID ) );
 					}
 				}
 			}
@@ -3387,10 +3358,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 */
 	function subscribe_campaign_monitor( $api_key, $email, $list_id, $name = '' ) {
 		require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/createsend-php-4.0.2/csrest_subscribers.php' );
-		$auth = array(
+		$auth          = array(
 			'api_key' => $api_key,
 		);
-		$wrap = new CS_REST_Subscribers( $list_id, $auth);
+		$wrap          = new CS_REST_Subscribers( $list_id, $auth );
 		$is_subscribed = $wrap->get( $email );
 
 		if ( $is_subscribed->was_successful() ) {
@@ -3401,7 +3372,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				'Name'         => $name,
 				'Resubscribe'  => false,
 			) );
-			if( $result->was_successful() ) {
+			if ( $result->was_successful() ) {
 				$error_message = 'success';
 			} else {
 				$error_message = $result->response->message;
@@ -3424,21 +3395,21 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		$response_code = wp_remote_retrieve_response_code( $theme_request );
 
-		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ){
+		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
 			$theme_response = json_decode( wp_remote_retrieve_body( $theme_request ), true );
 			if ( ! empty( $theme_response ) ) {
 				$error_message = 'success';
 
 				foreach ( $theme_response as $list_data ) {
-					$lists[$list_data['id']]['name'] = $list_data['name'];
-					$lists[$list_data['id']]['subscribers_count'] = $list_data['list_size'];
-					$lists[$list_data['id']]['growth_week'] = $this->calculate_growth_rate( 'madmimi_' . $list_data['id'] );
+					$lists[ $list_data['id'] ]['name']              = $list_data['name'];
+					$lists[ $list_data['id'] ]['subscribers_count'] = $list_data['list_size'];
+					$lists[ $list_data['id'] ]['growth_week']       = $this->calculate_growth_rate( 'madmimi_' . $list_data['id'] );
 				}
 
 				$this->update_account( 'madmimi', $name, array(
-					'api_key' => esc_html( $api_key ),
-					'username' => esc_html( $username ),
-					'lists' => $lists,
+					'api_key'       => esc_html( $api_key ),
+					'username'      => esc_html( $username ),
+					'lists'         => $lists,
 					'is_authorized' => esc_html( 'true' ),
 				) );
 
@@ -3446,19 +3417,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$error_message = __( 'Please make sure you have at least 1 list in your account and try again', 'rapidology' );
 			}
 		} else {
-			if ( is_wp_error( $theme_request ) ) {
-				$error_message = $theme_request->get_error_message();
-			} else {
-				switch ( $response_code ) {
-					case '401' :
-						$error_message = __( 'Invalid Username or API key', 'rapidology' );
-						break;
-
-					default :
-						$error_message = $response_code;
-						break;
-				}
-			}
+			$error_message = $this->get_error_message( $theme_request, $response_code, null );
 		}
 
 		return $error_message;
@@ -3476,7 +3435,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		$check_user_response_code = wp_remote_retrieve_response_code( $check_user_request );
 
-		if ( ! is_wp_error( $check_user_request ) && $check_user_response_code == 200 ){
+		if ( ! is_wp_error( $check_user_request ) && $check_user_response_code == 200 ) {
 			$check_user_response = json_decode( wp_remote_retrieve_body( $check_user_request ), true );
 
 			// if user is not subscribed yet - try to subscribe
@@ -3487,7 +3446,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 				$response_code = wp_remote_retrieve_response_code( $theme_request );
 
-				if ( ! is_wp_error( $theme_request ) && $response_code == 200 ){
+				if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
 					$error_message = 'success';
 				} else {
 					if ( is_wp_error( $theme_request ) ) {
@@ -3511,18 +3470,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$error_message = __( 'Already subscribed', 'rapidology' );
 			}
 		} else {
-			if ( is_wp_error( $theme_request ) ) {
-				$error_message = $theme_request->get_error_message();
-			} else {
-				switch ( $response_code ) {
-					case '401' :
-						$error_message = __( 'Invalid Username or API key', 'rapidology' );
-						break;
-					default :
-						$error_message = $response_code;
-						break;
-				}
-			}
+			// TODO: Figure out how to handle this better, since $theme_request and $response_code are undef here
+			$error_message = $this->get_error_message( $theme_request, $response_code, null);
 		}
 
 		return $error_message;
@@ -3533,9 +3482,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function get_icontact_lists( $app_id, $username, $password, $name ) {
-		$lists = array();
+		$lists      = array();
 		$account_id = '';
-		$folder_id = '';
+		$folder_id  = '';
 
 		$request_account_id_url = esc_url_raw( 'https://app.icontact.com/icp/a/' );
 
@@ -3553,22 +3502,22 @@ class RAD_Rapidology extends RAD_Dashboard {
 					$folder_id = $folder_data['clientfolders'][0]['clientFolderId'];
 
 					$request_lists_url = esc_url_raw( 'https://app.icontact.com/icp/a/' . $account_id . '/c/' . $folder_id . '/lists' );
-					$lists_data = $this->icontacts_remote_request( $request_lists_url, $app_id, $username, $password );
+					$lists_data        = $this->icontacts_remote_request( $request_lists_url, $app_id, $username, $password );
 
 					if ( is_array( $lists_data ) ) {
 						$error_message = 'success';
 						foreach ( $lists_data['lists'] as $single_list ) {
-							$lists[$single_list['listId']]['name'] = $single_list['name'];
-							$lists[$single_list['listId']]['account_id'] = $account_id;
-							$lists[$single_list['listId']]['folder_id'] = $folder_id;
+							$lists[ $single_list['listId'] ]['name']       = $single_list['name'];
+							$lists[ $single_list['listId'] ]['account_id'] = $account_id;
+							$lists[ $single_list['listId'] ]['folder_id']  = $folder_id;
 
 							//request for subscribers
 							$request_contacts_url = esc_url_raw( 'https://app.icontact.com/icp/a/' . $account_id . '/c/' . $folder_id . '/contacts?status=total&listId=' . $single_list['listId'] );
-							$subscribers_data = $this->icontacts_remote_request( $request_contacts_url, $app_id, $username, $password );
-							$total_subscribers = isset( $subscribers_data['total'] ) ? $subscribers_data['total'] : 0;
+							$subscribers_data     = $this->icontacts_remote_request( $request_contacts_url, $app_id, $username, $password );
+							$total_subscribers    = isset( $subscribers_data['total'] ) ? $subscribers_data['total'] : 0;
 
-							$lists[$single_list['listId']]['subscribers_count'] = $total_subscribers;
-							$lists[$single_list['listId']]['growth_week'] = $this->calculate_growth_rate( 'icontact_' . $single_list['listId'] );
+							$lists[ $single_list['listId'] ]['subscribers_count'] = $total_subscribers;
+							$lists[ $single_list['listId'] ]['growth_week']       = $this->calculate_growth_rate( 'icontact_' . $single_list['listId'] );
 						}
 
 						$this->update_account( 'icontact', $name, array(
@@ -3600,11 +3549,11 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 */
 	function subscribe_icontact( $app_id, $username, $password, $folder_id, $account_id, $list_id, $email, $name = '', $last_name = '' ) {
 		$check_subscription_url = esc_url_raw( 'https://app.icontact.com/icp/a/' . $account_id . '/c/' . $folder_id . '/contacts?email=' . rawurlencode( $email ) );
-		$is_subscribed = $this->icontacts_remote_request( $check_subscription_url, $app_id, $username, $password );
+		$is_subscribed          = $this->icontacts_remote_request( $check_subscription_url, $app_id, $username, $password );
 		if ( is_array( $is_subscribed ) ) {
 			if ( empty( $is_subscribed['contacts'] ) ) {
-				$add_body = '[{
-					"email":"' . $email .'",
+				$add_body           = '[{
+					"email":"' . $email . '",
 					"firstName":"' . $name . '",
 					"lastName":"' . $last_name . '",
 					"status":"normal"
@@ -3614,7 +3563,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$added_account = $this->icontacts_remote_request( $add_subscriber_url, $app_id, $username, $password, true, $add_body );
 				if ( is_array( $added_account ) ) {
 					if ( ! empty( $added_account['contacts'][0]['contactId'] ) ) {
-						$map_contact = '[{
+						$map_contact        = '[{
 							"contactId":' . $added_account['contacts'][0]['contactId'] . ',
 							"listId":' . $list_id . ',
 							"status":"normal"
@@ -3665,12 +3614,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 					'Api-Username' => $username,
 					'API-Password' => $password,
 				),
-				'body' => $body,
+				'body'    => $body,
 			) );
 		}
 
 		$response_code = wp_remote_retrieve_response_code( $theme_request );
-		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ){
+		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
 			$theme_response = wp_remote_retrieve_body( $theme_request );
 			if ( ! empty( $theme_response ) ) {
 				$error_message = json_decode( wp_remote_retrieve_body( $theme_request ), true );
@@ -3678,19 +3627,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$error_message = __( 'empty response', 'rapidology' );
 			}
 		} else {
-			if ( is_wp_error( $theme_request ) ) {
-				$error_message = $theme_request->get_error_message();
-			} else {
-				switch ( $response_code ) {
-					case '401' :
-						$error_message = __( 'Invalid App ID, Username or Password', 'rapidology' );
-						break;
-
-					default :
-						$error_message = $response_code;
-						break;
-				}
-			}
+			$error_map     = array(
+				"401" => 'Invalid App ID, Username or Password',
+			);
+			$error_message = $this->get_error_message( $theme_request, $response_code, $error_map );
 		}
 
 		return $error_message;
@@ -3718,19 +3658,19 @@ class RAD_Rapidology extends RAD_Dashboard {
 		if ( ! empty( $campaigns ) ) {
 			$error_message = 'success';
 
-			foreach( $campaigns as $id => $details ) {
-				$lists[$id]['name'] = $details->name;
-				$contacts = (array) $api->getContacts( array( $id ) );
+			foreach ( $campaigns as $id => $details ) {
+				$lists[ $id ]['name'] = $details->name;
+				$contacts             = (array) $api->getContacts( array( $id ) );
 
-				$total_contacts = count( $contacts );
-				$lists[$id]['subscribers_count'] = $total_contacts;
+				$total_contacts                    = count( $contacts );
+				$lists[ $id ]['subscribers_count'] = $total_contacts;
 
-				$lists[$id]['growth_week'] = $this->calculate_growth_rate( 'getresponse_' . $id );
+				$lists[ $id ]['growth_week'] = $this->calculate_growth_rate( 'getresponse_' . $id );
 			}
 
 			$this->update_account( 'getresponse', $name, array(
-				'api_key' => esc_html( $api_key ),
-				'lists' => $lists,
+				'api_key'       => esc_html( $api_key ),
+				'lists'         => $lists,
 				'is_authorized' => esc_html( 'true' ),
 			) );
 		} else {
@@ -3792,19 +3732,19 @@ class RAD_Rapidology extends RAD_Dashboard {
 			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/sendinblue-v2.0/mailin.php' );
 		}
 
-		$mailin = new Mailin( 'https://api.sendinblue.com/v2.0', $api_key );
-		$page = 1;
-		$page_limit = 50;
-		$all_lists = array();
+		$mailin       = new Mailin( 'https://api.sendinblue.com/v2.0', $api_key );
+		$page         = 1;
+		$page_limit   = 50;
+		$all_lists    = array();
 		$need_request = true;
 
 		while ( true == $need_request ) {
 			$lists_array = $mailin->get_lists( $page, $page_limit );
-			$all_lists = array_merge( $all_lists, $lists_array );
+			$all_lists   = array_merge( $all_lists, $lists_array );
 			if ( 50 > count( $lists_array ) ) {
 				$need_request = false;
 			} else {
-				$page++;
+				$page ++;
 			}
 		}
 
@@ -3813,13 +3753,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$error_message = 'success';
 
 				if ( ! empty( $all_lists['data']['lists'] ) ) {
-					foreach( $all_lists['data']['lists'] as $single_list ) {
-						$lists[$single_list['id']]['name'] = $single_list['name'];
+					foreach ( $all_lists['data']['lists'] as $single_list ) {
+						$lists[ $single_list['id'] ]['name'] = $single_list['name'];
 
-						$total_contacts = isset( $single_list['total_subscribers'] ) ? $single_list['total_subscribers'] : 0;
-						$lists[$single_list['id']]['subscribers_count'] = $total_contacts;
+						$total_contacts                                   = isset( $single_list['total_subscribers'] ) ? $single_list['total_subscribers'] : 0;
+						$lists[ $single_list['id'] ]['subscribers_count'] = $total_contacts;
 
-						$lists[$single_list['id']]['growth_week'] = $this->calculate_growth_rate( 'sendinblue_' . $single_list['id'] );
+						$lists[ $single_list['id'] ]['growth_week'] = $this->calculate_growth_rate( 'sendinblue_' . $single_list['id'] );
 					}
 				}
 
@@ -3852,15 +3792,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 
 		$mailin = new Mailin( 'https://api.sendinblue.com/v2.0', $api_key );
-		$user = $mailin->get_user( $email );
+		$user   = $mailin->get_user( $email );
 		if ( 'failure' == $user['code'] ) {
-			$attributes = array(
+			$attributes      = array(
 				"NAME"    => $name,
 				"SURNAME" => $last_name,
 			);
-			$blacklisted = 0;
-			$listid = array( $list_id );
-			$listid_unlink = array();
+			$blacklisted     = 0;
+			$listid          = array( $list_id );
+			$listid_unlink   = array();
 			$blacklisted_sms = 0;
 
 			$result = $mailin->create_update_user( $email, $attributes, $blacklisted, $listid, $listid_unlink, $blacklisted_sms );
@@ -3889,28 +3829,28 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$lists = array();
 
 		global $wpdb;
-		$table_name = $wpdb->prefix . 'wysija_list';
+		$table_name  = $wpdb->prefix . 'wysija_list';
 		$table_users = $wpdb->prefix . 'wysija_user_list';
 
 		if ( ! class_exists( 'WYSIJA' ) ) {
 			$error_message = __( 'MailPoet plugin is not installed or not activated', 'rapidology' );
 		} else {
-			$list_model = WYSIJA::get( 'list', 'model' );
+			$list_model      = WYSIJA::get( 'list', 'model' );
 			$all_lists_array = $list_model->get( array( 'name', 'list_id' ), array( 'is_enabled' => '1' ) );
 
 			$error_message = 'success';
 
 			if ( ! empty( $all_lists_array ) ) {
 				foreach ( $all_lists_array as $list_details ) {
-					$lists[$list_details['list_id']]['name'] = $list_details['name'];
+					$lists[ $list_details['list_id'] ]['name'] = $list_details['name'];
 
-					$user_model = WYSIJA::get( 'user_list', 'model' );
+					$user_model            = WYSIJA::get( 'user_list', 'model' );
 					$all_subscribers_array = $user_model->get( array( 'user_id' ), array( 'list_id' => $list_details['list_id'] ) );
 
-					$subscribers_count = count( $all_subscribers_array );
-					$lists[$list_details['list_id']]['subscribers_count'] = $subscribers_count;
+					$subscribers_count                                      = count( $all_subscribers_array );
+					$lists[ $list_details['list_id'] ]['subscribers_count'] = $subscribers_count;
 
-					$lists[$list_details['list_id']]['growth_week'] = $this->calculate_growth_rate( 'mailpoet_' . $list_details['list_id'] );
+					$lists[ $list_details['list_id'] ]['growth_week'] = $this->calculate_growth_rate( 'mailpoet_' . $list_details['list_id'] );
 				}
 			}
 
@@ -3929,14 +3869,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 */
 	function subscribe_mailpoet( $list_id, $email, $name = '', $last_name = '' ) {
 		global $wpdb;
-		$table_user = $wpdb->prefix . 'wysija_user';
+		$table_user       = $wpdb->prefix . 'wysija_user';
 		$table_user_lists = $wpdb->prefix . 'wysija_user_list';
 
 		if ( ! class_exists( 'WYSIJA' ) ) {
 			$error_message = __( 'MailPoet plugin is not installed or not activated', 'rapidology' );
 		} else {
 			$sql_count = "SELECT COUNT(*) FROM $table_user WHERE email = %s";
-			$sql_args = array(
+			$sql_args  = array(
 				$email,
 			);
 
@@ -3950,13 +3890,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 						'firstname' => $name,
 						'lastname'  => $last_name
 					),
-
 					'user_list' => array( 'list_ids' => array( $list_id ) )
 				);
 
 				$mailpoet_class = WYSIJA::get( 'user', 'helper' );
-				$error_message = $mailpoet_class->addSubscriber( $new_user );
-				$error_message = is_int( $error_message ) ? 'success' : $error_message;
+				$error_message  = $mailpoet_class->addSubscriber( $new_user );
+				$error_message  = is_int( $error_message ) ? 'success' : $error_message;
 			} else {
 				$error_message = __( 'Already Subscribed', 'rapidology' );
 			}
@@ -3970,10 +3909,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function get_aweber_lists( $api_key, $name ) {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$lists = array();
+		$options_array = RAD_Rapidology::get_rapidology_options();
+		$lists         = array();
 
-		if ( ! isset( $options_array['accounts']['aweber'][$name]['consumer_key'] ) || ( $api_key != $options_array['accounts']['aweber'][$name]['api_key'] ) ) {
+		if ( ! isset( $options_array['accounts']['aweber'][ $name ]['consumer_key'] ) || ( $api_key != $options_array['accounts']['aweber'][ $name ]['api_key'] ) ) {
 			$error_message = $this->aweber_authorization( $api_key, $name );
 		} else {
 			$error_message = 'success';
@@ -3990,12 +3929,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$aweber_lists = $account->lists;
 				if ( isset( $aweber_lists ) ) {
 					foreach ( $aweber_lists as $list ) {
-						$lists[$list->id]['name'] = $list->name;
+						$lists[ $list->id ]['name'] = $list->name;
 
-						$total_subscribers = $list->total_subscribers;
-						$lists[$list->id]['subscribers_count'] = $total_subscribers;
+						$total_subscribers                       = $list->total_subscribers;
+						$lists[ $list->id ]['subscribers_count'] = $total_subscribers;
 
-						$lists[$list->id]['growth_week'] = $this->calculate_growth_rate( 'aweber_' . $list->id );
+						$lists[ $list->id ]['growth_week'] = $this->calculate_growth_rate( 'aweber_' . $list->id );
 					}
 				}
 			}
@@ -4023,7 +3962,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		try {
 			$list_url = "/accounts/{$account->id}/lists/{$list_id}";
-			$list = $account->loadFromUrl( $list_url );
+			$list     = $account->loadFromUrl( $list_url );
 
 			$new_subscriber = $list->subscribers->create(
 				array(
@@ -4098,14 +4037,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 			require_once( get_template_directory() . '/includes/subscription/aweber/aweber_api.php' );
 		}
 
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$account = false;
+		$options_array = RAD_Rapidology::get_rapidology_options();
+		$account       = false;
 
-		if ( isset( $options_array['accounts']['aweber'][$name] ) ) {
-			$consumer_key = $options_array['accounts']['aweber'][$name]['consumer_key'];
-			$consumer_secret = $options_array['accounts']['aweber'][$name]['consumer_secret'];
-			$access_key = $options_array['accounts']['aweber'][$name]['access_key'];
-			$access_secret = $options_array['accounts']['aweber'][$name]['access_secret'];
+		if ( isset( $options_array['accounts']['aweber'][ $name ] ) ) {
+			$consumer_key    = $options_array['accounts']['aweber'][ $name ]['consumer_key'];
+			$consumer_secret = $options_array['accounts']['aweber'][ $name ]['consumer_secret'];
+			$access_key      = $options_array['accounts']['aweber'][ $name ]['access_key'];
+			$access_secret   = $options_array['accounts']['aweber'][ $name ]['access_secret'];
 
 			try {
 				// Aweber requires curl extension to be enabled
@@ -4141,20 +4080,20 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		$response_code = wp_remote_retrieve_response_code( $theme_request );
 
-		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ){
+		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
 			$theme_response = $this->xml_to_array( wp_remote_retrieve_body( $theme_request ) );
 
 			if ( ! empty( $theme_response ) ) {
 				if ( 'ok' == $theme_response['rsp']['@attributes']['stat'] ) {
 					$error_message = 'success';
-					$lists_array = $theme_response['syndications']['syndication'];
+					$lists_array   = $theme_response['syndications']['syndication'];
 
 					if ( ! empty( $lists_array ) ) {
-						foreach( $lists_array as $list_data ) {
-							$lists[$list_data['id']]['name'] = $list_data['name'];
-							$lists[$list_data['id']]['subscribers_count'] = $list_data['subscribersummary']['subscribers'];
+						foreach ( $lists_array as $list_data ) {
+							$lists[ $list_data['id'] ]['name']              = $list_data['name'];
+							$lists[ $list_data['id'] ]['subscribers_count'] = $list_data['subscribersummary']['subscribers'];
 
-							$lists[$list_data['id']]['growth_week'] = $this->calculate_growth_rate( 'feedblitz_' . $list_data['id'] );
+							$lists[ $list_data['id'] ]['growth_week'] = $this->calculate_growth_rate( 'feedblitz_' . $list_data['id'] );
 						}
 					}
 
@@ -4187,12 +4126,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function subscribe_feedblitz( $api_key, $list_id, $name, $email = '', $last_name = '' ) {
-		$request_url = esc_url_raw( 'https://www.feedblitz.com/f?SimpleApiSubscribe&key=' . $api_key . '&email=' . rawurlencode( $email ) . '&listid=' . $list_id . '&FirstName=' . $name . '&LastName=' . $last_name );
+		$request_url   = esc_url_raw( 'https://www.feedblitz.com/f?SimpleApiSubscribe&key=' . $api_key . '&email=' . rawurlencode( $email ) . '&listid=' . $list_id . '&FirstName=' . $name . '&LastName=' . $last_name );
 		$theme_request = wp_remote_get( $request_url, array( 'timeout' => 30, 'sslverify' => false ) );
 
 		$response_code = wp_remote_retrieve_response_code( $theme_request );
 
-		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ){
+		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
 			$theme_response = $this->xml_to_array( wp_remote_retrieve_body( $theme_request ) );
 			if ( ! empty( $theme_response ) ) {
 				if ( 'ok' == $theme_response['rsp']['@attributes']['stat'] ) {
@@ -4223,18 +4162,18 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function get_ontraport_lists( $api_key, $app_id, $name ) {
-		$appid = $app_id;
-		$key = $api_key;
-		$lists = array();
+		$appid         = $app_id;
+		$key           = $api_key;
+		$lists         = array();
 		$list_id_array = array();
 
 		// get sequences (lists)
-		$req_type = "fetch_sequences";
-		$postargs = "appid=" . $appid . "&key=" . $key . "&reqType=" . $req_type;
-		$request = "https://api.ontraport.com/cdata.php";
-		$result = $this->ontraport_request( $postargs, $request );
+		$req_type    = "fetch_sequences";
+		$postargs    = "appid=" . $appid . "&key=" . $key . "&reqType=" . $req_type;
+		$request     = "https://api.ontraport.com/cdata.php";
+		$result      = $this->ontraport_request( $postargs, $request );
 		$lists_array = $this->xml_to_array( $result );
-		$lists_id = simplexml_load_string( $result );
+		$lists_id    = simplexml_load_string( $result );
 
 		foreach ( $lists_id->sequence as $value ) {
 			$list_id_array[] = (int) $value->attributes()->id;
@@ -4249,14 +4188,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 				$i = 0;
 
-				foreach( $sequence_array as $id => $list_name ) {
-					$lists[$list_id_array[$i]]['name'] = $list_name;
+				foreach ( $sequence_array as $id => $list_name ) {
+					$lists[ $list_id_array[ $i ] ]['name'] = $list_name;
 
 					// we cannot get amount of subscribers for each sequence due to API limitations, so set it to 0.
-					$lists[$list_id_array[$i]]['subscribers_count'] = 0;
+					$lists[ $list_id_array[ $i ] ]['subscribers_count'] = 0;
 
-					$lists[$list_id_array[$i]]['growth_week'] = $this->calculate_growth_rate( 'ontraport_' . $list_id_array[$i] );
-					$i++;
+					$lists[ $list_id_array[ $i ] ]['growth_week'] = $this->calculate_growth_rate( 'ontraport_' . $list_id_array[ $i ] );
+					$i ++;
 				}
 			}
 			$this->update_account( 'ontraport', $name, array(
@@ -4286,10 +4225,10 @@ STRING;
 </search>
 STRING;
 
-		$data_check = urlencode( urlencode( $data_check ) );
-		$reqType_search = "search";
-		$postargs_search = "appid=" . $app_id . "&key=" . $api_key . "&reqType=" . $reqType_search . "&data=" . $data_check;
-		$result_search = $this->ontraport_request( $postargs_search );
+		$data_check        = urlencode( urlencode( $data_check ) );
+		$reqType_search    = "search";
+		$postargs_search   = "appid=" . $app_id . "&key=" . $api_key . "&reqType=" . $reqType_search . "&data=" . $data_check;
+		$result_search     = $this->ontraport_request( $postargs_search );
 		$user_array_search = $this->xml_to_array( $result_search );
 
 		//make sure that user is not subscribed yet
@@ -4325,11 +4264,11 @@ STRING;
 </contact>
 STRING;
 
-			$data = urlencode( urlencode( $data ) );
-			$reqType = "add";
+			$data     = urlencode( urlencode( $data ) );
+			$reqType  = "add";
 			$postargs = "appid=" . $app_id . "&key=" . $api_key . "&return_id=1&reqType=" . $reqType . "&data=" . $data;
 
-			$result = $this->ontraport_request( $postargs );
+			$result     = $this->ontraport_request( $postargs );
 			$user_array = $this->xml_to_array( $result );
 
 			if ( isset( $user_array['status'] ) && 'Success' == $user_array['status'] ) {
@@ -4350,7 +4289,7 @@ STRING;
 	 */
 	function ontraport_request( $postargs ) {
 		if ( ! function_exists( 'curl_init' ) ) {
-			$response =  __( 'curl_init is not defined ', 'rapidology' );
+			$response = __( 'curl_init is not defined ', 'rapidology' );
 		} else {
 			$response = '';
 			$httpCode = '';
@@ -4359,11 +4298,11 @@ STRING;
 			// Set some options
 			curl_setopt_array( $curl, array(
 				CURLOPT_RETURNTRANSFER => 1,
-				CURLOPT_HEADER         => FALSE,
+				CURLOPT_HEADER         => false,
 				CURLOPT_URL            => "https://api.ontraport.com/cdata.php",
-				CURLOPT_POST           => TRUE,
+				CURLOPT_POST           => true,
 				CURLOPT_POSTFIELDS     => $postargs,
-				CURLOPT_SSL_VERIFYPEER => FALSE, //we need this option since we perform request to https
+				CURLOPT_SSL_VERIFYPEER => false, //we need this option since we perform request to https
 			) );
 			// Send the request & save response to $resp
 			$response = curl_exec( $curl );
@@ -4386,8 +4325,8 @@ STRING;
 	 * @return array
 	 */
 	function xml_to_array( $xml_data ) {
-		$xml = simplexml_load_string( $xml_data );
-		$json = json_encode( $xml );
+		$xml   = simplexml_load_string( $xml_data );
+		$json  = json_encode( $xml );
 		$array = json_decode( $json, true );
 
 		return $array;
@@ -4398,19 +4337,19 @@ STRING;
 	 * @return string
 	 */
 	function generate_accounts_list() {
-		wp_verify_nonce( $_POST['retrieve_lists_nonce'] , 'retrieve_lists' );
-		$service = !empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
-		$optin_id = !empty( $_POST['rapidology_optin_id'] ) ? sanitize_text_field( $_POST['rapidology_optin_id'] ) : '';
-		$new_account = !empty( $_POST['rapidology_add_account'] ) ? sanitize_text_field( $_POST['rapidology_add_account'] ) : '';
+		wp_verify_nonce( $_POST['retrieve_lists_nonce'], 'retrieve_lists' );
+		$service     = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
+		$optin_id    = ! empty( $_POST['rapidology_optin_id'] ) ? sanitize_text_field( $_POST['rapidology_optin_id'] ) : '';
+		$new_account = ! empty( $_POST['rapidology_add_account'] ) ? sanitize_text_field( $_POST['rapidology_add_account'] ) : '';
 
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$current_account = isset( $options_array[$optin_id]['account_name'] ) ? $options_array[$optin_id]['account_name'] : 'empty';
+		$options_array   = RAD_Rapidology::get_rapidology_options();
+		$current_account = isset( $options_array[ $optin_id ]['account_name'] ) ? $options_array[ $optin_id ]['account_name'] : 'empty';
 
 		$available_accounts = array();
 
 		if ( isset( $options_array['accounts'] ) ) {
-			if ( isset( $options_array['accounts'][$service] ) ) {
-				foreach ( $options_array['accounts'][$service] as $account_name => $details ) {
+			if ( isset( $options_array['accounts'][ $service ] ) ) {
+				foreach ( $options_array['accounts'][ $service ] as $account_name => $details ) {
 					$available_accounts[] = $account_name;
 				}
 			}
@@ -4469,8 +4408,8 @@ STRING;
 		$field_values = '';
 
 		if ( '' !== $account_name ) {
-			$options_array = RAD_Rapidology::grad_rapidology_options();
-			$field_values = $options_array['accounts'][$service][$account_name];
+			$options_array = RAD_Rapidology::get_rapidology_options();
+			$field_values  = $options_array['accounts'][ $service ][ $account_name ];
 		}
 
 		$form_fields = sprintf(
@@ -4560,7 +4499,7 @@ STRING;
 						<label for="%1$s">%2$s</label>
 						<input type="password" value="%3$s" id="%1$s">%4$s
 					</div>',
-					esc_attr( 'api_key_' .  $service ),
+					esc_attr( 'api_key_' . $service ),
 					__( 'API key', 'rapidology' ),
 					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',
 					RAD_Rapidology::generate_hint( sprintf(
@@ -4589,7 +4528,7 @@ STRING;
 				break;
 
 			case 'aweber' :
-				$app_id = '7365f385';
+				$app_id               = '7365f385';
 				$aweber_auth_endpoint = 'https://auth.aweber.com/1.0/oauth/authorize_app/' . $app_id;
 
 				$form_fields .= sprintf( '
@@ -4611,7 +4550,7 @@ STRING;
 				break;
 
 			case 'icontact' :
-				$form_fields .= sprintf('
+				$form_fields .= sprintf( '
 					<div class="rad_dashboard_account_row">%1$s</div>',
 					sprintf( '
 						<div class="rad_dashboard_account_row">
@@ -4627,7 +4566,7 @@ STRING;
 							<input type="password" value="%9$s" id="%3$s">%10$s
 						</div>',
 						esc_attr( 'client_id_' . $service ),
-						esc_attr( 'username_' .  $service ),
+						esc_attr( 'username_' . $service ),
 						esc_attr( 'password_' . $service ),
 						__( 'App ID', 'rapidology' ),
 						__( 'Username', 'rapidology' ),
@@ -4644,7 +4583,7 @@ STRING;
 				break;
 
 			case 'ontraport' :
-				$form_fields .= sprintf('
+				$form_fields .= sprintf( '
 					<div class="rad_dashboard_account_row">
 						<label for="%1$s">%3$s</label>
 						<input type="password" value="%5$s" id="%1$s">%7$s
@@ -4700,11 +4639,11 @@ STRING;
 	 * @return string
 	 */
 	function retrieve_accounts_list( $service, $accounts_list = array() ) {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
+		$options_array = RAD_Rapidology::get_rapidology_options();
 		if ( isset( $options_array['accounts'] ) ) {
-			if ( isset( $options_array['accounts'][$service] ) ) {
-				foreach ( $options_array['accounts'][$service] as $account_name => $details ) {
-					$accounts_list[$account_name] = $account_name;
+			if ( isset( $options_array['accounts'][ $service ] ) ) {
+				foreach ( $options_array['accounts'][ $service ] as $account_name => $details ) {
+					$accounts_list[ $account_name ] = $account_name;
 				}
 			}
 		}
@@ -4716,19 +4655,19 @@ STRING;
 	 * Generates the list of "Lists" for selected account in the Dashboard. Returns the generated form to jQuery.
 	 */
 	function generate_mailing_lists( $service = '', $account_name = '' ) {
-		wp_verify_nonce( $_POST['retrieve_lists_nonce'] , 'retrieve_lists' );
+		wp_verify_nonce( $_POST['retrieve_lists_nonce'], 'retrieve_lists' );
 		$account_for = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
-		$service = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
-		$optin_id = ! empty( $_POST['rapidology_optin_id'] ) ? sanitize_text_field( $_POST['rapidology_optin_id'] ) : '';
+		$service     = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
+		$optin_id    = ! empty( $_POST['rapidology_optin_id'] ) ? sanitize_text_field( $_POST['rapidology_optin_id'] ) : '';
 
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$current_email_list = isset( $options_array[$optin_id] ) ? $options_array[$optin_id]['email_list'] : 'empty';
+		$options_array      = RAD_Rapidology::get_rapidology_options();
+		$current_email_list = isset( $options_array[ $optin_id ] ) ? $options_array[ $optin_id ]['email_list'] : 'empty';
 
 		$available_lists = array();
 
 		if ( isset( $options_array['accounts'] ) ) {
-			if ( isset( $options_array['accounts'][$service] ) ) {
-				foreach ( $options_array['accounts'][$service] as $account_name => $details ) {
+			if ( isset( $options_array['accounts'][ $service ] ) ) {
+				foreach ( $options_array['accounts'][ $service ] as $account_name => $details ) {
 					if ( $account_for == $account_name ) {
 						if ( isset( $details['lists'] ) ) {
 							$available_lists = $details['lists'];
@@ -4767,7 +4706,7 @@ STRING;
 
 
 	/**-------------------------**/
-	/** 		Front end		**/
+	/**        Front end        **/
 	/**-------------------------**/
 
 	function load_scripts_styles() {
@@ -4793,7 +4732,7 @@ STRING;
 		$taxonomies = array();
 
 		if ( ! empty( $post_types ) ) {
-			foreach( $post_types as $single_type ) {
+			foreach ( $post_types as $single_type ) {
 				if ( 'post' != $single_type ) {
 					$taxonomies[] = $this->get_tax_slug( $single_type );
 				}
@@ -4811,7 +4750,7 @@ STRING;
 	 */
 	function get_tax_slug( $post_type ) {
 		$theme_name = wp_get_theme();
-		$taxonomy = '';
+		$taxonomy   = '';
 
 		switch ( $post_type ) {
 			case 'project' :
@@ -4857,37 +4796,37 @@ STRING;
 	 * @return bool
 	 */
 	function check_applicability( $optin_id ) {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
+		$options_array = RAD_Rapidology::get_rapidology_options();
 
 		$display_there = false;
 
-		$optin_type = $options_array[$optin_id]['optin_type'];
+		$optin_type = $options_array[ $optin_id ]['optin_type'];
 
 		$current_optin_limits = array(
-			'post_types'        => $options_array[$optin_id]['post_types'],
-			'categories'        => $options_array[$optin_id]['post_categories'],
-			'on_cat_select'     => isset( $options_array[$optin_id]['display_on'] ) && in_array( 'category', $options_array[$optin_id]['display_on'] ) ? true : false,
-			'pages_exclude'     => is_array( $options_array[$optin_id]['pages_exclude'] ) ? $options_array[$optin_id]['pages_exclude'] : explode( ',', $options_array[$optin_id]['pages_exclude'] ),
-			'pages_include'     => is_array( $options_array[$optin_id]['pages_include'] ) ? $options_array[$optin_id]['pages_include'] : explode( ',', $options_array[$optin_id]['pages_include'] ),
-			'posts_exclude'     => is_array( $options_array[$optin_id]['posts_exclude'] ) ? $options_array[$optin_id]['posts_exclude'] : explode( ',', $options_array[$optin_id]['posts_exclude'] ),
-			'posts_include'     => is_array( $options_array[$optin_id]['posts_include'] ) ? $options_array[$optin_id]['posts_include'] : explode( ',', $options_array[$optin_id]['posts_include'] ),
-			'on_tag_select'     => isset( $options_array[$optin_id]['display_on'] ) && in_array( 'tags', $options_array[$optin_id]['display_on'] )
+			'post_types'        => $options_array[ $optin_id ]['post_types'],
+			'categories'        => $options_array[ $optin_id ]['post_categories'],
+			'on_cat_select'     => isset( $options_array[ $optin_id ]['display_on'] ) && in_array( 'category', $options_array[ $optin_id ]['display_on'] ) ? true : false,
+			'pages_exclude'     => is_array( $options_array[ $optin_id ]['pages_exclude'] ) ? $options_array[ $optin_id ]['pages_exclude'] : explode( ',', $options_array[ $optin_id ]['pages_exclude'] ),
+			'pages_include'     => is_array( $options_array[ $optin_id ]['pages_include'] ) ? $options_array[ $optin_id ]['pages_include'] : explode( ',', $options_array[ $optin_id ]['pages_include'] ),
+			'posts_exclude'     => is_array( $options_array[ $optin_id ]['posts_exclude'] ) ? $options_array[ $optin_id ]['posts_exclude'] : explode( ',', $options_array[ $optin_id ]['posts_exclude'] ),
+			'posts_include'     => is_array( $options_array[ $optin_id ]['posts_include'] ) ? $options_array[ $optin_id ]['posts_include'] : explode( ',', $options_array[ $optin_id ]['posts_include'] ),
+			'on_tag_select'     => isset( $options_array[ $optin_id ]['display_on'] ) && in_array( 'tags', $options_array[ $optin_id ]['display_on'] )
 				? true
 				: false,
-			'on_archive_select' => isset( $options_array[$optin_id]['display_on'] ) && in_array( 'archive', $options_array[$optin_id]['display_on'] )
+			'on_archive_select' => isset( $options_array[ $optin_id ]['display_on'] ) && in_array( 'archive', $options_array[ $optin_id ]['display_on'] )
 				? true
 				: false,
-			'homepage_select'   => isset( $options_array[$optin_id]['display_on'] ) && in_array( 'home', $options_array[$optin_id]['display_on'] )
+			'homepage_select'   => isset( $options_array[ $optin_id ]['display_on'] ) && in_array( 'home', $options_array[ $optin_id ]['display_on'] )
 				? true
 				: false,
-			'everything_select' => isset( $options_array[$optin_id]['display_on'] ) && in_array( 'everything', $options_array[$optin_id]['display_on'] )
+			'everything_select' => isset( $options_array[ $optin_id ]['display_on'] ) && in_array( 'everything', $options_array[ $optin_id ]['display_on'] )
 				? true
 				: false,
-			'auto_select'       => isset( $options_array[$optin_id]['post_categories']['auto_select'] )
-				? $options_array[$optin_id]['post_categories']['auto_select']
+			'auto_select'       => isset( $options_array[ $optin_id ]['post_categories']['auto_select'] )
+				? $options_array[ $optin_id ]['post_categories']['auto_select']
 				: false,
-			'previously_saved'  => isset( $options_array[$optin_id]['post_categories']['previously_saved'] )
-				? explode( ',', $options_array[$optin_id]['post_categories']['previously_saved'] )
+			'previously_saved'  => isset( $options_array[ $optin_id ]['post_categories']['previously_saved'] )
+				? explode( ',', $options_array[ $optin_id ]['post_categories']['previously_saved'] )
 				: false,
 		);
 
@@ -4913,7 +4852,7 @@ STRING;
 					}
 				}
 			} else {
-				$page_id = ( is_front_page() && !is_page() ) ? 'homepage' : get_the_ID();
+				$page_id           = ( is_front_page() && ! is_page() ) ? 'homepage' : get_the_ID();
 				$current_post_type = 'homepage' == $page_id ? 'home' : get_post_type( $page_id );
 
 				if ( is_singular() || ( 'home' == $current_post_type && ( 'flyin' == $optin_type || 'pop_up' == $optin_type ) ) ) {
@@ -4944,7 +4883,7 @@ STRING;
 							if ( ! in_array( $page_id, $current_optin_limits['posts_exclude'] ) ) {
 								if ( '' != $taxonomy_slug ) {
 									$categories = get_the_terms( $page_id, $taxonomy_slug );
-									$post_cats = array();
+									$post_cats  = array();
 									if ( $categories ) {
 										foreach ( $categories as $category ) {
 											$post_cats[] = $category->term_id;
@@ -4985,18 +4924,18 @@ STRING;
 	public static function choose_form_ab_test( $optin_id, $optins_set, $update_option = true ) {
 		$chosen_form = $optin_id;
 
-		if( ! empty( $optins_set[$optin_id]['child_optins'] ) && 'active' == $optins_set[$optin_id]['test_status'] ) {
-			$chosen_form = ( '-1' != $optins_set[$optin_id]['next_optin'] || empty( $optins_set[$optin_id]['next_optin'] ) )
-				? $optins_set[$optin_id]['next_optin']
+		if ( ! empty( $optins_set[ $optin_id ]['child_optins'] ) && 'active' == $optins_set[ $optin_id ]['test_status'] ) {
+			$chosen_form = ( '-1' != $optins_set[ $optin_id ]['next_optin'] || empty( $optins_set[ $optin_id ]['next_optin'] ) )
+				? $optins_set[ $optin_id ]['next_optin']
 				: $optin_id;
 
-			if ( '-1' == $optins_set[$optin_id]['next_optin'] ) {
-				$next_optin = $optins_set[$optin_id]['child_optins'][0];
+			if ( '-1' == $optins_set[ $optin_id ]['next_optin'] ) {
+				$next_optin = $optins_set[ $optin_id ]['child_optins'][0];
 			} else {
-				$child_forms_count = count( $optins_set[$optin_id]['child_optins'] );
+				$child_forms_count = count( $optins_set[ $optin_id ]['child_optins'] );
 
-				for ( $i = 0; $i < $child_forms_count; $i++ ) {
-					if ( $optins_set[$optin_id]['next_optin'] == $optins_set[$optin_id]['child_optins'][$i] ) {
+				for ( $i = 0; $i < $child_forms_count; $i ++ ) {
+					if ( $optins_set[ $optin_id ]['next_optin'] == $optins_set[ $optin_id ]['child_optins'][ $i ] ) {
 						$current_optin_number = $i;
 					}
 				}
@@ -5004,13 +4943,13 @@ STRING;
 				if ( ( $child_forms_count - 1 ) == $current_optin_number ) {
 					$next_optin = '-1';
 				} else {
-					$next_optin = $optins_set[$optin_id]['child_optins'][$current_optin_number + 1];
+					$next_optin = $optins_set[ $optin_id ]['child_optins'][ $current_optin_number + 1 ];
 				}
 
 			}
 			if ( true === $update_option ) {
-				$update_test_optin[$optin_id] = $optins_set[$optin_id];
-				$update_test_optin[$optin_id]['next_optin'] = $next_optin;
+				$update_test_optin[ $optin_id ]               = $optins_set[ $optin_id ];
+				$update_test_optin[ $optin_id ]['next_optin'] = $next_optin;
 				RAD_Rapidology::update_rapidology_options( $update_test_optin );
 			}
 		}
@@ -5023,8 +4962,8 @@ STRING;
 	 * @return void
 	 */
 	function handle_stats_adding() {
-		wp_verify_nonce( $_POST['update_stats_nonce'] , 'update_stats' );
-		$stats_data_json = str_replace( '\\', '' ,  $_POST[ 'stats_data_array' ] );
+		wp_verify_nonce( $_POST['update_stats_nonce'], 'update_stats' );
+		$stats_data_json  = str_replace( '\\', '', $_POST['stats_data_array'] );
 		$stats_data_array = json_decode( $stats_data_json, true );
 
 		RAD_Rapidology::add_stats_record( $stats_data_array['type'], $stats_data_array['optin_id'], $stats_data_array['page_id'], $stats_data_array['list_id'] );
@@ -5045,7 +4984,7 @@ STRING;
 		$table_name = $wpdb->prefix . 'rad_rapidology_stats';
 
 		$record_date = current_time( 'mysql' );
-		$ip_address  = $_SERVER[ 'REMOTE_ADDR' ];
+		$ip_address  = $_SERVER['REMOTE_ADDR'];
 
 		$wpdb->insert(
 			$table_name,
@@ -5077,6 +5016,7 @@ STRING;
 	// add marker at the bottom of the_content() for the "Trigger at bottom of post" option.
 	function trigger_bottom_mark( $content ) {
 		$content .= '<span class="rad_rapidology_bottom_trigger"></span>';
+
 		return $content;
 	}
 
@@ -5086,19 +5026,18 @@ STRING;
 	 */
 	public static function generate_form_content( $optin_id, $page_id, $details = array() ) {
 		if ( empty( $details ) ) {
-			$all_optins = RAD_Rapidology::grad_rapidology_options();
-			$details = $all_optins[$optin_id];
-
+			$all_optins = RAD_Rapidology::get_rapidology_options();
+			$details    = $all_optins[ $optin_id ];
 		}
 
 		$hide_img_mobile_class = isset( $details['hide_mobile'] ) && '1' == $details['hide_mobile'] ? 'rad_rapidology_hide_mobile' : '';
 		$image_animation_class = isset( $details['image_animation'] )
-			? esc_attr( ' rad_rapidology_image_' .  $details['image_animation'] )
+			? esc_attr( ' rad_rapidology_image_' . $details['image_animation'] )
 			: 'rad_rapidology_image_no_animation';
-		$image_class = $hide_img_mobile_class . $image_animation_class . ' rad_rapidology_image';
+		$image_class           = $hide_img_mobile_class . $image_animation_class . ' rad_rapidology_image';
 
 		// Translate all strings if WPML is enabled
-		if ( function_exists ( 'icl_translate' ) ) {
+		if ( function_exists( 'icl_translate' ) ) {
 			$optin_title      = icl_translate( 'rapidology', 'optin_title_' . $optin_id, $details['optin_title'] );
 			$optin_message    = icl_translate( 'rapidology', 'optin_message_' . $optin_id, $details['optin_message'] );
 			$email_text       = icl_translate( 'rapidology', 'email_text_' . $optin_id, $details['email_text'] );
@@ -5120,11 +5059,11 @@ STRING;
 			$footer_text      = $details['footer_text'];
 		}
 
-		$formatted_title = '&lt;h2&gt;&nbsp;&lt;/h2&gt;' != $details['optin_title']
+		$formatted_title   = '&lt;h2&gt;&nbsp;&lt;/h2&gt;' != $details['optin_title']
 			? str_replace( '&nbsp;', '', $optin_title )
 			: '';
 		$formatted_message = '' != $details['optin_message'] ? $optin_message : '';
-		$formatted_footer = '' != $details['footer_text']
+		$formatted_footer  = '' != $details['footer_text']
 			? sprintf(
 				'<div class="rad_rapidology_form_footer">
 					<p>%1$s</p>
@@ -5260,7 +5199,7 @@ STRING;
 				esc_attr( $details['email_list'] ),
 				esc_attr( $page_id ),
 				esc_attr( $details['account_name'] ),
-				'' != $button_text ? stripslashes( esc_html( $button_text ) ) :  esc_html__( 'SUBSCRIBE!', 'rapidology' ),
+				'' != $button_text ? stripslashes( esc_html( $button_text ) ) : esc_html__( 'SUBSCRIBE!', 'rapidology' ),
 				isset( $details['button_text_color'] ) ? esc_attr( $details['button_text_color'] ) : '' // #10
 			), //#9
 			'' != $success_text
@@ -5298,7 +5237,7 @@ STRING;
 			'aweber',
 			'getresponse'
 		);
-		$result = in_array( $service, $single_name_networks );
+		$result               = in_array( $service, $single_name_networks );
 
 		return $result;
 	}
@@ -5364,25 +5303,12 @@ STRING;
 	/**
 	 * Generates the powered by button html
 	 */
-	function get_power_button($mode) {
-
-		if($mode == 'flyin' ) {
-
-			return '<div class="rad_power rad_power_mode_' . $mode . ' tab_power">
+	function get_power_button( $mode ) {
+		return '<div class="rad_power rad_power_mode_' . $mode . '">
 					<span class="rad_power_box_mode_' . $mode . '">
-						<a href="http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=powered-by-badge" target="_blank">Powered by<span class="rad_power_logo">&nbsp</span><span class="rad_power_text rad_power_text_'.$mode.'">Rapidology</span></a>
+						<a href="http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=powered-by-badge" target="_blank">Powered by<span class="rad_power_logo">&nbsp</span><span class="rad_power_text">Rapidology</span></a>
 					</span>
 				</div>';
-
-		}else{
-			return '<div class="rad_power rad_power_mode_' . $mode . '">
-					<span class="rad_power_box_mode_' . $mode . '">
-						<a style="color:"href="http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=powered-by-badge" target="_blank">Powered by<span class="rad_power_logo">&nbsp</span><span class="rad_power_text rad_power_text_'.$mode.'">Rapidology</span></a>
-					</span>
-				</div>';
-		}
-
-
 	}
 
 	/**
@@ -5392,18 +5318,18 @@ STRING;
 		$optins_set = $this->flyin_optins;
 
 		if ( ! empty( $optins_set ) ) {
-			foreach( $optins_set as $optin_id => $details ) {
+			foreach ( $optins_set as $optin_id => $details ) {
 				if ( $this->check_applicability( $optin_id ) ) {
 					$display_optin_id = RAD_Rapidology::choose_form_ab_test( $optin_id, $optins_set );
 
 					if ( $display_optin_id != $optin_id ) {
-						$all_optins = RAD_Rapidology::grad_rapidology_options();
-						$optin_id = $display_optin_id;
-						$details = $all_optins[$optin_id];
+						$all_optins = RAD_Rapidology::get_rapidology_options();
+						$optin_id   = $display_optin_id;
+						$details    = $all_optins[ $optin_id ];
 					}
 
 					if ( is_singular() || is_front_page() ) {
-						$page_id = is_front_page() ? -1 : get_the_ID();
+						$page_id = is_front_page() ? - 1 : get_the_ID();
 					} else {
 						$page_id = 0;
 					}
@@ -5411,11 +5337,10 @@ STRING;
 					printf(
 						'<div class="rad_rapidology_flyin rad_rapidology_optin rad_rapidology_resize rad_rapidology_flyin_%6$s rad_rapidology_%5$s%17$s%1$s%2$s%18$s%19$s%20$s%21$s"%22$s%3$s%4$s%16$s>
 							<div class="rad_rapidology_form_container%7$s%8$s%9$s%10$s%12$s%13$s%14$s%15$s%23$s%24$s%25$s">
-
+		
 								%11$s
 								%27$s
 							</div>
-
 						</div>',
 						true == $details['post_bottom'] ? ' rad_rapidology_trigger_bottom' : '',
 						isset( $details['trigger_idle'] ) && true == $details['trigger_idle'] ? ' rad_rapidology_trigger_idle' : '',
@@ -5494,7 +5419,7 @@ STRING;
 						'stacked' == $details['field_orientation'] && 'bottom' == $details['form_orientation'] && ( 'right' == $details['image_orientation'] || 'left' == $details['image_orientation'] )
 							? ' rad_rapidology_flyin_bottom_stacked'
 							: '', //#26
-						$this->get_power_button('flyin')
+						$this->get_power_button( 'flyin' )
 					);
 				}
 			}
@@ -5508,18 +5433,18 @@ STRING;
 		$optins_set = $this->popup_optins;
 
 		if ( ! empty( $optins_set ) ) {
-			foreach( $optins_set as $optin_id => $details ) {
+			foreach ( $optins_set as $optin_id => $details ) {
 				if ( $this->check_applicability( $optin_id ) ) {
 					$display_optin_id = RAD_Rapidology::choose_form_ab_test( $optin_id, $optins_set );
 
 					if ( $display_optin_id != $optin_id ) {
-						$all_optins = RAD_Rapidology::grad_rapidology_options();
-						$optin_id = $display_optin_id;
-						$details = $all_optins[$optin_id];
+						$all_optins = RAD_Rapidology::get_rapidology_options();
+						$optin_id   = $display_optin_id;
+						$details    = $all_optins[ $optin_id ];
 					}
 
 					if ( is_singular() || is_front_page() ) {
-						$page_id = is_front_page() ? -1 : get_the_ID();
+						$page_id = is_front_page() ? - 1 : get_the_ID();
 					} else {
 						$page_id = 0;
 					}
@@ -5543,7 +5468,7 @@ STRING;
 							: '',
 						esc_attr( $optin_id ), // #5
 						'bottom' !== $details['form_orientation'] && 'custom_html' !== $details['email_provider']
-							? sprintf( ' rad_rapidology_form_%1$s',  esc_attr( $details['form_orientation'] ) )
+							? sprintf( ' rad_rapidology_form_%1$s', esc_attr( $details['form_orientation'] ) )
 							: ' rad_rapidology_form_bottom',
 						'basic_edge' == $details['edge_style'] || '' == $details['edge_style']
 							? ''
@@ -5579,7 +5504,7 @@ STRING;
 							? ' rad_rapidology_before_exit'
 							: '',#21
 
-						$this->get_power_button('popup')
+						$this->get_power_button( 'popup' )
 					);
 				}
 			}
@@ -5587,24 +5512,24 @@ STRING;
 	}
 
 	function display_preview() {
-		wp_verify_nonce( $_POST['rapidology_preview_nonce'] , 'rapidology_preview' );
+		wp_verify_nonce( $_POST['rapidology_preview_nonce'], 'rapidology_preview' );
 
-		$options = $_POST['preview_options'];
+		$options          = $_POST['preview_options'];
 		$processed_string = str_replace( array( '%5B', '%5D' ), array( '[', ']' ), $options );
 		parse_str( $processed_string, $processed_array );
-		$details = $processed_array['rad_dashboard'];
+		$details     = $processed_array['rad_dashboard'];
 		$fonts_array = array();
 
-		if ( ! isset( $fonts_array[$details['header_font']] ) && isset( $details['header_font'] ) ) {
+		if ( ! isset( $fonts_array[ $details['header_font'] ] ) && isset( $details['header_font'] ) ) {
 			$fonts_array[] = $details['header_font'];
 		}
-		if ( ! isset( $fonts_array[$details['body_font']] ) && isset( $details['body_font'] ) ) {
+		if ( ! isset( $fonts_array[ $details['body_font'] ] ) && isset( $details['body_font'] ) ) {
 			$fonts_array[] = $details['body_font'];
 		}
 
 		$popup_array['popup_code'] = $this->generate_preview_popup( $details );
-		$popup_array['popup_css'] = '<style id="rad_rapidology_preview_css">' . RAD_Rapidology::generate_custom_css( '.rad_rapidology .rad_rapidology_preview_popup', $details ) . '</style>';
-		$popup_array['fonts'] = $fonts_array;
+		$popup_array['popup_css']  = '<style id="rad_rapidology_preview_css">' . RAD_Rapidology::generate_custom_css( '.rad_rapidology .rad_rapidology_preview_popup', $details ) . '</style>';
+		$popup_array['fonts']      = $fonts_array;
 
 		die( json_encode( $popup_array ) );
 	}
@@ -5622,7 +5547,7 @@ STRING;
 				</div>
 			</div>',
 			'bottom' !== $details['form_orientation'] && 'custom_html' !== $details['email_provider'] && 'widget' !== $details['optin_type']
-				? sprintf( ' rad_rapidology_form_%1$s',  esc_attr( $details['form_orientation'] ) )
+				? sprintf( ' rad_rapidology_form_%1$s', esc_attr( $details['form_orientation'] ) )
 				: ' rad_rapidology_form_bottom',
 			'basic_edge' == $details['edge_style'] || '' == $details['edge_style']
 				? ''
@@ -5638,7 +5563,7 @@ STRING;
 			( 'rounded' == $details['field_corner'] ) ? ' rad_rapidology_rounded' : '',
 			'light' == $details['text_color'] ? ' rad_rapidology_form_text_light' : ' rad_rapidology_form_text_dark',
 			RAD_Rapidology::generate_form_content( 0, 0, $details ),
-			$this->get_power_button('popup')
+			$this->get_power_button( 'popup' )
 		);
 
 		return $output;
@@ -5651,7 +5576,7 @@ STRING;
 		$optins_set = $this->below_post_optins;
 
 		if ( ! empty( $optins_set ) && ! is_singular( 'product' ) ) {
-			foreach( $optins_set as $optin_id => $details ) {
+			foreach ( $optins_set as $optin_id => $details ) {
 				if ( $this->check_applicability( $optin_id ) ) {
 					$content .= '<div class="rad_rapidology_below_post">' . $this->generate_inline_form( $optin_id, $details ) . '</div>';
 				}
@@ -5668,7 +5593,7 @@ STRING;
 		$optins_set = $this->below_post_optins;
 
 		if ( ! empty( $optins_set ) ) {
-			foreach( $optins_set as $optin_id => $details ) {
+			foreach ( $optins_set as $optin_id => $details ) {
 				if ( $this->check_applicability( $optin_id ) ) {
 					echo $this->generate_inline_form( $optin_id, $details );
 				}
@@ -5682,22 +5607,22 @@ STRING;
 	function generate_inline_form( $optin_id, $details, $update_stats = true ) {
 		$output = '';
 
-		$page_id = get_the_ID();
-		$list_id = $details['email_provider'] . '_' . $details['email_list'];
+		$page_id           = get_the_ID();
+		$list_id           = $details['email_provider'] . '_' . $details['email_list'];
 		$custom_css_output = '';
 
-		$all_optins = RAD_Rapidology::grad_rapidology_options();
+		$all_optins       = RAD_Rapidology::get_rapidology_options();
 		$display_optin_id = RAD_Rapidology::choose_form_ab_test( $optin_id, $all_optins );
 
 		if ( $display_optin_id != $optin_id ) {
 			$optin_id = $display_optin_id;
-			$details = $all_optins[$optin_id];
+			$details  = $all_optins[ $optin_id ];
 		}
 		if ( true === $update_stats ) {
 			RAD_Rapidology::add_stats_record( 'imp', $optin_id, $page_id, $list_id );
 		}
 		if ( 'below_post' !== $details['optin_type'] ) {
-			$custom_css = RAD_Rapidology::generate_custom_css( '.rad_rapidology .rad_rapidology_' . $display_optin_id, $details );
+			$custom_css        = RAD_Rapidology::generate_custom_css( '.rad_rapidology .rad_rapidology_' . $display_optin_id, $details );
 			$custom_css_output = '' !== $custom_css ? sprintf( '<style type="text/css">%1$s</style>', $custom_css ) : '';
 		}
 
@@ -5744,7 +5669,7 @@ STRING;
 					? '3'
 					: '2'
 			),
-			$this->get_power_button('inline')
+			$this->get_power_button( 'inline' )
 		);
 
 		return $output;
@@ -5754,14 +5679,14 @@ STRING;
 	 * Displays the Inline shortcode on front-end.
 	 */
 	function display_inline_shortcode( $atts ) {
-		$atts = shortcode_atts( array(
+		$atts     = shortcode_atts( array(
 			'optin_id' => '',
 		), $atts );
 		$optin_id = $atts['optin_id'];
 
-		$optins_set = RAD_Rapidology::grad_rapidology_options();
-		$selected_optin = isset( $optins_set[$optin_id] ) ? $optins_set[$optin_id] : '';
-		$output = '';
+		$optins_set     = RAD_Rapidology::get_rapidology_options();
+		$selected_optin = isset( $optins_set[ $optin_id ] ) ? $optins_set[ $optin_id ] : '';
+		$output         = '';
 
 		if ( '' !== $selected_optin && 'active' == $selected_optin['optin_status'] && 'inline' == $selected_optin['optin_type'] && empty( $selected_optin['child_of'] ) ) {
 			$output = $this->generate_inline_form( $optin_id, $selected_optin );
@@ -5773,17 +5698,17 @@ STRING;
 	/**
 	 * Displays the "locked content" shortcode on front-end.
 	 */
-	function display_locked_shortcode( $atts, $content=null ) {
-		$atts = shortcode_atts( array(
+	function display_locked_shortcode( $atts, $content = null ) {
+		$atts           = shortcode_atts( array(
 			'optin_id' => '',
 		), $atts );
-		$optin_id = $atts['optin_id'];
-		$optins_set = RAD_Rapidology::grad_rapidology_options();
-		$selected_optin = isset( $optins_set[$optin_id] ) ? $optins_set[$optin_id] : '';
+		$optin_id       = $atts['optin_id'];
+		$optins_set     = RAD_Rapidology::get_rapidology_options();
+		$selected_optin = isset( $optins_set[ $optin_id ] ) ? $optins_set[ $optin_id ] : '';
 		if ( '' == $selected_optin ) {
 			$output = $content;
 		} else {
-			$form = '';
+			$form    = '';
 			$page_id = get_the_ID();
 			$list_id = 'custom_html' == $selected_optin['email_provider'] ? 'custom_html' : $selected_optin['email_provider'] . '_' . $selected_optin['email_list'];
 
@@ -5820,28 +5745,28 @@ STRING;
 	 * Displays the Widget content on front-end.
 	 */
 	public static function display_widget( $optin_id ) {
-		$optins_set = RAD_Rapidology::grad_rapidology_options();
-		$selected_optin = isset( $optins_set[$optin_id] ) ? $optins_set[$optin_id] : '';
-		$output = '';
+		$optins_set     = RAD_Rapidology::get_rapidology_options();
+		$selected_optin = isset( $optins_set[ $optin_id ] ) ? $optins_set[ $optin_id ] : '';
+		$output         = '';
 
-		if ( '' !== $selected_optin && 'active' == $optins_set[$optin_id]['optin_status'] && empty( $optins_set[$optin_id]['child_of'] ) ) {
+		if ( '' !== $selected_optin && 'active' == $optins_set[ $optin_id ]['optin_status'] && empty( $optins_set[ $optin_id ]['child_of'] ) ) {
 
 			$display_optin_id = RAD_Rapidology::choose_form_ab_test( $optin_id, $optins_set );
 
 			if ( $display_optin_id != $optin_id ) {
-				$optin_id = $display_optin_id;
-				$selected_optin = $optins_set[$optin_id];
+				$optin_id       = $display_optin_id;
+				$selected_optin = $optins_set[ $optin_id ];
 			}
 
 			if ( is_singular() || is_front_page() ) {
-				$page_id = is_front_page() ? -1 : get_the_ID();
+				$page_id = is_front_page() ? - 1 : get_the_ID();
 			} else {
 				$page_id = 0;
 			}
 
 			$list_id = $selected_optin['email_provider'] . '_' . $selected_optin['email_list'];
 
-			$custom_css = RAD_Rapidology::generate_custom_css( '.rad_rapidology .rad_rapidology_' . $display_optin_id, $selected_optin );
+			$custom_css        = RAD_Rapidology::generate_custom_css( '.rad_rapidology .rad_rapidology_' . $display_optin_id, $selected_optin );
 			$custom_css_output = '' !== $custom_css ? sprintf( '<style type="text/css">%1$s</style>', $custom_css ) : '';
 
 			RAD_Rapidology::add_stats_record( 'imp', $optin_id, $page_id, $list_id );
@@ -5872,7 +5797,7 @@ STRING;
 				'light' == $selected_optin['text_color'] ? ' rad_rapidology_form_text_light' : ' rad_rapidology_form_text_dark',
 				esc_attr( $optin_id ),
 				$custom_css_output, //#8
-				RAD_Rapidology::get_power_button('widget')
+				RAD_Rapidology::get_power_button( 'widget' )
 			);
 		}
 
@@ -5884,13 +5809,13 @@ STRING;
 	 * @return array
 	 */
 	public static function widget_optins_list() {
-		$optins_set = RAD_Rapidology::grad_rapidology_options();
-		$output = array(
+		$optins_set = RAD_Rapidology::get_rapidology_options();
+		$output     = array(
 			'empty' => __( 'Select optin', 'rapidology' ),
 		);
 
 		if ( ! empty( $optins_set ) ) {
-			foreach( $optins_set as $optin_id => $details ) {
+			foreach ( $optins_set as $optin_id => $details ) {
 				if ( isset( $details['optin_status'] ) && 'active' === $details['optin_status'] && empty( $details['child_of'] ) ) {
 					if ( 'widget' == $details['optin_type'] ) {
 						$output = array_merge( $output, array( $optin_id => $details['optin_name'] ) );
@@ -5907,28 +5832,28 @@ STRING;
 	}
 
 	function set_custom_css() {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
-		$custom_css = '';
+		$options_array  = RAD_Rapidology::get_rapidology_options();
+		$custom_css     = '';
 		$font_functions = RAD_Rapidology::load_fonts_class();
-		$fonts_array = array();
+		$fonts_array    = array();
 
-		foreach( $options_array as $id => $single_optin ) {
+		foreach ( $options_array as $id => $single_optin ) {
 			if ( 'accounts' != $id && 'db_version' != $id && isset( $single_optin['optin_type'] ) ) {
 				if ( 'inactive' !== $single_optin['optin_status'] ) {
 					$current_optin_id = RAD_Rapidology::choose_form_ab_test( $id, $options_array, false );
-					$single_optin = $options_array[$current_optin_id];
+					$single_optin     = $options_array[ $current_optin_id ];
 
-					if ( ( ( 'flyin' == $single_optin['optin_type'] || 'pop_up' == $single_optin['optin_type'] || 'below_post' == $single_optin['optin_type'] ) && $this->check_applicability ( $id ) ) && ( isset( $single_optin['custom_css'] ) || isset( $single_optin['form_bg_color'] ) || isset( $single_optin['header_bg_color'] ) || isset( $single_optin['form_button_color'] ) || isset( $single_optin['border_color'] ) ) ) {
+					if ( ( ( 'flyin' == $single_optin['optin_type'] || 'pop_up' == $single_optin['optin_type'] || 'below_post' == $single_optin['optin_type'] ) && $this->check_applicability( $id ) ) && ( isset( $single_optin['custom_css'] ) || isset( $single_optin['form_bg_color'] ) || isset( $single_optin['header_bg_color'] ) || isset( $single_optin['form_button_color'] ) || isset( $single_optin['border_color'] ) ) ) {
 						$form_class = '.rad_rapidology .rad_rapidology_' . $current_optin_id;
 
 						$custom_css .= RAD_Rapidology::generate_custom_css( $form_class, $single_optin );
 					}
 
-					if ( ! isset( $fonts_array[$single_optin['header_font']] ) && isset( $single_optin['header_font'] ) ) {
+					if ( ! isset( $fonts_array[ $single_optin['header_font'] ] ) && isset( $single_optin['header_font'] ) ) {
 						$fonts_array[] = $single_optin['header_font'];
 					}
 
-					if ( ! isset( $fonts_array[$single_optin['body_font']] ) && isset( $single_optin['body_font'] ) ) {
+					if ( ! isset( $fonts_array[ $single_optin['body_font'] ] ) && isset( $single_optin['body_font'] ) ) {
 						$fonts_array[] = $single_optin['body_font'];
 					}
 				}
@@ -5955,7 +5880,7 @@ STRING;
 	 */
 	public static function generate_custom_css( $form_class, $single_optin = array() ) {
 		$font_functions = RAD_Rapidology::load_fonts_class();
-		$custom_css = '';
+		$custom_css     = '';
 
 		if ( isset( $single_optin['form_bg_color'] ) && '' !== $single_optin['form_bg_color'] ) {
 			$custom_css .= $form_class . ' .rad_rapidology_form_content { background-color: ' . $single_optin['form_bg_color'] . ' !important; } ';
@@ -5971,7 +5896,7 @@ STRING;
 		}
 
 		if ( isset( $single_optin['header_bg_color'] ) && '' !== $single_optin['header_bg_color'] ) {
-			$custom_css .= $form_class .  ' .rad_rapidology_form_container .rad_rapidology_form_header { background-color: ' . $single_optin['header_bg_color'] . ' !important; } ';
+			$custom_css .= $form_class . ' .rad_rapidology_form_container .rad_rapidology_form_header { background-color: ' . $single_optin['header_bg_color'] . ' !important; } ';
 
 			switch ( $single_optin['edge_style'] ) {
 				case 'curve_edge' :
@@ -6002,16 +5927,14 @@ STRING;
 		}
 
 		if ( isset( $single_optin['form_button_color'] ) && '' !== $single_optin['form_button_color'] ) {
-
-			$custom_css .= $form_class .  ' .rad_rapidology_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ';
-			// $custom_css .= '.rad_power a { color: ' . $single_optin['header_bg_color'] . ' !important; } ';
+			$custom_css .= $form_class . ' .rad_rapidology_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ';
 		}
 
 		if ( isset( $single_optin['border_color'] ) && '' !== $single_optin['border_color'] && 'no_border' !== $single_optin['border_orientation'] ) {
 			if ( 'breakout_edge' === $single_optin['edge_style'] ) {
 				switch ( $single_optin['border_style'] ) {
 					case 'letter' :
-						$custom_css .= $form_class .  ' .breakout_edge.rad_rapidology_border_letter .rad_rapidology_header_outer { background: repeating-linear-gradient( 135deg, ' . $single_optin['border_color'] . ', ' . $single_optin['border_color'] . ' 10px, #fff 10px, #fff 20px, #f84d3b 20px, #f84d3b 30px, #fff 30px, #fff 40px ) !important; } ';
+						$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_letter .rad_rapidology_header_outer { background: repeating-linear-gradient( 135deg, ' . $single_optin['border_color'] . ', ' . $single_optin['border_color'] . ' 10px, #fff 10px, #fff 20px, #f84d3b 20px, #f84d3b 30px, #fff 30px, #fff 40px ) !important; } ';
 						break;
 
 					case 'double' :
@@ -6083,7 +6006,7 @@ STRING;
 			} else {
 				switch ( $single_optin['border_style'] ) {
 					case 'letter' :
-						$custom_css .= $form_class .  ' .rad_rapidology_border_letter { background: repeating-linear-gradient( 135deg, ' . $single_optin['border_color'] . ', ' . $single_optin['border_color'] . ' 10px, #fff 10px, #fff 20px, #f84d3b 20px, #f84d3b 30px, #fff 30px, #fff 40px ) !important; } ';
+						$custom_css .= $form_class . ' .rad_rapidology_border_letter { background: repeating-linear-gradient( 135deg, ' . $single_optin['border_color'] . ', ' . $single_optin['border_color'] . ' 10px, #fff 10px, #fff 20px, #f84d3b 20px, #f84d3b 30px, #fff 30px, #fff 40px ) !important; } ';
 						break;
 
 					case 'double' :
@@ -6155,8 +6078,7 @@ STRING;
 			}
 		}
 
-		$custom_css .= isset( $single_optin['form_button_color'] ) && '' !== $single_optin['form_button_color'] ? $form_class .  ' .rad_rapidology_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ' : '';
-		// $custom_css .= isset( $single_optin['form_button_color'] ) && '' !== $single_optin['form_button_color'] ?   '.rad_power a { color: ' . $single_optin['form_button_color'] . ' !important; } ' : '';
+		$custom_css .= isset( $single_optin['form_button_color'] ) && '' !== $single_optin['form_button_color'] ? $form_class . ' .rad_rapidology_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ' : '';
 		$custom_css .= isset( $single_optin['header_font'] ) ? $font_functions->et_gf_attach_font( $single_optin['header_font'], $form_class . ' h2, ' . $form_class . ' h2 span, ' . $form_class . ' h2 strong' ) : '';
 		$custom_css .= isset( $single_optin['body_font'] ) ? $font_functions->et_gf_attach_font( $single_optin['body_font'], $form_class . ' p, ' . $form_class . ' p span, ' . $form_class . ' p strong, ' . $form_class . ' form input, ' . $form_class . ' form button span' ) : '';
 
@@ -6169,11 +6091,11 @@ STRING;
 	 * Modifies the URL of post after commenting to trigger the popup after comment
 	 * @return string
 	 */
-	function after_comment_trigger( $location ){
-		$newurl = $location;
-		$newurl = substr( $location, 0, strpos( $location, '#comment' ) );
+	function after_comment_trigger( $location ) {
+		$newurl    = $location;
+		$newurl    = substr( $location, 0, strpos( $location, '#comment' ) );
 		$delimeter = false === strpos( $location, '?' ) ? '?' : '&';
-		$params = 'rad_rapidology_popup=true';
+		$params    = 'rad_rapidology_popup=true';
 
 		$newurl .= $delimeter . $params;
 
@@ -6195,67 +6117,70 @@ STRING;
 	 * Creates arrays with optins for for Flyin, Popup, Below Content to improve the performance during forms displaying
 	 */
 	function frontend_register_locations() {
-		$options_array = RAD_Rapidology::grad_rapidology_options();
+		$options_array = RAD_Rapidology::get_rapidology_options();
 
 		if ( ! is_admin() && ! empty( $options_array ) ) {
 			add_action( 'wp_head', array( $this, 'set_custom_css' ) );
 
-			$flyin_count = 0;
-			$popup_count = 0;
-			$below_count = 0;
-			$after_comment = 0;
+			$flyin_count    = 0;
+			$popup_count    = 0;
+			$below_count    = 0;
+			$after_comment  = 0;
 			$after_purchase = 0;
 
 			foreach ( $options_array as $optin_id => $details ) {
 				if ( 'accounts' !== $optin_id ) {
 					if ( isset( $details['optin_status'] ) && 'active' === $details['optin_status'] && empty( $details['child_of'] ) ) {
-						switch( $details['optin_type'] ) {
+						switch ( $details['optin_type'] ) {
 							case 'flyin' :
 								if ( 0 === $flyin_count ) {
 									add_action( 'wp_footer', array( $this, "display_flyin" ) );
-									$flyin_count++;
+									$flyin_count ++;
 								}
 
 								if ( 0 === $after_comment && isset( $details['comment_trigger'] ) && true == $details['comment_trigger'] ) {
 									add_filter( 'comment_post_redirect', array( $this, 'after_comment_trigger' ) );
-									$after_comment++;
+									$after_comment ++;
 								}
 
 								if ( 0 === $after_purchase && isset( $details['purchase_trigger'] ) && true == $details['purchase_trigger'] ) {
 									add_action( 'woocommerce_thankyou', array( $this, 'add_purchase_trigger' ) );
-									$after_purchase++;
+									$after_purchase ++;
 								}
 
-								$this->flyin_optins[$optin_id] = $details;
+								$this->flyin_optins[ $optin_id ] = $details;
 								break;
 
 							case 'pop_up' :
 								if ( 0 === $popup_count ) {
 									add_action( 'wp_footer', array( $this, "display_popup" ) );
-									$popup_count++;
+									$popup_count ++;
 								}
 
 								if ( 0 === $after_comment && isset( $details['comment_trigger'] ) && true == $details['comment_trigger'] ) {
 									add_filter( 'comment_post_redirect', array( $this, 'after_comment_trigger' ) );
-									$after_comment++;
+									$after_comment ++;
 								}
 
 								if ( 0 === $after_purchase && isset( $details['purchase_trigger'] ) && true == $details['purchase_trigger'] ) {
 									add_action( 'woocommerce_thankyou', array( $this, 'add_purchase_trigger' ) );
-									$after_purchase++;
+									$after_purchase ++;
 								}
 
-								$this->popup_optins[$optin_id] = $details;
+								$this->popup_optins[ $optin_id ] = $details;
 								break;
 
 							case 'below_post' :
 								if ( 0 === $below_count ) {
 									add_filter( 'the_content', array( $this, 'display_below_post' ), 9999 );
-									add_action( 'woocommerce_after_single_product_summary', array( $this, 'display_on_wc_page' ) );
-									$below_count++;
+									add_action(
+										'woocommerce_after_single_product_summary',
+										array( $this, 'display_on_wc_page' )
+									);
+									$below_count ++;
 								}
 
-								$this->below_post_optins[$optin_id] = $details;
+								$this->below_post_optins[ $optin_id ] = $details;
 								break;
 						}
 					}
@@ -6268,22 +6193,52 @@ STRING;
 		}
 	}
 
-	function rad_add_footer_text($text){
+	function rad_add_footer_text( $text ) {
 
-		return sprintf( __( $text . ' Rapidology - by LeadPages<sup>&reg;</sup> <a target="_blank" style= "color:#939AAA;" href="%s">Privacy Policy</a> | <a target="_blank" style= "color:#939AAA;" href="%s">Terms of Use</a>'), $this->privacy_url, $this->tou_url );
+		return sprintf( __( $text . ' Rapidology - by LeadPages<sup>&reg;</sup> <a target="_blank" style= "color:#939AAA;" href="%s">Privacy Policy</a> | <a target="_blank" style= "color:#939AAA;" href="%s">Terms of Use</a>' ), $this->privacy_url, $this->tou_url );
 	}
 
-	function execute_footer_text()
-	{
-		if(isset($_GET['page'])) {
-			if ($_GET['page'] == 'rad_rapidology_options' && isset($_GET['page'])) {
-				add_filter('admin_footer_text', array($this, 'rad_add_footer_text'));
+	function execute_footer_text() {
+		if ( isset( $_GET['page'] ) ) {
+			if ( $_GET['page'] == 'rad_rapidology_options' && isset( $_GET['page'] ) ) {
+				add_filter( 'admin_footer_text', array( $this, 'rad_add_footer_text' ) );
 			}
 		}
 	}
 
+	/**
+	 * Get appropriate error message from API request/response.
+	 *
+	 * @param $theme_request
+	 * @param $response_code
+	 *
+	 * @param $message_map
+	 *
+	 * @return string|void
+	 */
+	public function get_error_message( $theme_request, $response_code, $message_map ) {
+		if ( null === $message_map ) {
+			$message_map = array(
+				"401" => 'Invalid Username or API key'
+			);
+		}
+		if ( is_wp_error( $theme_request ) ) {
+			$error_message = $theme_request->get_error_message();
 
+			return $error_message;
+		} else {
+			switch ( $response_code ) {
+				case '401' :
+					$error_message = __( $message_map['401'], 'rapidology' );
 
+					return $error_message;
+				default :
+					$error_message = $response_code;
+
+					return $error_message;
+			}
+		}
+	}
 
 
 }

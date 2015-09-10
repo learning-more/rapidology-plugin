@@ -20,6 +20,15 @@ if ( ! class_exists( 'RAD_Dashboard' ) ) {
 	require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'dashboard/dashboard.php' );
 }
 
+require_once( 'includes/BFIGitHubPluginUploader.php' );
+if ( is_admin() ) {
+    new BFIGitHubPluginUpdater( __FILE__, 'leadpages', "rapidology-plugin" );
+}
+
+
+
+
+
 class RAD_Rapidology extends RAD_Dashboard {
 	var $plugin_version = '1.0';
 	var $db_version = '1.0';

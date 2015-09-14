@@ -66,12 +66,14 @@ class WP_GitHub_Updater {
 	 * @return void
 	 */
 	public function __construct( $config = array() ) {
-
+		require_once( plugin_dir_path( __FILE__ ) . "Parsedown.php" );
 		$defaults = array(
 			'slug' => plugin_basename( __FILE__ ),
 			'proper_folder_name' => dirname( plugin_basename( __FILE__ ) ),
 			'sslverify' => true,
 			'access_token' => '',
+			'changelog',
+			'githubAPIResult',
 		);
 
 		$this->config = wp_parse_args( $config, $defaults );
@@ -159,6 +161,8 @@ class WP_GitHub_Updater {
 
 		if ( ! isset( $this->config['description'] ) )
 			$this->config['description'] = $this->get_description();
+		if ( ! isset( $this->config['changelog'] ) )
+			$this->config['changelog'] = $this->get_changelog();
 
 		$plugin_data = $this->get_plugin_data();
 		if ( ! isset( $this->config['plugin_name'] ) )
@@ -330,6 +334,14 @@ class WP_GitHub_Updater {
 		return ( !empty( $_description->description ) ) ? $_description->description : false;
 	}
 
+	public function get_changelog(){
+		$this->getRepoReleaseInfo();
+		$_changelog = class_exists( "Parsedown" )
+			? Parsedown::instance()->parse( $this->config['githubAPIResult']->body )
+			: $this->config['githubAPIResult']->body;
+		return $_changelog;
+
+	}
 
 	/**
 	 * Get Plugin data
@@ -355,12 +367,10 @@ class WP_GitHub_Updater {
 
 		// Check if the transient contains the 'checked' information
 		// If not, just return its value without hacking it
-		if ( empty( $transient->checked ) )
-			return $transient;
-
+	
 		// check the version and decide if it's new
 		$update = version_compare( $this->config['new_version'], $this->config['version'] );
-
+		$this->config['old_version'] = $this->config['version'];
 		if ( 1 === $update ) {
 			$response = new stdClass;
 			$response->new_version = $this->config['new_version'];
@@ -398,7 +408,7 @@ class WP_GitHub_Updater {
 		$response->tested = $this->config['tested'];
 		$response->downloaded   = 0;
 		$response->last_updated = $this->config['last_updated'];
-		$response->sections = array( 'description' => $this->config['description'] );
+		$response->sections = array( 'description' => $this->config['description'], 'changelog' => $this->config['changelog'] );
 		$response->download_link = $this->config['zip_url'];
 		return $response;
 	}
@@ -415,7 +425,7 @@ class WP_GitHub_Updater {
 	 * @return array $result the result of the move
 	 */
 	public function upgrader_post_install( $true, $hook_extra, $result ) {
-
+		
 		global $wp_filesystem;
 
 		// Move & Activate
@@ -427,8 +437,68 @@ class WP_GitHub_Updater {
 		// Output the update message
 		$fail  = __( 'The plugin has been updated, but could not be reactivated. Please reactivate it manually.', 'github_plugin_updater' );
 		$success = __( 'Plugin reactivated successfully.', 'github_plugin_updater' );
-		echo is_wp_error( $activate ) ? $fail : $success;
+
 		return $result;
 
 	}
+
+	public function download_file(){
+		//get file info
+		$url = 'https://rapidology.com/download/rapidology.zip';
+		$args=array(
+			'timeout'	=> 20
+		);
+		$response = wp_remote_get($url);
+		print_r($response);die();
+		$zip = $response['body'];
+		// In the header info is the name of the XML or CVS file. I used preg_match to find it
+		preg_match("/.datafeed_([0-9]*)\../", $response['headers']['content-disposition'], $match);
+
+		$file = WP_CONTENT_DIR."/upgrade/datafeed_".$match[1].".zip";
+		$fp = fopen($file, "w");
+		fwrite($fp, $zip);
+		fclose($fp);
+
+		WP_Filesystem();
+		if (unzip_file($file, WP_CONTENT_DIR."/upgrade")) {
+		// Now that the zip file has been used, destroy it
+			unlink($file);
+			return true;
+		} else {
+			return false;
+		}
+
+	}
+
+	public function getRepoReleaseInfo() {
+		// Only do this once
+		if ( !empty( $this->githubAPIResult ) ) {
+			return;
+		}
+
+		// Query the GitHub API
+		$url = $this->config['release_url'];
+
+		// We need the access token for private repos
+		if ( !empty( $this->accessToken ) ) {
+			$url = add_query_arg( array( "access_token" => $this->accessToken ), $url );
+		}
+
+		// Get the results
+		$this->config['githubAPIResult'] = wp_remote_retrieve_body( wp_remote_get( $url ) );
+
+
+		if ( !empty( $this->config['githubAPIResult']) ) {
+			$this->config['githubAPIResult'] = json_decode( $this->config['githubAPIResult'] );
+		}
+
+		// Use only the latest release
+		if ( is_array( $this->config['githubAPIResult'] ) ) {
+			$this->config['githubAPIResult'] = $this->config['githubAPIResult'][0];
+		}
+
+
+	}
+
+
 }

@@ -28,14 +28,15 @@ if (is_admin()) { // note the use of is_admin() to double check that this is hap
 		'api_url' => 'https://api.github.com/repos/blbraner1234/rapidology', // the github API url of your github repo
 		'raw_url' => 'https://raw.github.com/blbraner1234/rapidology/master', // the github raw url of your github repo
 		'github_url' => 'https://github.com/blbraner1234/rapidology', // the github url of your github repo
-		'zip_url' => 'https://github.com/blbraner1234/rapidology/zipball/master', // the zip url of the github repo
+		'zip_url' => 'https://rapidology.com/download/rapidology.zip', // the zip url of the github repo
+		'release_url' => 'https://api.github.com/repos/blbraner1234/rapidology/releases',
         //'api_url' => 'https://api.github.com/repos/leadpages/rapidology-plugin', // the github API url of your github repo
         //'raw_url' => 'https://raw.github.com/leadpages/rapidology-plugin/master', // the github raw url of your github repo
         //'github_url' => 'https://github.com/leadpages/rapidology-plugin', // the github url of your github repo
         //'zip_url' => 'https://github.com/leadpages/rapidology-plugin/zipball/master', // the zip url of the github repo
         'sslverify' => true, // wether WP should check the validity of the SSL cert when getting an update, see https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/2 and https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/4 for details
         'requires' => '3.5', // which version of WordPress does your plugin require?
-        'tested' => '3.3', // which version of WordPress is your plugin tested up to?
+        'tested' => '4.3', // which version of WordPress is your plugin tested up to?
         'readme' => 'README.md' // which file to use as the readme for the version number
     );
     new WP_GitHub_Updater($config);

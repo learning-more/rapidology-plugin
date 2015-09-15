@@ -87,6 +87,7 @@ class WP_GitHub_Updater {
 		}
 
 		$this->set_defaults();
+		if (isset($_REQUEST['tab']) && $_REQUEST['tab'] == 'plugin-information' && isset($_REQUEST['plugin']) && $_REQUEST['plugin'] == 'rapidology') {
 
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'api_check' ) );
 
@@ -97,8 +98,9 @@ class WP_GitHub_Updater {
 		// set timeout
 		add_filter( 'http_request_timeout', array( $this, 'http_request_timeout' ) );
 
-		// set sslverify for zip download
-		add_filter( 'http_request_args', array( $this, 'http_request_sslverify' ), 10, 2 );
+			// set sslverify for zip download
+			add_filter('http_request_args', array($this, 'http_request_sslverify'), 10, 2);
+		}
 	}
 
 	public function has_minimum_config() {

@@ -295,7 +295,7 @@ $rad_dashboard_options_all = array(
 			'default'         => 'no_name',
 			'conditional'     => 'name_text#last_name#single_name_text',
 			'validation_type' => 'simple_text',
-			'display_if'      => 'constant_contact#sendinblue#feedblitz#mailpoet#campaign_monitor#madmimi#icontact#mailchimp#ontraport#infusionsoft',
+			'display_if'      => 'constant_contact#sendinblue#feedblitz#mailpoet#campaign_monitor#madmimi#icontact#mailchimp#ontraport#infusionsoft#salesforce',
 		),
 		'name_text' => array(
 			'type'            => 'input_field',

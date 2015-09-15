@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Rapidology By LeadPages
  * Plugin URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
- * Version: 0.8
+ * Version: 1.1.1
  * Description: 100% Free List Building & Popup Plugin...With Over 100 Responsive Templates & 6 Different Display Types For Growing Your Email Newsletter
  * Author: Rapidology
  * Author URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
@@ -19,6 +19,28 @@ define( 'RAD_RAPIDOLOGY_PLUGIN_URI', plugins_url( '', __FILE__ ) );
 if ( ! class_exists( 'RAD_Dashboard' ) ) {
 	require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'dashboard/dashboard.php' );
 }
+
+require_once('includes/updater.php');
+if (is_admin()) { // note the use of is_admin() to double check that this is happening in the admin
+    $config = array(
+        'slug' => plugin_basename(__FILE__), // this is the slug of your plugin
+        'proper_folder_name' => dirname( plugin_basename( __FILE__ ) ), // this is the name of the folder your plugin lives in
+		'zip_url' => 'https://rapidology.com/download/rapidology.zip', // the zip url of the github repo
+		'release_url' => 'https://api.github.com/repos/leadpages/rapidology-plugin/releases',
+        'api_url' => 'https://api.github.com/repos/leadpages/rapidology-plugin', // the github API url of your github repo
+        'raw_url' => 'https://raw.github.com/leadpages/rapidology-plugin/master', // the github raw url of your github repo
+        'github_url' => 'https://github.com/leadpages/rapidology-plugin', // the github url of your github repo
+        'sslverify' => true, // wether WP should check the validity of the SSL cert when getting an update, see https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/2 and https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/4 for details
+        'requires' => '3.5', // which version of WordPress does your plugin require?
+        'tested' => '4.3', // which version of WordPress is your plugin tested up to?
+        'readme' => 'README.md' // which file to use as the readme for the version number
+    );
+    new WP_GitHub_Updater($config);
+}
+
+
+
+
 
 class RAD_Rapidology extends RAD_Dashboard {
 	var $plugin_version = '1.0';
@@ -2822,6 +2844,16 @@ class RAD_Rapidology extends RAD_Dashboard {
 					$error_message = $this->emma_member_subscribe( $public_key, $private_key, $account_id, $email, $list_id, $name );
 
 					break;
+				case 'salesforce' :
+					$url			= $options_array['accounts'][ $service ][ $account_name ]['url'];
+					$version		= $options_array['accounts'][ $service ][ $account_name ]['version'];
+					$client_key		= $options_array['accounts'][ $service ][ $account_name ]['client_key'];
+					$client_secret  = $options_array['accounts'][ $service ][ $account_name ]['client_secret'];
+					$username_sf	= $options_array['accounts'][ $service ][ $account_name ]['username_sf'];
+					$password_sf	= $options_array['accounts'][ $service ][ $account_name ]['password_sf'];
+					$token			= $options_array['accounts'][ $service ][ $account_name ]['token'];
+					$error_message = $this->subscribe_salesforce($url, $version, $client_key, $client_secret, $username_sf, $password_sf, $token, $name, $last_name, $email, $list_id);
+				break;
 			}
 		} else {
 			$error_message = __( 'Invalid email', 'rapidology' );
@@ -3338,15 +3370,78 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 		//echo '<pre>';print_r($campagin_list);
 		$this->update_account('salesforce', sanitize_text_field($name), array(
-			'api_key' => $client_key,
-			'lists' => $campagin_list,
+			'url' => $url,
+			'version' 		=> $version,
+			'client_key' 	=> $client_key,
+			'client_secret' => $client_secret,
+			'username_sf' 	=> $username_sf,
+			'password_sf' 	=> $password_sf,
+			'token' 		=> $token,
+			'lists' 		=> $campagin_list,
 			'is_authorized' => 'true',
 		));
 		$error_message = 'success';
 		return $error_message;
 	}
 
+	/**
+	 * Adds Lead and adds them to selected campagain via Salesforce api and updates the data in DB.
+	 * @return string
+	 */
 
+	function subscribe_salesforce($url, $version, $client_key, $client_secret, $username,$password, $token, $name = '', $last_name = '', $email, $list_id){
+
+		require_once 'subscription/salesforce/SalesforceAPI.php';
+
+		//lastname is required so if it is not provided setting it to weblead
+		if($last_name == ''){
+			$last_name = 'WebLead';
+		}
+
+		//test to make sure the url appears to be properly formatted
+
+		//instantiate new salesforce class and login with your user. User needs to have access to campagins and leads
+		$salesforce = new SalesforceAPI($url, $version, $client_key, $client_secret);
+		$salesforce->login($username, $password, $token);
+		//perform soql query to see if email is already assigned to a lead
+		$current_lead = $salesforce->searchSOQL("select id from lead where email = '".$email."'");
+
+		$current = $current_lead->totalSize;
+
+		if($current > 0){
+			$lead_ids['id']=$current_lead->records[0]->Id;
+		}else{
+			$create_lead = $salesforce->create( 'Lead', ['firstname' => $name, 'lastname'=>$last_name, 'email'=>$email, 'company'=>'WebLead'] );
+			$lead_ids['id']=$create_lead->id;
+		}
+		$error_message = '';
+		//return($lead_ids['id']);
+		if($lead_ids['id'] == '0'){
+			$error_message = 'Connection error please try again';
+		}
+
+
+		//check to see if lead is a member of the campagin
+		$current_member = $salesforce->searchSOQL("SELECT LeadId FROM CampaignMember where CampaignId = '".$list_id."' and LeadId = '".$lead_ids['id']."' ");
+		if($current_member->totalSize > 0){
+			//just pass as success if they are currently a member of the campaign
+			$error_message = 'success';
+			return $error_message;
+		}
+		//hopefully create new memeber of campagain
+		$args = array(
+			'LeadId'		=> $lead_ids['id'],
+			'CampaignId'	=> $list_id
+		);
+		$campaign_member = $salesforce->create( 'CampaignMember', $args );
+		if($campaign_member->success == '1'){
+			$error_message  =  'success';
+		}else{
+			$error_message = __('Lead could not be added to campaign', 'rapidology');
+		}
+
+		return $error_message;
+	}
 
 	/**
 	 * Retrieves the lists via Campaign Monitor API and updates the data in DB.

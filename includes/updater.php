@@ -87,7 +87,8 @@ class WP_GitHub_Updater {
 		}
 
 		$this->set_defaults();
-		if (isset($_REQUEST['tab']) && $_REQUEST['tab'] == 'plugin-information' && isset($_REQUEST['plugin']) && $_REQUEST['plugin'] == 'rapidology') {
+		if (isset($_REQUEST['tab']) && $_REQUEST['tab'] == 'plugin-information' && isset($_REQUEST['plugin']) && $_REQUEST['plugin'] == 'rapidology' || $this->config['plugin_name'] != 'rapidology' && $_REQUEST['tab'] != 'plugin-information') {
+
 
 		add_filter( 'pre_set_site_transient_update_plugins', array( $this, 'api_check' ) );
 

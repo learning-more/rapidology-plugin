@@ -3343,12 +3343,22 @@ class RAD_Rapidology extends RAD_Dashboard {
 		
 		require_once 'subscription/salesforce/SalesforceAPI.php';
 		//test to make sure the url appears to be properly formatted
-		preg_match("/^https:\/\/[a-z0-9]+.salesforce.com$/", $url, $matches);
+		/*preg_match("/^https:\/\/[a-z0-9]+.salesforce.com$/", $url, $matches);
 		//if matches from preg_match is 0 that means that there is something wrong with the url
 		if(sizeof($matches) == 0){
 			$error_message = "Please check your url. It should be https://naXX.salesforce.com. <br /> This will also be the url you are at once you login to salesforce.";
 			return $error_message;
+		}*/
+
+		//check just instance name for naXX
+
+		preg_match("/^na[0-9]+$/", $url, $matches);
+		//if matches from preg_match is 0 that means that there is something wrong with the url
+		if(sizeof($matches) == 0){
+			$error_message = "Please check your instance name. It should be naXX. <br /> This will  be the first part url you are at once you login to salesforce.";
+			return $error_message;
 		}
+		$url = 'https://'.$url.'.salesforce.com';
 		//ensure version has a . in it so 34.0 vs 34 etc
 		preg_match("/[0-9]+[\.]+[0-9]+/", $version, $version_matches);
 		if(sizeof($version_matches) == 0){
@@ -3370,7 +3380,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 		//echo '<pre>';print_r($campagin_list);
 		$this->update_account('salesforce', sanitize_text_field($name), array(
-			'url' => $url,
+			'url' 			=> $url,
 			'version' 		=> $version,
 			'client_key' 	=> $client_key,
 			'client_secret' => $client_secret,
@@ -4654,14 +4664,11 @@ STRING;
 				);
 				break;
 			case 'salesforce' :
+				//hide verision # and hardcoded it to 34.0
 				$form_fields .= sprintf('
 					<div class="rad_dashboard_account_row">
 						<label for="%1$s">%8$s</label>
 						<input type="text" value="%15$s" id="%1$s">%22$s
-					</div>
-					<div class="rad_dashboard_account_row">
-						<label for="%2$s">%9$s</label>
-						<input type="text" value="%16$s" id="%2$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%3$s">%10$s</label>
@@ -4682,7 +4689,12 @@ STRING;
 					<div class="rad_dashboard_account_row">
 						<label for="%7$s">%14$s</label>
 						<input type="text" value="%21$s" id="%7$s">%22$s
-					</div>',
+					</div>
+					<div class="rad_dashboard_account_row">
+						<label style="display:none;" for="%2$s">%9$s</label>
+						<input type="hidden" value="34.0" id="%2$s">
+					</div>
+					',
 					esc_attr('url_'.$service),#1
 					esc_attr('version_'.$service),#2
 					esc_attr('client_key_'.$service),#3
@@ -4690,7 +4702,7 @@ STRING;
 					esc_attr('username_sf_'.$service),#5
 					esc_attr('password_sf_'.$service),#6
 					esc_attr('token_'.$service),#7
-					__('Salesforce url', 'rapidology'),#8
+					__('Instance Number', 'rapidology'),#8
 					__('Salesforce version #', 'rapidology'),#9
 					__('Consumer key', 'rapidology'),#10
 					__('Consumer secret', 'rapidology'),#11

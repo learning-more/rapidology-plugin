@@ -1087,7 +1087,11 @@
 					beforeSend: function( data ) {
 						$( $container ).find( 'span.spinner' ).addClass( 'rad_dashboard_spinner_visible' );
 					},
-
+                    error: function (xhr, ajaxOptions, thrownError){
+                        $(  '.spinner'	).removeClass( 'rad_dashboard_spinner_visible' );
+                        var error = 'There appears to be an issue with your credientals. Please check them and try again';
+                        window.rad_dashboard_generate_warning( error, '#', '', '', '', '' );
+                    },
 					success: function( data ){
 						$( $container ).find( 'span.spinner' ).removeClass( 'rad_dashboard_spinner_visible' );
 
@@ -1394,6 +1398,7 @@
 				}
 			}, 100 );
 		}
+
 
 		$( window ).scroll( function(){
 			if( $( this ).scrollTop() > 200 ) {

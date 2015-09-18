@@ -167,7 +167,11 @@ class rapidology_active_campagin
 				$i++;
 			}
 		}else{
-			return 'Error connecting to server. Please check credientals and try again';
+			$error_array=array(
+				'status' => 'error',
+				'message' => 'Error retrieving lists, please check your credientals and try again'
+			);
+			return $error_array;
 		}
 		return $forms;
 	}
@@ -182,7 +186,7 @@ class rapidology_active_campagin
 	public function rapidology_get_ac_html($forms){
 		$i=0;
 		foreach($forms as $form) {
-			$this->form_id = '1435';
+			$this->form_id = $form['id'];
 			$this->api_action = 'form_html';
 			$results = $this->http_request();
 			//run each form through qualify form to make sure rapidology can use it
@@ -326,12 +330,13 @@ class rapidology_active_campagin
 				return $error;
 			}
 		}
-		if($qualified_form){
+
+		if($qualified_form = 'true'){
 			return $form_fields;
 		}
 	}
 
-	public function rapidology_submit_ac_form($form_array){
+	public function rapidology_submit_ac_form($form_id, $first_name, $last_name, $email, $lists_array, $url ){
 		$this->api_action = 'contact_add';
 		$params = array(
 			'api_key'		=> $this->api_key,
@@ -339,15 +344,15 @@ class rapidology_active_campagin
 			'api_output'	=> $this->api_output,
 		);
 		$post_fields = array();
-		$post_fields['first_name'] = 'brandon';
-		$post_fields['last_name'] = 'braner';
-		$post_fields['email'] = 'brandonphp@test121212.com';
-		foreach($form_array['lists'] as $list){
+		$post_fields['first_name']	= $first_name;
+		$post_fields['last_name']	= $last_name;
+		$post_fields['email']		= $email;
+		foreach($lists_array as $list){
 			$post_fields["p[$list]"] = $list;
 			$post_fields['status'] = 1;
 			$post_fields["instantresponders[$list]"] = 0;
 		}
-		$post_fields['form'] = $form_array['id'];
+		$post_fields['form'] = $form_id;
 
 		// This section takes the input fields and converts them to the proper format
 		$query = "";
@@ -382,28 +387,19 @@ class rapidology_active_campagin
 			die('Nothing was returned. Do you have a connection to Email Marketing server?');
 		}
 		$results = json_decode($response);
-		echo '<pre>'; print_r($results);
-		$success = 'false';
+		$success = array();
 		if($results->result_code){
-			$success = 'true';
+			$success['result'] = 'success';
+			$success['message'] = 'success';
+		}else{
+			$success['result'] = 'error';
+			$success['message'] = 'There seems to be an issue with your form. Please check it for invalid fields.';
 		}
 		return $success;
 	}
 }
 
 
-//test setup
-$ac_requests = new rapidology_active_campagin('https://leadpages.api-us1.com', '59e7111ad66787d1442747ddc53695a7a7231cb8fa8a93feba3e6bfba856e74fa8534ad6');
-$forms = $ac_requests->rapidology_get_ac_forms();
-$forms_array = $ac_requests->rapidology_get_ac_html($forms);
 
-//test form submit information
-
-foreach ($forms_array as $form){
-	if($form['id'] == 1435){
-		$testform = $form;
-	}
-}
-$result = $ac_requests->rapidology_submit_ac_form($testform);
 
 ?>

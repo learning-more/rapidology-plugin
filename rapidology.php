@@ -2735,6 +2735,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 			case 'salesforce' :
 				$error_message = $this->get_salesforce_campagins($url, $version, $client_key, $client_secret, $username_sf, $password_sf, $token, $name);
 				break;
+			case 'activecampaign':
+				$error_message = $this->get_active_campagin_forms($url, $api_key, $name);
+				break;
 
 
 		}
@@ -2856,6 +2859,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 					$token			= $options_array['accounts'][ $service ][ $account_name ]['token'];
 					$error_message = $this->subscribe_salesforce($url, $version, $client_key, $client_secret, $username_sf, $password_sf, $token, $name, $last_name, $email, $list_id);
 				break;
+				case 'activecampaign':
+					$api_key    = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
+					$url		= $options_array['accounts'][ $service ][ $account_name ]['url'];
+					$lists		= $options_array['accounts'][ $service ][ $account_name ]['lists'][$list_id]['list_ids'];
+					$form_id	= $list_id;//gets confusing the list_id from rapdiology is actualy the form id in active campaign, and lists are the lists you need to subscribe to based on the form
+					$error_message = $this->subscribe_active_campaign($url, $api_key, $name , $last_name, $email, $lists, $form_id);
+					break;
 			}
 		} else {
 			$error_message = __( 'Invalid email', 'rapidology' );
@@ -3459,6 +3469,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 	/**
 	 * get Active Campaign forms
+	 * @return string
 	 */
 
 	function get_active_campagin_forms($url, $api_key, $name){
@@ -3469,21 +3480,38 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$error_message = $forms['message'];
 			return $error_message;
 		}
-		foreach($forms as $form){
+
+		$verfied_forms = $ac_requests->rapidology_get_ac_html($forms);
+
+		foreach($verfied_forms as $form){
 			$form_list[$form['id']]['name'] = $form['name'];
 			$form_list[$form['id']]['subscribers_count'] = $form['subscriptions'];
 			$form_list[$form['id']]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('activecampagin' . $form['id']));
-			$lists_to_form = $form['lists'];
+			$form_list[$form['id']]['list_ids'] = $form['lists'];
 		}
 		$this->update_account('activecampaign', sanitize_text_field($name), array(
 			'url' 			=> $url,
 			'api_key' 		=> $api_key,
 			'lists' 		=> $form_list,
-			'list_ids'		=> $lists_to_form,
 			'is_authorized' => 'true',
 		));
 		$error_message = 'success';
 		return $error_message;
+
+	}
+
+	/**
+	 * submit user to form and lists active campaign
+	 * @return string
+	 */
+
+	function subscribe_active_campaign($url, $api_key, $first_name , $last_name, $email, $lists, $form_id){
+		require_once('subscription/activecampaign/class.activecampagin.php');
+		$ac_requests = new rapidology_active_campagin($url, $api_key);
+
+		$result = $ac_requests->rapidology_submit_ac_form($form_id, $first_name, $last_name, $email, $lists, $url );
+		$error_message = $result;
+		return $error_message['message'];
 
 	}
 

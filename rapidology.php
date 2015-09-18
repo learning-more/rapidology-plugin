@@ -3352,13 +3352,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		//check just instance name for naXX
 
-		preg_match("/^na[0-9]+$/", $url, $matches);
+		preg_match("/na[0-9]+/", $url, $matches);
 		//if matches from preg_match is 0 that means that there is something wrong with the url
 		if(sizeof($matches) == 0){
 			$error_message = "Please check your instance name. It should be naXX. <br /> This will  be the first part url you are at once you login to salesforce.";
 			return $error_message;
 		}
-		$url = 'https://'.$url.'.salesforce.com';
+		$url = 'https://'.$matches[0].'.salesforce.com';
 		//ensure version has a . in it so 34.0 vs 34 etc
 		preg_match("/[0-9]+[\.]+[0-9]+/", $version, $version_matches);
 		if(sizeof($version_matches) == 0){
@@ -4891,7 +4891,21 @@ STRING;
 
 		return $accounts_list;
 	}
-
+/**
+	 * Generates the output for the salesforce versions dropdown
+	 * @return string
+	 */
+	function get_salesforce_version_lists($service){
+		$response = wp_remote_get( 'https://na34.salesforce.com/services/data/' );
+		$response = wp_remote_retrieve_body( $response );
+		$response = json_decode($response);
+		$output = '<select id="version_'.$service.'">';
+		foreach($response as $version){
+			$output .= '<option value="'.$version->version.'">'.$version->label.'</option>';
+		}
+		$output .= '</select>';
+		return $output;
+	}
 	/**
 	 * Generates the list of "Lists" for selected account in the Dashboard. Returns the generated form to jQuery.
 	 */

@@ -146,12 +146,14 @@ class rapidology_active_campagin
 		if ( !$response ) {
 			die('Nothing was returned. Do you have a connection to Email Marketing server?');
 		}
+
 		return $response;
 	}
 
 	public function rapidology_get_ac_forms(){
 		$this->api_action = 'form_getforms';
 		$results = json_decode($this->http_request());
+
 		$forms =  array();
 		$i=0;
 		if($results->result_code){
@@ -185,6 +187,7 @@ class rapidology_active_campagin
 	 */
 	public function rapidology_get_ac_html($forms){
 		$i=0;
+
 		foreach($forms as $form) {
 			$this->form_id = $form['id'];
 			$this->api_action = 'form_html';
@@ -199,6 +202,7 @@ class rapidology_active_campagin
 				$invalid_forms[$form['id']]['not_qualfied'] = 'true';
 			}
 		}
+
 		return $valid_forms;
 	}
 
@@ -217,7 +221,6 @@ class rapidology_active_campagin
 		if($capthca->length > 0){
 			return $error;
 		}
-
 		/**
 		 * @description get form submit url
 		 * @note ended up not being needed, leaving for good measure
@@ -337,6 +340,7 @@ class rapidology_active_campagin
 	}
 
 	public function rapidology_submit_ac_form($form_id, $first_name, $last_name, $email, $lists_array, $url ){
+
 		$this->api_action = 'contact_add';
 		$params = array(
 			'api_key'		=> $this->api_key,

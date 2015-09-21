@@ -30,7 +30,7 @@ function rapid_version_check( $wp = '3.5', $php = '5.4' ) {
 		return;
 	$version = 'PHP' == $flag ? $php : $wp;
 	deactivate_plugins( basename( __FILE__ ) );
-	wp_die('<p><strong>Rapidology - By Leadpages</strong> plugin requires '.$flag.'  version '.$version.' or greater.</p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
+	wp_die('<p><strong>Rapidology - By Leadpages</strong> plugin requires '.$flag.'  version '.$version.' or greater.</p><p>PHP Version: 5.6 & WordPress: 4.3 recommended</p>','Plugin Activation Error',  array( 'response'=>200, 'back_link'=>TRUE ) );
 }
 
 ?>

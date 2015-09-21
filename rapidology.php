@@ -4674,27 +4674,27 @@ STRING;
 				$form_fields .= sprintf('
 					<div class="rad_dashboard_account_row">
 						<label for="%1$s">%8$s</label>
-						<input type="text" value="%15$s" id="%1$s">%22$s
+						<input type="password" value="%15$s" id="%1$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%3$s">%10$s</label>
-						<input type="text" value="%17$s" id="%3$s">%22$s
+						<input type="password" value="%17$s" id="%3$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%4$s">%11$s</label>
-						<input type="text" value="%18$s" id="%4$s">%22$s
+						<input type="password" value="%18$s" id="%4$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%5$s">%12$s</label>
-						<input type="text" value="%19$s" id="%5$s">%22$s
+						<input type="password" value="%19$s" id="%5$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%6$s">%13$s</label>
-						<input type="text" value="%20$s" id="%6$s">%22$s
+						<input type="password" value="%20$s" id="%6$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%7$s">%14$s</label>
-						<input type="text" value="%21$s" id="%7$s">%22$s
+						<input type="password" value="%21$s" id="%7$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label style="display:none;" for="%2$s">%9$s</label>

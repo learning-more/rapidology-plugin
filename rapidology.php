@@ -4729,7 +4729,7 @@ STRING;
 				$form_fields .= sprintf('
 					<div class="rad_dashboard_account_row">
 						<label for="%1$s">%8$s</label>
-						<input type="password" value="%15$s" id="%1$s">%22$s
+						<input type="text" value="%15$s" id="%1$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%3$s">%10$s</label>
@@ -4741,7 +4741,7 @@ STRING;
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%5$s">%12$s</label>
-						<input type="password" value="%19$s" id="%5$s">%22$s
+						<input type="text" value="%19$s" id="%5$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%6$s">%13$s</label>

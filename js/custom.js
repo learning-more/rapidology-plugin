@@ -130,14 +130,7 @@
 			}
 		}
 
-        $( '.rad_rapidology_click_trigger:not(.rad_rapidology_visible)' ).each( function() {
-            var this_el = $(this);
-            var optin_id = $(this).find( '.rad_rapidology_submit_subscription' ).data( 'optin_id' );
-            $('rad_rapidology_click_trigger_element').on('click', function(){
-                make_popup_visible ( $this_el, 0, '', '' );
-            });
 
-        });
 
         function exit_trigger($current_popup_exit){
 

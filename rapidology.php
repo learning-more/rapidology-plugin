@@ -2788,8 +2788,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 					$error_message = $this->subscribe_mailchimp( $api_key, $list_id, $email, $name, $last_name );
 					break;
 				case 'hubspot' :
-					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
-					$error_message = $this->hubspot_subscribe( $api_key, $email, $list_id );
+					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
+					$error_message = $this->hubspot_subscribe($api_key, $email, $list_id, $name, $last_name);
 					break;
 
 				case 'constant_contact' :
@@ -2856,8 +2856,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 				case 'emma' :
 					$public_key    = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$private_key   = $options_array['accounts'][ $service ][ $account_name ]['client_id'];
-					$account_id    = $options_array['accounts'][ $service ][ $account_name ]['username'];
-					$error_message = $this->emma_member_subscribe( $public_key, $private_key, $account_id, $email, $list_id, $name );
+					$account_id = $options_array['accounts'][$service][$account_name]['username'];
+					$error_message = $this->emma_member_subscribe($public_key, $private_key, $account_id, $email, $list_id, $name, $last_name);
 
 					break;
 				case 'salesforce' :
@@ -3244,8 +3244,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 	}
 
-	function emma_member_subscribe( $public_key, $private_key, $account_id, $email, $list_id ) {
-		if ( ! class_exists( 'Emma_Rapidology' ) ) {
+	function emma_member_subscribe($public_key, $private_key, $account_id, $email, $list_id, $first_name='', $last_name=''){
+		if(!class_exists('Emma_Rapidology')){
 			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/emma/Emma.php' );
 		}
 		//TODO add some checking into see if they are already part of the group they are opting into skilled because it adds extra seemingly unneed processing
@@ -3255,6 +3255,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 			'email'     => $email,
 			'group_ids' => array(
 				$list_id
+			),
+			'fields' => array(
+				"first_name" => $first_name,
+    				"last_name" => $last_name
 			)
 		);
 		try {
@@ -3309,9 +3313,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 	}
 
 
-	function hubspot_subscribe( $api_key, $email, $list_id ) {
-		if ( ! class_exists( 'HubSpot_Lists_Rapidology' ) ) {
-			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.lists.php' );
+
+	function hubspot_subscribe($api_key, $email, $list_id, $name = '', $last_name = ''){
+		if(!class_exists('HubSpot_Lists_Rapidology')) {
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.lists.php');
 		}
 		if ( ! class_exists( 'HubSpot_Contacts_Rapidology' ) ) {
 			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.contacts.php' );
@@ -3333,10 +3338,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 
 		//add contact
-		if ( $contact_exists == false ) {
-			$args        = array( 'email' => $email, 'firstname' => '' );
-			$new_contact = $contacts->create_contact( $args );
-			$contact_id  = $new_contact->vid;
+		if($contact_exists == false){
+			$args =  array('email' => $email, 'firstname' => $name, 'lastname' => $last_name );
+			$new_contact = $contacts->create_contact($args);
+			$contact_id = $new_contact->vid;
 		}
 
 		//add contact to list

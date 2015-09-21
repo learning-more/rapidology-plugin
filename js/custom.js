@@ -131,6 +131,18 @@
 		}
 
 
+        $('.rad_rapidology_click_trigger_element').on('click', function(e){
+            var optin_id = $(this).data('optin_id')
+            $( '.rad_rapidology_click_trigger:not(.rad_rapidology_visible)' ).each( function() {
+                var $this_el = $( this );
+                current_optin_id = $(this).find( '.rad_rapidology_submit_subscription' ).data( 'optin_id' );
+                e.preventDefault();//prevent links from disrupting popup
+                if(current_optin_id == optin_id){
+                    make_popup_visible ( $this_el, 0, '', '' );
+                }
+            });
+
+        });
 
         function exit_trigger($current_popup_exit){
 
@@ -230,19 +242,6 @@
 
 			$( '.rad_rapidology_scroll:not(.rad_rapidology_visible)' ).each( function(){
 				scroll_trigger( $( this ), false );
-			});
-		}
-
-		if ( $( '.rad_rapidology_trigger_click' ).length ) {
-			$( '.rad_rapidology_trigger_click:not(.et_bloom_visible)' ).each( function() {
-				var $this_el = $( this ),
-					selector = $this_el.attr( 'data-trigger_click' );
-
-				if ( typeof selector !== 'undefined' ) {
-					$( 'body' ).on( 'click', selector, function() {
-						make_popup_visible ( $this_el, 0, '', '' );
-					});
-				}
 			});
 		}
 

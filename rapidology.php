@@ -166,7 +166,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_shortcode( 'rad_rapidology_locked', array( $this, 'display_locked_shortcode' ) );
 
 		add_filter( 'body_class', array( $this, 'add_body_class' ) );
-
+		register_activation_hook( __FILE__, 'rapid_version_check' );
 		register_activation_hook( __FILE__, array( $this, 'activate_plugin' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate_plugin' ) );
 		add_action( 'rapidology_lists_auto_refresh', array( $this, 'perform_auto_refresh' ) );

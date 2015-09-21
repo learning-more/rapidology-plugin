@@ -21,6 +21,7 @@ if ( ! class_exists( 'RAD_Dashboard' ) ) {
 }
 
 require_once('includes/updater.php');
+require_once('includes/rapidology_functions.php');
 if (is_admin()) { // note the use of is_admin() to double check that this is happening in the admin
     $config = array(
         'slug' => plugin_basename(__FILE__), // this is the slug of your plugin
@@ -3443,7 +3444,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 		if($current > 0){
 			$lead_ids['id']=$current_lead->records[0]->Id;
 		}else{
-			$create_lead = $salesforce->create( 'Lead', ['firstname' => $name, 'lastname'=>$last_name, 'email'=>$email, 'company'=>'WebLead'] );
+			$params = array(
+				'firstname' => $name,
+				'lastname'=>$last_name,
+				'email'=>$email,
+				'company'=>'WebLead'
+			);
+			$create_lead = $salesforce->create( 'Lead', $params );
 			$lead_ids['id']=$create_lead->id;
 
 		}

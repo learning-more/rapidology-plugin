@@ -203,7 +203,7 @@ button.authorize_service { margin-top: 20px; }
 .account_settings_fields { max-height: 0; }
 
 .account_settings_fields { overflow: hidden; max-height: 0px; clear: both; -webkit-transition:height, 0.5s linear;	-moz-transition: height, 0.5s linear; -ms-transition: height, 0.5s linear; -o-transition: height, 0.5s linear; transition: height, 0.5s linear; }
-.account_settings_fields.rad_visible_settings, .rad_dashboard_edit_account_fields .account_settings_fields {	max-height: 200px !important; -webkit-transition:height, 0.5s linear; -moz-transition: height, 0.5s linear;	-ms-transition: height, 0.5s linear; -o-transition: height, 0.5s linear; transition: height, 0.5s linear; }
+.account_settings_fields.rad_visible_settings, .rad_dashboard_edit_account_fields .account_settings_fields {	max-height: 700px !important; -webkit-transition:height, 0.5s linear; -moz-transition: height, 0.5s linear;	-ms-transition: height, 0.5s linear; -o-transition: height, 0.5s linear; transition: height, 0.5s linear; }
 
 /* accounts tab */
 .rad_dashboard_tab_content_header_accounts .rad_dashboard_new_account_row h1 { float: left; }

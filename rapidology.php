@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Rapidology By LeadPages
  * Plugin URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
- * Version: 1.1.1
+ * Version: 1.2
  * Description: 100% Free List Building & Popup Plugin...With Over 100 Responsive Templates & 6 Different Display Types For Growing Your Email Newsletter
  * Author: Rapidology
  * Author URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
@@ -1641,7 +1641,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 				esc_html__( 'HubSpot', 'rapidology' ),
 				esc_html__( 'Salesforce', 'rapidology' ),
 				esc_html__( 'Active Campaign', 'rapidology' )
-
 
 			);
 		}
@@ -4730,27 +4729,27 @@ STRING;
 				$form_fields .= sprintf('
 					<div class="rad_dashboard_account_row">
 						<label for="%1$s">%8$s</label>
-						<input type="text" value="%15$s" id="%1$s">%22$s
+						<input type="password" value="%15$s" id="%1$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%3$s">%10$s</label>
-						<input type="text" value="%17$s" id="%3$s">%22$s
+						<input type="password" value="%17$s" id="%3$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%4$s">%11$s</label>
-						<input type="text" value="%18$s" id="%4$s">%22$s
+						<input type="password" value="%18$s" id="%4$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%5$s">%12$s</label>
-						<input type="text" value="%19$s" id="%5$s">%22$s
+						<input type="password" value="%19$s" id="%5$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%6$s">%13$s</label>
-						<input type="text" value="%20$s" id="%6$s">%22$s
+						<input type="password" value="%20$s" id="%6$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%7$s">%14$s</label>
-						<input type="text" value="%21$s" id="%7$s">%22$s
+						<input type="password" value="%21$s" id="%7$s">%22$s
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label style="display:none;" for="%2$s">%9$s</label>
@@ -4783,32 +4782,11 @@ STRING;
 						__( 'Click here for more information', 'rapidology' )
 					), false
 					)#22
+
+
 				);
 			break;
-			case 'activecampaign':
-				$form_fields .= sprintf('
-					<div class="rad_dashboard_account_row">
-						<label for="%1$s">%3$s</label>
-						<input type="text" value="%5$s" id="%1$s">%7$s
-					</div>
-					<div class="rad_dashboard_account_row">
-						<label for="%2$s">%4$s</label>
-						<input type="text" value="%6$s" id="%2$s">%7$s
-					</div>
-					',
-					esc_attr('url_'.$service),#1
-					esc_attr('api_key_'.$service),#2
-					__('URL', 'rapidology'),#3
-					__('API Key', 'rapidology'),#4
-					( '' !== $field_values && isset( $field_values['url'] ) ) ? esc_attr( $field_values['url'] ) : '',#5
-					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',#6
-					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
-						__( 'Click here for more information', 'rapidology' )
-					), false
-					)#7
-				);
-			break;
+
 
 			case 'mailchimp' :
 			case 'hubspot'  :

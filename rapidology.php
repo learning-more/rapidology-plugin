@@ -1627,7 +1627,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 								<option value="feedblitz">%14$s</option>
 								<option value="infusionsoft">%15$s</option>
 								<option value="emma">%16$s</option>
-								<option value="activecampaign">%17$s</option>
+								<option value="activecampaign">%19$s</option>
 							</select>
 						</li>
 					</ul>

@@ -376,10 +376,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$options_array = RAD_Rapidology::get_rapidology_options();
 		$locked_array  = array();
 		$inline_array  = array();
+		$onclick_array = array();
 		if ( ! empty( $options_array ) ) {
 			foreach ( $options_array as $optin_id => $details ) {
 				if ( 'accounts' !== $optin_id ) {
 					if ( isset( $details['optin_status'] ) && 'active' === $details['optin_status'] && empty( $details['child_of'] ) ) {
+						if ( '1' == $details['click_trigger'] ) {
+							$onclick_array = array_merge( $onclick_array, array( $optin_id => preg_replace( '/[^A-Za-z0-9 _-]/', '', $details['optin_name'] ) ) );
+						}
+
 						if ( 'inline' == $details['optin_type'] ) {
 							$inline_array = array_merge( $inline_array, array( $optin_id => $details['optin_name'] ) );
 						}
@@ -403,11 +408,17 @@ class RAD_Rapidology extends RAD_Dashboard {
 				'empty' => __( 'No optins available', 'rapidology' ),
 			);
 		}
+		if ( empty( $onclick_array ) ) {
+			$onclick_array = array(
+				'empty' => __( 'No optins available', 'rapidology' ),
+			);
+		}
 		?>
 
 		<!-- TinyMCE Shortcode Plugin -->
 		<script type='text/javascript'>
 			var rapidology = {
+				'onclick_optins'	: '<?php echo json_encode( $onclick_array ); ?>',
 				'locked_optins': '<?php echo json_encode( $locked_array ); ?>',
 				'inline_optins': '<?php echo json_encode( $inline_array ); ?>',
 				'rapidology_tooltip': '<?php _e( "insert rapidology Opt-In", "rapidology" ); ?>',
@@ -5651,7 +5662,7 @@ STRING;
 					}
 
 					printf(
-						'<div class="rad_rapidology_flyin rad_rapidology_optin rad_rapidology_resize rad_rapidology_flyin_%6$s rad_rapidology_%5$s%17$s%1$s%2$s%18$s%19$s%20$s%21$s"%22$s%3$s%4$s%16$s>
+						'<div class="rad_rapidology_flyin rad_rapidology_optin rad_rapidology_resize rad_rapidology_flyin_%6$s rad_rapidology_%5$s%17$s%1$s%2$s%18$s%19$s%20$s%21$s%29$s"%22$s%3$s%4$s%16$s%28$s>
 							<div class="rad_rapidology_form_container%7$s%8$s%9$s%10$s%12$s%13$s%14$s%15$s%23$s%24$s%25$s">
 		
 								%11$s
@@ -5734,8 +5745,12 @@ STRING;
 							: '', //#25
 						'stacked' == $details['field_orientation'] && 'bottom' == $details['form_orientation'] && ( 'right' == $details['image_orientation'] || 'left' == $details['image_orientation'] )
 							? ' rad_rapidology_flyin_bottom_stacked'
-							: '', //#26
-						$this->get_power_button( 'flyin' )
+							: '', //#27
+						$this->get_power_button( 'flyin' ),
+						true == $details['click_trigger']
+							? ' data-click_trigger="' . esc_attr( $details['click_trigger_selector'] ) . '"'
+							: '',#28
+						isset( $details['click_trigger'] ) && true == $details['click_trigger'] ? ' rad_rapidology_click_trigger' : ''#29
 					);
 				}
 			}
@@ -5766,7 +5781,7 @@ STRING;
 					}
 
 					printf(
-						'<div class="rad_rapidology_popup rad_rapidology_optin rad_rapidology_resize rad_rapidology_%5$s%15$s%21$s%1$s%2$s%16$s%17$s%18$s%20$s"%3$s%4$s%14$s%19$s>
+						'<div class="rad_rapidology_popup rad_rapidology_optin rad_rapidology_resize rad_rapidology_%5$s%15$s%21$s%1$s%2$s%16$s%17$s%18$s%20$s%24$s"%3$s%4$s%14$s%19$s%23$s>
 							<div class="rad_rapidology_form_container rad_rapidology_popup_container%6$s%7$s%8$s%9$s%11$s%12$s%13$s">
 								%10$s
 								%22$s
@@ -5820,7 +5835,11 @@ STRING;
 							? ' rad_rapidology_before_exit'
 							: '',#21
 
-						$this->get_power_button( 'popup' )
+						$this->get_power_button( 'popup' ),
+						true == $details['click_trigger']
+							? ' data-click_trigger="' . esc_attr( $details['click_trigger_selector'] ) . '"'
+							: '',
+						isset( $details['click_trigger'] ) && true == $details['click_trigger'] ? ' rad_rapidology_click_trigger' : ''
 					);
 				}
 			}

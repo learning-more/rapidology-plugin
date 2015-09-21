@@ -733,6 +733,13 @@ $rad_dashboard_options_all = array(
 			'default'         => false,
 			'validation_type' => 'boolean',
 		),
+		'click_trigger' => array(
+			'type'            => 'checkbox',
+			'title'           => __( 'Trigger When Element is Clicked', 'rapidology' ),
+			'name'            => 'click_trigger',
+			'default'         => false,
+			'validation_type' => 'boolean',
+		),
 	),
 
 	'flyin_orientation' => array(

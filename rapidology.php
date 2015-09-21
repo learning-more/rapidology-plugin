@@ -3421,7 +3421,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 		if($current > 0){
 			$lead_ids['id']=$current_lead->records[0]->Id;
 		}else{
-			$create_lead = $salesforce->create( 'Lead', ['firstname' => $name, 'lastname'=>$last_name, 'email'=>$email, 'company'=>'WebLead'] );
+			$params = array(
+				'firstname' => $name,
+				'lastname'=>$last_name,
+				'email'=>$email,
+				'company'=>'WebLead'
+			);
+			$create_lead = $salesforce->create( 'Lead', $params );
 			$lead_ids['id']=$create_lead->id;
 		}
 		$error_message = '';

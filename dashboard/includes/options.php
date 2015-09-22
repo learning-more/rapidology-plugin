@@ -1086,6 +1086,7 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'form_integration' ][ 'select_account' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'email_list' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'custom_html' ],
+			$rad_dashboard_options_all[ 'form_integration' ][ 'disable_dbl_optin' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 	),
 	'optin_premade_options' => array(

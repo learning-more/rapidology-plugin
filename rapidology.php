@@ -2775,6 +2775,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$account_name = sanitize_text_field( $subscribe_data_array['account_name'] );
 		$name         = isset( $subscribe_data_array['name'] ) ? sanitize_text_field( $subscribe_data_array['name'] ) : '';
 		$last_name    = isset( $subscribe_data_array['last_name'] ) ? sanitize_text_field( $subscribe_data_array['last_name'] ) : '';
+		$dbl_optin = isset( $subscribe_data_array['dbl_optin'] ) ? sanitize_text_field( $subscribe_data_array['dbl_optin'] ) : '';
 		$email        = sanitize_email( $subscribe_data_array['email'] );
 		$list_id      = sanitize_text_field( $subscribe_data_array['list_id'] );
 		$page_id      = sanitize_text_field( $subscribe_data_array['page_id'] );
@@ -2787,7 +2788,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 			switch ( $service ) {
 				case 'mailchimp' :
 					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
-					$error_message = $this->subscribe_mailchimp( $api_key, $list_id, $email, $name, $last_name );
+					$error_message = $this->subscribe_mailchimp( $api_key, $list_id, $email, $name, $last_name, $dbl_optin );
 					break;
 				case 'hubspot' :
 					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
@@ -3081,6 +3082,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$mailchimp = new MailChimp_Rapidology( $api_key );
 
 		$email = array( 'email' => $email );
+		$double_optin = '' === $disable_dbl ? 'true' : 'false';
 
 		$merge_vars = array(
 			'FNAME' => $name,
@@ -3090,6 +3092,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$retval = $mailchimp->call( 'lists/subscribe', array(
 			'id'         => $list_id,
 			'email'      => $email,
+			'double_optin' => $double_optin,
 			'merge_vars' => $merge_vars,
 		) );
 

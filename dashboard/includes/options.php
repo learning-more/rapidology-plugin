@@ -117,12 +117,12 @@ $rad_dashboard_options_all = array(
 		),
 		'disable_dbl_optin' => array(
 			'type'            => 'checkbox',
-			'title'           => __( 'Disable Double Optin', 'bloom' ),
+			'title'           => __( 'Disable Double Optin', 'rapidology' ),
 			'name'            => 'disable_dbl_optin',
 			'default'         => false,
 			'display_if'      => 'mailchimp',
 			'validation_type' => 'boolean',
-			'hint_text'       => __( 'Abusing this feature may cause your Mailchimp account to be suspended.', 'bloom' ),
+			'hint_text'       => __( 'Abusing this feature may cause your Mailchimp account to be suspended.', 'rapidology' ),
 		),
 	),
 

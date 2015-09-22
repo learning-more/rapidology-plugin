@@ -43,6 +43,8 @@ $rad_all_sections = array(
  *
  */
 
+require_once('options_config.php');
+
 $more_info_hint_text = sprintf(
 	'<a href="%2$s" target="_blank">%1$s</a>',
 	__( 'Click here for more information', 'rapidology' ),
@@ -76,25 +78,7 @@ $rad_dashboard_options_all = array(
 			'type'            => 'select',
 			'title'           => __( 'Select Email Provider', 'rapidology' ),
 			'name'            => 'email_provider',
-			'value'           => array(
-				'empty'            => __( 'Select One...', 'rapidology' ),
-				'mailchimp'        => __( 'MailChimp', 'rapidology' ),
-                'hubspot'           => __( 'HubSpot', 'rapidology' ),
-				'salesforce'		=> __( 'Salesforce', 'rapidology' ),
-				'aweber'			=> __( 'AWeber', 'rapidology' ),
-				'constant_contact'	=> __( 'Constant Contact', 'rapidology' ),
-				'campaign_monitor'	=> __( 'Campaign Monitor', 'rapidology' ),
-				'madmimi'			=> __( 'Mad Mimi', 'rapidology' ),
-				'icontact'			=> __( 'iContact', 'rapidology' ),
-				'getresponse'		=> __( 'GetResponse', 'rapidology' ),
-				'sendinblue'		=> __( 'Sendinblue', 'rapidology' ),
-				'mailpoet'			=> __( 'MailPoet', 'rapidology' ),
-				'feedblitz'			=> __( 'Feedblitz', 'rapidology' ),
-				'ontraport'			=> __( 'Ontraport', 'rapidology' ),
-				'infusionsoft'		=> __( 'Infusionsoft', 'rapidology' ),
-                'emma'				=> __( 'Emma', 'rapidology' ),
-				'activecampaign'	=> __( 'Active Campaign', 'rapidology' ),
-				'custom_html'		=> __( 'Custom HTML Form', 'rapidology' ) ),
+			'value'           => $email_providers_new_optin,
 			'default'         => 'empty',
 			'conditional'     => 'mailchimp_account#aweber_account#constant_contact_account#custom_html#activecampaign#display_name#name_fields',
 			'validation_type' => 'simple_text',
@@ -296,7 +280,7 @@ $rad_dashboard_options_all = array(
 			'default'         => 'no_name',
 			'conditional'     => 'name_text#last_name#single_name_text',
 			'validation_type' => 'simple_text',
-			'display_if'      => 'constant_contact#sendinblue#feedblitz#mailpoet#campaign_monitor#madmimi#icontact#mailchimp#ontraport#infusionsoft#salesforce#activecampaign#hubspot#emma',
+			'display_if'      => implode( '#', $show_name_fields ),
 		),
 		'name_text' => array(
 			'type'            => 'input_field',

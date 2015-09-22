@@ -1603,6 +1603,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 				esc_attr( $service )
 			);
 		} else {
+			//dropdown is in alphabetical order, please add the new optin here in the right spot. Add to replacement values at the bottom to keep #'s in order
+			//new account dropdown
 			printf(
 				'<div class="rad_dashboard_form rad_dashboard_row">
 					<h2>%1$s</h2>
@@ -1612,22 +1614,22 @@ class RAD_Rapidology extends RAD_Dashboard {
 							<p>Select Email Provider</p>
 							<select>
 								<option value="empty" selected>%2$s</option>
-								<option value="mailchimp">%3$s</option>
-								<option value="hubspot">%17$s</option>
-								<option value="salesforce">%18$s</option>
+								<option value="activecampaign">%19$s</option>
 								<option value="aweber">%4$s</option>
-								<option value="constant_contact">%5$s</option>
 								<option value="campaign_monitor">%6$s</option>
-								<option value="madmimi">%7$s</option>
-								<option value="icontact">%8$s</option>
+								<option value="constant_contact">%5$s</option>
+								<option value="emma">%16$s</option>
+								<option value="feedblitz">%14$s</option>
 								<option value="getresponse">%9$s</option>
-								<option value="sendinblue">%10$s</option>
+								<option value="hubspot">%17$s</option>
+								<option value="icontact">%8$s</option>
+								<option value="infusionsoft">%15$s</option>
+								<option value="madmimi">%7$s</option>
+								<option value="mailchimp">%3$s</option>
 								<option value="mailpoet">%11$s</option>
 								<option value="ontraport">%13$s</option>
-								<option value="feedblitz">%14$s</option>
-								<option value="infusionsoft">%15$s</option>
-								<option value="emma">%16$s</option>
-								<option value="activecampaign">%19$s</option>
+								<option value="salesforce">%18$s</option>
+								<option value="sendinblue">%10$s</option>
 							</select>
 						</li>
 					</ul>

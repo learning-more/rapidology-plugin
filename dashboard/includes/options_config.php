@@ -14,7 +14,8 @@ $email_providers_array = array(
 	'emma'				=>  'Emma' ,
 	'feedblitz'			=>  'Feedblitz' ,
 	'getresponse'		=>  'GetResponse' ,
-	'hubspot'           =>  'HubSpot' ,
+	'hubspot'           =>  'HubSpot Lists' ,
+	'hubspot-standard'	=>	'HubSpot Standard',
 	'icontact'			=>  'iContact' ,
 	'infusionsoft'		=>  'Infusionsoft' ,
 	'madmimi'			=>  'Mad Mimi' ,
@@ -38,23 +39,6 @@ foreach ($email_providers_array as $key => $value){
 
 
 
-//setup dropdowns for the new acount page
-/*function rad_rapid_new_account_dropdown($email_providers_array){
-	$options_str = '';
-	//iterator for display value to allow us to use esc_html__ in wordpress
-	$i=0;
-	//add empty value to the dropdown
-	$providers_drop_down_base_options = array(
-		'empty' =>  esc_html__( 'New account settings', 'rapidology' )
-	);
-	//merge in email providers_array
-	$providers_drop_down = array_merge($providers_drop_down_base_options, $email_providers_array);
-	foreach($providers_drop_down as $key => $value){
-		$options_str .= '<option value="'.$key.'" selected>%'.=$i.'$s</option>';
-	}
-}*/
-
-
 
 //providers to show name fields on when creating optins
 $show_name_fields =  array(
@@ -71,6 +55,7 @@ $show_name_fields =  array(
 	'salesforce',
 	'activecampaign',
 	'hubspot',
+	'hubspot-standard',
 	'emma'
 );
 

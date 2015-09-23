@@ -1622,6 +1622,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 								<option value="feedblitz">%14$s</option>
 								<option value="getresponse">%9$s</option>
 								<option value="hubspot">%17$s</option>
+								<option value ="hubspot-standard">%20$s</option>
 								<option value="icontact">%8$s</option>
 								<option value="infusionsoft">%15$s</option>
 								<option value="madmimi">%7$s</option>
@@ -1636,25 +1637,26 @@ class RAD_Rapidology extends RAD_Dashboard {
 					<ul class="rad_dashboard_new_account_fields"><li></li></ul>
 					<button class="rad_dashboard_icon save_account_tab">%12$s</button>
 				</div>',
-				esc_html__( 'New account settings', 'rapidology' ),
-				esc_html__( 'Select One...', 'rapidology' ),
-				esc_html__( 'MailChimp', 'rapidology' ),
-				esc_html__( 'AWeber', 'rapidology' ),
-				esc_html__( 'Constant Contact', 'rapidology' ),
-				esc_html__( 'Campaign Monitor', 'rapidology' ),
-				esc_html__( 'Mad Mimi', 'rapidology' ),
-				esc_html__( 'iContact', 'rapidology' ),
-				esc_html__( 'GetResponse', 'rapidology' ),
-				esc_html__( 'Sendinblue', 'rapidology' ),
-				esc_html__( 'MailPoet', 'rapidology' ),
-				esc_html__( 'save & exit', 'rapidology' ),
-				esc_html__( 'Ontraport', 'rapidology' ),
-				esc_html__( 'Feedblitz', 'rapidology' ),
-				esc_html__( 'Infusionsoft', 'rapidology' ),
-				esc_html__( 'Emma', 'rapidology' ),
-				esc_html__( 'HubSpot', 'rapidology' ),
-				esc_html__( 'Salesforce', 'rapidology' ),
-				esc_html__( 'Active Campaign', 'rapidology' )
+				esc_html__( 'New account settings', 'rapidology' ),#1
+				esc_html__( 'Select One...', 'rapidology' ),#2
+				esc_html__( 'MailChimp', 'rapidology' ),#3
+				esc_html__( 'AWeber', 'rapidology' ),#4
+				esc_html__( 'Constant Contact', 'rapidology' ),#5
+				esc_html__( 'Campaign Monitor', 'rapidology' ),#6
+				esc_html__( 'Mad Mimi', 'rapidology' ),#7
+				esc_html__( 'iContact', 'rapidology' ),#8
+				esc_html__( 'GetResponse', 'rapidology' ),#9
+				esc_html__( 'Sendinblue', 'rapidology' ),#10
+				esc_html__( 'MailPoet', 'rapidology' ),#11
+				esc_html__( 'save & exit', 'rapidology' ),#12
+				esc_html__( 'Ontraport', 'rapidology' ),#13
+				esc_html__( 'Feedblitz', 'rapidology' ),#14
+				esc_html__( 'Infusionsoft', 'rapidology' ),#15
+				esc_html__( 'Emma', 'rapidology' ),#16
+				esc_html__( 'HubSpot Lists', 'rapidology' ),#17
+				esc_html__( 'Salesforce', 'rapidology' ),#18
+				esc_html__( 'Active Campaign', 'rapidology' ),#19
+				esc_html__( 'HubSpot Standard', 'rapidology')#20
 
 			);
 		}
@@ -2745,6 +2747,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 			case 'hubspot' :
 				$error_message = $this->get_hubspot_lists( $api_key, $name );
 				break;
+			case 'hubspot-standard' :
+				$error_message = $this->get_hubspot_forms($account_id, $api_key, $name);
+				break;
 			case 'salesforce' :
 				$error_message = $this->get_salesforce_campagins($url, $version, $client_key, $client_secret, $username_sf, $password_sf, $token, $name);
 				break;
@@ -2779,7 +2784,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$email        = sanitize_email( $subscribe_data_array['email'] );
 		$list_id      = sanitize_text_field( $subscribe_data_array['list_id'] );
 		$page_id      = sanitize_text_field( $subscribe_data_array['page_id'] );
+		$post_name	  = sanitize_text_field( $subscribe_data_array['post_name'] );
 		$optin_id     = sanitize_text_field( $subscribe_data_array['optin_id'] );
+		$cookie		  = sanitize_text_field( $subscribe_data_array['cookie'] );
 		$result       = '';
 
 		if ( is_email( $email ) ) {
@@ -2793,6 +2800,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 				case 'hubspot' :
 					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
 					$error_message = $this->hubspot_subscribe($api_key, $email, $list_id, $name, $last_name);
+					break;
+				case 'hubspot-standard' :
+					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
+					$account_id = $options_array['accounts'][$service][$account_name]['account_id'];
+					$error_message = $this->submit_hubspot_form($api_key, $account_id,  $email, $list_id, $name, $last_name, $post_name, $cookie);
+
 					break;
 
 				case 'constant_contact' :
@@ -3363,6 +3376,95 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 
 		return $error_message;
+	}
+
+
+
+	/**
+	 *
+	 * @return array
+	 * @description get all forms that are valid for rapdiology
+	 */
+
+
+	function get_hubspot_forms($account_id, $api_key, $name){
+		if(!class_exists('HubSpot_Forms_Rapidology')){
+			include_once('subscription/hubspot/class.forms.php');
+		}
+		$forms      	= new HubSpot_Forms_Rapidology($api_key);
+		$all_forms		= $forms->get_forms();
+		//array to hold valid forms to return
+		$valid_forms	= array();
+		//only fields accepted for rapidology, check against and make sure other forms are not required
+		$accepted_flds	= array(
+			'firstname',
+			'lastname',
+			'email'
+		);
+
+		foreach ($all_forms as $form){
+			$invalid_form = false;
+			if($form->captchaEnabled == 1){
+				$invalid_form = true;
+			}
+			foreach($form->fields as $field){
+				if(!in_array($field->name, $accepted_flds) && $field->required  == 1){
+					$invalid_form = true;
+					break;
+				}
+			}
+			if(!$invalid_form){
+				$valid_forms[$form->guid]['name'] = $form->name;
+				$valid_forms[$form->guid]['subscribers_count'] = 0; //set to 0 as there is no inital subscriber count for forms
+				$valid_forms[$form->guid]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('hubspot-standard_' . $form->guid));
+			}
+		}
+		if(sizeof($valid_forms) > 0) {
+			$this->update_account('hubspot-standard', sanitize_text_field($name), array(
+				'account_id' => $account_id,
+				'api_key' => $api_key,
+				'lists' => $valid_forms,
+				'is_authorized' => 'true',
+			));
+			$error_message = 'success';
+		}else{
+			$error_message = 'You do not appear to have any valid lists';
+		}
+		return $error_message;
+
+	}
+
+	/**
+	 * @return string
+	 * @description submits form submissions to hubspot forms api
+	 */
+
+
+	function submit_hubspot_form($api_key, $account_id, $email, $list_id, $name, $last_name, $post_name, $cookie){
+		if(!class_exists('HubSpot_Forms_Rapidology')){
+			include_once('subscription/hubspot/class.forms.php');
+		}
+		$submitted_form_fields = array(
+			'firstname'	=> $name,
+			'lastname'	=> $last_name,
+			'email'		=> $email
+		);
+		$context = array(
+			'hutk' => $cookie,
+			'ipAddress'	=> $_SERVER['REMOTE_ADDR'],
+			'pageUrl'	=> $_SERVER['HTTP_HOST'],
+			'pageName'	=> $post_name
+		);
+		$forms      	= new HubSpot_Forms_Rapidology($api_key);
+		$submitted_form = $forms->submit_form($account_id, $list_id, $submitted_form_fields, $context);
+		if($submitted_form['error']){
+			$error_message = 'There was an error submitting your form';
+		}else{
+			$error_message = 'success';
+		}
+		return $error_message;
+
+
 	}
 
 
@@ -4840,6 +4942,29 @@ STRING;
 
 			case 'mailchimp' :
 			case 'hubspot'  :
+			case 'hubspot-standard' :
+			$form_fields .= sprintf( '
+					<div class="rad_dashboard_account_row">
+						<label for="%1$s">%3$s</label>
+						<input type="text" value="%5$s" id="%1$s">%7$s
+					</div>
+					<div class="rad_dashboard_account_row">
+						<label for="%2$s">%4$s</label>
+						<input type="password" value="%6$s" id="%2$s">%7$s
+					</div>',
+				esc_attr('username_' . $service),#1
+				esc_attr( 'api_key_' . $service ),#2
+				__( 'Account Id', 'rapidology'),#3
+				__( 'API key', 'rapidology' ),#4
+				( '' !== $field_values && isset( $field_values['username'] ) ) ? esc_attr( $field_values['username'] ) : '',#5
+				( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',#6
+				RAD_Rapidology::generate_hint( sprintf(
+					'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+					__( 'Click here for more information', 'rapidology' )
+				), false#7
+				)
+			);
+				break;
 			case 'constant_contact' :
 			case 'getresponse' :
 			case 'sendinblue' :
@@ -5390,12 +5515,13 @@ STRING;
 	 * Generates the content for the optin.
 	 * @return string
 	 */
-	public static function generate_form_content( $optin_id, $page_id, $details = array() ) {
+	public static function generate_form_content( $optin_id, $page_id, $pagename,  $details = array() ) {
 		if ( empty( $details ) ) {
 			$all_optins = RAD_Rapidology::get_rapidology_options();
 			$details    = $all_optins[ $optin_id ];
 		}
 
+		$hubspot_cookie = $_COOKIE['hubspotutk'];
 		$hide_img_mobile_class = isset( $details['hide_mobile'] ) && '1' == $details['hide_mobile'] ? 'rad_rapidology_hide_mobile' : '';
 		$image_animation_class = isset( $details['image_animation'] )
 			? esc_attr( ' rad_rapidology_image_' . $details['image_animation'] )
@@ -5524,7 +5650,7 @@ STRING;
 						<p class="rad_rapidology_popup_input rad_rapidology_subscribe_email">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-account="%8$s" data-disable_dbl_optin="%11$s" class="rad_rapidology_submit_subscription">
+						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" class="rad_rapidology_submit_subscription">
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -5567,8 +5693,11 @@ STRING;
 				esc_attr( $details['account_name'] ),
 				'' != $button_text ? stripslashes( esc_html( $button_text ) ) : esc_html__( 'SUBSCRIBE!', 'rapidology' ),
 				isset( $details['button_text_color'] ) ? esc_attr( $details['button_text_color'] ) : '', // #10
-				isset( $details['disable_dbl_optin'] ) && '1' === $details['disable_dbl_optin'] ? 'disable' : ''
-			), //#9
+				isset( $details['disable_dbl_optin'] ) && '1' === $details['disable_dbl_optin'] ? 'disable' : '',#11
+				esc_attr($pagename),#12
+				esc_attr($hubspot_cookie)#13
+
+			),
 			'' != $success_text
 				? stripslashes( esc_html( $success_text ) )
 				: esc_html__( 'You have Successfully Subscribed!', 'rapidology' ), //#10
@@ -5816,7 +5945,10 @@ STRING;
 
 					if ( is_singular() || is_front_page() ) {
 						$page_id = is_front_page() ? - 1 : get_the_ID();
+						$post = get_post();
+						$post_name = $post->post_name;
 					} else {
+						$post_name = '';
 						$page_id = 0;
 					}
 
@@ -5852,7 +5984,7 @@ STRING;
 						)
 							: '',
 						( 'rounded' == $details['corner_style'] ) ? ' rad_rapidology_rounded_corners' : '',
-						RAD_Rapidology::generate_form_content( $optin_id, $page_id ), //#10
+						RAD_Rapidology::generate_form_content( $optin_id, $page_id, $post_name, $details ), //#10
 						( 'rounded' == $details['field_corner'] ) ? ' rad_rapidology_rounded' : '',
 						'light' == $details['text_color'] ? ' rad_rapidology_form_text_light' : ' rad_rapidology_form_text_dark',
 						isset( $details['load_animation'] )

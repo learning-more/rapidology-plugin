@@ -431,6 +431,7 @@
 				last_name = undefined != this_form.find( '.rad_rapidology_subscribe_last input' ).val() ? this_form.find( '.rad_rapidology_subscribe_last input' ).val() : '',
 				email = this_form.find( '.rad_rapidology_subscribe_email input' ).val(),
 				page_id = this_button.data( 'page_id' ),
+                disable_dbl_optin = this_button.data( 'disable_dbl_optin'),
 				optin_id = this_button.data( 'optin_id' );
 
 			this_form.find( '.rad_rapidology_subscribe_email input' ).removeClass( 'rad_rapidology_warn_field' );
@@ -438,7 +439,7 @@
 			if ( '' == email ) {
 				this_form.find( '.rad_rapidology_subscribe_email input' ).addClass( 'rad_rapidology_warn_field' );
 			} else {
-				$subscribe_data = JSON.stringify({ 'list_id' : list_id, 'account_name' : account_name, 'service' : service, 'name' : name, 'email' : email, 'page_id' : page_id, 'optin_id' : optin_id, 'last_name' : last_name });
+				$subscribe_data = JSON.stringify({ 'list_id' : list_id, 'account_name' : account_name, 'service' : service, 'name' : name, 'email' : email, 'page_id' : page_id, 'optin_id' : optin_id, 'last_name' : last_name, 'dbl_optin' : disable_dbl_optin });
 				$.ajax({
 					type: 'POST',
 					dataType: 'json',

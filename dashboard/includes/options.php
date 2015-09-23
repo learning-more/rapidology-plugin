@@ -168,6 +168,7 @@ $rad_dashboard_options_all = array(
 		'section_start' => array(
 			'type'  => 'section_start',
 			'title' => __( 'Image Settings', 'rapidology' ),
+			'class' => 'rad_dashboard_10_bottom',
 		),
 		'image_orientation' => array(
 			'type'            => 'select',

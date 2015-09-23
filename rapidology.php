@@ -3070,7 +3070,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Subscribes to Mailchimp list. Returns either "success" string or error message.
 	 * @return string
 	 */
-	function subscribe_mailchimp( $api_key, $list_id, $email, $name = '', $last_name = '' ) {
+	function subscribe_mailchimp( $api_key, $list_id, $email, $name = '', $last_name = '', $disable_dbl ) {
 		if ( ! function_exists( 'curl_init' ) ) {
 			return;
 		}
@@ -4825,7 +4825,7 @@ STRING;
 					',
 					esc_attr('url_'.$service),#1
 					esc_attr('api_key_'.$service),#2
-					__('URL', 'rapidology'),#3
+					__('API URL', 'rapidology'),#3
 					__('API Key', 'rapidology'),#4
 					( '' !== $field_values && isset( $field_values['url'] ) ) ? esc_attr( $field_values['url'] ) : '',#5
 					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',#6
@@ -5524,7 +5524,7 @@ STRING;
 						<p class="rad_rapidology_popup_input rad_rapidology_subscribe_email">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-account="%8$s" class="rad_rapidology_submit_subscription">
+						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-account="%8$s" data-disable_dbl_optin="%11$s" class="rad_rapidology_submit_subscription">
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -5566,7 +5566,8 @@ STRING;
 				esc_attr( $page_id ),
 				esc_attr( $details['account_name'] ),
 				'' != $button_text ? stripslashes( esc_html( $button_text ) ) : esc_html__( 'SUBSCRIBE!', 'rapidology' ),
-				isset( $details['button_text_color'] ) ? esc_attr( $details['button_text_color'] ) : '' // #10
+				isset( $details['button_text_color'] ) ? esc_attr( $details['button_text_color'] ) : '', // #10
+				isset( $details['disable_dbl_optin'] ) && '1' === $details['disable_dbl_optin'] ? 'disable' : ''
 			), //#9
 			'' != $success_text
 				? stripslashes( esc_html( $success_text ) )

@@ -5515,7 +5515,7 @@ STRING;
 	 * Generates the content for the optin.
 	 * @return string
 	 */
-	public static function generate_form_content( $optin_id, $page_id, $pagename,  $details = array() ) {
+	public static function generate_form_content( $optin_id, $page_id, $pagename = '',  $details = array() ) {
 		if ( empty( $details ) ) {
 			$all_optins = RAD_Rapidology::get_rapidology_options();
 			$details    = $all_optins[ $optin_id ];
@@ -6008,9 +6008,6 @@ STRING;
 							: '',#21
 
 						$this->get_power_button( 'popup' ),
-						true == $details['click_trigger']
-							? ' data-click_trigger="' . esc_attr( $details['click_trigger_selector'] ) . '"'
-							: '',
 						isset( $details['click_trigger'] ) && true == $details['click_trigger'] ? ' rad_rapidology_click_trigger' : ''
 					);
 				}

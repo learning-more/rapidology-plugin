@@ -3359,22 +3359,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 		if($contact_exists == false){
 
 			//try to make a smart guess if they put their first and last name in the name field or if its just a single name form
-			if($last_name == ''){
-				//check to see if firstname has a space, which is assumed to seperate first and last
-				$first_space = stripos($name, ' '); //get first occurance of a space
-				$second_space = strripos($name, ' '); // get second occurance of a space to check if 3 names were entered
-
-				if($second_space > $first_space || $first_space > 0){
-					$name_array = explode(' ', $name); //explode name into an array
-					$first_name = array_shift($name_array);
-					$name = $first_name;
-					$last_name = implode(' ', $name_array); //implode all other names into a string and assign to last name
-				}else{
-					$last_name = 'WebLead';//generic last name
-				}
-
-			}
-
+			$names_array = rapidology_name_splitter($name, $last_name);
+			$name = $names_array['name'];
+			$last_name = $names_array['last_name'];
 			$args =  array('email' => $email, 'firstname' => $name, 'lastname' => $last_name );
 			$new_contact = $contacts->create_contact($args);
 			$contact_id = $new_contact->vid;
@@ -3462,6 +3449,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 		if(!class_exists('HubSpot_Forms_Rapidology')){
 			include_once('subscription/hubspot/class.forms.php');
 		}
+		$names_array = rapidology_name_splitter($name, $last_name);
+		$name = $names_array['name'];
+		$last_name = $names_array['last_name'];
 		$submitted_form_fields = array(
 			'firstname'	=> $name,
 			'lastname'	=> $last_name,

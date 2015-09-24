@@ -4817,7 +4817,7 @@ STRING;
 					( '' !== $field_values && isset( $field_values['username'] ) ) ? esc_html( $field_values['username'] ) : '',
 					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_html( $field_values['api_key'] ) : '',
 					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+						'<a href="http://www.rapidology.com/docs'.$service.'" target="_blank">%1$s</a>',
 						__( 'Click here for more information', 'rapidology' )
 					), false
 					)
@@ -4848,7 +4848,7 @@ STRING;
 					( '' !== $field_values && isset( $field_values['client_id_'] ) ) ? esc_html( $field_values['client_id_'] ) : '',
 					( '' !== $field_values && isset( $field_values['username_'] ) ) ? esc_html( $field_values['username_'] ) : '',
 					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+						'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
 						__( 'Click here for more information', 'rapidology' )
 					), false
 					)
@@ -4908,7 +4908,7 @@ STRING;
 					( '' !== $field_values && isset( $field_values['password_sf'] ) ) ? esc_attr( $field_values['password'] ) : '',#20
 					( '' !== $field_values && isset( $field_values['token'] ) ) ? esc_attr( $field_values['token'] ) : '',#21
 					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+						'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
 						__( 'Click here for more information', 'rapidology' )
 					), false
 					)#22
@@ -4932,7 +4932,7 @@ STRING;
 					( '' !== $field_values && isset( $field_values['url'] ) ) ? esc_attr( $field_values['url'] ) : '',#5
 					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',#6
 					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+						'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
 						__( 'Click here for more information', 'rapidology' )
 					), false
 					)#7
@@ -4959,7 +4959,7 @@ STRING;
 				( '' !== $field_values && isset( $field_values['username'] ) ) ? esc_attr( $field_values['username'] ) : '',#5
 				( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',#6
 				RAD_Rapidology::generate_hint( sprintf(
-					'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+					'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
 					__( 'Click here for more information', 'rapidology' )
 				), false#7
 				)
@@ -4980,7 +4980,7 @@ STRING;
 					__( 'API key', 'rapidology' ),
 					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',
 					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+						'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
 						__( 'Click here for more information', 'rapidology' )
 					), false
 					)
@@ -4996,7 +4996,7 @@ STRING;
 						__( 'Token', 'rapidology' ),
 						( '' !== $field_values && isset( $field_values['token'] ) ) ? esc_attr( $field_values['token'] ) : '',
 						RAD_Rapidology::generate_hint( sprintf(
-							'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+							'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
 							__( 'Click here for more information', 'rapidology' )
 						), false )
 					)
@@ -5052,7 +5052,7 @@ STRING;
 						( '' !== $field_values && isset( $field_values['username'] ) ) ? esc_html( $field_values['username'] ) : '',
 						( '' !== $field_values && isset( $field_values['password'] ) ) ? esc_html( $field_values['password'] ) : '',
 						RAD_Rapidology::generate_hint( sprintf(
-							'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+							'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
 							__( 'Click here for more information', 'rapidology' )
 						), false )
 					)
@@ -5076,7 +5076,7 @@ STRING;
 					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',
 					( '' !== $field_values && isset( $field_values['client_id'] ) ) ? esc_attr( $field_values['client_id'] ) : '',
 					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+						'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
 						__( 'Click here for more information', 'rapidology' )
 					), false )
 				);
@@ -5099,7 +5099,7 @@ STRING;
 					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',
 					( '' !== $field_values && isset( $field_values['client_id'] ) ) ? esc_attr( $field_values['client_id'] ) : '',
 					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs" target="_blank">%1$s</a>',
+						'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
 						__( 'Click here for more information', 'rapidology' )
 					), false )
 				);
@@ -5826,8 +5826,11 @@ STRING;
 
 					if ( is_singular() || is_front_page() ) {
 						$page_id = is_front_page() ? - 1 : get_the_ID();
+						$post = get_post();
+						$post_name = $post->post_name;
 					} else {
 						$page_id = 0;
+						$post_name = '';
 					}
 
 					printf(
@@ -5865,7 +5868,7 @@ STRING;
 						)
 							: '',
 						( 'rounded' == $details['corner_style'] ) ? ' rad_rapidology_rounded_corners' : '', //#10
-						RAD_Rapidology::generate_form_content( $optin_id, $page_id ),
+						RAD_Rapidology::generate_form_content( $optin_id, $page_id, $post_name, $details ),
 						'bottom' == $details['form_orientation'] && ( 'no_image' == $details['image_orientation'] || 'above' == $details['image_orientation'] || 'below' == $details['image_orientation'] ) && 'stacked' == $details['field_orientation']
 							? ' rad_rapidology_stacked_flyin'
 							: '',
@@ -5953,7 +5956,7 @@ STRING;
 					}
 
 					printf(
-						'<div class="rad_rapidology_popup rad_rapidology_optin rad_rapidology_resize rad_rapidology_%5$s%15$s%21$s%1$s%2$s%16$s%17$s%18$s%20$s%24$s"%3$s%4$s%14$s%19$s%23$s>
+						'<div class="rad_rapidology_popup rad_rapidology_optin rad_rapidology_resize rad_rapidology_%5$s%15$s%21$s%1$s%2$s%16$s%17$s%18$s%20$s%23$s"%3$s%4$s%14$s%19$s%23$s>
 							<div class="rad_rapidology_form_container rad_rapidology_popup_container%6$s%7$s%8$s%9$s%11$s%12$s%13$s">
 								%10$s
 								%22$s
@@ -6114,6 +6117,8 @@ STRING;
 		$page_id           = get_the_ID();
 		$list_id           = $details['email_provider'] . '_' . $details['email_list'];
 		$custom_css_output = '';
+		$post = get_post();
+		$post_name = $post->post_name;
 
 		$all_optins       = RAD_Rapidology::get_rapidology_options();
 		$display_optin_id = RAD_Rapidology::choose_form_ab_test( $optin_id, $all_optins );

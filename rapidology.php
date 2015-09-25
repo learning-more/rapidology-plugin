@@ -5528,8 +5528,12 @@ STRING;
 			$all_optins = RAD_Rapidology::get_rapidology_options();
 			$details    = $all_optins[ $optin_id ];
 		}
+		if(isset($_COOKIE['hubspotutk'])){
+			$hubspot_cookie = $_COOKIE['hubspotutk'];
+		}else{
+			$hubspot_cookie = '';
+		}
 
-		$hubspot_cookie = $_COOKIE['hubspotutk'];
 		$hide_img_mobile_class = isset( $details['hide_mobile'] ) && '1' == $details['hide_mobile'] ? 'rad_rapidology_hide_mobile' : '';
 		$image_animation_class = isset( $details['image_animation'] )
 			? esc_attr( ' rad_rapidology_image_' . $details['image_animation'] )

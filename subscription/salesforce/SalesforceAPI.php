@@ -8,7 +8,7 @@
  * @license GPL, or GNU General Public License, version 2
  */
 
-class Rapidology_SalesforceAPI extends APIAbstract {
+class SalesforceAPI extends APIAbstract {
     public
         $last_response;
     protected

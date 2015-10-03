@@ -3039,16 +3039,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 		return $error_message;
 	}
 
-	/**
-	 * Retrieves the lists via MailChimp API and updates the data in DB.
-	 * @return string
-	 */
+	
 
 
-	/**
-	 * Subscribes to Mailchimp list. Returns either "success" string or error message.
-	 * @return string
-	 */
+
 	
 
 

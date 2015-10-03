@@ -40,9 +40,6 @@ if (is_admin()) { // note the use of is_admin() to double check that this is hap
 }
 
 
-
-
-
 class RAD_Rapidology extends RAD_Dashboard {
 	var $plugin_version = '1.2.3';
 	var $db_version = '1.0';
@@ -2653,6 +2650,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function authorize_account() {
+
 		wp_verify_nonce( $_POST['get_lists_nonce'], 'get_lists' );
 		$service         = ! empty( $_POST['rapidology_upd_service'] ) ? sanitize_text_field( $_POST['rapidology_upd_service'] ) : '';
 		$name            = ! empty( $_POST['rapidology_upd_name'] ) ? sanitize_text_field( $_POST['rapidology_upd_name'] ) : '';
@@ -2833,7 +2831,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 					$hubspot_standard = new rapidology_hubspot_standard();
 					$error_message = $hubspot_standard->submit_hubspot_form($api_key, $account_id,  $email, $list_id, $name, $last_name, $post_name, $cookie);
 					break;
-
 				case 'constant_contact' :
 					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$token         = $options_array['accounts'][ $service ][ $account_name ]['token'];

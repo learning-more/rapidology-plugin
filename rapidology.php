@@ -590,8 +590,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 				);
 				break;
 			case 'support'	:
-				echo _e('This is a supprt page');
+				include_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/static_content/marketing.php');
 				break;
+
 		}
 	}
 

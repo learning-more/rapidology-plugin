@@ -45,12 +45,9 @@ class RAD_Dashboard {
 		add_action( 'plugins_loaded', array( $this, 'add_class_localization' ) );
 		add_action( 'wp_ajax_rad_dashboard_generate_warning', array( $this, 'generate_modal_warning' ) );
 		add_action( 'wp_ajax_rad_dashboard_execute_live_search', array( $this, 'execute_live_search' ) );
-
 		add_action( 'wp_ajax_rad_dashboard_activate_screen', array( $this, 'rad_dashboard_activate_screen' ) );
-
 		add_action( 'admin_init', array( $this, 'set_post_types' ) );
 		add_action( 'admin_enqueue_scripts', array( $this, 'dashboard_scripts' ) );
-
 		add_action( 'admin_init', array( $this, 'process_settings_export' ) );
 		add_action( 'admin_init', array( $this, 'process_settings_import' ) );
 	}
@@ -168,12 +165,10 @@ class RAD_Dashboard {
 
 				case 'project' :
 					$taxonomy_name = 'project_category';
-
 					break;
 
 				case 'product' :
 					$taxonomy_name = 'product_cat';
-
 					break;
 
 				case 'listing' :
@@ -182,19 +177,15 @@ class RAD_Dashboard {
 					} else {
 						$taxonomy_name = 'listing_category';
 					}
-
 					break;
 
 				case 'event' :
 						$taxonomy_name = 'event_category';
-
 					break;
 
 				case 'gallery' :
 					$taxonomy_name = 'gallery_category';
-
 					break;
-
 			}
 
 			if ( '' !== $taxonomy_name && taxonomy_exists( $taxonomy_name ) ) {

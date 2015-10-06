@@ -10,6 +10,25 @@ class rapidology_mailchimp extends RAD_Rapidology{
 
 	}
 
+	public function draw_mailchimp_form($form_fields, $service, $field_values)
+	{
+		$form_fields .= sprintf( '
+					<div class="rad_dashboard_account_row">
+						<label for="%1$s">%2$s</label>
+						<input type="password" value="%3$s" id="%1$s">%4$s
+					</div>',
+			esc_attr( 'api_key_' . $service ),
+			__( 'API key', 'rapidology' ),
+			( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',
+			RAD_Rapidology::generate_hint( sprintf(
+				'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
+				__( 'Click here for more information', 'rapidology' )
+			), false
+			)
+		);
+		return $form_fields;
+	}
+
 	/**
 	 * Retrieves the lists via MailChimp API and updates the data in DB.
 	 * @return string

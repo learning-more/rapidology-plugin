@@ -352,6 +352,9 @@ class rapidology_active_campagin
 			'api_action'	=> $this->api_action,
 			'api_output'	=> $this->api_output,
 		);
+		$names_array = rapidology_name_splitter($first_name, $last_name);
+		$first_name = $names_array['name'];
+		$last_name = $names_array['last_name'];
 		$post_fields = array();
 		$post_fields['first_name']	= $first_name;
 		$post_fields['last_name']	= $last_name;

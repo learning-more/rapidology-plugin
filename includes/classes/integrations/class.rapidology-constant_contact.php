@@ -3,7 +3,7 @@ if ( ! class_exists( 'RAD_Dashboard' ) ) {
 require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'rapidology.php' );
 }
 
-class rapidology_contact_contact
+class rapidology_constant_contact extends RAD_Rapidology
 {
 
 	public function __contruct()
@@ -14,12 +14,21 @@ class rapidology_contact_contact
 	public function draw_contstant_contact_form($form_fields, $service, $field_values){
 		$form_fields .=
 			sprintf(
-				'<div class="rad_dashboard_account_row">
-							<label for="%1$s">%2$s</label>
-							<input type="password" value="%3$s" id="%1$s">%4$s
-						</div>',
+				'
+						<div class="rad_dashboard_account_row">
+							<label for="%1$s">%3$s</label>
+							<input type="password" value="%5$s" id="%1$s">%7$s
+						</div>
+						<div class="rad_dashboard_account_row">
+						<label for="%2$s">%4$s</label>
+						<input type="password" value="%6$s" id="%2$s">%7$s
+						</div>
+						',
+				esc_attr( 'api_key_' . $service ),
 				esc_attr( 'token_' . $service ),
+				__( 'API key', 'rapidology' ),
 				__( 'Token', 'rapidology' ),
+				( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_html( $field_values['api_key'] ) : '',
 				( '' !== $field_values && isset( $field_values['token'] ) ) ? esc_attr( $field_values['token'] ) : '',
 				RAD_Rapidology::generate_hint( sprintf(
 					'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
@@ -34,6 +43,7 @@ class rapidology_contact_contact
 	 * @return string
 	 */
 	function get_constant_contact_lists( $api_key, $token, $name ) {
+
 		$lists         = array();
 		$error_message = '';
 

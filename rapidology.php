@@ -2576,7 +2576,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				foreach ( $account as $name => $details ) {
 					if ( 'true' == $details['is_authorized'] ) {
 						if(!class_exists('rapidology_'.$service)){
-							require_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/classes/class.rapidology-'.$service.'.php');
+							require_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/classes/integrations/class.rapidology-'.$service.'.php');
 						}
 						switch ( $service ) {
 							case 'mailchimp' :
@@ -2585,48 +2585,78 @@ class RAD_Rapidology extends RAD_Dashboard {
 								break;
 
 							case 'constant_contact' :
-								$constant_contact = new rapidology_contact_contact();
+								$constant_contact = new rapidology_constant_contact();
 								$error_message = $constant_contact->get_constant_contact_lists( $details['api_key'], $details['token'], $name );
 								break;
 
 							case 'madmimi' :
-								$error_message = $this->get_madmimi_lists( $details['username'], $details['api_key'], $name );
+								$madmimi = new rapidology_madmimi();
+								$error_message = $madmimi->get_madmimi_lists( $details['username'], $details['api_key'], $name );
 								break;
 
 							case 'icontact' :
-								$error_message = $this->get_icontact_lists( $details['client_id'], $details['username'], $details['password'], $name );
+								$icontact = new rapidology_icontact();
+								$error_message = $icontact->get_icontact_lists( $details['client_id'], $details['username'], $details['password'], $name );
 								break;
 
 							case 'getresponse' :
-								$error_message = $this->get_getresponse_lists( $details['api_key'], $name );
+								$getresponse = new rapidology_getresponse();
+								$error_message = $getresponse->get_getresponse_lists( $details['api_key'], $name );
 								break;
 
 							case 'sendinblue' :
-								$error_message = $this->get_sendinblue_lists( $details['api_key'], $name );
+								$sendinblue = new rapidology_sendinblue();
+								$error_message = $sendinblue->get_sendinblue_lists( $details['api_key'], $name );
 								break;
 
 							case 'mailpoet' :
-								$error_message = $this->get_mailpoet_lists( $name );
+								$mailpoet = new rapidology_mailpoet();
+								$error_message = $mailpoet->get_mailpoet_lists( $name );
 								break;
 
 							case 'aweber' :
-								$error_message = $this->get_aweber_lists( $details['api_key'], $name );
+								$aweber = new rapidology_aweber();
+								$error_message = $aweber->get_aweber_lists( $details['api_key'], $name );
 								break;
 
 							case 'campaign_monitor' :
-								$error_message = $this->get_campaign_monitor_lists( $details['api_key'], $name );
+								$campaign_monitor = new rapidology_campaign_monitor();
+								$error_message = $campaign_monitor->get_campaign_monitor_lists( $details['api_key'], $name );
 								break;
 
 							case 'ontraport' :
-								$error_message = $this->get_ontraport_lists( $details['api_key'], $details['client_id'], $name );
+								$ontraport = new rapidology_ontraport();
+								$error_message = $ontraport->get_ontraport_lists( $details['api_key'], $details['client_id'], $name );
 								break;
 
 							case 'feedblitz' :
-								$error_message = $this->get_feedblitz_lists( $details['api_key'], $name );
+								$feedblitz = new rapidology_feedblitz();
+								$error_message = $feedblitz->get_feedblitz_lists( $details['api_key'], $name );
 								break;
 
 							case 'infusionsoft' :
-								$error_message = $this->get_infusionsoft_lists( $details['client_id'], $details['api_key'], $name );
+								$infusionsoft = new rapidology_infusionsoft();
+								$error_message = $infusionsoft->get_infusionsoft_lists( $details['client_id'], $details['api_key'], $name );
+								break;
+							case 'emma' :
+								$emma = new rapidology_emma();
+								$error_message = $emma->get_emma_groups( $details['public_key'], $details['private_key'], $details['$account_id'], $name );
+								break;
+							case 'hubspot' :
+								$hubspot = new rapidology_hubspot();
+								$error_message = $hubspot->get_hubspot_lists( $details['api_key'], $name );
+								break;
+							case 'hubspot-standard' :
+								$hubspot_standard = new rapidology_hubspot_standard();
+								$error_message = $hubspot_standard->get_hubspot_forms($details['account_id'], $details['api_key'], $name);
+								break;
+							case 'salesforce' :
+								$salesforce = new rapidology_salesforce();
+								$error_message = $salesforce->get_salesforce_campagins($details['url'], $details['version'], $details['client_key'], $details['client_secret'], $details['username_sf'], $details['password_sf'], $details['token'], $name);
+								break;
+							case 'activecampaign':
+								$activecampaign = new rapidology_activecampaign();
+								$error_message = $activecampaign->get_active_campagin_forms($details['url'], $details['api_key'], $name);
 								break;
 						}
 					}
@@ -2658,7 +2688,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		//include class to get functions below
 		if(!class_exists('rapidology_'.$service)){
-			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/classes/class.rapidology-'.$service.'.php');
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/classes/integrations/class.rapidology-'.$service.'.php');
 		}
 
 		if ( 'true' == $update_existing ) {
@@ -2712,51 +2742,62 @@ class RAD_Rapidology extends RAD_Dashboard {
 				break;
 
 			case 'constant_contact' :
-				$constant_contact = new rapidology_contact_contact();
+				$constant_contact = new rapidology_constant_contact();
 				$error_message = $constant_contact->get_constant_contact_lists( $api_key, $token, $name );
 				break;
 
 			case 'madmimi' :
-				$error_message = $this->get_madmimi_lists( $username, $api_key, $name );
+				$madmimi = new rapidology_madmimi();
+				$error_message = $madmimi->get_madmimi_lists( $username, $api_key, $name );
 				break;
 
 			case 'icontact' :
-				$error_message = $this->get_icontact_lists( $app_id, $username, $password, $name );
+				$icontact = new rapidology_icontact();
+				$error_message = $icontact->get_icontact_lists( $app_id, $username, $password, $name );
 				break;
 
 			case 'getresponse' :
-				$error_message = $this->get_getresponse_lists( $api_key, $name );
+				$getresponse = new rapidology_getresponse();
+				$error_message = $getresponse->get_getresponse_lists( $api_key, $name );
 				break;
 
 			case 'sendinblue' :
-				$error_message = $this->get_sendinblue_lists( $api_key, $name );
+				$sendinblue = new rapidology_sendinblue();
+				$error_message = $sendinblue->get_sendinblue_lists( $api_key, $name );
 				break;
 
 			case 'mailpoet' :
-				$error_message = $this->get_mailpoet_lists( $name );
+				$mailpoet = new rapidology_mailpoet();
+				$error_message = $mailpoet->get_mailpoet_lists( $name );
 				break;
 
 			case 'aweber' :
-				$error_message = $this->get_aweber_lists( $api_key, $name );
+				$aweber = new rapidology_aweber();
+				$error_message = $aweber->get_aweber_lists( $api_key, $name );
 				break;
 
 			case 'campaign_monitor' :
-				$error_message = $this->get_campaign_monitor_lists( $api_key, $name );
+				$campaign_monitor = new rapidology_campaign_monitor();
+				$error_message = $campaign_monitor->get_campaign_monitor_lists( $api_key, $name );
 				break;
 
 			case 'ontraport' :
-				$error_message = $this->get_ontraport_lists( $api_key, $app_id, $name );
+				$ontraport = new rapidology_ontraport();
+				$error_message = $ontraport->get_ontraport_lists( $api_key, $app_id, $name );
 				break;
 
 			case 'feedblitz' :
-				$error_message = $this->get_feedblitz_lists( $api_key, $name );
+				$feedblitz = new rapidology_feedblitz();
+				$error_message = $feedblitz->get_feedblitz_lists( $api_key, $name );
 				break;
 
 			case 'infusionsoft' :
-				$error_message = $this->get_infusionsoft_lists( $app_id, $api_key, $name );
+				$infusionsoft = new rapidology_infusionsoft();
+				$error_message = $infusionsoft->get_infusionsoft_lists( $app_id, $api_key, $name );
 				break;
 			case 'emma' :
-				$error_message = $this->get_emma_groups( $public_key, $private_key, $account_id, $name );
+				$emma = new rapidology_emma();
+				$error_message = $emma->get_emma_groups( $public_key, $private_key, $account_id, $name );
 				break;
 			case 'hubspot' :
 				$hubspot = new rapidology_hubspot();
@@ -2771,7 +2812,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$error_message = $salesforce->get_salesforce_campagins($url, $version, $client_key, $client_secret, $username_sf, $password_sf, $token, $name);
 				break;
 			case 'activecampaign':
-				$error_message = $this->get_active_campagin_forms($url, $api_key, $name);
+				$activecampaign = new rapidology_activecampaign();
+				$error_message = $activecampaign->get_active_campagin_forms($url, $api_key, $name);
 				break;
 
 
@@ -2808,7 +2850,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		//include class to get functions below
 		if(!class_exists('rapidology_'.$service)){
-			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/classes/class.rapidology-'.$service.'.php');
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/classes/integrations/class.rapidology-'.$service.'.php');
 		}
 
 		if ( is_email( $email ) ) {
@@ -2834,14 +2876,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 				case 'constant_contact' :
 					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$token         = $options_array['accounts'][ $service ][ $account_name ]['token'];
-					$constant_contact = new rapidology_contact_contact();
+					$constant_contact = new rapidology_constant_contact();
 					$error_message = $constant_contact->subscribe_constant_contact( $email, $api_key, $token, $list_id, $name, $last_name );
 					break;
 
 				case 'madmimi' :
 					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$username      = $options_array['accounts'][ $service ][ $account_name ]['username'];
-					$error_message = $this->subscribe_madmimi( $username, $api_key, $list_id, $email, $name, $last_name );
+					$madmimi = new rapidology_madmimi();
+					$error_message = $madmimi->subscribe_madmimi( $username, $api_key, $list_id, $email, $name, $last_name );
 					break;
 
 				case 'icontact' :
@@ -2850,54 +2893,63 @@ class RAD_Rapidology extends RAD_Dashboard {
 					$password      = $options_array['accounts'][ $service ][ $account_name ]['password'];
 					$folder_id     = $options_array['accounts'][ $service ][ $account_name ]['lists'][ $list_id ]['folder_id'];
 					$account_id    = $options_array['accounts'][ $service ][ $account_name ]['lists'][ $list_id ]['account_id'];
-					$error_message = $this->subscribe_icontact( $app_id, $username, $password, $folder_id, $account_id, $list_id, $email, $name, $last_name );
+					$icontact = new rapidology_icontact();
+					$error_message = $icontact->subscribe_icontact( $app_id, $username, $password, $folder_id, $account_id, $list_id, $email, $name, $last_name );
 					break;
 
 				case 'getresponse' :
 					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
-					$error_message = $this->subscribe_get_response( $list_id, $email, $api_key, $name );
+					$getresponse = new rapidology_getresponse();
+					$error_message = $getresponse->subscribe_get_response( $list_id, $email, $api_key, $name );
+					break;
+				case 'ontraport' :
+					$app_id = $options_array['accounts'][$service][$account_name]['client_id'];
+					$api_key = $options_array['accounts'][$service][$account_name]['api_key'];
+					$ontraport = new rapidology_ontraport();
+					$error_message = $ontraport->subscribe_ontraport($app_id, $api_key, $name, $email, $list_id, $last_name = '');
 					break;
 
 				case 'sendinblue' :
 					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
-					$error_message = $this->subscribe_sendinblue( $api_key, $email, $list_id, $name, $last_name );
+					$sendinblue = new rapidology_sendinblue();
+					$error_message = $sendinblue->subscribe_sendinblue( $api_key, $email, $list_id, $name, $last_name );
 					break;
 
 				case 'mailpoet' :
-					$error_message = $this->subscribe_mailpoet( $list_id, $email, $name, $last_name );
+					$mailpoet = new rapidology_mailpoet();
+					$error_message = $mailpoet->subscribe_mailpoet( $list_id, $email, $name, $last_name );
 					break;
 
 				case 'aweber' :
-					$error_message = $this->subscribe_aweber( $list_id, $account_name, $email, $name );
+					$aweber = new rapidology_aweber();
+					$error_message = $aweber->subscribe_aweber( $list_id, $account_name, $email, $name );
 					break;
 
 				case 'campaign_monitor' :
 					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
-					$error_message = $this->subscribe_campaign_monitor( $api_key, $email, $list_id, $name );
-					break;
-
-				case 'ontraport' :
-					$app_id        = $options_array['accounts'][ $service ][ $account_name ]['client_id'];
-					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
-					$error_message = $this->subscribe_ontraport( $app_id, $api_key, $name, $email, $list_id, $last_name );
+					$campaign_monitor = new rapidology_campaign_monitor();
+					$error_message = $campaign_monitor->subscribe_campaign_monitor( $api_key, $email, $list_id, $name );
 					break;
 
 				case 'feedblitz' :
 					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
-					$error_message = $this->subscribe_feedblitz( $api_key, $list_id, $name, $email, $last_name );
+					$feedblitz = new rapidology_feedblitz();
+					$error_message = $feedblitz->subscribe_feedblitz( $api_key, $list_id, $name, $email, $last_name );
 					break;
 
 				case 'infusionsoft' :
 					$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$app_id        = $options_array['accounts'][ $service ][ $account_name ]['client_id'];
-					$error_message = $this->subscribe_infusionsoft( $api_key, $app_id, $list_id, $email, $name, $last_name );
+					$infusionsoft = new rapidology_infusionsoft();
+					$error_message = $infusionsoft->subscribe_infusionsoft( $api_key, $app_id, $list_id, $email, $name, $last_name );
 					break;
 
 				case 'emma' :
 					$public_key    = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
 					$private_key   = $options_array['accounts'][ $service ][ $account_name ]['client_id'];
 					$account_id = $options_array['accounts'][$service][$account_name]['username'];
-					$error_message = $this->emma_member_subscribe($public_key, $private_key, $account_id, $email, $list_id, $name, $last_name);
+					$emma = new rapidology_emma();
+					$error_message = $emma->emma_member_subscribe($public_key, $private_key, $account_id, $email, $list_id, $name, $last_name);
 
 					break;
 				case 'salesforce' :
@@ -2916,7 +2968,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 					$url		= $options_array['accounts'][ $service ][ $account_name ]['url'];
 					$lists		= $options_array['accounts'][ $service ][ $account_name ]['lists'][$list_id]['list_ids'];
 					$form_id	= $list_id;//gets confusing the list_id from rapdiology is actualy the form id in active campaign, and lists are the lists you need to subscribe to based on the form
-					$error_message = $this->subscribe_active_campaign($url, $api_key, $name , $last_name, $email, $lists, $form_id);
+					$activecampaign = new rapidology_activecampaign();
+					$error_message = $activecampaign->subscribe_active_campaign($url, $api_key, $name , $last_name, $email, $lists, $form_id);
 					break;
 			}
 		} else {
@@ -2933,1278 +2986,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 		die( $result );
 	}
 
-	/**
-	 * Retrieves the lists via Infusionsoft API and updates the data in DB.
-	 * @return string
-	 */
-
-	function get_infusionsoft_lists( $app_id, $api_key, $name ) {
-		if ( ! function_exists( 'curl_init' ) ) {
-			return __( 'curl_init is not defined ', 'rapidology' );
-		}
-
-		if ( ! class_exists( 'iSDK' ) ) {
-			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/infusionsoft/isdk.php' );
-		}
-
-		$lists = array();
-
-		try {
-			$infusion_app = new iSDK();
-			$infusion_app->cfgCon( $app_id, $api_key, 'throw' );
-		} catch ( iSDKException $e ) {
-			$error_message = $e->getMessage();
-		}
-
-		if ( empty( $error_message ) ) {
-			$need_request = true;
-			$page         = 0;
-			$all_lists    = array();
-
-			while ( true == $need_request ) {
-				$error_message = 'success';
-				$lists_data = $infusion_app->dsQuery(
-					'ContactGroup',
-					1000,
-					$page,
-					array( 'Id' => '%' ),
-					array( 'Id', 'GroupName' )
-				);
-				$all_lists     = array_merge( $all_lists, $lists_data );
-
-				if ( 1000 > count( $lists_data ) ) {
-					$need_request = false;
-				} else {
-					$page ++;
-				}
-			}
-		}
-
-		if ( ! empty( $all_lists ) ) {
-			foreach ( $all_lists as $list ) {
-				$group_query                               = '%' . $list['Id'] . '%';
-				$subscribers_count                         = $infusion_app->dsCount( 'Contact', array( 'Groups' => $group_query ) );
-				$lists[ $list['Id'] ]['name']              = sanitize_text_field( $list['GroupName'] );
-				$lists[ $list['Id'] ]['subscribers_count'] = sanitize_text_field( $subscribers_count );
-				$lists[ $list['Id'] ]['growth_week']       = sanitize_text_field( $this->calculate_growth_rate( 'infusionsoft_' . $list['Id'] ) );
-			}
-
-			$this->update_account( 'infusionsoft', sanitize_text_field( $name ), array(
-				'lists'         => $lists,
-				'api_key'       => sanitize_text_field( $api_key ),
-				'client_id'     => sanitize_text_field( $app_id ),
-				'is_authorized' => 'true',
-			) );
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Subscribes to Infusionsoft list. Returns either "success" string or error message.
-	 * @return string
-	 */
-	function subscribe_infusionsoft( $api_key, $app_id, $list_id, $email, $name = '', $last_name = '' ) {
-		if ( ! function_exists( 'curl_init' ) ) {
-			return __( 'curl_init is not defined ', 'rapidology' );
-		}
-
-		if ( ! class_exists( 'iSDK' ) ) {
-			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/infusionsoft/isdk.php' );
-		}
-
-		try {
-			$infusion_app = new iSDK();
-			$infusion_app->cfgCon( $app_id, $api_key, 'throw' );
-		} catch ( iSDKException $e ) {
-			$error_message = $e->getMessage();
-		}
-
-
-		$contact_details = array(
-			'FirstName' => $name,
-			'LastName'  => $last_name,
-			'Email'     => $email,
-		);
-		$new_contact_id = $infusion_app->addWithDupCheck($contact_details, $checkType = 'Email');
-		$infusion_app->optIn($contact_details['Email']);
-		$response = $infusion_app->grpAssign( $new_contact_id, $list_id );
-		if($response) {
-			$error_message = 'success';
-		}else{
-			$error_message = esc_html__( 'Already In List', 'rapidology' );
-		}
-
-
-		return $error_message;
-	}
-
-	
-
-
-
-	
-
-
-
-
-
-	function get_emma_groups( $public_key, $private_key, $account_id, $name ) {
-		if ( ! class_exists( 'Emma_Rapidology' ) ) {
-			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/emma/Emma.php' );
-		}
-
-		$emma = new Emma_Rapidology( $account_id, $public_key, $private_key, false ); //true set for debug
-		try {
-			$error_message = 'success';
-			$response      = $emma->myGroups();
-			$response      = json_decode( $response );
-
-			$all_lists = array();
-			foreach ($response as $obj){
-				$all_lists[$obj->member_group_id]['name'] = $obj->group_name;
-				$all_lists[$obj->member_group_id]['subscribers_count'] = sanitize_text_field($obj->active_count);
-				$all_lists[$obj->member_group_id]['growth_week'] = sanitize_text_field( $this->calculate_growth_rate( 'emma_' . $obj->account_id ) );
-			}
-			$this->update_account( 'emma', sanitize_text_field( $name ), array(
-				'api_key'       => sanitize_text_field( $public_key ),
-				'client_id'     => sanitize_text_field( $private_key ),
-				'username'      => sanitize_text_field( $account_id ),
-				'lists'         => $all_lists,
-				'is_authorized' => 'true',
-			) );
-
-			return $error_message;
-		} catch ( exception $e ) {
-			$error_message = $e;
-
-			return $error_message;
-		}
-
-
-	}
-
-	function emma_member_subscribe($public_key, $private_key, $account_id, $email, $list_id, $first_name='', $last_name=''){
-		if(!class_exists('Emma_Rapidology')){
-			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/emma/Emma.php' );
-		}
-		//TODO add some checking into see if they are already part of the group they are opting into skilled because it adds extra seemingly unneed processing
-		$emma = new Emma_Rapidology( $account_id, $public_key, $private_key, false ); //true set for debug
-		//arguments to pass to send to emma to sign up user
-		$args = array(
-			'email'     => $email,
-			'group_ids' => array(
-				$list_id
-			),
-			'fields' => array(
-				"first_name" => $first_name,
-    				"last_name" => $last_name
-			)
-		);
-		try {
-			$emma->membersAddSingle( $args );
-
-			return $error_message = "success";
-		} catch ( exception $e ) {
-			$error_message = $e;
-
-			return $error_message;
-		}
-
-	}
-
-
-	/**
-	 * get Active Campaign forms
-	 * @return string
-	 */
-
-	function get_active_campagin_forms($url, $api_key, $name){
-		require_once('subscription/activecampaign/class.activecampagin.php');
-		$ac_requests = new rapidology_active_campagin($url, $api_key);
-		$forms = $ac_requests->rapidology_get_ac_forms();
-		if($forms['status'] == 'error'){
-			$error_message = $forms['message'];
-			return $error_message;
-		}
-
-		$verfied_forms = $ac_requests->rapidology_get_ac_html($forms);
-
-		foreach($verfied_forms as $form){
-			$form_list[$form['id']]['name'] = $form['name'];
-			$form_list[$form['id']]['subscribers_count'] = $form['subscriptions'];
-			$form_list[$form['id']]['growth_week'] = sanitize_text_field($this->calculate_growth_rate('activecampagin' . $form['id']));
-			$form_list[$form['id']]['list_ids'] = $form['lists'];
-		}
-		$this->update_account('activecampaign', sanitize_text_field($name), array(
-			'url' 			=> $url,
-			'api_key' 		=> $api_key,
-			'lists' 		=> $form_list,
-			'is_authorized' => 'true',
-		));
-		$error_message = 'success';
-		return $error_message;
-
-	}
-
-	/**
-	 * submit user to form and lists active campaign
-	 * @return string
-	 */
-
-	function subscribe_active_campaign($url, $api_key, $first_name , $last_name, $email, $lists, $form_id){
-		require_once('subscription/activecampaign/class.activecampagin.php');
-		$ac_requests = new rapidology_active_campagin($url, $api_key);
-
-		$result = $ac_requests->rapidology_submit_ac_form($form_id, $first_name, $last_name, $email, $lists, $url );
-		$error_message = $result;
-		return $error_message['message'];
-
-	}
-
-	/**
-	 * Retrieves the lists via Campaign Monitor API and updates the data in DB.
-	 * @return string
-	 */
-	function get_campaign_monitor_lists( $api_key, $name ) {
-		require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/createsend-php-4.0.2/csrest_clients.php' );
-		require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/createsend-php-4.0.2/csrest_lists.php' );
-
-		$auth = array(
-			'api_key' => $api_key,
-		);
-
-		$request_url    = esc_url_raw( 'https://api.createsend.com/api/v3.1/clients.json?pretty=true' );
-		$all_clients_id = array();
-		$all_lists      = array();
-
-		if ( ! function_exists( 'curl_init' ) ) {
-			return __( 'curl_init is not defined ', 'rapidology' );
-		}
-
-		// Get cURL resource
-		$curl = curl_init();
-		// Set some options
-		curl_setopt_array( $curl, array(
-			CURLOPT_RETURNTRANSFER => 1,
-			CURLOPT_URL            => $request_url,
-			CURLOPT_SSL_VERIFYPEER => false, //we need this option since we perform request to https
-			CURLOPT_USERPWD        => $api_key . ':x'
-		) );
-		// Send the request & save response to $resp
-		$resp     = curl_exec( $curl );
-		$httpCode = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
-		// Close request to clear up some resources
-		curl_close( $curl );
-
-		$clients_array = json_decode( $resp, true );
-
-		if ( '200' == $httpCode ) {
-			$error_message = 'success';
-
-			foreach ( $clients_array as $client => $client_details ) {
-				$all_clients_id[] = $client_details['ClientID'];
-			}
-
-			if ( ! empty( $all_clients_id ) ) {
-				foreach ( $all_clients_id as $client ) {
-					$wrap       = new CS_REST_Clients( $client, $auth );
-					$lists_data = $wrap->get_lists();
-
-					foreach ( $lists_data->response as $list => $single_list ) {
-						$all_lists[ $single_list->ListID ]['name'] = $single_list->Name;
-
-						$wrap_stats                                             = new CS_REST_Lists( $single_list->ListID, $auth );
-						$result_stats                                           = $wrap_stats->get_stats();
-						$all_lists[ $single_list->ListID ]['subscribers_count'] = sanitize_text_field( $result_stats->response->TotalActiveSubscribers );
-						$all_lists[ $single_list->ListID ]['growth_week']       = sanitize_text_field( $this->calculate_growth_rate( 'campaign_monitor_' . $single_list->ListID ) );
-					}
-				}
-			}
-
-			$this->update_account( 'campaign_monitor', sanitize_text_field( $name ), array(
-				'api_key'       => sanitize_text_field( $api_key ),
-				'lists'         => $all_lists,
-				'is_authorized' => 'true',
-			) );
-		} else {
-			if ( '401' == $httpCode ) {
-				$error_message = __( 'invalid API key', 'rapidology' );
-			} else {
-				$error_message = $httpCode;
-			}
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Subscribes to Campaign Monitor list. Returns either "success" string or error message.
-	 * @return string
-	 */
-	function subscribe_campaign_monitor( $api_key, $email, $list_id, $name = '' ) {
-		require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/createsend-php-4.0.2/csrest_subscribers.php' );
-		$auth          = array(
-			'api_key' => $api_key,
-		);
-		$wrap          = new CS_REST_Subscribers( $list_id, $auth );
-		$is_subscribed = $wrap->get( $email );
-
-		if ( $is_subscribed->was_successful() ) {
-			$error_message = __( 'Already subscribed', 'rapidology' );
-		} else {
-			$result = $wrap->add( array(
-				'EmailAddress' => $email,
-				'Name'         => $name,
-				'Resubscribe'  => false,
-			) );
-			if ( $result->was_successful() ) {
-				$error_message = 'success';
-			} else {
-				$error_message = $result->response->message;
-			}
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Retrieves the lists via Mad Mimi API and updates the data in DB.
-	 * @return string
-	 */
-	function get_madmimi_lists( $username, $api_key, $name ) {
-		$lists = array();
-
-		$request_url = esc_url_raw( 'https://api.madmimi.com/audience_lists/lists.json?username=' . rawurlencode( $username ) . '&api_key=' . $api_key );
-
-		$theme_request = wp_remote_get( $request_url, array( 'timeout' => 30 ) );
-
-		$response_code = wp_remote_retrieve_response_code( $theme_request );
-
-		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
-			$theme_response = json_decode( wp_remote_retrieve_body( $theme_request ), true );
-			if ( ! empty( $theme_response ) ) {
-				$error_message = 'success';
-
-				foreach ( $theme_response as $list_data ) {
-					$lists[ $list_data['id'] ]['name']              = $list_data['name'];
-					$lists[ $list_data['id'] ]['subscribers_count'] = $list_data['list_size'];
-					$lists[ $list_data['id'] ]['growth_week']       = $this->calculate_growth_rate( 'madmimi_' . $list_data['id'] );
-				}
-
-				$this->update_account( 'madmimi', $name, array(
-					'api_key'       => esc_html( $api_key ),
-					'username'      => esc_html( $username ),
-					'lists'         => $lists,
-					'is_authorized' => esc_html( 'true' ),
-				) );
-
-			} else {
-				$error_message = __( 'Please make sure you have at least 1 list in your account and try again', 'rapidology' );
-			}
-		} else {
-			$error_message = $this->get_error_message( $theme_request, $response_code, null );
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Subscribes to Mad Mimi list. Returns either "success" string or error message.
-	 * @return string
-	 */
-	function subscribe_madmimi( $username, $api_key, $list_id, $email, $name = '', $last_name = '' ) {
-		// check whether the user already subscribed
-		$check_user_url = esc_url_raw( 'https://api.madmimi.com/audience_members/' . rawurlencode( $email ) . '/lists.json?username=' . rawurlencode( $username ) . '&api_key=' . $api_key );
-
-		$check_user_request = wp_remote_get( $check_user_url, array( 'timeout' => 30 ) );
-
-		$check_user_response_code = wp_remote_retrieve_response_code( $check_user_request );
-
-		if ( ! is_wp_error( $check_user_request ) && $check_user_response_code == 200 ) {
-			$check_user_response = json_decode( wp_remote_retrieve_body( $check_user_request ), true );
-
-			// if user is not subscribed yet - try to subscribe
-			if ( empty( $check_user_response ) ) {
-				$request_url = esc_url_raw( 'https://api.madmimi.com/audience_lists/' . $list_id . '/add?email=' . rawurlencode( $email ) . '&first_name=' . $name . '&last_name=' . $last_name . '&username=' . rawurlencode( $username ) . '&api_key=' . $api_key );
-
-				$theme_request = wp_remote_post( $request_url, array( 'timeout' => 30 ) );
-
-				$response_code = wp_remote_retrieve_response_code( $theme_request );
-
-				if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
-					$error_message = 'success';
-				} else {
-					if ( is_wp_error( $theme_request ) ) {
-						$error_message = $theme_request->get_error_message();
-					} else {
-						switch ( $response_code ) {
-							case '401' :
-								$error_message = __( 'Invalid Username or API key', 'rapidology' );
-								break;
-							case '400' :
-								$error_message = wp_remote_retrieve_body( $theme_request );
-								break;
-
-							default :
-								$error_message = $response_code;
-								break;
-						}
-					}
-				}
-			} else {
-				$error_message = __( 'Already subscribed', 'rapidology' );
-			}
-		} else {
-			// TODO: Figure out how to handle this better, since $theme_request and $response_code are undef here
-			$error_message = $this->get_error_message( $theme_request, $response_code, null);
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Retrieves the lists via iContact API and updates the data in DB.
-	 * @return string
-	 */
-	function get_icontact_lists( $app_id, $username, $password, $name ) {
-		$lists      = array();
-		$account_id = '';
-		$folder_id  = '';
-
-		$request_account_id_url = esc_url_raw( 'https://app.icontact.com/icp/a/' );
-
-		$account_data = $this->icontacts_remote_request( $request_account_id_url, $app_id, $username, $password );
-
-		if ( is_array( $account_data ) ) {
-			$account_id = $account_data['accounts'][0]['accountId'];
-
-			if ( '' !== $account_id ) {
-				$request_folder_id_url = esc_url_raw( 'https://app.icontact.com/icp/a/' . $account_id . '/c' );
-
-				$folder_data = $this->icontacts_remote_request( $request_folder_id_url, $app_id, $username, $password );
-
-				if ( is_array( $folder_data ) ) {
-					$folder_id = $folder_data['clientfolders'][0]['clientFolderId'];
-
-					$request_lists_url = esc_url_raw( 'https://app.icontact.com/icp/a/' . $account_id . '/c/' . $folder_id . '/lists' );
-					$lists_data        = $this->icontacts_remote_request( $request_lists_url, $app_id, $username, $password );
-
-					if ( is_array( $lists_data ) ) {
-						$error_message = 'success';
-						foreach ( $lists_data['lists'] as $single_list ) {
-							$lists[ $single_list['listId'] ]['name']       = $single_list['name'];
-							$lists[ $single_list['listId'] ]['account_id'] = $account_id;
-							$lists[ $single_list['listId'] ]['folder_id']  = $folder_id;
-
-							//request for subscribers
-							$request_contacts_url = esc_url_raw( 'https://app.icontact.com/icp/a/' . $account_id . '/c/' . $folder_id . '/contacts?status=total&listId=' . $single_list['listId'] );
-							$subscribers_data     = $this->icontacts_remote_request( $request_contacts_url, $app_id, $username, $password );
-							$total_subscribers    = isset( $subscribers_data['total'] ) ? $subscribers_data['total'] : 0;
-
-							$lists[ $single_list['listId'] ]['subscribers_count'] = $total_subscribers;
-							$lists[ $single_list['listId'] ]['growth_week']       = $this->calculate_growth_rate( 'icontact_' . $single_list['listId'] );
-						}
-
-						$this->update_account( 'icontact', $name, array(
-							'client_id'     => esc_html( $app_id ),
-							'username'      => esc_html( $username ),
-							'password'      => esc_html( $password ),
-							'lists'         => $lists,
-							'is_authorized' => esc_html( 'true' ),
-						) );
-					} else {
-						$error_message = $lists_data;
-					}
-				} else {
-					$error_message = $folder_data;
-				}
-			} else {
-				$error_message = __( 'Account ID is not defined', 'rapidology' );
-			}
-		} else {
-			$error_message = $account_data;
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Subscribes to iContact list. Returns either "success" string or error message.
-	 * @return string
-	 */
-	function subscribe_icontact( $app_id, $username, $password, $folder_id, $account_id, $list_id, $email, $name = '', $last_name = '' ) {
-		$check_subscription_url = esc_url_raw( 'https://app.icontact.com/icp/a/' . $account_id . '/c/' . $folder_id . '/contacts?email=' . rawurlencode( $email ) );
-		$is_subscribed          = $this->icontacts_remote_request( $check_subscription_url, $app_id, $username, $password );
-		if ( is_array( $is_subscribed ) ) {
-			if ( empty( $is_subscribed['contacts'] ) ) {
-				$add_body           = '[{
-					"email":"' . $email . '",
-					"firstName":"' . $name . '",
-					"lastName":"' . $last_name . '",
-					"status":"normal"
-				}]';
-				$add_subscriber_url = esc_url_raw( 'https://app.icontact.com/icp/a/' . $account_id . '/c/' . $folder_id . '/contacts/' );
-
-				$added_account = $this->icontacts_remote_request( $add_subscriber_url, $app_id, $username, $password, true, $add_body );
-				if ( is_array( $added_account ) ) {
-					if ( ! empty( $added_account['contacts'][0]['contactId'] ) ) {
-						$map_contact        = '[{
-							"contactId":' . $added_account['contacts'][0]['contactId'] . ',
-							"listId":' . $list_id . ',
-							"status":"normal"
-						}]';
-						$map_subscriber_url = esc_url_raw( 'https://app.icontact.com/icp/a/' . $account_id . '/c/' . $folder_id . '/subscriptions/' );
-
-						$add_to_list = $this->icontacts_remote_request( $map_subscriber_url, $app_id, $username, $password, true, $map_contact );
-					}
-					$error_message = 'success';
-				} else {
-					$error_message = $added_account;
-				}
-			} else {
-				$error_message = __( 'Already subscribed', 'rapidology' );
-			}
-		} else {
-			$error_message = $is_subscribed;
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Executes remote request to iContacts API
-	 * @return string
-	 */
-	function icontacts_remote_request( $request_url, $app_id, $username, $password, $is_post = false, $body = '' ) {
-		if ( false === $is_post ) {
-			$theme_request = wp_remote_get( $request_url, array(
-				'timeout' => 30,
-				'headers' => array(
-					'Accept'       => 'application/json',
-					'Content-Type' => 'application/json',
-					'Api-Version'  => '2.0',
-					'Api-AppId'    => $app_id,
-					'Api-Username' => $username,
-					'API-Password' => $password,
-				)
-			) );
-		} else {
-			$theme_request = wp_remote_post( $request_url, array(
-				'timeout' => 30,
-				'headers' => array(
-					'Accept'       => 'application/json',
-					'Content-Type' => 'application/json',
-					'Api-Version'  => '2.0',
-					'Api-AppId'    => $app_id,
-					'Api-Username' => $username,
-					'API-Password' => $password,
-				),
-				'body'    => $body,
-			) );
-		}
-
-		$response_code = wp_remote_retrieve_response_code( $theme_request );
-		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
-			$theme_response = wp_remote_retrieve_body( $theme_request );
-			if ( ! empty( $theme_response ) ) {
-				$error_message = json_decode( wp_remote_retrieve_body( $theme_request ), true );
-			} else {
-				$error_message = __( 'empty response', 'rapidology' );
-			}
-		} else {
-			$error_map     = array(
-				"401" => 'Invalid App ID, Username or Password',
-			);
-			$error_message = $this->get_error_message( $theme_request, $response_code, $error_map );
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Retrieves the lists via GetResponse API and updates the data in DB.
-	 * @return string
-	 */
-	function get_getresponse_lists( $api_key, $name ) {
-		$lists = array();
-
-		if ( ! function_exists( 'curl_init' ) ) {
-			return __( 'curl_init is not defined ', 'rapidology' );
-		}
-
-		if ( ! class_exists( 'GetResponse' ) ) {
-			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/getresponse/getresponseapi.class.php' );
-		}
-
-		$api = new GetResponse( $api_key );
-
-		$campaigns = (array) $api->getCampaigns();
-
-		if ( ! empty( $campaigns ) ) {
-			$error_message = 'success';
-
-			foreach ( $campaigns as $id => $details ) {
-				$lists[ $id ]['name'] = $details->name;
-				$contacts             = (array) $api->getContacts( array( $id ) );
-
-				$total_contacts                    = count( $contacts );
-				$lists[ $id ]['subscribers_count'] = $total_contacts;
-
-				$lists[ $id ]['growth_week'] = $this->calculate_growth_rate( 'getresponse_' . $id );
-			}
-
-			$this->update_account( 'getresponse', $name, array(
-				'api_key'       => esc_html( $api_key ),
-				'lists'         => $lists,
-				'is_authorized' => esc_html( 'true' ),
-			) );
-		} else {
-			$error_message = __( 'Invalid API key or something went wrong during Authorization request', 'rapidology' );
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Subscribes to GetResponse list. Returns either "success" string or error message.
-	 * @return string
-	 */
-	function subscribe_get_response( $list, $email, $api_key, $name = '-' ) {
-		if ( ! function_exists( 'curl_init' ) ) {
-			return;
-		}
-
-		require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/getresponse/jsonrpcclient.php' );
-		$api_url = 'http://api2.getresponse.com';
-
-		$name = '' == $name ? '-' : $name;
-
-		$client = new jsonRPCClient( $api_url );
-		$result = $client->add_contact(
-			$api_key,
-			array(
-				'campaign' => $list,
-				'name'     => $name,
-				'email'    => $email,
-			)
-		);
-
-		if ( isset( $result['result']['queued'] ) && 1 == $result['result']['queued'] ) {
-			$result = 'success';
-		} else {
-			if ( isset( $result['error']['message'] ) ) {
-				$result = $result['error']['message'];
-			} else {
-				$result = 'unknown error';
-			}
-		}
-
-		return $result;
-	}
-
-	/**
-	 * Retrieves the lists via Sendinblue API and updates the data in DB.
-	 * @return string
-	 */
-	function get_sendinblue_lists( $api_key, $name ) {
-		$lists = array();
-
-		if ( ! function_exists( 'curl_init' ) ) {
-			return __( 'curl_init is not defined ', 'rapidology' );
-		}
-
-		if ( ! class_exists( 'Mailin' ) ) {
-			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/sendinblue-v2.0/mailin.php' );
-		}
-
-		$mailin       = new Mailin( 'https://api.sendinblue.com/v2.0', $api_key );
-		$page         = 1;
-		$page_limit   = 50;
-		$all_lists    = array();
-		$need_request = true;
-
-		while ( true == $need_request ) {
-			$lists_array = $mailin->get_lists( $page, $page_limit );
-			$all_lists   = array_merge( $all_lists, $lists_array );
-			if ( 50 > count( $lists_array ) ) {
-				$need_request = false;
-			} else {
-				$page ++;
-			}
-		}
-
-		if ( ! empty( $all_lists ) ) {
-			if ( isset( $all_lists['code'] ) && 'success' === $all_lists['code'] ) {
-				$error_message = 'success';
-
-				if ( ! empty( $all_lists['data']['lists'] ) ) {
-					foreach ( $all_lists['data']['lists'] as $single_list ) {
-						$lists[ $single_list['id'] ]['name'] = $single_list['name'];
-
-						$total_contacts                                   = isset( $single_list['total_subscribers'] ) ? $single_list['total_subscribers'] : 0;
-						$lists[ $single_list['id'] ]['subscribers_count'] = $total_contacts;
-
-						$lists[ $single_list['id'] ]['growth_week'] = $this->calculate_growth_rate( 'sendinblue_' . $single_list['id'] );
-					}
-				}
-
-				$this->update_account( 'sendinblue', $name, array(
-					'api_key'       => esc_html( $api_key ),
-					'lists'         => $lists,
-					'is_authorized' => esc_html( 'true' ),
-				) );
-			} else {
-				$error_message = $all_lists['message'];
-			}
-		} else {
-			$error_message = __( 'Invalid API key or something went wrong during Authorization request', 'rapidology' );
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Subscribes to Sendinblue list. Returns either "success" string or error message.
-	 * @return string
-	 */
-	function subscribe_sendinblue( $api_key, $email, $list_id, $name, $last_name = '' ) {
-		if ( ! function_exists( 'curl_init' ) ) {
-			return __( 'curl_init is not defined ', 'rapidology' );
-		}
-
-		if ( ! class_exists( 'Mailin' ) ) {
-			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/sendinblue-v2.0/mailin.php' );
-		}
-
-		$mailin = new Mailin( 'https://api.sendinblue.com/v2.0', $api_key );
-		$user   = $mailin->get_user( $email );
-		if ( 'failure' == $user['code'] ) {
-			$attributes      = array(
-				"NAME"    => $name,
-				"SURNAME" => $last_name,
-			);
-			$blacklisted     = 0;
-			$listid          = array( $list_id );
-			$listid_unlink   = array();
-			$blacklisted_sms = 0;
-
-			$result = $mailin->create_update_user( $email, $attributes, $blacklisted, $listid, $listid_unlink, $blacklisted_sms );
-
-			if ( 'success' == $result['code'] ) {
-				$error_message = 'success';
-			} else {
-				if ( ! empty( $result['message'] ) ) {
-					$error_message = $result['message'];
-				} else {
-					$error_message = __( 'Unknown error', 'rapidology' );
-				}
-			}
-		} else {
-			$error_message = __( 'Already subscribed', 'rapidology' );
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Retrieves the lists from MailPoet table and updates the data in DB.
-	 * @return string
-	 */
-	function get_mailpoet_lists( $name ) {
-		$lists = array();
-
-		global $wpdb;
-		$table_name  = $wpdb->prefix . 'wysija_list';
-		$table_users = $wpdb->prefix . 'wysija_user_list';
-
-		if ( ! class_exists( 'WYSIJA' ) ) {
-			$error_message = __( 'MailPoet plugin is not installed or not activated', 'rapidology' );
-		} else {
-			$list_model      = WYSIJA::get( 'list', 'model' );
-			$all_lists_array = $list_model->get( array( 'name', 'list_id' ), array( 'is_enabled' => '1' ) );
-
-			$error_message = 'success';
-
-			if ( ! empty( $all_lists_array ) ) {
-				foreach ( $all_lists_array as $list_details ) {
-					$lists[ $list_details['list_id'] ]['name'] = $list_details['name'];
-
-					$user_model            = WYSIJA::get( 'user_list', 'model' );
-					$all_subscribers_array = $user_model->get( array( 'user_id' ), array( 'list_id' => $list_details['list_id'] ) );
-
-					$subscribers_count                                      = count( $all_subscribers_array );
-					$lists[ $list_details['list_id'] ]['subscribers_count'] = $subscribers_count;
-
-					$lists[ $list_details['list_id'] ]['growth_week'] = $this->calculate_growth_rate( 'mailpoet_' . $list_details['list_id'] );
-				}
-			}
-
-			$this->update_account( 'mailpoet', $name, array(
-				'lists'         => $lists,
-				'is_authorized' => esc_html( 'true' ),
-			) );
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Subscribes to MailPoet list. Returns either "success" string or error message.
-	 * @return string
-	 */
-	function subscribe_mailpoet( $list_id, $email, $name = '', $last_name = '' ) {
-		global $wpdb;
-		$table_user       = $wpdb->prefix . 'wysija_user';
-		$table_user_lists = $wpdb->prefix . 'wysija_user_list';
-
-		if ( ! class_exists( 'WYSIJA' ) ) {
-			$error_message = __( 'MailPoet plugin is not installed or not activated', 'rapidology' );
-		} else {
-			$sql_count = "SELECT COUNT(*) FROM $table_user WHERE email = %s";
-			$sql_args  = array(
-				$email,
-			);
-
-			$subscribers_count = $wpdb->get_var( $wpdb->prepare( $sql_count, $sql_args ) );
-
-			if ( 0 == $subscribers_count ) {
-
-				$new_user = array(
-					'user'      => array(
-						'email'     => $email,
-						'firstname' => $name,
-						'lastname'  => $last_name
-					),
-					'user_list' => array( 'list_ids' => array( $list_id ) )
-				);
-
-				$mailpoet_class = WYSIJA::get( 'user', 'helper' );
-				$error_message  = $mailpoet_class->addSubscriber( $new_user );
-				$error_message  = is_int( $error_message ) ? 'success' : $error_message;
-			} else {
-				$error_message = __( 'Already Subscribed', 'rapidology' );
-			}
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Retrieves the lists via AWeber API and updates the data in DB.
-	 * @return string
-	 */
-	function get_aweber_lists( $api_key, $name ) {
-		$options_array = RAD_Rapidology::get_rapidology_options();
-		$lists         = array();
-
-		if ( ! isset( $options_array['accounts']['aweber'][ $name ]['consumer_key'] ) || ( $api_key != $options_array['accounts']['aweber'][ $name ]['api_key'] ) ) {
-			$error_message = $this->aweber_authorization( $api_key, $name );
-		} else {
-			$error_message = 'success';
-		}
-
-		if ( 'success' === $error_message ) {
-			if ( ! class_exists( 'AWeberAPI' ) ) {
-				require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/aweber/aweber_api.php' );
-			}
-
-			$account = $this->get_aweber_account( $name );
-
-			if ( $account ) {
-				$aweber_lists = $account->lists;
-				if ( isset( $aweber_lists ) ) {
-					foreach ( $aweber_lists as $list ) {
-						$lists[ $list->id ]['name'] = $list->name;
-
-						$total_subscribers                       = $list->total_subscribers;
-						$lists[ $list->id ]['subscribers_count'] = $total_subscribers;
-
-						$lists[ $list->id ]['growth_week'] = $this->calculate_growth_rate( 'aweber_' . $list->id );
-					}
-				}
-			}
-
-			$this->update_account( 'aweber', $name, array( 'lists' => $lists ) );
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Subscribes to Aweber list. Returns either "success" string or error message.
-	 * @return string
-	 */
-	function subscribe_aweber( $list_id, $account_name, $email, $name = '' ) {
-		if ( ! class_exists( 'AWeberAPI' ) ) {
-			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/aweber/aweber_api.php' );
-		}
-
-		$account = $this->get_aweber_account( $account_name );
-
-		if ( ! $account ) {
-			$error_message = __( 'Aweber: Wrong configuration data', 'rapidology' );
-		}
-
-		try {
-			$list_url = "/accounts/{$account->id}/lists/{$list_id}";
-			$list     = $account->loadFromUrl( $list_url );
-
-			$new_subscriber = $list->subscribers->create(
-				array(
-					'email' => $email,
-					'name'  => $name,
-				)
-			);
-
-			$error_message = 'success';
-		} catch ( Exception $exc ) {
-			$error_message = $exc->message;
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Retrieves the tokens from AWeber
-	 * @return string
-	 */
-	function aweber_authorization( $api_key, $name ) {
-
-		if ( ! class_exists( 'AWeberAPI' ) ) {
-			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/aweber/aweber_api.php' );
-		}
-
-		try {
-			$auth = AWeberAPI::getDataFromAweberID( $api_key );
-
-			if ( ! ( is_array( $auth ) && 4 === count( $auth ) ) ) {
-				$error_message = __( 'Authorization code is invalid. Try regenerating it and paste in the new code.', 'rapidology' );
-			} else {
-				$error_message = 'success';
-				list( $consumer_key, $consumer_secret, $access_key, $access_secret ) = $auth;
-
-				$this->update_account( 'aweber', $name, array(
-					'api_key'         => esc_html( $api_key ),
-					'consumer_key'    => $consumer_key,
-					'consumer_secret' => $consumer_secret,
-					'access_key'      => $access_key,
-					'access_secret'   => $access_secret,
-					'is_authorized'   => esc_html( 'true' ),
-				) );
-			}
-		} catch ( AWeberAPIException $exc ) {
-			$error_message = sprintf(
-				'<p>%4$s</p>
-				<ul>
-					<li>%5$s: %1$s</li>
-					<li>%6$s: %2$s</li>
-					<li>%7$s: %3$s</li>
-				</ul>',
-				esc_html( $exc->type ),
-				esc_html( $exc->message ),
-				esc_html( $exc->documentation_url ),
-				esc_html__( 'AWeberAPIException.', 'rapidology' ),
-				esc_html__( 'Type', 'rapidology' ),
-				esc_html__( 'Message', 'rapidology' ),
-				esc_html__( 'Documentation', 'rapidology' )
-			);
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Creates Aweber account using the data saved to plugin's database.
-	 * @return object or false
-	 */
-	function get_aweber_account( $name ) {
-		if ( ! class_exists( 'AWeberAPI' ) ) {
-			require_once( get_template_directory() . '/includes/subscription/aweber/aweber_api.php' );
-		}
-
-		$options_array = RAD_Rapidology::get_rapidology_options();
-		$account       = false;
-
-		if ( isset( $options_array['accounts']['aweber'][ $name ] ) ) {
-			$consumer_key    = $options_array['accounts']['aweber'][ $name ]['consumer_key'];
-			$consumer_secret = $options_array['accounts']['aweber'][ $name ]['consumer_secret'];
-			$access_key      = $options_array['accounts']['aweber'][ $name ]['access_key'];
-			$access_secret   = $options_array['accounts']['aweber'][ $name ]['access_secret'];
-
-			try {
-				// Aweber requires curl extension to be enabled
-				if ( ! function_exists( 'curl_init' ) ) {
-					return false;
-				}
-
-				$aweber = new AWeberAPI( $consumer_key, $consumer_secret );
-
-				if ( ! $aweber ) {
-					return false;
-				}
-
-				$account = $aweber->getAccount( $access_key, $access_secret );
-			} catch ( Exception $exc ) {
-				return false;
-			}
-		}
-
-		return $account;
-	}
-
-	/**
-	 * Retrieves the lists via feedblitz API and updates the data in DB.
-	 * @return string
-	 */
-	function get_feedblitz_lists( $api_key, $name ) {
-		$lists = array();
-
-		$request_url = esc_url_raw( 'https://api.feedblitz.com/f.api/syndications?key=' . $api_key );
-
-		$theme_request = wp_remote_get( $request_url, array( 'timeout' => 30, 'sslverify' => false ) );
-
-		$response_code = wp_remote_retrieve_response_code( $theme_request );
-
-		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
-			$theme_response = $this->xml_to_array( wp_remote_retrieve_body( $theme_request ) );
-
-			if ( ! empty( $theme_response ) ) {
-				if ( 'ok' == $theme_response['rsp']['@attributes']['stat'] ) {
-					$error_message = 'success';
-					$lists_array   = $theme_response['syndications']['syndication'];
-
-					if ( ! empty( $lists_array ) ) {
-						foreach ( $lists_array as $list_data ) {
-							$lists[ $list_data['id'] ]['name']              = $list_data['name'];
-							$lists[ $list_data['id'] ]['subscribers_count'] = $list_data['subscribersummary']['subscribers'];
-
-							$lists[ $list_data['id'] ]['growth_week'] = $this->calculate_growth_rate( 'feedblitz_' . $list_data['id'] );
-						}
-					}
-
-					$this->update_account( 'feedblitz', $name, array(
-						'api_key'       => esc_html( $api_key ),
-						'lists'         => $lists,
-						'is_authorized' => esc_html( 'true' ),
-					) );
-				} else {
-					$error_message = isset( $theme_response['rsp']['err']['@attributes']['msg'] ) ? $theme_response['rsp']['err']['@attributes']['msg'] : __( 'Unknown error', 'rapidology' );
-				}
-
-			} else {
-				$error_message = __( 'empty response', 'rapidology' );
-			}
-		} else {
-			if ( is_wp_error( $theme_request ) ) {
-				$error_message = $theme_request->get_error_message();
-			} else {
-				$error_message = $response_code;
-			}
-		}
-
-		return $error_message;
-
-	}
-
-	/**
-	 * Subscribes to feedblitz list. Returns either "success" string or error message.
-	 * @return string
-	 */
-	function subscribe_feedblitz( $api_key, $list_id, $name, $email = '', $last_name = '' ) {
-		$request_url   = esc_url_raw( 'https://www.feedblitz.com/f?SimpleApiSubscribe&key=' . $api_key . '&email=' . rawurlencode( $email ) . '&listid=' . $list_id . '&FirstName=' . $name . '&LastName=' . $last_name );
-		$theme_request = wp_remote_get( $request_url, array( 'timeout' => 30, 'sslverify' => false ) );
-
-		$response_code = wp_remote_retrieve_response_code( $theme_request );
-
-		if ( ! is_wp_error( $theme_request ) && $response_code == 200 ) {
-			$theme_response = $this->xml_to_array( wp_remote_retrieve_body( $theme_request ) );
-			if ( ! empty( $theme_response ) ) {
-				if ( 'ok' == $theme_response['rsp']['@attributes']['stat'] ) {
-					if ( empty( $theme_response['rsp']['success']['@attributes']['msg'] ) ) {
-						$error_message = 'success';
-					} else {
-						$error_message = $theme_response['rsp']['success']['@attributes']['msg'];
-					}
-				} else {
-					$error_message = isset( $theme_response['rsp']['err']['@attributes']['msg'] ) ? $theme_response['rsp']['err']['@attributes']['msg'] : __( 'Unknown error', 'rapidology' );
-				}
-			} else {
-				$error_message = __( 'empty response', 'rapidology' );
-			}
-		} else {
-			if ( is_wp_error( $theme_request ) ) {
-				$error_message = $theme_request->get_error_message();
-			} else {
-				$error_message = $response_code;
-			}
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Retrieves the lists via OntraPort API and updates the data in DB.
-	 * @return string
-	 */
-	function get_ontraport_lists( $api_key, $app_id, $name ) {
-		$appid         = $app_id;
-		$key           = $api_key;
-		$lists         = array();
-		$list_id_array = array();
-
-		// get sequences (lists)
-		$req_type    = "fetch_sequences";
-		$postargs    = "appid=" . $appid . "&key=" . $key . "&reqType=" . $req_type;
-		$request     = "https://api.ontraport.com/cdata.php";
-		$result      = $this->ontraport_request( $postargs, $request );
-		$lists_array = $this->xml_to_array( $result );
-		$lists_id    = simplexml_load_string( $result );
-
-		foreach ( $lists_id->sequence as $value ) {
-			$list_id_array[] = (int) $value->attributes()->id;
-		}
-
-		if ( is_array( $lists_array ) ) {
-			$error_message = 'success';
-			if ( ! empty( $lists_array['sequence'] ) ) {
-				$sequence_array = is_array( $lists_array['sequence'] )
-					? $lists_array['sequence']
-					: $lists_array;
-
-				$i = 0;
-
-				foreach ( $sequence_array as $id => $list_name ) {
-					$lists[ $list_id_array[ $i ] ]['name'] = $list_name;
-
-					// we cannot get amount of subscribers for each sequence due to API limitations, so set it to 0.
-					$lists[ $list_id_array[ $i ] ]['subscribers_count'] = 0;
-
-					$lists[ $list_id_array[ $i ] ]['growth_week'] = $this->calculate_growth_rate( 'ontraport_' . $list_id_array[ $i ] );
-					$i ++;
-				}
-			}
-			$this->update_account( 'ontraport', $name, array(
-				'api_key'       => esc_html( $api_key ),
-				'client_id'     => esc_html( $app_id ),
-				'lists'         => $lists,
-				'is_authorized' => esc_html( 'true' ),
-			) );
-		} else {
-			$error_message = $lists_array;
-		}
-
-		return $error_message;
-	}
-
-	function subscribe_ontraport( $app_id, $api_key, $name, $email, $list_id, $last_name = '' ) {
-		$data_check = <<<STRING
-<search><equation>
-<field>Email</field>
-<op>e</op>
-<value>
-STRING;
-		$data_check .= $email;
-		$data_check .= <<<STRING
-</value>
-</equation>
-</search>
-STRING;
-
-		$data_check        = urlencode( urlencode( $data_check ) );
-		$reqType_search    = "search";
-		$postargs_search   = "appid=" . $app_id . "&key=" . $api_key . "&reqType=" . $reqType_search . "&data=" . $data_check;
-		$result_search     = $this->ontraport_request( $postargs_search );
-		$user_array_search = $this->xml_to_array( $result_search );
-
-		//make sure that user is not subscribed yet
-		if ( empty( $user_array_search ) ) {
-// Construct contact data in XML format
-			$data = <<<STRING
-<contact>
-<Group_Tag name="Contact Information">
-<field name="First Name">
-STRING;
-			$data .= $name;
-			$data .= <<<STRING
-</field>
-<field name="Last Name">
-STRING;
-			$data .= $last_name;
-			$data .= <<<STRING
-</field>
-<field name="Email">
-STRING;
-			$data .= $email;
-			$data .= <<<STRING
-</field>
-</Group_Tag>
-<Group_Tag name="Sequences and Tags">
-<field name="Contact Tags"></field>
-<field name="Sequences">*/*
-STRING;
-			$data .= $list_id;
-			$data .= <<<STRING
-*/*</field>
-</Group_Tag>
-</contact>
-STRING;
-
-			$data     = urlencode( urlencode( $data ) );
-			$reqType  = "add";
-			$postargs = "appid=" . $app_id . "&key=" . $api_key . "&return_id=1&reqType=" . $reqType . "&data=" . $data;
-
-			$result     = $this->ontraport_request( $postargs );
-			$user_array = $this->xml_to_array( $result );
-
-			if ( isset( $user_array['status'] ) && 'Success' == $user_array['status'] ) {
-				$error_message = 'success';
-			} else {
-				$error_message = __( 'Error occured during subscription', 'rapidology' );
-			}
-		} else {
-			$error_message = __( 'Already Subscribed', 'rapidology' );
-		}
-
-		return $error_message;
-	}
-
-	/**
-	 * Performs the request to OntraPort API and handles the response
-	 * @return xml
-	 */
-	function ontraport_request( $postargs ) {
-		if ( ! function_exists( 'curl_init' ) ) {
-			$response = __( 'curl_init is not defined ', 'rapidology' );
-		} else {
-			$response = '';
-			$httpCode = '';
-			// Get cURL resource
-			$curl = curl_init();
-			// Set some options
-			curl_setopt_array( $curl, array(
-				CURLOPT_RETURNTRANSFER => 1,
-				CURLOPT_HEADER         => false,
-				CURLOPT_URL            => "https://api.ontraport.com/cdata.php",
-				CURLOPT_POST           => true,
-				CURLOPT_POSTFIELDS     => $postargs,
-				CURLOPT_SSL_VERIFYPEER => false, //we need this option since we perform request to https
-			) );
-			// Send the request & save response to $resp
-			$response = curl_exec( $curl );
-			$httpCode = curl_getinfo( $curl, CURLINFO_HTTP_CODE );
-			// Close request to clear up some resources
-			curl_close( $curl );
-
-			if ( 200 == $httpCode ) {
-				$response = $response;
-			} else {
-				$response = $httpCode;
-			}
-		}
-
-		return $response;
-	}
 
 	/**
 	 * Converts xml data to array
@@ -4315,93 +3096,40 @@ STRING;
 				RAD_Rapidology::generate_hint( __( 'Enter the name for your account', 'rapidology' ), true )
 			);
 		}
+		$default_fields = sprintf( '
+					<div class="rad_dashboard_account_row">
+						<label for="%1$s">%2$s</label>
+						<input type="password" value="%3$s" id="%1$s">%4$s
+					</div>',
+			esc_attr( 'api_key_' . $service ),
+			__( 'API key', 'rapidology' ),
+			( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',
+			RAD_Rapidology::generate_hint( sprintf(
+				'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
+				__( 'Click here for more information', 'rapidology' )
+			), false
+			)
+		);
 		//include class to get functions below
 		if(!class_exists('rapidology_'.$service)){
-			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/classes/class.rapidology-'.$service.'.php');
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/classes/integrations/class.rapidology-'.$service.'.php');
 		}
 		switch ( $service ) {
 			case 'madmimi' :
-
-				$form_fields .= sprintf( '
-					<div class="rad_dashboard_account_row">
-						<label for="%1$s">%3$s</label>
-						<input type="password" value="%5$s" id="%1$s">%7$s
-					</div>
-					<div class="rad_dashboard_account_row">
-						<label for="%2$s">%4$s</label>
-						<input type="password" value="%6$s" id="%2$s">%7$s
-					</div>',
-					esc_attr( 'username_' . $service ),
-					esc_attr( 'api_key_' . $service ),
-					__( 'Username', 'rapidology' ),
-					__( 'API key', 'rapidology' ),
-					( '' !== $field_values && isset( $field_values['username'] ) ) ? esc_html( $field_values['username'] ) : '',
-					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_html( $field_values['api_key'] ) : '',
-					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs'.$service.'" target="_blank">%1$s</a>',
-						__( 'Click here for more information', 'rapidology' )
-					), false
-					)
-				);
-
+				$madmimi = new rapidology_madmimi();
+				$form_fields = $madmimi->draw_madmimi_form($form_fields, $service, $field_values);
 				break;
 			case 'emma':
-				$form_fields .= sprintf( '
-					<div class="rad_dashboard_account_row">
-						<label for="%1$s">%4$s</label>
-						<input type="password" value="%7$s" id="%1$s">%10$s
-					</div>
-					<div class="rad_dashboard_account_row">
-						<label for="%2$s">%5$s</label>
-						<input type="password" value="%8$s" id="%2$s">%10$s
-					</div>
-					<div class="rad_dashboard_account_row">
-						<label for="%3$s">%6$s</label>
-						<input type="password" value="%9$s" id="%3$s">%10$s
-					</div>',
-					esc_attr( 'api_key_' . $service ),
-					esc_attr( 'client_id_' . $service ),
-					esc_attr( 'username_' . $service ),
-					__( 'Public API Key', 'rapidology' ),
-					__( 'Private API key', 'rapidology' ),
-					__( 'Account ID', 'rapidology' ),
-					( '' !== $field_values && isset( $field_values['api_key_'] ) ) ? esc_html( $field_values['api_key_'] ) : '',
-					( '' !== $field_values && isset( $field_values['client_id_'] ) ) ? esc_html( $field_values['client_id_'] ) : '',
-					( '' !== $field_values && isset( $field_values['username_'] ) ) ? esc_html( $field_values['username_'] ) : '',
-					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
-						__( 'Click here for more information', 'rapidology' )
-					), false
-					)
-				);
+				$emma = new rapidology_emma();
+				$form_fields = $emma->draw_emma_form($form_fields, $service, $field_values);
 				break;
 			case 'salesforce' :
 				$salesforce_form = new rapidology_salesforce();
 				$form_fields = $salesforce_form->draw_salesforce_form($form_fields, $service, $field_values);
 			break;
 			case 'activecampaign':
-				$form_fields .= sprintf('
-					<div class="rad_dashboard_account_row">
-						<label for="%1$s">%3$s</label>
-						<input type="text" value="%5$s" id="%1$s">%7$s
-					</div>
-					<div class="rad_dashboard_account_row">
-						<label for="%2$s">%4$s</label>
-						<input type="text" value="%6$s" id="%2$s">%7$s
-					</div>
-					',
-					esc_attr('url_'.$service),#1
-					esc_attr('api_key_'.$service),#2
-					__('API URL', 'rapidology'),#3
-					__('API Key', 'rapidology'),#4
-					( '' !== $field_values && isset( $field_values['url'] ) ) ? esc_attr( $field_values['url'] ) : '',#5
-					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',#6
-					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
-						__( 'Click here for more information', 'rapidology' )
-					), false
-					)#7
-				);
+				$activecampaign = new rapidology_activecampaign();
+				$form_fields = $activecampaign->draw_activecampaign_form($form_fields, $service, $field_values);
 			break;
 
 			case 'hubspot-standard' :
@@ -4409,135 +3137,51 @@ STRING;
 				$form_fields = $hubspot_standard->draw_hubspot_standard_form($form_fields, $service, $field_values);
 			break;
 			case 'constant_contact' :
-				$constant_contact = new rapidology_contact_contact();
+				$constant_contact = new rapidology_constant_contact();
 				$form_fields = $constant_contact->draw_contstant_contact_form($form_fields, $service, $field_values);
 				break;
 			case 'mailchimp' :
-			case 'hubspot'  :
-
-			case 'getresponse' :
-			case 'sendinblue' :
-			case 'campaign_monitor' :
-			case 'feedblitz' :
-
-				$form_fields .= sprintf( '
-					<div class="rad_dashboard_account_row">
-						<label for="%1$s">%2$s</label>
-						<input type="password" value="%3$s" id="%1$s">%4$s
-					</div>',
-					esc_attr( 'api_key_' . $service ),
-					__( 'API key', 'rapidology' ),
-					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',
-					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
-						__( 'Click here for more information', 'rapidology' )
-					), false
-					)
-				);
-
-
-
+				$mailchimp = new rapidology_mailchimp();
+				$form_fields = $mailchimp->draw_mailchimp_form($form_fields, $service, $field_values);
 				break;
-
+			case 'hubspot'  :
+				$hubspot = new rapidology_hubspot();
+				$form_fields = $hubspot->draw_hubspot_form($form_fields, $service, $field_values);
+				break;
+			case 'getresponse' :
+				$getresponse = new rapidology_getresponse();
+				$form_fields = $getresponse->draw_getresponse_form($form_fields, $service, $field_values);
+				break;
+			case 'sendinblue' :
+				$sendinblue = new rapidology_sendinblue();
+				$form_fields = $sendinblue->draw_sendinblue_form($form_fields, $service, $field_values);
+				break;
+			case 'campaign_monitor' :
+				$mailchimp = new rapidology_campaign_monitor();
+				$mailchimp->draw_campaign_monitor_form($form_fields, $service, $field_values);
+				break;
+			case 'feedblitz' :
+				$feedblitz = new rapidology_feedblitz();
+				$form_fields = $feedblitz->draw_feedbliz_form($form_fields, $service, $field_values);
+				break;
 			case 'aweber' :
-				$app_id               = '7365f385';
-				$aweber_auth_endpoint = 'https://auth.aweber.com/1.0/oauth/authorize_app/' . $app_id;
-
-				$form_fields .= sprintf( '
-					<div class="rad_dashboard_account_row rad_dashboard_aweber_row">%1$s%2$s</div>',
-					sprintf(
-						__( 'Step 1: <a href="%1$s" target="_blank">Generate authorization code</a><br/>', 'rapidology' ),
-						esc_url( $aweber_auth_endpoint )
-					),
-					sprintf( '
-						%2$s
-						<input type="password" value="%3$s" id="%1$s">',
-						esc_attr( 'api_key_' . $service ),
-						__( 'Step 2: Paste in the authorization code and click "Authorize" button: ', 'rapidology' ),
-						( '' !== $field_values && isset( $field_values['api_key'] ) )
-							? esc_attr( $field_values['api_key'] )
-							: ''
-					)
-				);
+				$aweber = new rapidology_aweber();
+				$form_fields = $aweber->draw_aweber_form($form_fields, $service, $field_values);
 				break;
 
 			case 'icontact' :
-				$form_fields .= sprintf( '
-					<div class="rad_dashboard_account_row">%1$s</div>',
-					sprintf( '
-						<div class="rad_dashboard_account_row">
-							<label for="%1$s">%4$s</label>
-							<input type="password" value="%7$s" id="%1$s">%10$s
-						</div>
-						<div class="rad_dashboard_account_row">
-							<label for="%2$s">%5$s</label>
-							<input type="password" value="%8$s" id="%2$s">%10$s
-						</div>
-						<div class="rad_dashboard_account_row">
-							<label for="%3$s">%6$s</label>
-							<input type="password" value="%9$s" id="%3$s">%10$s
-						</div>',
-						esc_attr( 'client_id_' . $service ),
-						esc_attr( 'username_' . $service ),
-						esc_attr( 'password_' . $service ),
-						__( 'App ID', 'rapidology' ),
-						__( 'Username', 'rapidology' ),
-						__( 'Password', 'rapidology' ),
-						( '' !== $field_values && isset( $field_values['client_id'] ) ) ? esc_html( $field_values['client_id'] ) : '',
-						( '' !== $field_values && isset( $field_values['username'] ) ) ? esc_html( $field_values['username'] ) : '',
-						( '' !== $field_values && isset( $field_values['password'] ) ) ? esc_html( $field_values['password'] ) : '',
-						RAD_Rapidology::generate_hint( sprintf(
-							'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
-							__( 'Click here for more information', 'rapidology' )
-						), false )
-					)
-				);
+				$icontact = new rapidology_icontact();
+				$form_fields = $icontact->draw_icontact_form($form_fields, $service, $field_values);
 				break;
 
 			case 'ontraport' :
-				$form_fields .= sprintf( '
-					<div class="rad_dashboard_account_row">
-						<label for="%1$s">%3$s</label>
-						<input type="password" value="%5$s" id="%1$s">%7$s
-					</div>
-					<div class="rad_dashboard_account_row">
-						<label for="%2$s">%4$s</label>
-						<input type="password" value="%6$s" id="%2$s">%7$s
-					</div>',
-					esc_attr( 'api_key_' . $service ),
-					esc_attr( 'client_id_' . $service ),
-					__( 'API key', 'rapidology' ),
-					__( 'APP ID', 'rapidology' ),
-					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',
-					( '' !== $field_values && isset( $field_values['client_id'] ) ) ? esc_attr( $field_values['client_id'] ) : '',
-					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
-						__( 'Click here for more information', 'rapidology' )
-					), false )
-				);
+				$ontraport = new rapidology_ontraport();
+				$form_fields = $ontraport->draw_ontraport_form($form_fields, $service, $field_values);
 				break;
 
 			case 'infusionsoft' :
-				$form_fields .= sprintf( '
-					<div class="rad_dashboard_account_row">
-						<label for="%1$s">%3$s</label>
-						<input type="password" value="%5$s" id="%1$s">%7$s
-					</div>
-					<div class="rad_dashboard_account_row">
-						<label for="%2$s">%4$s</label>
-						<input type="password" value="%6$s" id="%2$s">%7$s
-					</div>',
-					esc_attr( 'api_key_' . $service ),
-					esc_attr( 'client_id_' . $service ),
-					__( 'API Key', 'rapidology' ),
-					__( 'Application name', 'rapidology' ),
-					( '' !== $field_values && isset( $field_values['api_key'] ) ) ? esc_attr( $field_values['api_key'] ) : '',
-					( '' !== $field_values && isset( $field_values['client_id'] ) ) ? esc_attr( $field_values['client_id'] ) : '',
-					RAD_Rapidology::generate_hint( sprintf(
-						'<a href="http://www.rapidology.com/docs#'.$service.'" target="_blank">%1$s</a>',
-						__( 'Click here for more information', 'rapidology' )
-					), false )
-				);
+				$infusionsoft = new rapidology_infusionsoft();
+				$form_fields = $infusionsoft->draw_infusionsoft_form($form_fields, $service, $field_values);
 				break;
 		}
 
@@ -4559,10 +3203,8 @@ STRING;
 				}
 			}
 		}
-
 		return $accounts_list;
 	}
-
 	/**
 	 * Generates the list of "Lists" for selected account in the Dashboard. Returns the generated form to jQuery.
 	 */
@@ -4588,7 +3230,6 @@ STRING;
 				}
 			}
 		}
-
 		printf( '
 			<li class="select rad_dashboard_select_list">
 				<p>%1$s</p>
@@ -4615,7 +3256,6 @@ STRING;
 
 		die();
 	}
-
 
 	/**-------------------------**/
 	/**        Front end        **/
@@ -4667,12 +3307,10 @@ STRING;
 		switch ( $post_type ) {
 			case 'project' :
 				$taxonomy = 'project_category';
-
 				break;
 
 			case 'product' :
 				$taxonomy = 'product_cat';
-
 				break;
 
 			case 'listing' :
@@ -4681,22 +3319,18 @@ STRING;
 				} else {
 					$taxonomy = 'listing_category';
 				}
-
 				break;
 
 			case 'event' :
 				$taxonomy = 'event_category';
-
 				break;
 
 			case 'gallery' :
 				$taxonomy = 'gallery_category';
-
 				break;
 
 			case 'post' :
 				$taxonomy = 'category';
-
 				break;
 		}
 

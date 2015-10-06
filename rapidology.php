@@ -1745,13 +1745,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 					printf(
 						'<div class="rad_dashboard_row rad_dashboard_accounts_title">
 							<span class="rad_dashboard_service_logo_%1$s"></span>
+							<span class="dashicons dashicons-arrow-down-alt2 rad_dashboard_show_hide show-hide-icon"></span>
 						</div>',
-						esc_attr( $service )
+						esc_attr( $service ),
+						__('Show / Hide', 'rapidology')
 					);
 					foreach ( $details as $account_name => $value ) {
 						if ( 0 === $optins_count ) {
 							$output .= sprintf(
-								'<div class="rad_dashboard_optins_list">
+								'<div class="rad_dashboard_optins_list rad_hidden">
 									<ul>
 										<li>
 											<div class="rad_dashboard_table_acc_name rad_dashboard_table_column rad_dashboard_table_header">%1$s</div>
@@ -1767,7 +1769,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 						}
 
 						$output .= sprintf(
-							'<li class="rad_dashboard_optins_item" data-account_name="%1$s" data-service="%2$s">
+							'<li class="rad_dashboard_optins_item rad_dashboard_optins_item" data-account_name="%1$s" data-service="%2$s">
 								<div class="rad_dashboard_table_acc_name rad_dashboard_table_column">%3$s</div>
 								<div class="rad_dashboard_table_subscribers rad_dashboard_table_column"></div>
 								<div class="rad_dashboard_table_growth_rate rad_dashboard_table_column"></div>',
@@ -2098,6 +2100,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 
 		add_filter( 'admin_body_class', array( $this, 'add_admin_body_class' ) );
+		wp_enqueue_script('jquery-ui-accordion');
 		wp_enqueue_script( 'rad_rapidology-uniform-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/jquery.uniform.min.js', array( 'jquery' ), $this->plugin_version, true );
 		wp_enqueue_style( 'rad-open-sans-700', "{$this->protocol}://fonts.googleapis.com/css?family=Open+Sans:700", array(), $this->plugin_version );
 		wp_enqueue_style( 'rad-montserrat-700', "{$this->protocol}://fonts.googleapis.com/css?family=Montserrat:400,700", array(), $this->plugin_version );

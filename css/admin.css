@@ -95,7 +95,8 @@ button.save_account_tab, .rad_dashboard_save_changes button { background-color: 
 .rad_dashboard_service_logo_activecampaign { background-image: url('../images/activecampaign-logo.svg'); }
 
 .rad_rapidology .rad_dashboard_shape_tile:before { display: none; }
-
+.rad_hidden {display:none;}
+.rad_dashboard_show_hide{display:inline-block!important;}
 /*------------------------------------------------*/
 /*------------------[ALIGNMENT]-------------------*/
 /*------------------------------------------------*/
@@ -154,7 +155,6 @@ span.rad_dashboard_icon_abtest.clicked_button:before, span.rad_dashboard_icon_ab
 
 	.rad_dashboard_table_actions span.spinner { position: absolute; top: -12px; left: 2px; opacity: 1; }
 .rad_dashboard_optins_list > ul > li .rad_dashboard_table_column { transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s; }
-
 .rad_dashboard_table_column { word-break: break-word; }
 	.rad_dashboard_table_column:before { margin-right: 10px !important; color: #c2c6d0; }
 .rad_dashboard_optins_list { clear: both; }
@@ -210,7 +210,7 @@ button.authorize_service { margin-top: 20px; }
 /* accounts tab */
 .rad_dashboard_tab_content_header_accounts .rad_dashboard_new_account_row h1 { float: left; }
 
-.rad_dashboard_accounts_title span { display: block; width: 260px; height: 50px; background-repeat: no-repeat; }
+.rad_dashboard_accounts_title span { display: inline-block; width: 250px; height: 50px; background-repeat: no-repeat; }
 
 .rad_dashboard_lists_row .rad_dashboard_table_column { text-transform: none; }
 

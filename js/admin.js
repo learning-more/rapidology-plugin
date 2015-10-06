@@ -1415,6 +1415,20 @@
 				define_popup_position( $radRapidologyPreviewPopup, false );
 			}
 		});
+
+        $('.rad_dashboard_show_hide').on('click', function(){
+            var trigger = $(this).parent().next('.rad_hidden');
+            if(trigger.css('display') == 'none'){
+                $(this).removeClass('dashicons-arrow-down-alt2');
+                $(this).addClass('dashicons-arrow-up-alt2');
+            }
+            if(trigger.css('display') == 'block'){
+                $(this).removeClass('dashicons-arrow-up-alt2');
+                $(this).addClass('dashicons-arrow-down-alt2');
+            }
+            trigger.toggle('slow');
+
+        });
 	});
 })(jQuery)
 ;

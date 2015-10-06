@@ -96,7 +96,7 @@ button.save_account_tab, .rad_dashboard_save_changes button { background-color: 
 
 .rad_rapidology .rad_dashboard_shape_tile:before { display: none; }
 .rad_hidden {display:none;}
-.rad_dashboard_show_hide{display:inline-block!important;}
+.rad_dashboard_show_hide{display:inline-block!important; width:30px !important; height:30px !important; padding-top:10px; cursor: pointer; border:thin solid #D1D2D3; border-radius:5px;}
 /*------------------------------------------------*/
 /*------------------[ALIGNMENT]-------------------*/
 /*------------------------------------------------*/

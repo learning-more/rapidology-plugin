@@ -22,6 +22,7 @@ $rad_all_sections = array(
 			'importexport' => __( 'Import & Export', 'rapidology' ),
 			'home'         => __( 'Home', 'rapidology' ),
 			'edit_account' => __( 'Edit Account', 'rapidology' ),
+			'support' => __( 'Help and Support', 'rapidology' ),
 		),
 	),
 );
@@ -1029,6 +1030,10 @@ $rad_dashboard_options_all = array(
 		'type'  => 'account',
 		'title' => __( 'Accounts', 'rapidology' ),
 	),
+	'support' => array(
+		'type'  => 'support',
+		'title' => __( 'Help and Support', 'rapidology' ),
+	),
 
 	'edit_account' => array(
 		'type'  => 'edit_account',
@@ -1207,5 +1212,8 @@ $rad_assigned_options = array(
 	),
 	'header_stats_options' => array(
 		$rad_dashboard_options_all[ 'stats' ],
+	),
+	'header_support_options' => array(
+		$rad_dashboard_options_all[ 'support' ],
 	),
 );

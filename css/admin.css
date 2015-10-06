@@ -25,6 +25,7 @@ button.save_account_tab, .rad_dashboard_save_changes button { background-color: 
 .rad_dashboard_icon_delete:before 			{ content: "\e651"; }
 .rad_dashboard_icon_duplicate:before 		{ content: "\e652"; }
 .rad_dashboard_icon_header_home:before 		{ content: "\e653"; }
+.rad_dashboard_icon_header_support:before 		{ content: "\e615"; }
 .rad_dashboard_icon_inactive:before 			{ content: "\e654"; }
 .rad_dashboard_icon_setup:before,
 .rad_dashboard_icon_edit:before 				{ content: "\e655"; }

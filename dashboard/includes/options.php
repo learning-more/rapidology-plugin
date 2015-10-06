@@ -1034,7 +1034,6 @@ $rad_dashboard_options_all = array(
 		'type'  => 'support',
 		'title' => __( 'Help and Support', 'rapidology' ),
 	),
-
 	'edit_account' => array(
 		'type'  => 'edit_account',
 		'title' => __( 'Edit Account', 'rapidology' ),

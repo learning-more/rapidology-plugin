@@ -81,9 +81,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_action( 'rad_rapidology_after_main_options', array( $this, 'generate_premade_templates' ) );
 
 		add_action( 'rad_rapidology_after_save_button', array( $this, 'add_next_button' ) );
-
+		do_action('rapidology_ext_init');
 		$plugin_file = plugin_basename( __FILE__ );
 		add_filter( "plugin_action_links_{$plugin_file}", array( $this, 'add_settings_link' ) );
+
 
 
 		$dashboard_args = array(
@@ -534,6 +535,11 @@ class RAD_Rapidology extends RAD_Dashboard {
 								<div class="optin_select_grey_small"></div>
 								<div class="optin_select_grey_small last"></div>
 							</li>
+							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_rapidbar" data-type="rapidbar">
+								<h6>%8$s</h6>
+								<div class="optin_select_blue"></div>
+								<div class="optin_select_grey"></div>
+							</li>
 						</ul>
 					</div>',
 					esc_html__( 'select optin type to begin', 'rapidology' ),
@@ -542,7 +548,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 					esc_html__( 'below post', 'rapidology' ),
 					esc_html__( 'inline', 'rapidology' ),
 					esc_html__( 'locked content', 'rapidology' ),
-					esc_html__( 'widget', 'rapidology' )
+					esc_html__( 'widget', 'rapidology' ),
+					esc_html__( 'rapidbar', 'rapidology' )
 				);
 
 				$this->display_home_tab_tables();
@@ -589,10 +596,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 					)
 				);
 				break;
+
 			case 'support'	:
 				include_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/static_content/marketing.php');
 				break;
-
 		}
 	}
 

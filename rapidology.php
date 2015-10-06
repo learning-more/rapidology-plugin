@@ -221,6 +221,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_submenu_page( 'rad_rapidology_options', __( 'Email Accounts', 'rapidology' ), __( 'Email Accounts', 'rapidology' ), 'manage_options', 'admin.php?page=rad_rapidology_options#tab_rad_dashboard_tab_content_header_accounts' );
 		add_submenu_page( 'rad_rapidology_options', __( 'Statistics', 'rapidology' ), __( 'Statistics', 'rapidology' ), 'manage_options', 'admin.php?page=rad_rapidology_options#tab_rad_dashboard_tab_content_header_stats' );
 		add_submenu_page( 'rad_rapidology_options', __( 'Import & Export', 'rapidology' ), __( 'Import & Export', 'rapidology' ), 'manage_options', 'admin.php?page=rad_rapidology_options#tab_rad_dashboard_tab_content_header_importexport' );
+		add_submenu_page( 'rad_rapidology_options', __( 'Help and Supprt', 'rapidology' ), __( 'Help and Support', 'rapidology' ), 'manage_options', 'admin.php?page=rad_rapidology_options#tab_rad_dashboard_tab_content_header_support' );
 	}
 
 	function add_body_class( $body_class ) {
@@ -587,6 +588,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 						esc_html__( 'No', 'rapidology' )
 					)
 				);
+				break;
+			case 'support'	:
+				echo _e('This is a supprt page');
 				break;
 		}
 	}

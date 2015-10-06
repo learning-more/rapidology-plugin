@@ -853,7 +853,6 @@ class RAD_Dashboard {
 						<ul>',
 			esc_attr( $this->plugin_name )
 		);
-
 		if ( isset( $dashboard_sections[ 'header' ][ 'contents' ] ) ) {
 			foreach ( $dashboard_sections[ 'header' ][ 'contents' ] as $key => $value ) {
 				printf(
@@ -921,11 +920,9 @@ class RAD_Dashboard {
 				<div id="rad_dashboard_content">
 					<form id="rad_dashboard_options" enctype="multipart/form-data">';
 		settings_fields( 'rad_dashboard_settings_group' );
-
 		if ( isset( $dashboard_sections ) ) {
 			foreach ( $dashboard_sections as $key => $value ) {
 				$current_section = $key;
-
 				if ( $key !== 'header' ) {
 					foreach( $value[ 'contents' ] as $key => $value ) {
 						$current_location = $key;
@@ -1553,8 +1550,8 @@ class RAD_Dashboard {
 			do_action( 'rad_' . $this->plugin_name . '_header_start' );
 
 			foreach ( $dashboard_sections[ 'header' ][ 'contents' ] as $key => $value ) {
-				$options_array = $dashboard_options_assigned['header_' . $key . '_options'];
 
+				$options_array = $dashboard_options_assigned['header_' . $key . '_options'];
 				printf(
 					'<div class="rad_dashboard_tab_content rad_dashboard_tab_content_header_%1$s rad_dashboard_header_option">',
 					esc_attr( $key )

@@ -6,7 +6,7 @@
 
 		//Set the current tab to home by default
 		if ( typeof tab_link === 'undefined' ) {
-			window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_header_home', 'header' );
+			window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_header_support', 'header' );
 			$( '#rad_dashboard_wrapper' ).addClass( 'rad_dashboard_hidden_nav' );
 		} else {
 			var $toplevelPageRadRapidologyOptions = $('#toplevel_page_rad_rapidology_options');

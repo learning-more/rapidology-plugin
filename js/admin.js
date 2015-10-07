@@ -40,7 +40,7 @@
 					refresh_stats_tab( false );
 				}
 			} else {
-				window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_header_home', 'header' );
+				window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_header_support', 'header' );
 				$( '#rad_dashboard_wrapper' ).addClass( 'rad_dashboard_hidden_nav' );
 			}
 

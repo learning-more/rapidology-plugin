@@ -178,7 +178,7 @@ li.rad_dashboard_optins_item_bottom_row .rad_dashboard_table_rate.rad_dashboard_
 .rad_dashboard_row.rad_dashboard_new_optin { margin-bottom: 30px; }
 .rad_dashboard_optin_select ul { clear: both; margin: 0 auto; }
 	li.rad_dashboard_optin_type { opacity: 0; width: 15%; height: 140px; float: left; padding: 20px; margin: -20px 1.5% 40px 0; cursor: pointer; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; transition: all 0.8s ease-out; -moz-transition: all 0.8s ease-out; -webkit-transition: all 0.8s ease-out; }
-		li.rad_dashboard_optin_type:last-child { margin-right: 0; }
+		li.rad_dashboard_optin_type:last-child { margin-left: 0; }
 			.rad_dashboard_visible li.rad_dashboard_optin_type { opacity: 1; margin-top: 0;}
 				.rad_dashboard_visible li.rad_dashboard_optin_type:nth-child(1) { -webkit-transition-delay: 0.0s; transition-delay: 0.0s; }
 				.rad_dashboard_visible li.rad_dashboard_optin_type:nth-child(2) { -webkit-transition-delay: 0.1s; transition-delay: 0.1s; }
@@ -310,10 +310,11 @@ li.rad_dashboard_optin_type { border: none; background-color: #636a7d; border-ra
 .current_tab_rad_dashboard_tab_content_optin_design .current_optin_type_locked .rad_dashboard_next_shortcode, .current_tab_rad_dashboard_tab_content_optin_design .current_optin_type_inline .rad_dashboard_next_shortcode { display: block; }
 .rad_rapidology_widget_only_option {display : none;}
 .display_on_checkboxes { display: none; }
-.current_optin_type_pop_up .display_on_checkboxes, .current_optin_type_flyin .display_on_checkboxes { display: block; }
+.current_optin_type_pop_up .display_on_checkboxes, .current_optin_type_flyin .display_on_checkboxes, .current_optin_type_rapidbar .display_on_checkboxes { display: block; }
 .rad_rapidology_widg.rad_only_option { display: none; }
 .current_optin_type_widget .rad_rapidology_hide_for_widget { display: none; }
 .current_optin_type_widget .rad_rapidology_widg.rad_only_option { display: block; }
+
 
 
 .display_on_section li { height: auto; min-height: 30px; }
@@ -508,6 +509,13 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 
 
 /*------------------------------------------------*/
+/*-------------------[RapidBar]-----------------*/
+/*------------------------------------------------*/
+.current_optin_type_rapidbar .rad_rapidology_hide_for_rapidbar { display: none; }
+.current_optin_type_rapidbar .rad_rapidology_rapidbar.rad_only_option { display: block; }
+
+
+/*------------------------------------------------*/
 /*-------------------[Custom Styling]-----------------*/
 /*------------------------------------------------*/
 .rad_dashboard_25_bottom {
@@ -518,6 +526,5 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
     margin-bottom:10px !important;
 }
 
-/*testing for rapidbar*/
-.current_optin_type_rapidbar .rad_dashboard_tab_content_optin_display .rad_dashboard_row {display:none;}
-.current_optin_type_rapidbar .rad_dashboard_tab_content_optin_design .rad_dashboard_row {display:none;}
+
+

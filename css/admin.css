@@ -186,7 +186,7 @@ li.rad_dashboard_optins_item_bottom_row .rad_dashboard_table_rate.rad_dashboard_
 				.rad_dashboard_visible li.rad_dashboard_optin_type:nth-child(4) { -webkit-transition-delay: 0.3s; transition-delay: 0.3s; }
 				.rad_dashboard_visible li.rad_dashboard_optin_type:nth-child(5) { -webkit-transition-delay: 0.4s; transition-delay: 0.4s; }
 				.rad_dashboard_visible li.rad_dashboard_optin_type:nth-child(6) { -webkit-transition-delay: 0.5s; transition-delay: 0.5s; }
-
+                .rad_dashboard_visible li.rad_dashboard_optin_type:nth-child(7) { -webkit-transition-delay: 0.5s; transition-delay: 0.5s; }
 .rad_dashboard_optin_select .rad_dashboard_close_button { float: right; position: absolute; top: 15px; right: 18px; cursor: pointer; color: #f45a4a; }
 	.rad_dashboard_optin_select .rad_dashboard_close_button:hover { color: #db5142; }
 

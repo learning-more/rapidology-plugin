@@ -998,7 +998,6 @@ class RAD_Dashboard {
 									if ( isset( $option[ 'filter'] ) ) {
 										$current_option_list = apply_filters( $option[ 'filter'], $current_option_list );
 									}
-
 									printf(
 										'<li class="select%3$s%5$s%7$s"%4$s%6$s%8$s>
 											<p>%1$s</p>
@@ -1021,10 +1020,11 @@ class RAD_Dashboard {
 									);
 
 									foreach ( $current_option_list as $actual_value => $display_value ) {
-										printf( '<option value="%1$s" %2$s>%3$s</option>',
+										printf( '<option class ="%4$s" value="%1$s" %2$s>%3$s</option>',
 											esc_attr( $actual_value ),
 											selected( $actual_value, $current_option_value, false ),
-											esc_html( $display_value )
+											esc_html( $display_value ),
+											isset($option['conditional'][$actual_value]) ? $option['conditional'][$actual_value] : 'test'
 										);
 									}
 

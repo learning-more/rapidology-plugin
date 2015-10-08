@@ -66,14 +66,14 @@ class rapidology_rapidbar
 		$is_single_name = (isset($details['display_name']) && '1' == $details['display_name']) ? false : true;
 
 		$output = sprintf('
-			<div class="rad_rapidology_form_container_wrapper clearfix">
-				<div class="rad_rapidology_header_outer">
-					<div class="rad_rapidology_form_header%13$s">
+			<div class="rad_rapidology_rapidbar_form_container_wrapper clearfix">
+				<div class="rad_rapidology_rapidbar_header_outer">
+					<div class="rad_rapidology_rapidbar_form_header%13$s">
 						%3$s
 						%4$s
 					</div>
 				</div>
-				<div class="rad_rapidology_form_content%6$s%7$s%12$s"%11$s>
+				<div class="rad_rapidology_rapidbar_form_content%6$s%7$s%12$s"%11$s>
 					%8$s
 					<div class="rad_rapidology_success_container">
 						<span class="rad_rapidology_success_checkmark"></span>
@@ -227,14 +227,14 @@ class rapidology_rapidbar
 		$custom_css = '';
 
 		if (isset($single_optin['form_bg_color']) && '' !== $single_optin['form_bg_color']) {
-			$custom_css .= $form_class . ' .rad_rapidology_rapidbar_container, .rad_rapidology_form_container_wrapper, .rad_rapidology_form_text { background-color: ' . $single_optin['form_bg_color'] . ' !important; } ';
+			$custom_css .= $form_class . ' .rad_rapidology_rapidbar_container, .rad_rapidology_rapidbar_form_container_wrapper, .rad_rapidology_rapidbar_form_header .rad_rapidology_form_text { background-color: ' . $single_optin['form_bg_color'] . ' !important; } ';
 
 			if ('zigzag_edge' === $single_optin['edge_style']) {
 				$custom_css .=
-					$form_class . ' .zigzag_edge .rad_rapidology_form_content:before { background: linear-gradient(45deg, transparent 33.33%, ' . $single_optin['form_bg_color'] . ' 33.333%, ' . $single_optin['form_bg_color'] . ' 66.66%, transparent 66.66%), linear-gradient(-45deg, transparent 33.33%, ' . $single_optin['form_bg_color'] . ' 33.33%, ' . $single_optin['form_bg_color'] . ' 66.66%, transparent 66.66%) !important; background-size: 20px 40px !important; } ' .
-					$form_class . ' .zigzag_edge.rad_rapidology_form_right .rad_rapidology_form_content:before, ' . $form_class . ' .zigzag_edge.rad_rapidology_form_left .rad_rapidology_form_content:before { background-size: 40px 20px !important; }
+					$form_class . ' .zigzag_edge .rad_rapidology_rapidbar_form_content:before { background: linear-gradient(45deg, transparent 33.33%, ' . $single_optin['form_bg_color'] . ' 33.333%, ' . $single_optin['form_bg_color'] . ' 66.66%, transparent 66.66%), linear-gradient(-45deg, transparent 33.33%, ' . $single_optin['form_bg_color'] . ' 33.33%, ' . $single_optin['form_bg_color'] . ' 66.66%, transparent 66.66%) !important; background-size: 20px 40px !important; } ' .
+					$form_class . ' .zigzag_edge.rad_rapidology_form_right .rad_rapidology_rapidbar_form_content:before, ' . $form_class . ' .zigzag_edge.rad_rapidology_form_left .rad_rapidology_rapidbar_form_content:before { background-size: 40px 20px !important; }
 					@media only screen and ( max-width: 767px ) {' .
-					$form_class . ' .zigzag_edge.rad_rapidology_form_right .rad_rapidology_form_content:before, ' . $form_class . ' .zigzag_edge.rad_rapidology_form_left .rad_rapidology_form_content:before { background: linear-gradient(45deg, transparent 33.33%, ' . $single_optin['form_bg_color'] . ' 33.333%, ' . $single_optin['form_bg_color'] . ' 66.66%, transparent 66.66%), linear-gradient(-45deg, transparent 33.33%, ' . $single_optin['form_bg_color'] . ' 33.33%, ' . $single_optin['form_bg_color'] . ' 66.66%, transparent 66.66%) !important; background-size: 20px 40px !important; } ' .
+					$form_class . ' .zigzag_edge.rad_rapidology_form_right .rad_rapidology_rapidbar_form_content:before, ' . $form_class . ' .zigzag_edge.rad_rapidology_form_left .rad_rapidology_rapidbar_form_content:before { background: linear-gradient(45deg, transparent 33.33%, ' . $single_optin['form_bg_color'] . ' 33.333%, ' . $single_optin['form_bg_color'] . ' 66.66%, transparent 66.66%), linear-gradient(-45deg, transparent 33.33%, ' . $single_optin['form_bg_color'] . ' 33.33%, ' . $single_optin['form_bg_color'] . ' 66.66%, transparent 66.66%) !important; background-size: 20px 40px !important; } ' .
 					'}';
 			}
 		}
@@ -253,10 +253,10 @@ class rapidology_rapidbar
 
 				case 'carrot_edge' :
 					$custom_css .=
-						$form_class . ' .carrot_edge .rad_rapidology_form_content:before { border-top-color: ' . $single_optin['header_bg_color'] . ' !important; } ' .
-						$form_class . ' .carrot_edge.rad_rapidology_form_right .rad_rapidology_form_content:before, ' . $form_class . ' .carrot_edge.rad_rapidology_form_left .rad_rapidology_form_content:before { border-top-color: transparent !important; border-left-color: ' . $single_optin['header_bg_color'] . ' !important; }
+						$form_class . ' .carrot_edge .rad_rapidology_rapidbar_form_content:before { border-top-color: ' . $single_optin['header_bg_color'] . ' !important; } ' .
+						$form_class . ' .carrot_edge.rad_rapidology_form_right .rad_rapidology_rapidbar_form_content:before, ' . $form_class . ' .carrot_edge.rad_rapidology_form_left .rad_rapidology_rapidbar_form_content:before { border-top-color: transparent !important; border-left-color: ' . $single_optin['header_bg_color'] . ' !important; }
 						@media only screen and ( max-width: 767px ) {' .
-						$form_class . ' .carrot_edge.rad_rapidology_form_right .rad_rapidology_form_content:before, ' . $form_class . ' .carrot_edge.rad_rapidology_form_left .rad_rapidology_form_content:before { border-top-color: ' . $single_optin['header_bg_color'] . ' !important; border-left-color: transparent !important; }
+						$form_class . ' .carrot_edge.rad_rapidology_form_right .rad_rapidology_rapidbar_form_content:before, ' . $form_class . ' .carrot_edge.rad_rapidology_form_left .rad_rapidology_rapidbar_form_content:before { border-top-color: ' . $single_optin['header_bg_color'] . ' !important; border-left-color: transparent !important; }
 						}';
 					break;
 			}
@@ -271,7 +271,7 @@ class rapidology_rapidbar
 		}
 
 		if (isset($single_optin['form_button_color']) && '' !== $single_optin['form_button_color']) {
-			$custom_css .= $form_class . ' .rad_rapidology_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ';
+			$custom_css .= $form_class . ' .rad_rapidology_rapidbar_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ';
 		}
 
 		if (isset($single_optin['border_color']) && '' !== $single_optin['border_color'] && 'no_border' !== $single_optin['border_orientation']) {
@@ -416,13 +416,13 @@ class rapidology_rapidbar
 						break;
 
 					case 'dashed' :
-						$custom_css .= $form_class . ' .rad_rapidology_border_dashed .rad_rapidology_form_container_wrapper { border-color: ' . $single_optin['border_color'] . ' !important } ';
+						$custom_css .= $form_class . ' .rad_rapidology_border_dashed .rad_rapidology_rapidbar_form_container_wrapper { border-color: ' . $single_optin['border_color'] . ' !important } ';
 						break;
 				}
 			}
 		}
 
-		$custom_css .= isset($single_optin['form_button_color']) && '' !== $single_optin['form_button_color'] ? $form_class . ' .rad_rapidology_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ' : '';
+		$custom_css .= isset($single_optin['form_button_color']) && '' !== $single_optin['form_button_color'] ? $form_class . ' .rad_rapidology_rapidbar_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ' : '';
 		$custom_css .= isset($single_optin['header_font']) ? $font_functions->et_gf_attach_font($single_optin['header_font'], $form_class . ' h2, ' . $form_class . ' h2 span, ' . $form_class . ' h2 strong') : '';
 		$custom_css .= isset($single_optin['body_font']) ? $font_functions->et_gf_attach_font($single_optin['body_font'], $form_class . ' p, ' . $form_class . ' p span, ' . $form_class . ' p strong, ' . $form_class . ' form input, ' . $form_class . ' form button span') : '';
 

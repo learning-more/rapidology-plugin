@@ -261,11 +261,14 @@ $rad_dashboard_options_all = array(
 			'title'           => __( 'Form Orientation', 'rapidology' ),
 			'name'            => 'form_orientation',
 			'value'           => array(
-				'bottom' => __( 'Form On Bottom', 'rapidology' ),
 				'right'  => __( 'Form On Right', 'rapidology' ),
 				'left'   => __( 'Form On Left', 'rapidology' ),
+				'bottom' => __( 'Form On Bottom', 'rapidology' ),
 			),
-			'default'         => 'bottom',
+			'default'         => 'right',
+			'conditional'     => array(
+				'bottom' => 'rad_rapidology_hide_for_rapidbar'
+			),
 			'validation_type' => 'simple_text',
 			'class'           => 'rad_rapidology_hide_for_widget rad_dashboard_form_orientation',
 		),

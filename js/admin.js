@@ -1416,7 +1416,8 @@
 			}
 		});
 
-        $('.rad_dashboard_show_hide').on('click', function(){
+        $body.on( 'click', '.rad_dashboard_show_hide', function(){
+            console.log('click');
             var trigger = $(this).parent().next('.rad_hidden');
             if(trigger.css('display') == 'none'){
                 $(this).removeClass('dashicons-arrow-down-alt2');

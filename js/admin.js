@@ -13,6 +13,7 @@
             var link_to_highlight = $toplevelPageRadRapidologyOptions.find('a[href$="#tab_' + tab_link + '"]');
 			window.rad_dashboard_set_current_tab( tab_link, 'header' );
 
+
 			$toplevelPageRadRapidologyOptions.find('ul li' ).removeClass( 'current' );
 
 			if ( link_to_highlight.length ) {
@@ -39,6 +40,10 @@
 				if ( 'rad_dashboard_tab_content_header_stats' === open_link ) {
 					refresh_stats_tab( false );
 				}
+                if( open_link == 'rad_dashboard_tab_content_header_home' ){
+                    $( '#rad_dashboard_wrapper' ).removeClass( 'rad_dashboard rad_dashboard_visible_nav' );
+                    $( '#rad_dashboard_wrapper' ).addClass( 'rad_dashboard_hidden_nav' );
+                }
 			} else {
 				window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_header_support', 'header' );
 				$( '#rad_dashboard_wrapper' ).addClass( 'rad_dashboard_hidden_nav' );
@@ -51,14 +56,14 @@
 		});
 
 		if ( 'rad_dashboard_tab_content_header_home' === tab_link || 'rad_dashboard_tab_content_header_importexport' === tab_link || 'rad_dashboard_tab_content_header_accounts' === tab_link || 'rad_dashboard_tab_content_header_stats' === tab_link ) {
-			$( '#rad_dashboard_wrapper' ).addClass( 'rad_dashboard_hidden_nav' );
+            $( '#rad_dashboard_wrapper' ).removeClass( 'rad_dashboard rad_dashboard_visible_nav' );
+            $( '#rad_dashboard_wrapper' ).addClass( 'rad_dashboard_hidden_nav' );
 		}
 
 		$body.on( 'click', '#rad_dashboard_header ul li a', function() {
 			var $page_rapidology_options = $('#toplevel_page_rad_rapidology_options');
             var tab_link = $( this) .attr( 'href' ).split( '#tab_' )[1],
 				link_to_highlight = $page_rapidology_options.find('a[href$="#tab_' + tab_link + '"]');
-
 			$( '#rad_dashboard_wrapper' ).addClass( 'rad_dashboard_hidden_nav' );
 
 			//Highlight appropriate menu link in WP menu

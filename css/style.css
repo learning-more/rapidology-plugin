@@ -891,3 +891,7 @@
     margin: 0 !important;
     text-align: center !important;
 }
+.rad_rapidology_rapidbar_form .rad_rapidology_close_button{
+    right: 2px !important;
+    top: 0 !important;
+}

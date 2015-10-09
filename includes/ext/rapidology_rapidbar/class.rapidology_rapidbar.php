@@ -66,6 +66,7 @@ class rapidology_rapidbar
 		$is_single_name = (isset($details['display_name']) && '1' == $details['display_name']) ? false : true;
 		$output = sprintf('
 			<div class="rad_rapidology_rapidbar_form_container_wrapper clearfix">
+			%14$s
 				<div class="rad_rapidology_rapidbar_header_outer">
 					<div class="rad_rapidology_rapidbar_form_header%13$s">
 						%3$s
@@ -216,7 +217,8 @@ class rapidology_rapidbar
 				' rad_rapidology_header_text_%1$s',
 				esc_attr($details['header_text_color'])
 			)
-				: ' rad_rapidology_header_text_dark' //#14
+				: ' rad_rapidology_header_text_dark', //#14
+			self::get_power_button() #14
 		);
 
 		return $output;
@@ -447,6 +449,17 @@ class rapidology_rapidbar
 		wp_register_script('rapidbar_js', RAD_RAPIDOLOGY_PLUGIN_URI.  '/includes/ext/rapidology_rapidbar/js/rapidbar.js', array( 'jquery' ), '1.0', true);
 		wp_localize_script('rapidbar_js', 'rapidbar', $script_locals);
 		wp_enqueue_script('rapidbar_js');
+	}
+
+	/**
+	 * Generates the powered by button html
+	 */
+	 function get_power_button( ) {
+		return '<div class="rad_power_rapidology">
+					<span class="rad_power_box_mode_rapidbar">
+						<a href="http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=powered-by-badge" target="_blank"><span class="rad_power_logo">&nbsp</span></a>
+					</span>
+				</div>';
 	}
 }
 

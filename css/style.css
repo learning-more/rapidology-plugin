@@ -892,9 +892,10 @@
     text-align: center !important;
     cursor: pointer;
 }
-.rad_rapidology_rapidbar_form .rad_rapidology_close_button{
+.rad_rapidology .rad_rapidology_rapidbar_form .rad_rapidology_close_button{
     right: 2px !important;
     top: 0 !important;
+    background-color: transparent;
 }
 
 .rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input::-moz-placeholder{
@@ -904,4 +905,30 @@ color: #CBC8C8;
     display:none;
 }
 
+.rad_rapidology_rapidbar .rad_power_rapidology{
+    width: 100px !important;
+    float:left;
+}
 
+.rad_power_box_mode_rapidbar{
+    height:30px;
+    display:inline-block;
+    vertical-align: middle;
+}
+
+.rad_power_box_mode_rapidbar .rad_power_logo{
+    display:block;
+    height:30px;
+    font-size:25px !important;
+}
+
+.rad_power_rapidology a .rad_power_logo:after {
+    font-family: 'rapidology-cirlogo' !important;
+    content:"\e601" !important;
+    font-size: 30px !important;
+    margin-right: 5px;
+    margin-left:5px;
+    line-height: 30px !important;
+    vertical-align: middle !important;
+    color:#7E7B7B !important;
+}

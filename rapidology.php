@@ -4198,7 +4198,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		if ( ! empty( $optins_set ) ) {
 			foreach ( $optins_set as $optin_id => $details ) {
 				if ( $this->check_applicability( $optin_id ) ) {
-					$content = '<div class="rad_rapidology_rapidbar">' . $this->generate_rapidbar_form( $optin_id, $details ) . '</div>';
+					$content = '<div class="rad_rapidology_rapidbar">'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>';
 				}
 			}
 		}
@@ -4290,8 +4290,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				'first_last_name' == $details['name_fields'] && ! RAD_Rapidology::is_only_name_support( $details['email_provider'] )
 					? '3'
 					: '2'
-			),
-			RAD_Rapidology::get_power_button( 'inline' )
+			)
 		);
 
 		return $output;

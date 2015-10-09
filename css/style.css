@@ -895,3 +895,7 @@
     right: 2px !important;
     top: 0 !important;
 }
+
+.rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input::-moz-placeholder{
+color: #CBC8C8;
+}

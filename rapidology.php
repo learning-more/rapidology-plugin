@@ -628,8 +628,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 	function generate_premade_grid() {
 		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
-
-		require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php' );
+		$isRapidBar = $_POST['isRapidBar'];
+		if($isRapidBar == 'true'){
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/layouts/premade-layouts.php');
+			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/layouts/images/thumb_';
+		}else {
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php');
+			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/images/thumb_';
+		}
 		$output = '';
 
 		if ( isset( $all_layouts ) ) {
@@ -646,7 +652,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					</div>',
 					esc_attr( $layout_id ),
 					0 == $i ? ' rad_rapidology_layout_selected' : '',
-					esc_attr( RAD_RAPIDOLOGY_PLUGIN_URI . '/images/thumb_' . $layout_id . '.svg' )
+					esc_attr(  $imgpath . $layout_id . '.svg' )
 				);
 				$i ++;
 			}
@@ -662,13 +668,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 */
 	function get_premade_values() {
 		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
-
 		$premade_data_json = str_replace( '\\', '', $_POST['premade_data_array'] );
 		$premade_data      = json_decode( $premade_data_json, true );
 		$layout_id         = $premade_data['id'];
-
-		require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php' );
-
+		$isRapidBar = $_POST['isRapidBar'];
+		if($isRapidBar == 'true'){
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/layouts/premade-layouts.php');
+		}else {
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php');
+		}
 		if ( isset( $all_layouts[ $layout_id ] ) ) {
 			$options_set = json_encode( $all_layouts[ $layout_id ] );
 		}

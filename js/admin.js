@@ -41,7 +41,7 @@
 					refresh_stats_tab( false );
 				}
                 if( open_link == 'rad_dashboard_tab_content_header_home' ){
-                    $( '#rad_dashboard_wrapper' ).removeClass( 'rad_dashboard rad_dashboard_visible_nav' );
+
                     $( '#rad_dashboard_wrapper' ).addClass( 'rad_dashboard_hidden_nav' );
                 }
 			} else {

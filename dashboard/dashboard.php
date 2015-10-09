@@ -937,7 +937,6 @@ class RAD_Dashboard {
 						foreach( $options_array as $option) {
 							$current_option_name = '';
 							$hint_output = '';
-
 							if ( isset( $option[ 'name' ] ) ) {
 								if ( '' !== $sub_array ) {
 									$current_option_name = $option[ 'name' ];
@@ -1024,7 +1023,7 @@ class RAD_Dashboard {
 											esc_attr( $actual_value ),
 											selected( $actual_value, $current_option_value, false ),
 											esc_html( $display_value ),
-											isset($option['conditional'][$actual_value]) ? $option['conditional'][$actual_value] : 'test'
+											isset($option['conditional'][$actual_value]) ? $option['conditional'][$actual_value] : ''
 										);
 									}
 

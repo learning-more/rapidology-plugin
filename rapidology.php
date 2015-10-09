@@ -1713,6 +1713,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$all_lists     = array();
 		$name          = str_replace( array( '"', "'" ), '', stripslashes( $name ) );
 
+
+		if($service == 'redirect'){
+			return '';
+		}
 		if ( ! empty( $options_array['accounts'][ $service ][ $name ]['lists'] ) ) {
 			foreach ( $options_array['accounts'][ $service ][ $name ]['lists'] as $id => $list_details ) {
 				$all_lists[] = $list_details['name'];
@@ -1791,7 +1795,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 								esc_html__( 'Growth rate', 'rapidology' )
 							);
 						}
-
+						if ( 'redirect' === $service ) {
+							$value['is_authorized'] = 'true';
+						}
 						$output .= sprintf(
 							'<li class="rad_dashboard_optins_item rad_dashboard_optins_item" data-account_name="%1$s" data-service="%2$s">
 								<div class="rad_dashboard_table_acc_name rad_dashboard_table_column">%3$s</div>
@@ -2763,6 +2769,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$error_message = '';
 
 		switch ( $service ) {
+			case 'redirect' :
+				$redirect = new rapidology_redirect();
+				$error_message = $redirect->redirect_authorize(  $name );
+				break;
 			case 'mailchimp' :
 				$mailchimp = new rapidology_mailchimp();
 				$error_message = $mailchimp->get_mailchimp_lists( $api_key, $name );
@@ -3243,7 +3253,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		$options_array      = RAD_Rapidology::get_rapidology_options();
 		$current_email_list = isset( $options_array[ $optin_id ] ) ? $options_array[ $optin_id ]['email_list'] : 'empty';
-
+		if ( 'redirect' === $service ) {
+			die();
+		}
 		$available_lists = array();
 
 		if ( isset( $options_array['accounts'] ) ) {

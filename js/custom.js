@@ -489,6 +489,12 @@
 			update_stats_table( 'con', form_container );
 		} );
 
+        $body.on( 'click','.rad_rapidology_redirect_page',function(e){
+            e.preventDefault();
+            var redirectUrl = $(this).data('redirect_url');
+            window.open(redirectUrl);
+        });
+
 		$( window ).resize( function(){
 			var $radRapidologyResize = $('.rad_rapidology_resize');
             if ( $radRapidologyResize.length ) {

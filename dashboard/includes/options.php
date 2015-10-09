@@ -81,7 +81,7 @@ $rad_dashboard_options_all = array(
 			'name'            => 'email_provider',
 			'value'           => $email_providers_new_optin,
 			'default'         => 'empty',
-			'conditional'     => 'mailchimp_account#aweber_account#constant_contact_account#custom_html#activecampaign#display_name#name_fields#disable_dbl_optin',
+			'conditional'     => 'mailchimp_account#aweber_account#constant_contact_account#custom_html#activecampaign#display_name#name_fields#disable_dbl_optin#button_redirect',
 			'validation_type' => 'simple_text',
 			'class'           => 'rad_dashboard_select_provider',
 		),
@@ -250,7 +250,6 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'boolean',
 		),
 	),
-
 	'form_setup' => array(
 		'section_start' => array(
 			'type'  => 'section_start',
@@ -281,6 +280,28 @@ $rad_dashboard_options_all = array(
 			'conditional'     => 'single_name_text',
 			'validation_type' => 'boolean',
 			'display_if'      => 'getresponse#aweber',
+		),
+		'button_redirect' => array(
+			'type'            => 'checkbox',
+			'title'           => __( 'Redirect Button', 'rapidology' ),
+			'name'            => 'button_redirect',
+			'class'           => 'rad_dashboard_name_checkbox',
+			'default'         => true,
+			'conditional'	  => 'email_text#redirect_url',
+			'validation_type' => 'boolean',
+			'display_if'      => 'redirect',
+		),
+		'redirect_url' => array(
+			'type'            => 'input_field',
+			'subtype'         => 'text',
+			'name'            => 'redirect_url',
+			'class'           => 'rad_dashboard_success_text',
+			'title'           => __( 'Redirect Url', 'rapidology' ),
+			'placeholder'     => __( 'http://example.com', 'rapidology' ),
+			'default'         => '',
+			'display_if'      => 'button_redirect#true',
+			'validation_type' => 'simple_text',
+			'is_wpml_string'  => true,
 		),
 		'name_fields' => array(
 			'type'            => 'select',
@@ -343,6 +364,7 @@ $rad_dashboard_options_all = array(
 			'default'         => '',
 			'validation_type' => 'simple_text',
 			'is_wpml_string'  => true,
+			'display_if'	  => 'button_redirect#false'
 		),
 		'button_text' => array(
 			'type'            => 'input_field',
@@ -1134,6 +1156,8 @@ $rad_assigned_options = array(
 		$rad_dashboard_options_all[ 'border_style' ],
 		$rad_dashboard_options_all[ 'form_setup' ][ 'section_start' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'form_orientation' ],
+			$rad_dashboard_options_all[ 'form_setup' ][ 'button_redirect' ],
+		$rad_dashboard_options_all[ 'form_setup' ][ 'redirect_url' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'display_name' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'name_fields' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'name_text' ],

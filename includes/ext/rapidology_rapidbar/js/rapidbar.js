@@ -17,3 +17,5 @@ function rapidbar_fix_padding(){
     jQuery(header).css('padding-top', headerPadding);
 
 }
+
+

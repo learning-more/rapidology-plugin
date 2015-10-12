@@ -829,53 +829,53 @@
     margin-right:auto;
     display: block;
 }
-.rad_rapidology_rapidbar{
+.rad_rapidology_rapidbar, .rad_rapidology_preview_rapidbar{
     position: fixed;
     width:100%;
     height:30px !important;
     top:0;
     z-index: 10000;
 }
-.rad_rapidology_rapidbar_form_container_wrapper{
+.rad_rapidology_rapidbar_form_container_wrapper, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_container_wrapper{
     display: inline-block;
     width: 100%;
     text-align: center;
 }
-.rad_rapidology_rapidbar_form strong{
+.rad_rapidology_rapidbar_form strong, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form strong{
     font-weight: bold;
 }
 
-.rad_rapidology_rapidbar_form .rad_rapidology_form_container{
+.rad_rapidology_rapidbar_form .rad_rapidology_form_container, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_container{
     max-width:100% !important;
     max-height:30px !important;
 }
-.rad_rapidology_rapidbar_header_outer, .rad_rapidology_rapidbar_form_content{
+.rad_rapidology_rapidbar_header_outer, .rad_rapidology_rapidbar_form_content, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_header_outer, .rad_rapidology_rapidbar_form_content{
     display: inline-block;
 }
-.rad_rapidology_rapidbar_form_header, .rad_rapidology_rapidbar_form_content{
+.rad_rapidology_rapidbar_form_header, .rad_rapidology_rapidbar_form_content, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_header, .rad_rapidology_rapidbar_form_content{
     max-height: 30px;
 }
 
 
-.rad_rapidology_rapidbar_form .rad_rapidology_form_text{
+.rad_rapidology_rapidbar_form .rad_rapidology_form_text, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text{
     padding:0 !important;
     height:30px !important;;
     line-height: 30px !important;
 }
-.rad_rapidology_rapidbar_form .rad_rapidology_form_text p{
+.rad_rapidology_rapidbar_form .rad_rapidology_form_text p, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p{
     font-size:14px !important;
     line-height: 30px !important;
     text-align: center !important;
 }
-.rad_rapidology_rapidbar_form .rad_rapidology_form_text p strong {
+.rad_rapidology_rapidbar_form .rad_rapidology_form_text p strong, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p strong {
     font-weight: bold;
 }
 
-.rad_rapidology_rapidbar_input{
+.rad_rapidology_rapidbar_input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_input{
     float:left;
     margin-right:10px !important;
 }
-.rad_rapidology_rapidbar_input input{
+.rad_rapidology_rapidbar_input input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_input input{
     width: 100%;
     font-weight: 600;
     -moz-box-sizing: border-box;
@@ -886,10 +886,10 @@
     min-width:250px;
 }
 
-.rad_rapidology_header_text_light .rad_rapidology_form_text p{
+.rad_rapidology_header_text_light .rad_rapidology_form_text p, .rad_rapidology_preview_rapidbar .rad_rapidology_header_text_light .rad_rapidology_form_text p{
     color: #fff !important;
 }
-.rad_rapidology_rapidbar_form .rad_rapidology_submit_subscription, .rad_rapidology_rapidbar_form .rad_rapidology_redirect_page {
+.rad_rapidology_rapidbar_form .rad_rapidology_submit_subscription, .rad_rapidology_rapidbar_form .rad_rapidology_redirect_page, .rad_rapidology_preview_rapidbar  .rad_rapidology_submit_subscription, .rad_rapidology_preview_rapidbar .rad_rapidology_redirect_page{
     float: right !important;
     height: 30px !important;
     padding: 5px !important;
@@ -897,63 +897,63 @@
     text-align: center !important;
     cursor: pointer;
 }
-.rad_rapidology .rad_rapidology_rapidbar_form .rad_rapidology_close_button{
+.rad_rapidology .rad_rapidology_rapidbar_form .rad_rapidology_close_button, .rad_rapidology_preview_rapidbar .rad_rapidology_close_button{
     right: 2px !important;
     top: 0 !important;
     background-color: transparent;
 }
 
-.rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input::-moz-placeholder{
+.rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input::-moz-placeholder, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input::-moz-placeholder{
 color:#fff;
 }
 
 
-.rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input{
+.rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input{
     background-color: rgba(255,255,255,0.3);
     color: #fff;
 }
 
-.rad_rapidology_rapidbar_form .rad_rapidology_form_text_dark input::-moz-placeholder{
+.rad_rapidology_rapidbar_form .rad_rapidology_form_text_dark input::-moz-placeholder, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text_dark input::-moz-placeholder{
     color:rgba(0,0,0,0.6) !important;
 }
 
 
-.rad_rapidology_rapidbar_form .rad_rapidology_form_text_dark input{
+.rad_rapidology_rapidbar_form .rad_rapidology_form_text_dark input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text_dark input{
     background-color: #fff;
     color: rgba(0,0,0,0.6)!important;
 }
 
 
 
-.hidden_item{
+.hidden_item, .rad_rapidology_preview_rapidbar .hidden_item{
     display:none;
 }
 
-.rad_rapidology_rapidbar .rad_power_rapidology{
+.rad_rapidology_rapidbar .rad_power_rapidology, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar .rad_power_rapidology{
     width: 100px !important;
     float:left;
 }
 
-.rad_power_box_mode_rapidbar{
+.rad_power_box_mode_rapidbar, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar{
     height:30px;
     display:inline-block;
     vertical-align: middle;
     z-index: 100000;
 }
 
-.rad_power_box_mode_rapidbar .rad_power_logo{
+.rad_power_box_mode_rapidbar .rad_power_logo, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar .rad_power_logo{
     display:block;
     height:30px;
     font-size:25px !important;
 
 }
-.rad_power_box_mode_rapidbar_light .rad_power_logo{
+.rad_power_box_mode_rapidbar_light .rad_power_logo, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar_light .rad_power_logo{
     color: #fff !important;
 }
-.rad_power_box_mode_rapidbar_dark .rad_power_logo{
+.rad_power_box_mode_rapidbar_dark .rad_power_logo, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar_dark .rad_power_logo{
     color:#7E7B7B !important;
 }
-.rad_power_rapidology a .rad_power_logo:after {
+.rad_power_rapidology a .rad_power_logo:after, .rad_rapidology_preview_rapidbar .rad_power_rapidology a .rad_power_logo:after {
     font-family: 'rapidology-cirlogo' !important;
     content:"\e601" !important;
     font-size: 30px !important;
@@ -962,4 +962,16 @@ color:#fff;
     line-height: 30px !important;
     vertical-align: middle !important;
 
+}
+
+/*---preivew specific----*/
+.rad_rapidology_preview_rapidbar{
+    top:32px;
+}
+.rad_rapidology_preview_rapidbar .rad_rapidology_form_container{
+    max-width:100% !important;
+}
+
+.rad_rapidology_preview_rapidbar .rad_rapidology_form_text {
+    padding: 0 !important;
 }

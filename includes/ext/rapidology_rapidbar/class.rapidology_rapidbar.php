@@ -465,6 +465,38 @@ class rapidology_rapidbar
 					</span>
 				</div>';
 	}
+
+	static function generate_preview_popup( $details ) {
+		$output = '';
+		$output = sprintf(
+			'<div class="rad_rapidology_rapidbar rad_rapidology_animated rad_rapidology_preview_rapidbar rad_rapidology_optin">
+				<div class="rad_rapidology_form_container rad_rapidology_animation_fadein rad_rapidology_rapidbar_container%1$s%2$s%3$s%4$s%5$s%6$s">
+					%7$s
+					%8$s
+				</div>
+			</div>',
+			'bottom' !== $details['form_orientation'] && 'custom_html' !== $details['email_provider'] && 'widget' !== $details['optin_type']
+				? sprintf( ' rad_rapidology_form_%1$s', esc_attr( $details['form_orientation'] ) )
+				: ' rad_rapidology_form_bottom',
+			'basic_edge' == $details['edge_style'] || '' == $details['edge_style']
+				? ''
+				: sprintf( ' with_edge %1$s', esc_attr( $details['edge_style'] ) ),
+			( 'no_border' !== $details['border_orientation'] )
+				? sprintf(
+				' rad_rapidology_with_border rad_rapidology_border_%1$s%2$s',
+				esc_attr( $details['border_style'] ),
+				esc_attr( ' rad_rapidology_border_position_' . $details['border_orientation'] )
+			)
+				: '',
+			( 'rounded' == $details['corner_style'] ) ? ' rad_rapidology_rounded_corners' : '',
+			( 'rounded' == $details['field_corner'] ) ? ' rad_rapidology_rounded' : '',
+			'light' == $details['text_color'] ? ' rad_rapidology_form_text_light' : ' rad_rapidology_form_text_dark',
+			self::generate_form_content( 0, 0, '', $details ),
+			''
+		);
+
+		return $output;
+	}
 }
 
 $rapidbar = new rapidology_rapidbar();

@@ -666,6 +666,7 @@
 					data: {
 						action : 'rapidology_display_preview',
 						preview_options : options_fromform,
+                        preview: 'true',
 						rapidology_preview_nonce : rapidology_settings.preview_nonce
 					},
 					success: function( data ){
@@ -700,6 +701,13 @@
 			$( '.rad_dashboard_preview button' ).removeClass( 'rapidology_preview_opened' );
 			$body.removeClass( 'rad_rapidology_popup_active' );
 		});
+
+        $body.on( 'click', '.rad_rapidology_preview_rapidbar .rad_rapidology_close_button', function() {
+            $( this ).parent().parent().remove();
+            $( '#rad_rapidology_preview_css' ).remove();
+            $( '.rad_dashboard_preview button' ).removeClass( 'rapidology_preview_opened' );
+            $body.removeClass( 'rad_rapidology_rapidbar_active' );
+        });
 
 		$body.on( 'click', '.rad_rapidology_preview_popup .rad_rapidology_submit_subscription', function() {
 			return false;

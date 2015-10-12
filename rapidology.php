@@ -4129,7 +4129,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 		parse_str( $processed_string, $processed_array );
 		$details     = $processed_array['rad_dashboard'];
 		$fonts_array = array();
-
 		if ( ! isset( $fonts_array[ $details['header_font'] ] ) && isset( $details['header_font'] ) ) {
 			$fonts_array[] = $details['header_font'];
 		}
@@ -4137,8 +4136,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$fonts_array[] = $details['body_font'];
 		}
 
-		$popup_array['popup_code'] = $this->generate_preview_popup( $details );
-		$popup_array['popup_css']  = '<style id="rad_rapidology_preview_css">' . RAD_Rapidology::generate_custom_css( '.rad_rapidology .rad_rapidology_preview_popup', $details ) . '</style>';
+
+		if($details['optin_type'] != 'rapidbar') {
+			$popup_array['popup_code'] = $this->generate_preview_popup( $details );
+			$popup_array['popup_css'] = '<style id="rad_rapidology_preview_css">' . RAD_Rapidology::generate_custom_css('.rad_rapidology .rad_rapidology_preview_popup', $details) . '</style>';
+		}else{
+			$popup_array['popup_code'] = rapidology_rapidbar::generate_preview_popup( $details );
+			$popup_array['popup_css'] = '<style id="rad_rapidology_preview_css">' . rapidology_rapidbar::generate_custom_css('.rad_rapidology .rad_rapidology_preview_rapidbar', $details) . '</style>';
+		}
 		$popup_array['fonts']      = $fonts_array;
 
 		die( json_encode( $popup_array ) );

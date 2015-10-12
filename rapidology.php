@@ -3747,10 +3747,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 					%1$s
 					<form method="post" class="clearfix">
 						%3$s
-						<p class="rad_rapidology_popup_input rad_rapidology_subscribe_email">
+						<p class="rad_rapidology_popup_input rad_rapidology_subscribe_email %16$s">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" class="rad_rapidology_submit_subscription">
+						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s" class="%14$s">
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -3795,8 +3795,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 				isset( $details['button_text_color'] ) ? esc_attr( $details['button_text_color'] ) : '', // #10
 				isset( $details['disable_dbl_optin'] ) && '1' === $details['disable_dbl_optin'] ? 'disable' : '',#11
 				esc_attr($pagename),#12
-				esc_attr($hubspot_cookie)#13
-
+				esc_attr($hubspot_cookie),#13
+				$details['button_redirect'] == true ? 'rad_rapidology_redirect_page' : 'rad_rapidology_submit_subscription',#14
+				$details['button_redirect'] == true ? esc_attr($details['redirect_url']) : '',#15
+				$details['button_redirect'] == true ? 'hidden_item' : ''#16
 			),
 			'' != $success_text
 				? stripslashes( esc_html( $success_text ) )

@@ -1639,6 +1639,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 							<p>Select Email Provider</p>
 							<select>
 								<option value="empty" selected>%2$s</option>
+								<option value="redirect">%21$s</option>
 								<option value="activecampaign">%19$s</option>
 								<option value="aweber">%4$s</option>
 								<option value="campaign_monitor">%6$s</option>
@@ -1681,7 +1682,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 				esc_html__( 'HubSpot Lists', 'rapidology' ),#17
 				esc_html__( 'Salesforce', 'rapidology' ),#18
 				esc_html__( 'Active Campaign', 'rapidology' ),#19
-				esc_html__( 'HubSpot Standard', 'rapidology')#20
+				esc_html__( 'HubSpot Standard', 'rapidology'),#20
+				esc_html__( 'Redirect Button', 'rapidology')#21
 
 			);
 		}

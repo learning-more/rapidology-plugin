@@ -56,7 +56,6 @@
 		});
 
 		if ( 'rad_dashboard_tab_content_header_home' === tab_link || 'rad_dashboard_tab_content_header_importexport' === tab_link || 'rad_dashboard_tab_content_header_accounts' === tab_link || 'rad_dashboard_tab_content_header_stats' === tab_link ) {
-            $( '#rad_dashboard_wrapper' ).removeClass( 'rad_dashboard rad_dashboard_visible_nav' );
             $( '#rad_dashboard_wrapper' ).addClass( 'rad_dashboard_hidden_nav' );
 		}
 

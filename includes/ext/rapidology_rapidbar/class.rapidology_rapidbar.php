@@ -8,6 +8,7 @@ class rapidology_rapidbar
 
 	public static function generate_form_content($optin_id, $page_id, $pagename = '', $details = array())
 	{
+
 		if (empty($details)) {
 			$all_optins = RAD_Rapidology::get_rapidology_options();
 			$details = $all_optins[$optin_id];
@@ -17,7 +18,6 @@ class rapidology_rapidbar
 		} else {
 			$hubspot_cookie = '';
 		}
-
 		//unsetting uneeded array elements
 		$details['image_url'] = null;
 
@@ -218,7 +218,7 @@ class rapidology_rapidbar
 				esc_attr($details['header_text_color'])
 			)
 				: ' rad_rapidology_header_text_dark', //#14
-			self::get_power_button() #14
+			self::get_power_button($details['header_text_color']) #14
 		);
 
 		return $output;
@@ -231,7 +231,6 @@ class rapidology_rapidbar
 
 		if (isset($single_optin['form_bg_color']) && '' !== $single_optin['form_bg_color']) {
 			$custom_css .= $form_class . ' .rad_rapidology_rapidbar_container, .rad_rapidology_rapidbar_form_container_wrapper, .rad_rapidology_rapidbar_form_header .rad_rapidology_form_text { background-color: ' . $single_optin['form_bg_color'] . ' !important; } ';
-
 			if ('zigzag_edge' === $single_optin['edge_style']) {
 				$custom_css .=
 					$form_class . ' .zigzag_edge .rad_rapidology_rapidbar_form_content:before { background: linear-gradient(45deg, transparent 33.33%, ' . $single_optin['form_bg_color'] . ' 33.333%, ' . $single_optin['form_bg_color'] . ' 66.66%, transparent 66.66%), linear-gradient(-45deg, transparent 33.33%, ' . $single_optin['form_bg_color'] . ' 33.33%, ' . $single_optin['form_bg_color'] . ' 66.66%, transparent 66.66%) !important; background-size: 20px 40px !important; } ' .
@@ -454,9 +453,14 @@ class rapidology_rapidbar
 	/**
 	 * Generates the powered by button html
 	 */
-	 function get_power_button( ) {
+	 function get_power_button( $header_text_color ) {
+		if($header_text_color == 'light'){
+			$text_color = 'rad_power_box_mode_rapidbar_light';
+		}else{
+			$text_color = 'rad_power_box_mode_rapidbar_dark';
+		}
 		return '<div class="rad_power_rapidology">
-					<span class="rad_power_box_mode_rapidbar">
+					<span class="rad_power_box_mode_rapidbar '.$text_color.'">
 						<a href="http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=powered-by-badge" target="_blank"><span class="rad_power_logo">&nbsp</span></a>
 					</span>
 				</div>';

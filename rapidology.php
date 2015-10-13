@@ -4201,13 +4201,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 		return $content;
 	}
 
-	function display_rapidbar( $content ) {
+	function display_rapidbar( ) {
 		$optins_set = $this->rapidbar_optins;
-
 		if ( ! empty( $optins_set ) ) {
 			foreach ( $optins_set as $optin_id => $details ) {
 				if ( $this->check_applicability( $optin_id ) ) {
-					$content = '<div class="rad_rapidology_rapidbar">'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>';
+					$displayCookie = 'rad_rapidology_subscribed_to_'.$optin_id.$details['email_list'];
+					if(!isset($_COOKIE[$displayCookie])){
+						$content = '<div class="rad_rapidology_rapidbar">'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>';
+					}
 				}
 			}
 		}

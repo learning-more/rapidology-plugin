@@ -75,6 +75,15 @@ $rad_dashboard_options_all = array(
 			'title' => __( 'Form Integration', 'rapidology' ),
 			'class' => 'rad_dashboard_child_hidden rad_dashboard_provider_setup_dropdown',
 		),
+		'enable_redirect_form' => array(
+			'type'            => 'checkbox',
+			'title'           => __( 'This is a redirect form', 'rapidology' ),
+			'name'            => 'enable_redirect_form',
+			'default'         => false,
+			'validation_type' => 'boolean',
+			'hint_text'       => __( 'Enabling this will remove all email providers and add a redirect option', 'rapidology' ),
+			'class'			  =>  'rad_dashboard_enable_redirect_form',
+		),
 		'email_provider' => array(
 			'type'            => 'select',
 			'title'           => __( 'Select Email Provider', 'rapidology' ),
@@ -1115,6 +1124,7 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'optin_name' ][ 'option' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'form_integration' ][ 'section_start' ],
+			$rad_dashboard_options_all[ 'form_integration' ][ 'enable_redirect_form' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'email_provider' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'select_account' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'email_list' ],

@@ -1458,6 +1458,29 @@
             var redirectUrl = $(this).data('redirect_url');
             window.open(redirectUrl);
         });
+
+        $body.on('click','.rad_dashboard_enable_redirect_form',function(){
+
+            var thisbox = $(this).find(':checkbox');
+
+            if(thisbox.is(':checked')){
+                ischecked = 1;
+            }else{
+                ischecked = 0;
+            }
+            if(ischecked) {
+                $('.rad_dashboard_select_provider select option').each(function () {
+                    if ($(this).val() != 'redirect') {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            if(!ischecked){
+                $('.rad_dashboard_select_provider select option').each(function(){
+                   $(this).show();
+                });
+            }
+        });
 	});
-})(jQuery)
-;
+})(jQuery);

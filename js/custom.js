@@ -473,7 +473,7 @@
                                     topLevel.find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
                                     topLevel.find('.rad_rapidology_form_text').remove();
                                     this_form.remove();
-                                    //set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
+                                    set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
                                 }
 								if ( data.success && '' == current_container && optin_type == 'standard') {
 									this_form.parent().find( '.rad_rapidology_success_message' ).addClass( 'rad_rapidology_animate_message' );

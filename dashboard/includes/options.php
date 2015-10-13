@@ -73,7 +73,7 @@ $rad_dashboard_options_all = array(
 		'section_start' => array(
 			'type'  => 'section_start',
 			'title' => __( 'Form Integration', 'rapidology' ),
-			'class' => 'rad_dashboard_child_hidden',
+			'class' => 'rad_dashboard_child_hidden rad_dashboard_provider_setup_dropdown',
 		),
 		'email_provider' => array(
 			'type'            => 'select',

@@ -286,7 +286,7 @@ li.rad_dashboard_optin_type { border: none; background-color: #636a7d; border-ra
 .rad_dashboard_optin_type_rapidbar .optin_select_grey {height: 55%;}
 .rad_dashboard_optin_type_inline .optin_select_grey,.rad_dashboard_optin_type_locked .optin_select_grey { height: 20%; }
 .rad_dashboard_optin_type_inline .optin_select_blue,.rad_dashboard_optin_type_locked .optin_select_blue { height: 30%; margin: 5px 0; }
-.rad_dashboard_optin_type_widget .optin_select_grey { height: 40%; }
+.rad_dashboard_optin_type_widget .optin_select_grey { height: 40%; clear:right;}
 .rad_dashboard_optin_type_widget .optin_select_blue,.rad_dashboard_optin_type_widget .optin_select_grey_small { width: 30%; height: 30%; float: left; margin: 4% 5% 0 0; }
 .rad_dashboard_optin_type_widget .optin_select_grey_small { background-color: #515666; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
 .rad_dashboard_optin_type_widget .optin_select_grey_small.last { margin-right: 0; }

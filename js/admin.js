@@ -1205,9 +1205,15 @@
 					rapidology_optin_id : optin_id
 				},
 				success: function( data ){
-					$( 'li.rad_dashboard_select_list' ).replaceWith( function() {
-						return $( data ).hide().fadeIn();
-					} );
+                    if($('li.rad_dashboard_select_list').length > 0) {
+                        $('li.rad_dashboard_select_list').replaceWith(function () {
+                            return $(data).hide().fadeIn();
+                        });
+                    }else{
+                        $('.rad_dashboard_provider_setup_dropdown li:last').after(function(){
+                            return $(data).hide().fadeIn();
+                        });
+                    }
 				}
 			});
 		}

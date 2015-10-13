@@ -539,7 +539,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 								<div class="optin_select_grey_small"></div>
 								<div class="optin_select_grey_small last"></div>
 							</li>
-							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_rapidbar" data-type="rapidbar">
+
+						</ul>
+						<ul>
+						<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_rapidbar" data-type="rapidbar">
 								<h6>%8$s</h6>
 								<div class="optin_select_blue"></div>
 								<div class="optin_select_grey"></div>
@@ -3255,6 +3258,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		$options_array      = RAD_Rapidology::get_rapidology_options();
 		$current_email_list = isset( $options_array[ $optin_id ] ) ? $options_array[ $optin_id ]['email_list'] : 'empty';
+
 		if ( 'redirect' === $service ) {
 			die();
 		}

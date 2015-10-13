@@ -435,7 +435,7 @@
                 post_name = this_button.data('post_name'),
                 cookie = this_button.data('cookie');
                 optin_id = this_button.data( 'optin_id' );
-
+                optin_type = (this_button.data('optin_type') == 'rapidbar' ? 'rapidbar' : 'standard');
 			this_form.find( '.rad_rapidology_subscribe_email input' ).removeClass( 'rad_rapidology_warn_field' );
 
 			if ( '' == email ) {
@@ -467,7 +467,15 @@
 									this_form.prepend( '<h2 class="rad_rapidology_error_message">' + data.error + '</h2>' );
 									this_form.parent().parent().find( '.rad_rapidology_form_header' ).addClass( 'rad_rapidology_with_error' );
 								}
-								if ( data.success && '' == current_container ) {
+                                if( data.success && '' == current_container && optin_type == 'rapidbar'){
+                                    var topLevel = this_form.parent().parent();
+                                    topLevel.find( '.rad_rapidology_success_message' ).addClass( 'rad_rapidology_animate_message' );
+                                    topLevel.find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
+                                    topLevel.find('.rad_rapidology_form_text').remove();
+                                    this_form.remove();
+                                    //set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
+                                }
+								if ( data.success && '' == current_container && optin_type == 'standard') {
 									this_form.parent().find( '.rad_rapidology_success_message' ).addClass( 'rad_rapidology_animate_message' );
 									this_form.parent().find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
 									this_form.remove();

@@ -71,14 +71,15 @@ class rapidology_rapidbar
 					<div class="rad_rapidology_rapidbar_form_header%13$s">
 						%3$s
 						%4$s
+						<div class="rad_rapidology_success_container">
+						<h2 class="rad_rapidology_success_message">%9$s</h2>
+						</div>
+
 					</div>
 				</div>
 				<div class="rad_rapidology_rapidbar_form_content%6$s%7$s%12$s"%11$s>
 					%8$s
-					<div class="rad_rapidology_success_container">
-						<span class="rad_rapidology_success_checkmark"></span>
-					</div>
-					<h2 class="rad_rapidology_success_message">%9$s</h2>
+
 					%10$s
 				</div>
 			</div>
@@ -147,7 +148,7 @@ class rapidology_rapidbar
 						<p class="rad_rapidology_rapidbar_input rad_rapidology_subscribe_email %16$s">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s" class="%14$s">
+						<button data-optin_type="rapidbar" data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s" class="%14$s">
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>

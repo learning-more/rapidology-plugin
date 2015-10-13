@@ -7,8 +7,8 @@ jQuery(window).on('load', function ($) {
         setTimeout(rapidbar_add_padding, 1000);
     }
 
-    jQuery('.rad_rapidology_redirect_page, .rad_rapidology_rapidbar .rad_rapidology_close_button').on('click', function(){
-        setTimeout(rapidbar_remove_padding, 400); //use set timeout as it is used the other closing functions
+    jQuery('.rad_rapidology_redirect_page, .rad_rapidology_rapidbar .rad_rapidology_close_button, .rad_rapidology_rapidbar .rad_rapidology_submit_subscription').on('click', function(){
+        setTimeout(rapidbar_remove_padding, 5000); //use set timeout as it is used the other closing functions
     });
 });
 

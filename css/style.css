@@ -970,6 +970,19 @@ color:#fff;
 
 }
 
+.rad_rapidology_rapidbar_form_header  .rad_rapidology_success_message{
+    margin-top:0 !important;
+    height: 30px !important;
+    max-height: 30px !important;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.rad_rapidology_rapidbar_form_header h2.rad_rapidology_success_message{
+    padding:0 !important;
+    width:100% !important;
+}
+
 /*---rapdibar preivew specific----*/
 .rad_rapidology_preview_rapidbar{
     top:32px;
@@ -988,3 +1001,4 @@ color:#fff;
 
 .rad_rapidology_preview_rapidbar .rad_rapidology_header_text_dark h2{  color: #898C91;  }
 .rad_rapidology_preview_rapidbar .rad_rapidology_header_text_dark p { color: rgba(137,140,145,0.7) !important; }
+

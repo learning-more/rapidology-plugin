@@ -666,7 +666,7 @@
 					data: {
 						action : 'rapidology_display_preview',
 						preview_options : options_fromform,
-                        preview: 'true',
+                       // preview: 'true',
 						rapidology_preview_nonce : rapidology_settings.preview_nonce
 					},
 					success: function( data ){
@@ -1445,6 +1445,12 @@
             }
             trigger.toggle('slow');
 
+        });
+
+        $body.on( 'click','.rad_rapidology_redirect_page',function(e){
+            e.preventDefault();
+            var redirectUrl = $(this).data('redirect_url');
+            window.open(redirectUrl);
         });
 	});
 })(jQuery)

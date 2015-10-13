@@ -4177,7 +4177,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 			( 'rounded' == $details['corner_style'] ) ? ' rad_rapidology_rounded_corners' : '',
 			( 'rounded' == $details['field_corner'] ) ? ' rad_rapidology_rounded' : '',
 			'light' == $details['text_color'] ? ' rad_rapidology_form_text_light' : ' rad_rapidology_form_text_dark',
-			RAD_Rapidology::generate_form_content( 0, 0, $details ),
+			RAD_Rapidology::generate_form_content( 0, 0, '', $details ),
 			RAD_Rapidology::get_power_button( 'popup' )
 		);
 

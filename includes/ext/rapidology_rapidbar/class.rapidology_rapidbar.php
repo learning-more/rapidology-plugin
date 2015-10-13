@@ -82,7 +82,7 @@ class rapidology_rapidbar
 					%10$s
 				</div>
 			</div>
-			<span class="rad_rapidology_close_button"></span>',
+			<span class="rad_rapidology_close_button %13$s"></span>',
 			('right' == $details['image_orientation'] || 'left' == $details['image_orientation']) && 'widget' !== $details['optin_type']
 				? sprintf(' split%1$s', 'right' == $details['image_orientation']
 				? ' image_right'
@@ -429,6 +429,7 @@ class rapidology_rapidbar
 		$custom_css .= isset($single_optin['body_font']) ? $font_functions->et_gf_attach_font($single_optin['body_font'], $form_class . ' p, ' . $form_class . ' p span, ' . $form_class . ' p strong, ' . $form_class . ' form input, ' . $form_class . ' form button span') : '';
 
 		$custom_css .= isset($single_optin['custom_css']) ? ' ' . $single_optin['custom_css'] : '';
+
 
 		return $custom_css;
 

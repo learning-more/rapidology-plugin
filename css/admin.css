@@ -528,3 +528,7 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 
 
 
+#rad_dashboard_redirect_list_id{
+    width:40% !important;
+    margin-right:13px;
+}

@@ -498,23 +498,26 @@
 		} );
 
         $body.on( 'click','.rad_rapidology_redirect_page',function(e){
-
-            list_id = $(this).data( 'list_id' ),
-            optin_id = $(this).data( 'optin_id' );
-
-
             e.preventDefault();
-            //get url we need to go to
+            var this_button = $( this );
+
+            list_id     = this_button.data( 'list_id' );
+            optin_id    = this_button.data( 'optin_id' );
+            type        = this_button.data( 'optin_type' );
+
+
+
             var redirectUrl = $(this).data('redirect_url');
-            //set container
+
             var container = $(this).parent().parent().parent().parent().parent();
             container.addClass( 'rad_rapidology_exit_animation' );
-            //remove container
+            update_stats_table( 'con', this_button );
             setTimeout( function() {
                 container.remove();
             }, 400 );
+
             set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
-            //window.open(redirectUrl);
+            window.open(redirectUrl);
 
         });
 

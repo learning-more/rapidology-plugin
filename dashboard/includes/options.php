@@ -83,6 +83,7 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'boolean',
 			'hint_text'       => __( 'Enabling this will remove all email providers and add a redirect option', 'rapidology' ),
 			'class'			  =>  'rad_dashboard_enable_redirect_form',
+			'conditional'	  =>  'redirect_list_id',
 		),
 		'email_provider' => array(
 			'type'            => 'select',
@@ -115,6 +116,16 @@ $rad_dashboard_options_all = array(
 			'default'         => 'empty',
 			'validation_type' => 'simple_text',
 			'class'           => 'rad_dashboard_select_list',
+		),
+		'redirect_list_id' => array(
+			'type'            => 'text',
+			'rows'            => '1',
+			'name'            => 'redirect_list_id',
+			'placeholder'     => __( 'Create new redirect list', 'rapidology' ),
+			'default'         => '',
+			'display_if'      => 'enable_redirect_form#true',
+			'validation_type' => 'simple_text',
+			'button_text'	  => 'Save List',
 		),
 		'custom_html' => array(
 			'type'            => 'text',
@@ -1125,6 +1136,7 @@ $rad_assigned_options = array(
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'form_integration' ][ 'section_start' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'enable_redirect_form' ],
+			$rad_dashboard_options_all[ 'form_integration' ][ 'redirect_list_id' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'email_provider' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'select_account' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'email_list' ],

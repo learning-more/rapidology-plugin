@@ -1306,10 +1306,14 @@ class RAD_Dashboard {
 								break;
 
 								case 'text' :
+									$button_class_text = (! empty( $option[ 'button_text' ]) ? str_replace( ' ', '_', $option[ 'button_text' ]) : '');
+									$button_class_text = (strlen($button_class_text) > 0)? strtolower($button_class_text) : '';
+									$button_text = (! empty( $option[ 'button_text' ]) ? $option[ 'button_text' ] : '');
+
 									printf(
 										'<li class="rad_dashboard_auto_height%6$s%10$s"%7$s%8$s>
 											%9$s
-											<textarea placeholder="%1$s" rows="%2$s" id="rad_dashboard_%4$s" name="rad_dashboard[%4$s]"%5$s>%3$s</textarea>
+											<textarea placeholder="%1$s" rows="%2$s" id="rad_dashboard_%4$s" name="rad_dashboard[%4$s]"%5$s>%3$s</textarea>%11$s
 										</li>',
 										esc_attr( $option[ 'placeholder' ] ),
 										esc_attr( $option[ 'rows' ] ),
@@ -1323,7 +1327,8 @@ class RAD_Dashboard {
 										isset( $option[ 'display_if' ] ) ? ' data-condition="' . esc_attr( $option[ 'display_if' ] ) .  '"': '',
 										isset( $option[ 'display_if' ] ) ? ' data-triggers_count="0"': '',
 										! empty( $option[ 'title' ] ) ? sprintf( '<p>%1$s</p>', esc_html( $option[ 'title' ] ) ) : '',
-										! empty( $option[ 'title' ] ) ? ' rad_dashboard_text_with_title' : '' //#10
+										! empty( $option[ 'title' ] ) ? ' rad_dashboard_text_with_title' : '', //#10
+										! empty( $option[ 'button_text' ]) ? '<button class="rad_rapidology_textarea_button rad_rapidology_'.$button_class_text.'">'.$button_text.'</button>' : ''#11
 									);
 								break;
 

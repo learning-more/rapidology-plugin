@@ -104,6 +104,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		// Register save settings function for ajax request
 		add_action( 'wp_ajax_rad_rapidology_save_settings', array( $this, 'rapidology_save_settings' ) );
+		add_action ('wp_ajax_rad_rapidology_save_redirect_lists', array($this, 'rapidology_save_redirect_list') );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_scripts' ) );
 
@@ -263,6 +264,27 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 	function import_settings() {
 		return true;
+	}
+
+	function rapidology_save_redirect_list(){
+		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
+		$name = sanitize_file_name($_POST['list_name']);
+		$lists = array();
+
+		$lists[ 0 ]['name']              = $name;
+		$lists[ 0 ]['subscribers_count'] = 0;
+		$lists[ 0 ]['growth_week']       = 0;
+		$current_lists = get_site_option('rapidology_redirect_lists');
+		$current_lists = json_decode($current_lists, true);
+		if(is_array($current_lists)){
+			$update_lists = array_merge($current_lists, $lists);
+		}else{
+			$update_lists = $lists;
+		}
+		$update_lists = json_encode($update_lists);
+		update_site_option('rapidology_redirect_lists', $update_lists);
+		die('success');
+
 	}
 
 	function rapidology_save_settings() {
@@ -2696,6 +2718,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 								$activecampaign = new rapidology_activecampaign();
 								$error_message = $activecampaign->get_active_campagin_forms($details['url'], $details['api_key'], $name);
 								break;
+							case 'redirect':
+								$redirect = new rapidology_redirect();
+								$error_message = $redirect->redirect_authorize($name);
+								break;
 						}
 					}
 
@@ -3259,9 +3285,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$options_array      = RAD_Rapidology::get_rapidology_options();
 		$current_email_list = isset( $options_array[ $optin_id ] ) ? $options_array[ $optin_id ]['email_list'] : 'empty';
 
-		if ( 'redirect' === $service ) {
-			die();
-		}
 		$available_lists = array();
 
 		if ( isset( $options_array['accounts'] ) ) {
@@ -3556,7 +3579,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 		wp_verify_nonce( $_POST['update_stats_nonce'], 'update_stats' );
 		$stats_data_json  = str_replace( '\\', '', $_POST['stats_data_array'] );
 		$stats_data_array = json_decode( $stats_data_json, true );
-
 		RAD_Rapidology::add_stats_record( $stats_data_array['type'], $stats_data_array['optin_id'], $stats_data_array['page_id'], $stats_data_array['list_id'] );
 
 		die();

@@ -6,8 +6,13 @@ if (!class_exists('RAD_Dashboard')) {
 class rapidology_redirect extends RAD_Rapidology{
 
 	function redirect_authorize($name){
+
+		$current_lists = get_site_option('rapidology_redirect_lists');
+		$lists = json_decode($current_lists, true);
+
 		$this->update_account( 'redirect', sanitize_text_field( $name ), array(
-			'is_authorized'   => 'true'
+			'lists'         => $lists,
+			'is_authorized' => 'true',
 		) );
 		return 'success';
 	}

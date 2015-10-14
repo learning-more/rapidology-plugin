@@ -1482,5 +1482,40 @@
                 });
             }
         });
+
+        $body.on('click','.rad_rapidology_save_list',function(event){
+            event.preventDefault();
+            var text_box = $('#rad_dashboard_redirect_list_id');
+            list_name_text = text_box.val();
+            if(list_name_text.length == 0){
+                text_box.css('border-left','thick solid red');
+                text_box.addClass('error');
+                return;
+            }
+            $.ajax({
+                type: 'POST',
+                url: rapidology_settings.ajaxurl,
+                data: {
+                    action : 'rad_rapidology_save_redirect_lists',
+                    rapidology_premade_nonce : rapidology_settings.rapidology_premade_nonce,
+                    list_name : list_name_text,
+                },
+                success: function( data ) {
+                    if(text_box.hasClass('error')) {
+                        text_box.removeClass('error');
+                    }
+                        text_box.css('border-left', 'thick solid green');
+                        text_box.val('List Added, Click here to add another list');
+
+                },
+                error: function(){
+                    text_box.addClass('error');
+                    text_box.css('border-left', 'thick solid red');
+                    text_box.val('Something went wrong');
+                }
+            });
+
+        });
+
 	});
 })(jQuery);

@@ -188,7 +188,7 @@
 											$( '.rad_dashboard_border_style' ).removeClass( 'rad_dashboard_hidden_option' );
 										}
 
-										if ( 'no_name' != optin_value && 'rad_dashboard_name_fields' == optin_name ) {
+										if ( 'no_name' != optin_value && 'rad_dashboard_redirect_checkbox' == optin_name ) {
 											$( '.rad_dashboard_name_checkbox input' ).prop( 'checked', true );
 
 											if ( $( '.rad_dashboard_name_checkbox' ).hasClass( 'rad_dashboard_visible_option' ) || ( 'single_name' == optin_value ) ) {
@@ -202,7 +202,11 @@
 										}
 
 										break;
-
+                                    case 'rad_dashboard_redirect_checkbox' :
+                                        if( optin_value == 'true'){
+                                            $( '.rad_dashboard_redirect_checkbox input' ).prop( 'checked', true );
+                                        }
+                                        break;
 									case 'rad_dashboard_name_text' :
 									case 'rad_dashboard_last_name_text' :
 									case 'rad_dashboard_email_text' :

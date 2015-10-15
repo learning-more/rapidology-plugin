@@ -654,9 +654,11 @@ class RAD_Rapidology extends RAD_Dashboard {
 	function generate_premade_grid() {
 		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
 		$isRapidBar = $_POST['isRapidBar'];
+		$isRedirect = $_POST['isRedirect'];
+		$layoutFolder = $isRedirect == 'true' ? 'redirect' : 'form';
 		if($isRapidBar == 'true'){
-			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/layouts/premade-layouts.php');
-			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/layouts/images/thumb_';
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/premade-layouts.php');
+			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/images/thumb_';
 		}else {
 			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php');
 			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/images/thumb_';
@@ -697,8 +699,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$premade_data      = json_decode( $premade_data_json, true );
 		$layout_id         = $premade_data['id'];
 		$isRapidBar = $_POST['isRapidBar'];
+		$isRedirect = $_POST['isRedirect'];
+		$layoutFolder = $isRedirect == 'true' ? 'redirect' : 'form';
 		if($isRapidBar == 'true'){
-			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/layouts/premade-layouts.php');
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/premade-layouts.php');
 		}else {
 			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php');
 		}

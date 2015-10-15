@@ -110,7 +110,7 @@
 			window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_optin_premade', 'side' );
 			$( '#rad_dashboard_tab_content_optin_design' ).addClass( 'current' );
             var isRapidBar = $('#rad_dashboard_navigation').hasClass('current_optin_type_rapidbar');
-
+            var isRedirect = $('.rad_dashboard_enable_redirect_form input').is(':checked'); //need to check if its a redirect form to load the proper layouts
 
 			if ( '' == premade_grid_cache ) {
 				$.ajax({
@@ -119,7 +119,8 @@
 					data: {
 						action : 'rapidology_generate_premade_grid',
 						rapidology_premade_nonce : rapidology_settings.rapidology_premade_nonce,
-                        isRapidBar  : isRapidBar
+                        isRapidBar  : isRapidBar,
+                        isRedirect  : isRedirect
 					},
 					beforeSend: function( data ) {
 						$( '.rad_rapidology_premade_spinner' ).addClass( 'rad_dashboard_spinner_visible' );
@@ -141,6 +142,7 @@
 
 			var selected_layout = JSON.stringify({ 'id' : $( this ).data( 'selected_layout' ) });
             var isRapidBar = $('#rad_dashboard_navigation').hasClass('current_optin_type_rapidbar');
+            var isRedirect = $('.rad_dashboard_enable_redirect_form input').is(':checked'); //need to check if its a redirect form to load the proper layouts
 			$.ajax({
 				type: 'POST',
 				url: rapidology_settings.ajaxurl,
@@ -148,6 +150,7 @@
 				data: {
 					action : 'rapidology_get_premade_values',
                     isRapidBar  : isRapidBar,
+                    isRedirect  : isRedirect,
 					rapidology_premade_nonce : rapidology_settings.rapidology_premade_nonce,
 					premade_data_array : selected_layout
 				},

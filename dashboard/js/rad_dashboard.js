@@ -331,7 +331,6 @@
 				}
 
 			var	values_array = String( current_option.data( 'condition' ) ).split( '#' );
-            console.log(values_array);
 			$.each( values_array, function( key, value ){
 				if ( value == option_value ) {
 					current_option.removeClass( 'rad_dashboard_hidden_option' ).addClass( 'rad_dashboard_visible_option' );

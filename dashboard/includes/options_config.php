@@ -30,8 +30,7 @@ $email_providers_array = array(
 //setup new array for creating a new provider when creating a new optin
 //setup default selection
 $email_providers_new_optin = array(
-	'empty'		=> __('Select One...', 'rapidology'),
-	'redirect'	=> __('Redirect Button', 'rapidology')
+	'empty'		=> __('Select One...', 'rapidology')
 );
 //loop through providers and add them to array. adding wordpress function for internationalization
 foreach ($email_providers_array as $key => $value){

@@ -194,9 +194,9 @@ class rapidology_rapidbar
 				isset($details['disable_dbl_optin']) && '1' === $details['disable_dbl_optin'] ? 'disable' : '',#11
 				esc_attr($pagename),#12
 				esc_attr($hubspot_cookie),#13
-				$details['button_redirect'] == true ? 'rad_rapidology_redirect_page' : 'rad_rapidology_submit_subscription',#14
-				$details['button_redirect'] == true ? esc_attr($details['redirect_url']) : '',#15
-				$details['button_redirect'] == true ? 'hidden_item' : ''#16
+				$details['enable_redirect_form'] == true ? 'rad_rapidology_redirect_page' : 'rad_rapidology_submit_subscription',#14
+				$details['enable_redirect_form'] == true ? esc_attr($details['redirect_url']) : '',#15
+				$details['enable_redirect_form'] == true ? 'hidden_item' : ''#16
 			),
 			'' != $success_text
 				? stripslashes(esc_html($success_text))

@@ -1008,6 +1008,11 @@
 			var $radDashboardWrapper = $('#rad_dashboard_wrapper');
 			$radDashboardWrapper.addClass( 'rad_dashboard_visible_nav' );
 			$( '#rad_dashboard_options' ).removeAttr( 'class' ).addClass( 'current_optin_type_' + $type );
+            if($('#rad_dashboard_options').hasClass('current_optin_type_rapidbar')){
+                $('.rad_dashboard_enable_redirect_form').show();
+            }else{
+                $('.rad_dashboard_enable_redirect_form').hide();
+            }
 			var $radDashboardNavigation = $('#rad_dashboard_navigation');
 			$radDashboardNavigation.find('> ul' ).removeAttr( 'class' ).addClass( 'nav_current_optin_type_' + $type );
 			$radDashboardNavigation.removeAttr( 'class' ).addClass( 'current_optin_type_' + $type );
@@ -1463,9 +1468,9 @@
             window.open(redirectUrl);
         });
 
-        $body.on('click','.rad_dashboard_enable_redirect_form',function(){
+        $body.on('click','.rad_dashboard_enable_redirect_form input',function(){
 
-            var thisbox = $(this).find(':checkbox');
+            var thisbox = $(this);
 
             if(thisbox.is(':checked')){
                 ischecked = 1;
@@ -1473,17 +1478,32 @@
                 ischecked = 0;
             }
             if(ischecked) {
+                $('.rad_dashboard_select_provider select').append($('<option>', {
+                    value: 'redirect',
+                    text: 'Redirect Button'
+                }));
+                $('.rad_dashboard_select_provider select').val('redirect');
+                display_actual_accounts( 'redirect', false, '' );
                 $('.rad_dashboard_select_provider select option').each(function () {
                     if ($(this).val() != 'redirect') {
                         $(this).hide();
                     }
                 });
+                return;
             }
 
             if(!ischecked){
                 $('.rad_dashboard_select_provider select option').each(function(){
-                   $(this).show();
+                    if ($(this).val() == 'redirect') {
+                        $(this).remove();
+                    }
+                    $(this).show();
                 });
+                $(".rad_dashboard_select_provider select").val("empty");
+                $(".rad_dashboard_select_account").hide();
+                $(".rad_dashboard_select_list").hide();
+                return;
+
             }
         });
 

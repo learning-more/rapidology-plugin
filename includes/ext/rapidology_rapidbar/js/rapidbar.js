@@ -4,7 +4,7 @@ jQuery(window).on('load', function ($) {
         jQuery('.rad_rapidology_rapidbar').css('margin-top', '32px');
     }
     if(rapidbar_displayed) {
-        setTimeout(rapidbar_add_padding, 1000);
+        setTimeout(rapidbar_add_padding, 500);
     }
 
     jQuery('.rad_rapidology_redirect_page, .rad_rapidology_rapidbar .rad_rapidology_close_button, .rad_rapidology_rapidbar .rad_rapidology_submit_subscription').on('click', function(){
@@ -33,8 +33,11 @@ function rapidbar_remove_padding(){
     headerPadding = parseInt(headerPadding.replace('px', '')) - 30;
     jQuery(firstDiv).css('padding-top', firstDivPadding);
     jQuery(header).css('padding-top', headerPadding);
-    jQuery('.rad_rapidology_rapidbar').remove();
 
+    if(jQuery('.rad_rapidology_submit_subscription').data('redirect_url').length == '0') { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
+        alert('test');
+        jQuery('.rad_rapidology_rapidbar').remove();
+    }
 }
 
 

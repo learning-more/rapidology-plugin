@@ -3780,7 +3780,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 						<p class="rad_rapidology_popup_input rad_rapidology_subscribe_email %16$s">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s" class="%14$s">
+						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-success_delay="%18$s" class="%14$s">
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -3826,9 +3826,11 @@ class RAD_Rapidology extends RAD_Dashboard {
 				isset( $details['disable_dbl_optin'] ) && '1' === $details['disable_dbl_optin'] ? 'disable' : '',#11
 				esc_attr($pagename),#12
 				esc_attr($hubspot_cookie),#13
-				$details['button_redirect'] == true ? 'rad_rapidology_redirect_page' : 'rad_rapidology_submit_subscription',#14
-				$details['button_redirect'] == true ? esc_attr($details['redirect_url']) : '',#15
-				$details['button_redirect'] == true ? 'hidden_item' : ''#16
+				$details['enable_redirect_form'] == true ? 'rad_rapidology_redirect_page' : 'rad_rapidology_submit_subscription',#14
+				$details['enable_redirect_form'] == true ? esc_url($details['redirect_url']) : '',#15
+				$details['enable_redirect_form'] == true ? 'hidden_item' : '',#16
+				isset($details['success_url']) ? esc_url($details['success_url']) : '',#17 //you will notice both 15 and 17 exist in the dat-redirect_url attribute. This is because both should never be set at the same time.
+				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '' #18
 			),
 			'' != $success_text
 				? stripslashes( esc_html( $success_text ) )

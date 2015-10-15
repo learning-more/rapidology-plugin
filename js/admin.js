@@ -1016,6 +1016,7 @@
             }else{
                 $('.rad_dashboard_enable_redirect_form').hide();
             }
+
 			var $radDashboardNavigation = $('#rad_dashboard_navigation');
 			$radDashboardNavigation.find('> ul' ).removeAttr( 'class' ).addClass( 'nav_current_optin_type_' + $type );
 			$radDashboardNavigation.removeAttr( 'class' ).addClass( 'current_optin_type_' + $type );

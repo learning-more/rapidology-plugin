@@ -836,6 +836,7 @@
 .rad_rapidology_rapidbar, .rad_rapidology_preview_rapidbar{
     position: fixed;
     width:100%;
+    min-width:750px !important
     height:30px !important;
     top:0;
     z-index: 9999999999; /*I hate to add this but need reliablity to be ontop over everything else */
@@ -843,6 +844,8 @@
 .rad_rapidology_rapidbar_form_container_wrapper, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_container_wrapper{
     display: inline-block;
     width: 100%;
+    min-width:1000px !important;
+    overflow:hidden !important;
     text-align: center;
 }
 .rad_rapidology_rapidbar_form strong, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form strong{
@@ -852,6 +855,7 @@
 .rad_rapidology_rapidbar_form .rad_rapidology_form_container, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_container{
     max-width:100% !important;
     max-height:30px !important;
+
 }
 .rad_rapidology_rapidbar_header_outer, .rad_rapidology_rapidbar_form_content, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_header_outer, .rad_rapidology_rapidbar_form_content{
     display: inline-block;

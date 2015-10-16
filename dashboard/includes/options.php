@@ -84,6 +84,7 @@ $rad_dashboard_options_all = array(
 			'hint_text'       => __( 'Enabling this will remove all email providers and add a redirect option', 'rapidology' ),
 			'class'			  =>  'rad_dashboard_enable_redirect_form',
 			'conditional'	  =>  'redirect_list_id#email_text#redirect_url#success_redirect',
+			'display_if'	  =>  'never',//display shut off for now to try other options
 		),
 		'email_provider' => array(
 			'type'            => 'select',
@@ -801,6 +802,7 @@ $rad_dashboard_options_all = array(
 			'hint_text'       => __( 'Adds new onclick shortcode option to Rapidology editor when editing a page / post', 'rapidology' ),
 			'default'         => false,
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_click_trigger'
 		),
 	),
 

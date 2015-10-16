@@ -7,11 +7,8 @@ class rapidology_redirect extends RAD_Rapidology{
 
 	function redirect_authorize($name){
 
-		$current_lists = get_site_option('rapidology_redirect_lists');
-		$lists = json_decode($current_lists, true);
-
 		$this->update_account( 'redirect', sanitize_text_field( $name ), array(
-			'lists'         => $lists,
+			'lists'         => mt_rand(),
 			'is_authorized' => 'true',
 		) );
 		return 'success';

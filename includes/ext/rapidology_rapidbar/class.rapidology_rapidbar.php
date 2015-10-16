@@ -4,6 +4,7 @@ class rapidology_rapidbar
 {
 	public function __construct(){
 		add_action('wp_enqueue_scripts', array($this, 'register_rapidbar_scripts'));
+		add_action('admin_init', array($this, 'register_rapidbar__admin_scripts'));
 	}
 
 	public static function generate_form_content($optin_id, $page_id, $pagename = '', $details = array())
@@ -438,7 +439,11 @@ class rapidology_rapidbar
 
 	}
 
+	public function register_rapidbar__admin_scripts(){
+		wp_enqueue_style('rapidbar-admin-css',RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/css/admin.css');
+		wp_enqueue_script('rapidbar_admin_js', RAD_RAPIDOLOGY_PLUGIN_URI.  '/includes/ext/rapidology_rapidbar/js/admin.js', array( 'jquery' ), '1.0', true);
 
+	}
 	public function register_rapidbar_scripts(){
 		if(is_admin_bar_showing()){
 			$admin_bar = true;
@@ -452,6 +457,7 @@ class rapidology_rapidbar
 		wp_register_script('rapidbar_js', RAD_RAPIDOLOGY_PLUGIN_URI.  '/includes/ext/rapidology_rapidbar/js/rapidbar.js', array( 'jquery' ), '1.0', true);
 		wp_localize_script('rapidbar_js', 'rapidbar', $script_locals);
 		wp_enqueue_script('rapidbar_js');
+		wp_enqueue_style('rapidbar-front-css',RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/css/style.css');
 	}
 
 	/**

@@ -877,7 +877,7 @@
 			check_display_options( $( '.display_on_checkboxes_everything' ), true );
 
 			//fix the removing of tinymce editors in FireFox
-
+            tinymce.remove();
 			tinymce.init({
 				mode : 'specific_textareas',
 				editor_selector : 'rad_dashboard_optin_title',
@@ -1545,8 +1545,6 @@
                     text_box.val('Something went wrong');
                 }
             });
-
         });
-
 	});
 })(jQuery);

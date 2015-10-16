@@ -6,7 +6,6 @@ jQuery(window).on('load', function ($) {
     if(rapidbar_displayed) {
         setTimeout(rapidbar_add_padding, 500);
     }
-
     jQuery('.rad_rapidology_redirect_page, .rad_rapidology_rapidbar .rad_rapidology_close_button, .rad_rapidology_rapidbar .rad_rapidology_submit_subscription').on('click', function(){
         setTimeout(rapidbar_remove_padding, 3000); //use set timeout as it is used the other closing functions
     });
@@ -35,7 +34,6 @@ function rapidbar_remove_padding(){
     jQuery(header).css('padding-top', headerPadding);
 
     if(jQuery('.rad_rapidology_submit_subscription').data('redirect_url').length == '0') { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
-        alert('test');
         jQuery('.rad_rapidology_rapidbar').remove();
     }
 }

@@ -1,0 +1,17 @@
+/*------------------------------------------------*/
+/*-------------------[RapidBar]-----------------*/
+/*------------------------------------------------*/
+.current_optin_type_rapidbar .rad_rapidology_hide_for_rapidbar { display: none; }
+.current_optin_type_rapidbar .rad_rapidology_rapidbar.rad_only_option { display: block; }
+.rad_dashboard_type_rapidbar:before {
+    content: "\e65a";
+    -webkit-transform: rotate(-180deg);
+    /* Firefox */
+    -moz-transform: rotate(-180deg);
+    /* IE */
+    -ms-transform: rotate(-180deg);
+    /* Opera */
+    -o-transform: rotate(-180deg);
+    /* Internet Explorer */
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=6);
+}

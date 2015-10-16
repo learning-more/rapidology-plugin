@@ -508,11 +508,6 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 }
 
 
-/*------------------------------------------------*/
-/*-------------------[RapidBar]-----------------*/
-/*------------------------------------------------*/
-.current_optin_type_rapidbar .rad_rapidology_hide_for_rapidbar { display: none; }
-.current_optin_type_rapidbar .rad_rapidology_rapidbar.rad_only_option { display: block; }
 
 
 /*------------------------------------------------*/
@@ -521,14 +516,11 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 .rad_dashboard_25_bottom {
     margin-bottom:25px !important;
 }
-
 .rad_dashboard_10_bottom {
     margin-bottom:10px !important;
 }
-
-
-
 #rad_dashboard_redirect_list_id{
     width:40% !important;
     margin-right:13px;
 }
+

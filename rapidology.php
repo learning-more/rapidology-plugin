@@ -2080,11 +2080,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 					esc_html( $impressions ),
 					esc_html( $conversions ),
 					esc_html( $this->conversion_rate( $optin_id, $conversions, $impressions ) . '%' ), // #5
-					( 'locked' === $value['optin_type'] || 'inline' === $value['optin_type'] )
+					( 'locked' === $value['optin_type'] || 'inline' === $value['optin_type'] || $value['click_trigger'] == '1'  )
 						? sprintf(
-						'<span class="rad_dashboard_icon_shortcode rad_optin_button rad_dashboard_icon" title="%1$s" data-type="%2$s"></span>',
+						'<span class="rad_dashboard_icon_shortcode rad_optin_button rad_dashboard_icon" title="%1$s" data-type="%2$s" data-click_trigger="%3$s"></span>',
 						esc_attr__( 'Generate shortcode', 'rapidology' ),
-						esc_attr( $value['optin_type'] )
+						esc_attr( $value['optin_type'] ),
+						$value['click_trigger'] == '1' ? 'true' : 'false'
 					)
 						: '',
 					'active' === $status ? esc_html__( 'Make Inactive', 'rapidology' ) : esc_html__( 'Make Active', 'rapidology' ),

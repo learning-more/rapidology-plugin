@@ -443,12 +443,15 @@
 				optin_id = typeof this_el.data( 'optin_id' ) !== 'undefined' ? this_el.data( 'optin_id' ) : this_el.parent().parent().data( 'optin_id' ),
 				shortcode_text = '',
 				shortcode_type = this_el.data( 'type' );
+                click_trigger = this_el.data('click_trigger');
 
 			if ( 'locked' == shortcode_type ) {
 				shortcode_text = '[rad_rapidology_locked optin_id="' + optin_id + '"] content [/rad_rapidology_locked]';
-			} else {
-				shortcode_text = '[rad_rapidology_inline optin_id="' + optin_id + '"]';
-			}
+			} else if (click_trigger == true) {
+				shortcode_text = '[rapidology_on_click_intent optin_id='+ optin_id + '] [/rapidology_on_click_intent]]';
+			}else{
+                shortcode_text = '[rad_rapidology_inline optin_id="' + optin_id + '"]';
+            }
 
 			var message_text = rapidology_settings.shortcode_text + shortcode_text;
 

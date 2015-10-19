@@ -1,4 +1,7 @@
-.rad_rapidology .rad_rapidology_redirect_page{
+.rad_rapidology_rapidbar.rad_rapidology_rapidbar_trigger_auto{
+    display: none !important;
+}
+.rad_rapidology_rapidbar  .rad_rapidology_redirect_page{
     margin-left:auto;
     margin-right:auto;
     display: block;
@@ -81,7 +84,7 @@ height:30px !important;
     top: 0 !important;
     background-color: transparent;
 }
-.rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input::-moz-placeholder, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input::-moz-placeholder, .rad_rapidology_close_button.rad_rapidology_header_text_light{
+.rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input::-moz-placeholder, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input::-moz-placeholder{
     color:#fff;
 }
 .rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input{

@@ -15,3 +15,7 @@
     /* Internet Explorer */
     filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=6);
 }
+
+.rad_dashboard_for_rapidbar{
+    display:block !important;
+}

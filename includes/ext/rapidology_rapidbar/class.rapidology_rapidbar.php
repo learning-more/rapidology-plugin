@@ -442,7 +442,7 @@ class rapidology_rapidbar
 	public function register_rapidbar__admin_scripts(){
 		wp_enqueue_style('rapidbar-admin-css',RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/css/admin.css');
 		wp_enqueue_script('rapidbar_admin_js', RAD_RAPIDOLOGY_PLUGIN_URI.  '/includes/ext/rapidology_rapidbar/js/admin.js', array( 'jquery' ), '1.0', true);
-
+		wp_enqueue_style('rapidbar-front-css',RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/css/style.css');
 	}
 	public function register_rapidbar_scripts(){
 		if(is_admin_bar_showing()){

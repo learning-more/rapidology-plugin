@@ -222,6 +222,15 @@
 			});
 		 }
 
+        if( $( '.rad_rapidology_rapidbar.rad_rapidology_rapidbar_trigger_auto' ).length ) {
+            alert('test');
+            $( '.rad_rapidology_rapidbar.rad_rapidology_rapidbar_trigger_auto:not(.rad_rapidology_visible)' ).each( function() {
+                var this_el = $( this ),
+                    delay = '' !== this_el.data( 'delay' ) ? this_el.data( 'delay' ) * 1000 : 0;
+                auto_popup( this_el, delay );
+            });
+        }
+
 		if( $( '.rad_rapidology_trigger_bottom' ).length ) {
 
 			$( '.rad_rapidology_trigger_bottom:not(.rad_rapidology_visible)' ).each( function(){
@@ -475,7 +484,7 @@
                                     topLevel.find( '.rad_rapidology_success_message' ).addClass( 'rad_rapidology_animate_message' );
                                     topLevel.find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
                                     topLevel.find('.rad_rapidology_form_text').remove();
-                                    set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
+                                    //set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
                                     this_form.remove();
                                     if(redirectUrl.length > 0){
                                         setTimeout(function(){
@@ -518,15 +527,11 @@
         $body.on( 'click','.rad_rapidology_redirect_page',function(e){
             e.preventDefault();
             var this_button = $( this );
-
-            list_id     = this_button.data( 'list_id' );
+            //list_id     = this_button.data( 'list_id' );
             optin_id    = this_button.data( 'optin_id' );
             type        = this_button.data( 'optin_type' );
 
-
-
             var redirectUrl = $(this).data('redirect_url');
-
             var container = $(this).parent().parent().parent().parent().parent();
             container.addClass( 'rad_rapidology_exit_animation' );
             update_stats_table( 'con', this_button );
@@ -534,7 +539,7 @@
                 container.remove();
             }, 400 );
 
-            set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
+            //set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
             window.open(redirectUrl);
 
         });

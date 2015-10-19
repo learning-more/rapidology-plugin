@@ -4212,15 +4212,23 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$optins_set = $this->rapidbar_optins;
 		if ( ! empty( $optins_set ) ) {
 			foreach ( $optins_set as $optin_id => $details ) {
-				print_r($details);
 				if ( $this->check_applicability( $optin_id ) ) {
 					$displayCookie = 'rad_rapidology_subscribed_to_'.$optin_id.$details['email_list'];
 					if(!isset($_COOKIE[$displayCookie])){
 						$content = sprintf(
-							'<div class="rad_rapidology_rapidbar %1$s" %2$s>'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>',
+							'<div class="rad_rapidology_rapidbar %1$s %3$s" %2$s>'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>',
 							isset( $details['trigger_auto'] ) && true == $details['trigger_auto'] ? 'rad_rapidology_rapidbar_trigger_auto' : '',
 							isset( $details['trigger_auto'] ) && true == $details['trigger_auto']
 								? sprintf( 'data-delay="%1$s"', esc_attr( $details['load_delay'] ) )
+								: '',
+							( 'no_border' !== $details['border_orientation'] )
+								? sprintf(
+								' rad_rapidology_border_%1$s%2$s',
+								esc_attr( $details['border_style'] ),
+								'full' !== $details['border_orientation']
+									? ' rad_rapidology_border_position_' . $details['border_orientation']
+									: ''
+							)
 								: ''
 						);
 
@@ -4278,7 +4286,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$output .= sprintf(
 			'<div class="rad_rapidology_rapidbar_form rad_rapidology_optin rad_rapidology_%1$s%9$s">
 				%10$s
-				<div class="rad_rapidology_form_container rad_rapidology_rapidbar_container%3$s%4$s%5$s%6$s%7$s%8$s%11$s">
+				<div class="rad_rapidology_form_container rad_rapidology_rapidbar_container%3$s%5$s%6$s%7$s%8$s%11$s">
 					%2$s
 				</div>
 

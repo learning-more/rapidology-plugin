@@ -2,7 +2,6 @@ jQuery(window).on('load', function () {
     var rapidbar_displayed = jQuery('.rad_rapidology_rapidbar').length;
     var rapidbar_timedelay = jQuery('.rad_rapidology_rapidbar.rad_rapidology_rapidbar_trigger_auto').data('delay');
     var delay = '' !== rapidbar_timedelay ? rapidbar_timedelay * 1000 : 500;
-    console.log(rapidbar_timedelay);
     if(rapidbar.admin_bar && rapidbar_displayed) {
         setTimeout(function () {
             jQuery('.rad_rapidology_rapidbar').css('margin-top', '32px');

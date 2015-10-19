@@ -223,7 +223,6 @@
 		 }
 
         if( $( '.rad_rapidology_rapidbar.rad_rapidology_rapidbar_trigger_auto' ).length ) {
-            alert('test');
             $( '.rad_rapidology_rapidbar.rad_rapidology_rapidbar_trigger_auto:not(.rad_rapidology_visible)' ).each( function() {
                 var this_el = $( this ),
                     delay = '' !== this_el.data( 'delay' ) ? this_el.data( 'delay' ) * 1000 : 0;

@@ -11,8 +11,8 @@
 .rad_rapidology_rapidbar, .rad_rapidology_preview_rapidbar{
     position: fixed;
     width:100%;
-    min-width:750px !important
-height:30px !important;
+    min-width:750px !important;
+    height:30px !important;
     top:0;
     z-index: 9999999999; /*I hate to add this but need reliablity to be ontop over everything else */
 }

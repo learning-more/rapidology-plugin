@@ -18,10 +18,12 @@ jQuery(window).on('load', function () {
 function rapidbar_add_padding(){
     var firstDiv = jQuery('body').find("div:first"); //we are going to assume this is the entire page container
     var header = jQuery('header'); //we assume this will be your header
+    //now lets fine out what kind of rapidbar it is so we know if we need 35 or 50px of padding
+    var paddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;
     var firstDivPadding = firstDiv.css('padding-top');
-    firstDivPadding = parseInt(firstDivPadding.replace('px', '')) + 30;
+    firstDivPadding = parseInt(firstDivPadding.replace('px', '')) + paddingNeeded;
     var headerPadding = header.css('padding-top');
-    headerPadding = parseInt(headerPadding.replace('px', '')) + 30;
+    headerPadding = parseInt(headerPadding.replace('px', '')) + paddingNeeded;
     jQuery(firstDiv).css('padding-top', firstDivPadding);
     jQuery(header).css('padding-top', headerPadding);
 
@@ -31,9 +33,11 @@ function rapidbar_remove_padding(){
     var firstDiv = jQuery('body').find("div:first"); //we are going to assume this is the entire page container
     var header = jQuery('header'); //we assume this will be your header
     var firstDivPadding = firstDiv.css('padding-top');
-    firstDivPadding = parseInt(firstDivPadding.replace('px', '')) - 30;
+    //now lets fine out what kind of rapidbar it is so we know if we need 35 or 50px of padding
+    var paddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;
+    firstDivPadding = parseInt(firstDivPadding.replace('px', '')) - paddingNeeded;
     var headerPadding = header.css('padding-top');
-    headerPadding = parseInt(headerPadding.replace('px', '')) - 30;
+    headerPadding = parseInt(headerPadding.replace('px', '')) - paddingNeeded;
     jQuery(firstDiv).css('padding-top', firstDivPadding);
     jQuery(header).css('padding-top', headerPadding);
 

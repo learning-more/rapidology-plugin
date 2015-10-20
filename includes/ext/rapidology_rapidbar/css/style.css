@@ -44,9 +44,10 @@
     -ms-flex-align: center;
     align-items: center;
     -webkit-box-pack: center;
-    -webkit-justify-content: center;
+    -webkit-justify-content: flex-end;
     -ms-flex-pack: center;
     justify-content: center;
+    flex: 0 1 100% !important;
 }
 .rad_rapidology_rapidbar_form strong, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form strong{
     font-weight: bold;
@@ -54,6 +55,7 @@
 
 .rad_rapidology_rapidbar_form .rad_rapidology_form_container, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_container{
     max-width:100% !important;
+
 }
 .rad_rapidology_rapidbar_form .rad_rapidology_form_text, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text{
     padding:0 !important;
@@ -69,7 +71,7 @@
     float:left;
     margin-right:10px !important;
 }
-.rad_rapidology_rapidbar_form_content{
+.rad_rapidology_rapidbar_form_content, .rad_rapidology_form_container{
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
@@ -83,6 +85,7 @@
     -ms-flex-pack: center;
     justify-content: center;
 }
+
 .rad_rapidology_rapidbar_input input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_input input{
     width: 100%;
     font-weight: 600;
@@ -115,8 +118,11 @@
 }
 
 .rad_rapidology .rad_rapidology_rapidbar_form .rad_rapidology_close_button, .rad_rapidology_preview_rapidbar .rad_rapidology_close_button{
-    right: 20px !important;
     background-color: transparent;
+    position: relative !important;
+    align-self: flex-end !important;
+    width: 30px !important;
+    margin-right:15px;
 }
 .rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input::-moz-placeholder, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text_light input::-moz-placeholder{
     color:#fff;
@@ -165,17 +171,26 @@
     vertical-align: middle !important;
 }
 
-.rad_rapidology_rapidbar_form_header  .rad_rapidology_success_message{
+.rad_rapidology_rapidbar_form_header  .rad_rapidology_success_message, .rad_rapidology_success_container.rad_rapidology_animate_success{
     margin-top:0 !important;
-    vertical-align: middle;
+    height:100% !important;
+    width: 100% !important;
+    min-width:350px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
 }
 
-.rad_rapidology_rapidbar_form_header h2.rad_rapidology_success_message{
+
+.rad_rapidology_rapidbar h2.rad_rapidology_success_message, .rad_rapidology_rapidbar h2.rad_rapidology_success_message.rad_rapidology_animate_message{
     padding:0 !important;
     width:100% !important;
-    color: black !important;
+    line-height:45px !important;
 }
 
+
+/*----admin css -----*/
+
+.rad_dashboard_select_optin{display:none;}
 /*---rapdibar preivew specific----*/
 .rad_rapidology_preview_rapidbar{
     top:32px;

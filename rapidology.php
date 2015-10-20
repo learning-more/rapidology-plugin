@@ -2090,7 +2090,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					)
 						: '',
 					$child_row, //#15
-					( 'empty' == $value['email_provider'] || ( 'custom_html' !== $value['email_provider'] && 'empty' == $value['email_list'] ) )
+					( 'empty' == $value['email_provider'] || ( 'custom_html' !== $value['email_provider'] && 'redirect' !== $value['email_provider'] && 'empty' == $value['email_list'] ) )
 						? ' rad_rapidology_no_account'
 						: '' //#16
 				);
@@ -4215,7 +4215,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					$displayCookie = 'rad_rapidology_subscribed_to_'.$optin_id.$details['email_list'];
 					if(!isset($_COOKIE[$displayCookie])){
 						$content = sprintf(
-							'<div class="rad_rapidology_rapidbar %1$s%3$s%4$s" %2$s>'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>',
+							'<div class="rad_rapidology_rapidbar %1$s%3$s %4$s" %2$s>'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>',
 							isset( $details['trigger_auto'] ) && true == $details['trigger_auto'] ? 'rad_rapidology_rapidbar_trigger_auto' : '',
 							isset( $details['trigger_auto'] ) && true == $details['trigger_auto']
 								? sprintf( 'data-delay="%1$s"', esc_attr( $details['load_delay'] ) )

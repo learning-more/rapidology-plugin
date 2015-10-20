@@ -5,7 +5,8 @@ jQuery(window).on('load', function () {
     var delay = '' !== rapidbar_timedelay ? rapidbar_timedelay * 1000 : 500;
     var isTop = (jQuery('.rad_rapidology_rapidbar').hasClass('stickytop') || jQuery('.rad_rapidology_rapidbar').hasClass('nonsticktop') ) ? true : false;
     var staticTop = (jQuery('.rad_rapidology_rapidbar').hasClass('nonsticktop')) ? true : false;
-    var staticBottom = (jQuery('.rad_rapidology_rapidbar').hasClass('stickybottom')) ? true : false;
+    var staticBottom = (jQuery('.rad_rapidology_rapidbar').hasClass('nonstickbottom')) ? true : false;
+    var stickyBottom = (jQuery('.rad_rapidology_rapidbar').hasClass('stickybottom')) ? true : false;
 
     //add padding to top of page for top bars if admin bar is displayed
     if(rapidbar.admin_bar && rapidbar_displayed && isTop) {
@@ -18,7 +19,7 @@ jQuery(window).on('load', function () {
         setTimeout(rapidbar_add_padding, delay);
     }
     //add padding to bottom of body for static bottom bar
-    if(rapidbar_displayed && staticBottom){
+    if(rapidbar_displayed && stickyBottom){
         jQuery('body').addClass('rapidbar_bottom_padding');
     }
     //do some fun scroll stuff to add and remove padding with static top bar
@@ -36,11 +37,14 @@ jQuery(window).on('load', function () {
             }
         });
     }
+    //remove padding for top bars
     if(isTop) {
         jQuery('.rad_rapidology_redirect_page, .rad_rapidology_rapidbar .rad_rapidology_close_button, .rad_rapidology_rapidbar .rad_rapidology_submit_subscription').on('click', function () {
             setTimeout(rapidbar_remove_padding, 3000); //use set timeout as it is used the other closing functions
         });
     }
+
+
 });
 
 function rapidbar_add_padding(){
@@ -72,7 +76,6 @@ function rapidbar_remove_padding(){
     jQuery(header).css('padding-top', headerPadding);
     jQuery('body').removeClass('padding_added_rapidbar');
 
-//TODO REMOVE THIS?? WHAT WAS THIS FOR?
     if(jQuery('.rad_rapidology_submit_subscription').data('redirect_url').length == '0') { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
       jQuery('.rad_rapidology_rapidbar').remove();
     }

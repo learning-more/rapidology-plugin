@@ -49,7 +49,7 @@
 
 .rad_rapidology .rad_rapidology_warn_field { -webkit-box-shadow: inset 0px 0px 0px 2px #f45a4a; -moz-box-shadow: inset 0px 0px 0px 2px #f45a4a; box-shadow: inset 0px 0px 0px 2px #f45a4a; }
 
-.rad_rapidology .rad_rapidology_header_text_light h2 { color: #fff !important; }
+.rad_rapidology .rad_rapidology_header_text_light h2 { color: #fff; }
 .rad_rapidology .rad_rapidology_header_text_light p { color: rgba(255,255,255,0.7) !important; }
 .rad_rapidology .rad_rapidology_header_text_dark h2{  color: #898C91;  }
 .rad_rapidology .rad_rapidology_header_text_dark p { color: rgba(137,140,145,0.7) !important; }
@@ -153,7 +153,7 @@
 .rad_rapidology span.rad_rapidology_success_checkmark { opacity: 0; color: #fff !important; background: #82C016; padding: 8px 7px 7px 10px !important; border-radius: 30px; left: 50%; margin-left: -20px; -webkit-transform: rotate(180deg); -ms-transform: rotate(180deg); transform: rotate(180deg); display: block; height: 28px; width: 28px; transition: all 1s; -moz-transition: all 1s; -webkit-transition: all 1s; position: absolute; top: 30px;  }
 .rad_rapidology .rad_rapidology_success_container.rad_rapidology_animate_success span.rad_rapidology_success_checkmark { opacity: 1; top: 0; -webkit-transform: rotate(0deg); -ms-transform: rotate(0deg); transform: rotate(0deg); }
 
-.rad_rapidology .rad_rapidology_close_button:before { content: "\e60f"; position: absolute; top: 7px; right: 7px; }
+.rad_rapidology .rad_rapidology_close_button:before { content: "\e60f"; position: absolute; top: 7px; right: 6.1px; }
 .rad_rapidology .rad_rapidology_form_container .rad_rapidology_close_button { position: absolute; top: -10px; right: -10px; width: 30px; height: 30px; -webkit-border-radius: 30px; -moz-border-radius: 30px; border-radius: 30px; background-color: #fff; -webkit-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.34); -moz-box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.34); box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.34); cursor: pointer; }
 .rad_rapidology .rad_rapidology_with_border .rad_rapidology_close_button { top: -13px; right: -13px; }
 

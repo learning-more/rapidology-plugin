@@ -487,7 +487,7 @@
                                     this_form.remove();
                                     if(redirectUrl.length > 0){
                                         setTimeout(function(){
-                                            $('.rad_rapidology_rapidbar').remove();
+                                           // $('.rad_rapidology_rapidbar').remove();
                                             //window.open(redirectUrl);
                                         }, redirect_delay);
                                     }

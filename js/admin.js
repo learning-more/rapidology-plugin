@@ -867,6 +867,7 @@
                     }
                 });
                 $('.rad_dashboard_new_account').hide();
+                $('.rad_rapidology_success_redirect').hide();
 
             }
 
@@ -1520,7 +1521,8 @@
                     }
                 });
                $(".rad_dashboard_select_account").hide();
-                $(".rad_dashboard_select_list").hide();
+               $(".rad_dashboard_select_list").hide();
+               $('.rad_rapidology_success_redirect').hide();
 
                 return;
             }
@@ -1533,6 +1535,7 @@
                     $(this).show();
                 });
                 $(".rad_dashboard_select_provider select").val("empty");
+                $('.rad_rapidology_success_redirect').show();
                 return;
             }
         });

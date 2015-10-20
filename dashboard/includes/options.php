@@ -123,7 +123,6 @@ $rad_dashboard_options_all = array(
 			'name'            => 'custom_html',
 			'placeholder'     => __( 'Insert HTML', 'rapidology' ),
 			'default'         => '',
-			'display_if'      => 'enable_redirect_form#true',
 			'validation_type' => 'html',
 		),
 		'disable_dbl_optin' => array(
@@ -264,6 +263,14 @@ $rad_dashboard_options_all = array(
 		'section_start' => array(
 			'type'  => 'section_start',
 			'title' => __( 'Form setup', 'rapidology' ),
+		),
+		'display_as_link' => array(
+			'type'            => 'checkbox',
+			'title'           => __( 'Display button as link', 'rapidology' ),
+			'name'            => 'display_as_link',
+			'class'           => 'rad_dashboard_display_as_link_checkbox',
+			'default'         => false,
+			'validation_type' => 'boolean',
 		),
 		'form_orientation' => array(
 			'type'            => 'select',
@@ -1228,6 +1235,7 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'form_setup' ][ 'last_name' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'email_text' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'button_text' ],
+		$rad_dashboard_options_all[ 'form_setup' ][ 'display_as_link' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'form_styling' ][ 'section_start' ],
 			$rad_dashboard_options_all[ 'form_styling' ][ 'field_orientation' ],

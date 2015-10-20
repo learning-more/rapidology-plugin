@@ -3058,9 +3058,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$current_account = isset( $options_array[ $optin_id ]['account_name'] ) ? $options_array[ $optin_id ]['account_name'] : 'empty';
 
 		$available_accounts = array();
-		if($service == 'redirect'){
-			return '';
-		}
+
 		if ( isset( $options_array['accounts'] ) ) {
 			if ( isset( $options_array['accounts'][ $service ] ) ) {
 				foreach ( $options_array['accounts'][ $service ] as $account_name => $details ) {
@@ -3100,14 +3098,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$form_fields = $this->generate_new_account_form( $service );
 
 			printf(
-				'<li class="select rad_dashboard_select_account rad_dashboard_new_account">
+				'<li class="select rad_dashboard_select_account rad_dashboard_new_account ">
 					%3$s
-					<button class="rad_dashboard_icon authorize_service" data-service="%2$s">%1$s</button>
+					<button class="rad_dashboard_icon authorize_service %4$s" data-service="%2$s">%1$s</button>
 					<span class="spinner"></span>
 				</li>',
 				__( 'Add Account', 'rapidology' ),
 				esc_attr( $service ),
-				$form_fields
+				$form_fields,
+				($service == 'redirect') ? ' hidden_item' : ''
 			);
 		}
 

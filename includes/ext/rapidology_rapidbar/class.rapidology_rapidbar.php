@@ -149,7 +149,7 @@ class rapidology_rapidbar
 						<p class="rad_rapidology_rapidbar_input rad_rapidology_subscribe_email %16$s">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_type="rapidbar" data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-success_delay="%18$s" %19$s class="%14$s">
+						<button data-optin_type="rapidbar" data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-success_delay="%18$s" %19$s class="%14$s%20$s">
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -201,7 +201,8 @@ class rapidology_rapidbar
 				isset($details['success_url']) ? esc_url($details['success_url']) : '',#17 //you will notice both 15 and 17 exist in the dat-redirect_url attribute. This is because both should never be set at the same time.
 				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '', #18
 				isset($details['rapidbar_popup']) && $details['rapidbar_popup'] !='nopopup' ? sprintf(
-				'data-popup_id = %1$s', $details['rapidbar_popup']) : '' #19
+				'data-popup_id = %1$s', $details['rapidbar_popup']) : '', #19
+				$details['display_as_link'] == true ? ' btnaslink_'.$details['button_text_color'].'' : ''#20
 			),
 			'' != $success_text
 				? stripslashes(esc_html($success_text))
@@ -277,8 +278,8 @@ class rapidology_rapidbar
 				}
 			}
 		}
-
-		if (isset($single_optin['form_button_color']) && '' !== $single_optin['form_button_color']) {
+		//print_r($single_optin);die();
+		if (isset($single_optin['form_button_color']) && '' !== $single_optin['form_button_color'] && $single_optin['display_as_link'] != 1) {
 			$custom_css .= $form_class . ' .rad_rapidology_rapidbar_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ';
 		}
 
@@ -358,15 +359,15 @@ class rapidology_rapidbar
 
 		}
 
-
 		$custom_css .= (isset($single_optin['enable_redirect_form']) && $single_optin['enable_redirect_form'] == '1' ) ? '
 		.rad_power_box_mode_rapidbar, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar, rad_power_box_mode_rapidbar .rad_power_logo, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar .rad_power_logo, rad_rapidology_rapidbar, .rad_rapidology_preview_rapidbar, rad_rapidology_rapidbar_form_container_wrapper, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_container_wrapper, rad_rapidology_rapidbar_form .rad_rapidology_form_container, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_container, .rad_rapidology_rapidbar_form_header, .rad_rapidology_rapidbar_form_content, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_header, .rad_rapidology_rapidbar_form_content{ height:35px} .rad_rapidology_rapidbar_form .rad_rapidology_form_text, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text, .rad_rapidology_rapidbar_form .rad_rapidology_form_text p, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p, .rad_power_rapidology a .rad_power_logo:after, .rad_rapidology_preview_rapidbar .rad_power_rapidology a .rad_power_logo:after{line-height:35px !important;} .rad_rapidology_rapidbar_form .rad_rapidology_submit_subscription, .rad_rapidology_rapidbar_form .rad_rapidology_redirect_page, .rad_rapidology_preview_rapidbar  .rad_rapidology_submit_subscription, .rad_rapidology_preview_rapidbar .rad_rapidology_redirect_page{ height: 30px;} .rad_rapidology .rad_rapidology_rapidbar_form .rad_rapidology_close_button, .rad_rapidology_preview_rapidbar .rad_rapidology_close_button{ top: 0 !important;}'
 			:'.rad_power_box_mode_rapidbar, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar, rad_power_box_mode_rapidbar .rad_power_logo, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar .rad_power_logo, rad_rapidology_rapidbar, .rad_rapidology_preview_rapidbar, rad_rapidology_rapidbar_form_container_wrapper, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_container_wrapper, rad_rapidology_rapidbar_form .rad_rapidology_form_container, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_container, .rad_rapidology_rapidbar_form_header, .rad_rapidology_rapidbar_form_content, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_header, .rad_rapidology_rapidbar_form_content{ height:50px} .rad_rapidology_rapidbar_form .rad_rapidology_form_text, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text, .rad_rapidology_rapidbar_form .rad_rapidology_form_text p, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p, .rad_power_rapidology a .rad_power_logo:after, .rad_rapidology_preview_rapidbar .rad_power_rapidology a .rad_power_logo:after{line-height:50px !important;} .rad_rapidology_rapidbar_form .rad_rapidology_submit_subscription, .rad_rapidology_rapidbar_form .rad_rapidology_redirect_page, .rad_rapidology_preview_rapidbar  .rad_rapidology_submit_subscription, .rad_rapidology_preview_rapidbar .rad_rapidology_redirect_page{ height: 35px;} .rad_rapidology .rad_rapidology_rapidbar_form .rad_rapidology_close_button, .rad_rapidology_preview_rapidbar .rad_rapidology_close_button (top: 15% !important;)
 		';
-		$custom_css .= isset($single_optin['form_button_color']) && '' !== $single_optin['form_button_color'] ? $form_class . ' .rad_rapidology_rapidbar_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ' : '';
+		$custom_css .= isset($single_optin['form_button_color']) && '' !== $single_optin['form_button_color'] && $single_optin['display_as_link'] != 1 ? $form_class . ' .rad_rapidology_rapidbar_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ' : '';
+		$custom_css .= $single_optin['display_as_link'] == 1 && $single_optin['button_text_color'] == 'light' ? '.btnaslink_light {background-color: transparent !important; text-decoration: underline !important; text-decoration-color: #fff !important; border: none !important; cursor: pointer !important;}' : '';
+		$custom_css .= $single_optin['display_as_link'] == 1 && $single_optin['button_text_color'] == 'dark' ? '.btnaslink_dark {background-color: transparent !important; text-decoration: underline !important; text-decoration-color: rgba(0,0,0,0.6) !important; border: none !important; cursor: pointer !important;}' : '';
 		$custom_css .= isset($single_optin['header_font']) ? $font_functions->et_gf_attach_font($single_optin['header_font'], $form_class . ' h2, ' . $form_class . ' h2 span, ' . $form_class . ' h2 strong') : '';
 		$custom_css .= isset($single_optin['body_font']) ? $font_functions->et_gf_attach_font($single_optin['body_font'], $form_class . ' p, ' . $form_class . ' p span, ' . $form_class . ' p strong, ' . $form_class . ' form input, ' . $form_class . ' form button span') : '';
-
 		$custom_css .= isset($single_optin['custom_css']) ? ' ' . $single_optin['custom_css'] : '';
 
 

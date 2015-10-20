@@ -83,12 +83,6 @@
 				$list = $( '.rad_dashboard_select_list select' ).val();
 
             //is this a redirect bar? if so overide all account and list settings with optin name
-            var isRedirect = $('.rad_dashboard_enable_redirect_form input').is(':checked'); //need to check if its a redirect form to load the proper layouts
-            if(isRedirect){
-                var rand
-                $provider = $('#rad_dashboard_optin_name').val();
-                $list = $('#rad_dashboard_optin_name').val();
-            }
 
 			if ( 'empty' == $provider || ( 'custom_html' !== $provider && 'empty' == $list ) ) {
 				window.rad_dashboard_generate_warning( rapidology_settings.no_account_text, '#tab_rad_dashboard_tab_content_optin_setup', rapidology_settings.add_account_button, rapidology_settings.save_inactive_button, '#', 'rad_rapidology_save_inactive' );
@@ -488,6 +482,7 @@
 
 
 		$body.on( 'change', '.rad_dashboard_select_provider select', function() {
+
 			var selected_provider = $( '.rad_dashboard_select_provider select' ).val(),
 				selected_account = 'empty';
 
@@ -868,6 +863,8 @@
                         $(this).hide();
                     }
                 });
+                $('.rad_dashboard_new_account').hide();
+
             }
 
 
@@ -1039,9 +1036,11 @@
             if($('#rad_dashboard_options').hasClass('current_optin_type_rapidbar')){
                 $('.rad_dashboard_enable_redirect_form').show();
                 $('.rad_dashboard_select_rapidbar_position').show();
+                $('.rad_dashboard_display_as_link_checkbox').show();
             }else{
                 $('.rad_dashboard_enable_redirect_form').hide();
                 $('.rad_dashboard_select_rapidbar_position').hide();
+                $('.rad_dashboard_display_as_link_checkbox').hide();
             }
 
 			var $radDashboardNavigation = $('#rad_dashboard_navigation');
@@ -1517,6 +1516,9 @@
                         $(this).hide();
                     }
                 });
+               $(".rad_dashboard_select_account").hide();
+                $(".rad_dashboard_select_list").hide();
+
                 return;
             }
 
@@ -1528,10 +1530,7 @@
                     $(this).show();
                 });
                 $(".rad_dashboard_select_provider select").val("empty");
-                $(".rad_dashboard_select_account").hide();
-                $(".rad_dashboard_select_list").hide();
                 return;
-
             }
         });
 

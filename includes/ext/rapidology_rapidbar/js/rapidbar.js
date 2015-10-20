@@ -73,9 +73,9 @@ function rapidbar_remove_padding(){
     jQuery('body').removeClass('padding_added_rapidbar');
 
 //TODO REMOVE THIS?? WHAT WAS THIS FOR?
-    /*if(jQuery('.rad_rapidology_submit_subscription').data('redirect_url').length == '0') { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
+    if(jQuery('.rad_rapidology_submit_subscription').data('redirect_url').length == '0') { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
       jQuery('.rad_rapidology_rapidbar').remove();
-    }*/
+    }
 }
 
 

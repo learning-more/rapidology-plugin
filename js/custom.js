@@ -499,13 +499,12 @@
 									set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
                                     if(redirectUrl.length > 0) {
                                         setTimeout(function () {
-                                            $('.rad_rapidology').remove();
+                                            $('.rad_rapidology_visible').remove();
                                             window.open(redirectUrl);
                                         }, redirect_delay);
                                     }
 								}
 							}
-
 							define_popup_position( this_form.parent().parent().parent().parent(), false, 50 );
 						}
 					}

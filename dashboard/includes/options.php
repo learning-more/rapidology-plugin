@@ -83,7 +83,7 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'boolean',
 			'hint_text'       => __( 'Enabling this will remove all email providers and add a redirect option', 'rapidology' ),
 			'class'			  =>  'rad_dashboard_enable_redirect_form',
-			'conditional'	  =>  'redirect_list_id#email_text#redirect_url#success_redirect',
+			'conditional'	  =>  'redirect_list_id#email_text#redirect_url',
 		),
 		'email_provider' => array(
 			'type'            => 'select',
@@ -635,7 +635,6 @@ $rad_dashboard_options_all = array(
 			'type'  	=> 'section_start',
 			'title' 	=> __( 'Success Redirect', 'rapidology' ),
 			'class' 	=> 'rad_rapidology_success_redirect',
-			'display_if'=> 'enable_redirect_form#false'
 		),
 		'success_url' => array(
 			'type'            => 'input_field',

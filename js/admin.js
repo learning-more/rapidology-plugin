@@ -82,9 +82,12 @@
 			var $provider = $( '.rad_dashboard_select_provider select' ).val(),
 				$list = $( '.rad_dashboard_select_list select' ).val();
 
-            //is this a redirect bar? if so overide all account and list settings with optin name
+            //is this a redirect bar? if so overide all account and list settings with empty
+            if($provider == 'redirect'){
+                $list = 'empty';
+            }
 
-			if ( 'empty' == $provider || ( 'custom_html' !== $provider && 'empty' == $list ) ) {
+			if ( 'empty' == $provider || ( 'custom_html' !== $provider && $provider !== 'redirect' && 'empty' == $list ) ) {
 				window.rad_dashboard_generate_warning( rapidology_settings.no_account_text, '#tab_rad_dashboard_tab_content_optin_setup', rapidology_settings.add_account_button, rapidology_settings.save_inactive_button, '#', 'rad_rapidology_save_inactive' );
 			} else {
 				rapidology_dashboard_save( $( this ) );

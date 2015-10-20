@@ -5,13 +5,29 @@
     margin-left:auto;
     margin-right:auto;
     text-align: center;
+}
 
+.rad_rapidology_rapidbar.stickytop{
+    position: fixed;
+    top: 0;
+}
+.rad_rapidology_rapidbar.stickybottom{
+    position: fixed;
+    bottom: 0;
+}
+.rad_rapidology_rapidbar.nonsticktop{
+    position: absolute;
+    top: 0;
+}
+.rapidbar_bottom_padding{
+    padding-bottom:30px !important;
+}
+.rad_rapidology_rapidbar.nonstickbottom{
+    position:relative;
 }
 .rad_rapidology_rapidbar, .rad_rapidology_preview_rapidbar{
-    position: fixed;
     width:100vw !important;
     min-width:750px !important;
-    top:0;
     z-index: 9999999999; /*I hate to add this but need reliablity to be ontop over everything else */
 }
 .rad_rapidology_rapidbar_form_container_wrapper, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_container_wrapper{

@@ -1023,8 +1023,10 @@
 			$( '#rad_dashboard_options' ).removeAttr( 'class' ).addClass( 'current_optin_type_' + $type );
             if($('#rad_dashboard_options').hasClass('current_optin_type_rapidbar')){
                 $('.rad_dashboard_enable_redirect_form').show();
+                $('.rad_dashboard_select_rapidbar_position').show();
             }else{
                 $('.rad_dashboard_enable_redirect_form').hide();
+                $('.rad_dashboard_select_rapidbar_position').hide();
             }
 
 			var $radDashboardNavigation = $('#rad_dashboard_navigation');

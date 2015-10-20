@@ -488,7 +488,7 @@
                                     if(redirectUrl.length > 0){
                                         setTimeout(function(){
                                             $('.rad_rapidology_rapidbar').remove();
-                                            window.open(redirectUrl);
+                                            //window.open(redirectUrl);
                                         }, redirect_delay);
                                     }
                                 }
@@ -513,9 +513,6 @@
 			}
 		}
 
-
-
-
 		$body.on( 'click', '.rad_rapidology_custom_html_form input[type="submit"], .rad_rapidology_custom_html_form button[type="submit"]', function() {
 			var this_button = $( this ),
 				form_container = this_button.closest( '.rad_rapidology_custom_html_form' );
@@ -529,7 +526,7 @@
             //list_id     = this_button.data( 'list_id' );
             optin_id    = this_button.data( 'optin_id' );
             type        = this_button.data( 'optin_type' );
-
+            var popup_id = $(this).data('popup_id');
             var redirectUrl = $(this).data('redirect_url');
             var container = $(this).parent().parent().parent().parent().parent();
             container.addClass( 'rad_rapidology_exit_animation' );
@@ -539,8 +536,12 @@
             }, 400 );
 
             //set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
-            window.open(redirectUrl);
-
+            if(popup_id) {
+                var optin = $('.rad_rapidology_' + popup_id);
+                make_popup_visible(optin, 0, '', '');
+            }else {
+                window.open(redirectUrl);
+            }
         });
 
 		$( window ).resize( function(){

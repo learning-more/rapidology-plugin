@@ -149,7 +149,7 @@ class rapidology_rapidbar
 						<p class="rad_rapidology_rapidbar_input rad_rapidology_subscribe_email %16$s">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_type="rapidbar" data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-success_delay="%18$s" class="%14$s">
+						<button data-optin_type="rapidbar" data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-success_delay="%18$s" %19$s class="%14$s">
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -199,7 +199,9 @@ class rapidology_rapidbar
 				$details['enable_redirect_form'] == true ? esc_attr($details['redirect_url']) : '',#15
 				$details['enable_redirect_form'] == true ? 'hidden_item' : '',#16
 				isset($details['success_url']) ? esc_url($details['success_url']) : '',#17 //you will notice both 15 and 17 exist in the dat-redirect_url attribute. This is because both should never be set at the same time.
-				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '' #18
+				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '', #18
+				isset($details['rapidbar_popup']) && $details['rapidbar_popup'] !='nopopup' ? sprintf(
+				'data-popup_id = %1$s', $details['rapidbar_popup']) : '' #19
 			),
 			'' != $success_text
 				? stripslashes(esc_html($success_text))

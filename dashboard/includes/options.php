@@ -279,7 +279,7 @@ $rad_dashboard_options_all = array(
 				'bottom' => 'rad_rapidology_hide_for_rapidbar'
 			),
 			'validation_type' => 'simple_text',
-			'class'           => 'rad_rapidology_hide_for_widget rad_dashboard_form_orientation',
+			'class'           => 'rad_rapidology_hide_for_widget rad_rapidology_hide_for_rapidbar rad_dashboard_form_orientation',
 		),
 		'display_name' => array(
 			'type'            => 'checkbox',

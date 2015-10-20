@@ -6,7 +6,7 @@ jQuery(window).on('load', function () {
     var isTop = (jQuery('.rad_rapidology_rapidbar').hasClass('stickytop') || jQuery('.rad_rapidology_rapidbar').hasClass('nonsticktop') ) ? true : false;
     var staticTop = (jQuery('.rad_rapidology_rapidbar').hasClass('nonsticktop')) ? true : false;
     var staticBottom = (jQuery('.rad_rapidology_rapidbar').hasClass('stickybottom')) ? true : false;
-    
+
     //add padding to top of page for top bars if admin bar is displayed
     if(rapidbar.admin_bar && rapidbar_displayed && isTop) {
         setTimeout(function () {

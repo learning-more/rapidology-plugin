@@ -868,6 +868,7 @@
                 });
                 $('.rad_dashboard_new_account').hide();
                 $('.rad_rapidology_success_redirect').hide();
+                $('.rad_dashboard_select_optin').show();
 
 
             }

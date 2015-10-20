@@ -856,6 +856,21 @@
 				} );
 			}
 
+            //rapidbar redirect auto select if selected
+            if(jQuery('.rad_dashboard_enable_redirect_form input').is(':checked')){
+                $('.rad_dashboard_select_provider select').append($('<option>', {
+                    value: 'redirect',
+                    text: 'Redirect Button'
+                }));
+                $('.rad_dashboard_select_provider select').val('redirect');
+                $('.rad_dashboard_select_provider select option').each(function () {
+                    if ($(this).val() != 'redirect') {
+                        $(this).hide();
+                    }
+                });
+            }
+
+
 			$( '.rad-dashboard-color-picker' ).wpColorPicker();
 
 			var $radDashboardConditional = $('.rad_dashboard_conditional');

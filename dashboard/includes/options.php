@@ -311,6 +311,7 @@ $rad_dashboard_options_all = array(
 			'default'         => 'empty',
 			'validation_type' => 'simple_text',
 			'class'           => 'rad_dashboard_select_optin',
+			'hint_text'		  => __('If selected, redirect will not happen. Will only display popup or flyin forms that show on everything.', 'rapidology'),
 		),
 		'name_fields' => array(
 			'type'            => 'select',

@@ -65,16 +65,20 @@ $all_optins = get_option('rad_rapidology_options');
 $valid_optins = array(
 	'nopopup'	=> 'Select Optin'
 );
+//array to check optin type against
+$allowed_optins = array(
+	'popup',
+	'flyin'
+);
 $i=0;
 
 foreach($all_optins as $optin => $options){
 
-	if($options['optin_type'] == 'pop_up' || $options['optin_type'] == 'flyin' && $options['optin_status'] == 'active' && $options['display_on'][0] == 'everything'){
+	if(in_array($options['optin_type'], $allowed_optins) && $options['optin_status'] == 'active' && $options['display_on'][0] == 'everything'){
 		$valid_optins[$optin] = $options['optin_name'];
 		$i++;
 	}
 }
-
 
 /**
  * Rapidbar position and sticky or not

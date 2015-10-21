@@ -415,10 +415,12 @@ class rapidology_rapidbar
 	static function generate_preview_popup( $details ) {
 		$output = '';
 		$output = sprintf(
-			'<div class="rad_rapidology_rapidbar rad_rapidology_animated rad_rapidology_preview_rapidbar rad_rapidology_optin">
-				<div class="rad_rapidology_form_container rad_rapidology_animation_fadein rad_rapidology_rapidbar_container%1$s%2$s%3$s%4$s%5$s%6$s">
-					%7$s
-					%8$s
+			'<div class="rapidbar_preview_wrapper">
+				<div class="rad_rapidology_rapidbar rad_rapidology_animated rad_rapidology_preview_rapidbar rad_rapidology_optin %9$s %10$s">
+						<div class="rad_rapidology_form_container rad_rapidology_animation_fadein rad_rapidology_rapidbar_container%1$s%2$s%6$s">
+						%7$s
+						%8$s
+					</div>
 				</div>
 			</div>',
 			'bottom' !== $details['form_orientation'] && 'custom_html' !== $details['email_provider'] && 'widget' !== $details['optin_type']
@@ -438,7 +440,17 @@ class rapidology_rapidbar
 			( 'rounded' == $details['field_corner'] ) ? ' rad_rapidology_rounded' : '',
 			'light' == $details['text_color'] ? ' rad_rapidology_form_text_light' : ' rad_rapidology_form_text_dark',
 			self::generate_form_content( 0, 0, '', $details ),
-			''
+			'',
+			esc_attr($details['rapidbar_position']),
+			( 'no_border' !== $details['border_orientation'] )
+				? sprintf(
+				' rad_rapidology_border_%1$s%2$s',
+				esc_attr( $details['border_style'] ),
+				'full' !== $details['border_orientation']
+					? ' rad_rapidology_border_position_' . $details['border_orientation']
+					: ''
+			)
+				: ''
 		);
 
 		return $output;

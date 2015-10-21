@@ -712,6 +712,7 @@
 		} );
 
 		$body.on( 'click', '.rad_rapidology_preview_popup .rad_rapidology_close_button', function() {
+            alert('test');
 			$( this ).parent().parent().remove();
 			$( '#rad_rapidology_preview_css' ).remove();
 			$( '.rad_dashboard_preview button' ).removeClass( 'rapidology_preview_opened' );
@@ -720,6 +721,7 @@
 
         $body.on( 'click', '.rad_rapidology_preview_rapidbar .rad_rapidology_close_button', function() {
             $( this ).parent().parent().remove();
+            $('.rapidbar_preview_wrapper').remove();
             $( '#rad_rapidology_preview_css' ).remove();
             $( '.rad_dashboard_preview button' ).removeClass( 'rapidology_preview_opened' );
             $body.removeClass( 'rad_rapidology_rapidbar_active' );
@@ -869,8 +871,6 @@
                 $('.rad_dashboard_new_account').hide();
                 $('.rad_rapidology_success_redirect').hide();
                 $('.rad_dashboard_select_optin').show();
-
-
             }
 
 

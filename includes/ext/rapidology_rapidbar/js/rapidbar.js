@@ -81,14 +81,19 @@ function rapidbar_remove_padding(){
 
 function replicate_text_color(delay){
     //loop through any rapidbar on the page and set the color appropriately if text color has been changed in the admin editor
+    //only happens on btns as links
     setTimeout(function(delay){
         jQuery('.rad_rapidology_rapidbar').each(function(){
            var this_el = jQuery(this);
-            var barTextEl = jQuery(this_el.find('.rad_rapidology_form_text p span'));
-            var textColor = barTextEl.css('color');
-            if(textColor){
-                var buttonText = jQuery(this_el.find('.rad_rapidology_button_text'));
-                jQuery(buttonText).attr('style', 'color: '+textColor+' !important');
+            var button = jQuery(this_el).find('button'); //find our button on this form
+            var btnAsLink = jQuery(button).attr('class').match(/btnaslink/); //make sure button has link class
+            if(btnAsLink.index > 0) { //if the result index from match is > 0 then we can change it, if not we won't.
+                var barTextEl = jQuery(this_el.find('.rad_rapidology_form_text p span'));
+                var textColor = barTextEl.css('color');
+                if (textColor) {
+                    var buttonText = jQuery(this_el.find('.rad_rapidology_button_text'));
+                    jQuery(buttonText).attr('style', 'color: ' + textColor + ' !important');
+                }
             }
         });
     }, delay);

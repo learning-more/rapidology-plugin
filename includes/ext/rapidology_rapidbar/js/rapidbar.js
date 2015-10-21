@@ -43,8 +43,7 @@ jQuery(window).on('load', function () {
             setTimeout(rapidbar_remove_padding, 3000); //use set timeout as it is used the other closing functions
         });
     }
-
-
+    replicate_text_color(delay);
 });
 
 function rapidbar_add_padding(){
@@ -52,7 +51,6 @@ function rapidbar_add_padding(){
     var header = jQuery('header'); //we assume this will be your header
     //now lets fine out what kind of rapidbar it is so we know if we need 35 or 50px of padding
     var paddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;
-    console.log(paddingNeeded);
     var firstDivPadding = firstDiv.css('padding-top');
     firstDivPadding = parseInt(firstDivPadding.replace('px', '')) + paddingNeeded;
     var headerPadding = header.css('padding-top');
@@ -60,7 +58,6 @@ function rapidbar_add_padding(){
     jQuery(firstDiv).css('padding-top', firstDivPadding);
     jQuery(header).css('padding-top', headerPadding);
     jQuery('body').addClass('padding_added_rapidbar');
-
 }
 
 function rapidbar_remove_padding(){
@@ -76,9 +73,25 @@ function rapidbar_remove_padding(){
     jQuery(header).css('padding-top', headerPadding);
     jQuery('body').removeClass('padding_added_rapidbar');
 
-    if(jQuery('.rad_rapidology_submit_subscription').data('redirect_url').length == '0') { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
+    var redirectUrl = jQuery('.rad_rapidology_submit_subscription').data('redirect_url');
+    if(redirectUrl) { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
       jQuery('.rad_rapidology_rapidbar').remove();
     }
+}
+
+function replicate_text_color(delay){
+    //loop through any rapidbar on the page and set the color appropriately if text color has been changed in the admin editor
+    setTimeout(function(delay){
+        jQuery('.rad_rapidology_rapidbar').each(function(){
+           var this_el = jQuery(this);
+            var barTextEl = jQuery(this_el.find('.rad_rapidology_form_text p span'));
+            var textColor = barTextEl.css('color');
+            if(textColor){
+                var buttonText = jQuery(this_el.find('.rad_rapidology_button_text'));
+                jQuery(buttonText).attr('style', 'color: '+textColor+' !important');
+            }
+        });
+    }, delay);
 }
 
 

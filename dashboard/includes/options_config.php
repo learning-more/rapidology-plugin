@@ -67,7 +67,7 @@ $valid_optins = array(
 );
 //array to check optin type against
 $allowed_optins = array(
-	'popup',
+	'pop_up',
 	'flyin'
 );
 $i=0;

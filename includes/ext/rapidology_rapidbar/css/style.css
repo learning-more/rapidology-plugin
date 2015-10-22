@@ -76,7 +76,7 @@
     float:left;
     margin-right:10px !important;
 }
-.rad_rapidology_rapidbar_form_content, .rad_rapidology_form_container{
+.rad_rapidology_rapidbar_container{
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;

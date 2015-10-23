@@ -19,3 +19,210 @@
 .rad_dashboard_for_rapidbar{
     display:block !important;
 }
+
+/*------------Marketing Page-------------------*/
+.marketing_wrapper{
+    display: flex;
+    flex-wrap: wrap;
+}
+.marketing_header{
+    width:965px;
+}
+.marketing_wrapper h1 {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+    margin-left:10px;
+    font-size: 26px;
+}
+.marketing_wrapper p{
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    color: #bdc4d6;
+    margin-left:10px;
+    margin-top:-5px;
+    font-size: 14px;
+}
+.rapidology_marketing_main{
+    width:965px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.rapidology_marketing_main > div{
+    height: 250px;
+    width: 450px;
+    border: 2px solid #bdc4d6;
+    margin:10px 10px 30px;
+}
+
+.box_header{
+    height:50px;
+    background: #bdc4d6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.box_header p{
+    color: #fff;
+    line-height: 14px;
+    margin: 0;
+    padding: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.rapidology_marketing_content{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+}
+.rapidology_marketing_content > div{
+    height: 102px;
+    width: 315px;
+}
+.rapidology_marketing_content img{
+    height: 175px;
+}
+.rapidology_marketing_content p{
+    font-weight: 700 !important;
+    font-size: 16px !important;
+    margin-bottom: 30px !important;
+}
+.rapidology_marketing_content a{
+    font-family: 'Open Sans', sans-serif;
+    text-transform: uppercase;
+    background: #47ccad;
+    text-decoration: none;
+    padding: 10px 20px;
+    color: #fff;
+    text-align: center;
+    border-radius:5px;
+    margin-left:10px;
+    font-size:14px;
+}
+
+.rapidology_marketing_sidebar{
+    width:320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: -170px;
+}
+
+.signup{
+    height: 315px;
+    width:300px;
+    border-left: 2px solid #bdc4d6;
+    margin-bottom: 30px;
+    padding-left:10px;
+}
+.signup .header{
+    font-weight:700;
+    font-size:16px;
+    text-align: center;
+    color: #373942;
+    font-style: normal;
+    margin-top:20px;
+    margin-bottom:0 !important
+}
+.signup p{
+    margin-left:10px;
+    font-style: italic;
+    width: 185px;
+    margin-bottom:10px !important;
+}
+.newsletter_email{
+    height:40px;
+    width: 200px;
+    background:#f3f5f8 !important;
+    border: none;
+}
+
+
+.newsletter_email::-webkit-input-placeholder{
+    font-size:14px;
+    margin-left:10px;
+    color:#939aaa;
+}
+.newsletter_email:-moz-placeholder{
+    font-size:14px;
+    margin-left:10px;
+    color:#939aaa;
+}
+.newsletter_email::-moz-placeholder {
+    font-size:14px;
+    margin-left:10px;
+    color:#939aaa;
+}
+.newsletter_email:-ms-input-placeholder{
+    font-size:14px;
+    margin-left:10px;
+    color:#939aaa;
+}
+.newsletter_submit_button{
+    font-family: 'Open Sans', sans-serif;
+    text-transform: uppercase;
+    background: #ff5e6e;
+    text-decoration: none;
+    padding: 10px 0;
+    color: #fff;
+    text-align: center;
+    border-radius:5px;
+    margin-top:10px;
+    font-size:14px;
+    display: block;
+    width:200px;
+}
+.privacy_link{
+    margin-top:10px;
+    text-align: center;
+    font-size: 13px;
+    color:#939aaa;
+    display: block;
+    width: 200px;
+    text-decoration: underline !important;
+    text-decoration-color: #939aaa !important;
+}
+.quick_links{
+    height: 217px;
+    border-left: 2px solid #bdc4d6;
+    width:300px;
+    padding-left:10px;
+}
+
+.quick_links .header{
+    font-weight:700;
+    font-size:16px;
+    text-align: center;
+    color: #373942;
+    font-style: normal;
+    margin-top:20px;
+    margin-bottom:30px;
+    width:200px;
+}
+.quick_links ul{
+    list-style: none;
+    margin: 0 0 0 10px;
+    padding: 0;
+}
+
+.quick_links ul li a{
+    font-size: 14px;
+    font-family: 'Open Sans', sans-serif;
+    color:#939aaa;
+    text-decoration: underline;
+    text-decoration-color: #939aaa;
+}
+
+.loader{
+    display:none;
+    margin-left:10px;
+}
+.error{
+    color:red !important;
+    display: none;
+}
+.signup_thankyou{
+    display:none;
+}

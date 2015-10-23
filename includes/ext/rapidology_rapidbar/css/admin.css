@@ -21,20 +21,23 @@
 }
 
 /*------------Marketing Page-------------------*/
+.current_tab_rad_dashboard_tab_content_header_support{
+    padding: 0 !important;
+}
 .marketing_wrapper{
     display: flex;
-    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
 }
-.marketing_header{
-    width:965px;
-}
-.marketing_wrapper h1 {
+
+.marketing_header h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 700;
     margin-left:10px;
+    margin-top: 10px;
     font-size: 26px;
 }
-.marketing_wrapper p{
+.marketing_header p{
     font-family: 'Open Sans', sans-serif;
     font-weight: 400;
     color: #bdc4d6;
@@ -43,15 +46,14 @@
     font-size: 14px;
 }
 .rapidology_marketing_main{
-    width:965px;
     display: flex;
     flex-wrap: wrap;
 }
 .rapidology_marketing_main > div{
     height: 250px;
-    width: 450px;
     border: 2px solid #bdc4d6;
     margin:10px 10px 30px;
+    width:45%;
 }
 
 .box_header{
@@ -72,7 +74,6 @@
 
 .rapidology_marketing_content{
     display:flex;
-    justify-content: center;
     align-items: center;
     height: 200px;
 }
@@ -102,17 +103,17 @@
 }
 
 .rapidology_marketing_sidebar{
-    width:320px;
+    width:275px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: -170px;
+    align-self: flex-start;
 }
 
 .signup{
     height: 315px;
-    width:300px;
+    width:250px;
     border-left: 2px solid #bdc4d6;
     margin-bottom: 30px;
     padding-left:10px;
@@ -187,7 +188,7 @@
 .quick_links{
     height: 217px;
     border-left: 2px solid #bdc4d6;
-    width:300px;
+    width:250px;
     padding-left:10px;
 }
 
@@ -225,4 +226,20 @@
 }
 .signup_thankyou{
     display:none;
+}
+
+
+@media screen and (max-width: 1250px) {
+    .rapidology_marketing_main > div{
+        width: auto !important;
+    }
+}
+
+@media (min-width: 100em) {
+    .rapidology_marketing_main > div{
+        width: 450px !important;
+    }
+    .rapidology_marketing_main{
+        flex-grow: 2;
+    }
 }

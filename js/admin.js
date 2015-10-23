@@ -82,7 +82,12 @@
 			var $provider = $( '.rad_dashboard_select_provider select' ).val(),
 				$list = $( '.rad_dashboard_select_list select' ).val();
 
-			if ( 'empty' == $provider || ( 'custom_html' !== $provider && 'empty' == $list ) ) {
+            //is this a redirect bar? if so overide all account and list settings with empty
+            if($provider == 'redirect'){
+                $list = 'empty';
+            }
+
+			if ( 'empty' == $provider || ( 'custom_html' !== $provider && $provider !== 'redirect' && 'empty' == $list ) ) {
 				window.rad_dashboard_generate_warning( rapidology_settings.no_account_text, '#tab_rad_dashboard_tab_content_optin_setup', rapidology_settings.add_account_button, rapidology_settings.save_inactive_button, '#', 'rad_rapidology_save_inactive' );
 			} else {
 				rapidology_dashboard_save( $( this ) );
@@ -480,6 +485,7 @@
 
 
 		$body.on( 'change', '.rad_dashboard_select_provider select', function() {
+
 			var selected_provider = $( '.rad_dashboard_select_provider select' ).val(),
 				selected_account = 'empty';
 
@@ -706,6 +712,7 @@
 		} );
 
 		$body.on( 'click', '.rad_rapidology_preview_popup .rad_rapidology_close_button', function() {
+            alert('test');
 			$( this ).parent().parent().remove();
 			$( '#rad_rapidology_preview_css' ).remove();
 			$( '.rad_dashboard_preview button' ).removeClass( 'rapidology_preview_opened' );
@@ -714,6 +721,7 @@
 
         $body.on( 'click', '.rad_rapidology_preview_rapidbar .rad_rapidology_close_button', function() {
             $( this ).parent().parent().remove();
+            $('.rapidbar_preview_wrapper').remove();
             $( '#rad_rapidology_preview_css' ).remove();
             $( '.rad_dashboard_preview button' ).removeClass( 'rapidology_preview_opened' );
             $body.removeClass( 'rad_rapidology_rapidbar_active' );
@@ -848,6 +856,24 @@
 				} );
 			}
 
+            //rapidbar redirect auto select if selected
+            if(jQuery('.rad_dashboard_enable_redirect_form input').is(':checked')){
+                $('.rad_dashboard_select_provider select').append($('<option>', {
+                    value: 'redirect',
+                    text: 'Redirect Button'
+                }));
+                $('.rad_dashboard_select_provider select').val('redirect');
+                $('.rad_dashboard_select_provider select option').each(function () {
+                    if ($(this).val() != 'redirect') {
+                        $(this).hide();
+                    }
+                });
+                $('.rad_dashboard_new_account').hide();
+                $('.rad_rapidology_success_redirect').hide();
+                $('.rad_dashboard_select_optin').show();
+            }
+
+
 			$( '.rad-dashboard-color-picker' ).wpColorPicker();
 
 			var $radDashboardConditional = $('.rad_dashboard_conditional');
@@ -877,7 +903,6 @@
 			check_display_options( $( '.display_on_checkboxes_everything' ), true );
 
 			//fix the removing of tinymce editors in FireFox
-            tinymce.remove();
 			tinymce.init({
 				mode : 'specific_textareas',
 				editor_selector : 'rad_dashboard_optin_title',
@@ -1016,8 +1041,12 @@
 			$( '#rad_dashboard_options' ).removeAttr( 'class' ).addClass( 'current_optin_type_' + $type );
             if($('#rad_dashboard_options').hasClass('current_optin_type_rapidbar')){
                 $('.rad_dashboard_enable_redirect_form').show();
+                $('.rad_dashboard_select_rapidbar_position').show();
+                $('.rad_dashboard_display_as_link_checkbox').show();
             }else{
                 $('.rad_dashboard_enable_redirect_form').hide();
+                $('.rad_dashboard_select_rapidbar_position').hide();
+                $('.rad_dashboard_display_as_link_checkbox').hide();
             }
 
 			var $radDashboardNavigation = $('#rad_dashboard_navigation');
@@ -1476,9 +1505,7 @@
         });
 
         $body.on('click','.rad_dashboard_enable_redirect_form input',function(){
-
             var thisbox = $(this);
-
             if(thisbox.is(':checked')){
                 ischecked = 1;
             }else{
@@ -1490,12 +1517,16 @@
                     text: 'Redirect Button'
                 }));
                 $('.rad_dashboard_select_provider select').val('redirect');
-                display_actual_accounts( 'redirect', false, '' );
                 $('.rad_dashboard_select_provider select option').each(function () {
                     if ($(this).val() != 'redirect') {
                         $(this).hide();
                     }
                 });
+               $(".rad_dashboard_select_account").hide();
+               $(".rad_dashboard_select_list").hide();
+               $('.rad_rapidology_success_redirect').hide();
+               $('.rad_dashboard_select_optin').show();
+
                 return;
             }
 
@@ -1507,10 +1538,9 @@
                     $(this).show();
                 });
                 $(".rad_dashboard_select_provider select").val("empty");
-                $(".rad_dashboard_select_account").hide();
-                $(".rad_dashboard_select_list").hide();
+                $('.rad_rapidology_success_redirect').show();
+                $('.rad_dashboard_select_optin').hide();
                 return;
-
             }
         });
 

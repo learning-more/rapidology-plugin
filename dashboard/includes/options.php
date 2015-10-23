@@ -83,8 +83,7 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'boolean',
 			'hint_text'       => __( 'Enabling this will remove all email providers and add a redirect option', 'rapidology' ),
 			'class'			  =>  'rad_dashboard_enable_redirect_form',
-			'conditional'	  =>  'redirect_list_id#email_text#redirect_url#success_redirect',
-			'display_if'	  =>  'never',//display shut off for now to try other options
+			'conditional'	  =>  'redirect_list_id#email_text#redirect_url',
 		),
 		'email_provider' => array(
 			'type'            => 'select',
@@ -118,23 +117,12 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'simple_text',
 			'class'           => 'rad_dashboard_select_list',
 		),
-		'redirect_list_id' => array(
-			'type'            => 'text',
-			'rows'            => '1',
-			'name'            => 'redirect_list_id',
-			'placeholder'     => __( 'Create new redirect list', 'rapidology' ),
-			'default'         => '',
-			'display_if'      => 'enable_redirect_form#true',
-			'validation_type' => 'simple_text',
-			'button_text'	  => 'Save List',
-		),
 		'custom_html' => array(
 			'type'            => 'text',
 			'rows'            => '4',
 			'name'            => 'custom_html',
 			'placeholder'     => __( 'Insert HTML', 'rapidology' ),
 			'default'         => '',
-			'display_if'      => 'enable_redirect_form#true',
 			'validation_type' => 'html',
 		),
 		'disable_dbl_optin' => array(
@@ -276,6 +264,14 @@ $rad_dashboard_options_all = array(
 			'type'  => 'section_start',
 			'title' => __( 'Form setup', 'rapidology' ),
 		),
+		'display_as_link' => array(
+			'type'            => 'checkbox',
+			'title'           => __( 'Display button as link', 'rapidology' ),
+			'name'            => 'display_as_link',
+			'class'           => 'rad_dashboard_display_as_link_checkbox',
+			'default'         => false,
+			'validation_type' => 'boolean',
+		),
 		'form_orientation' => array(
 			'type'            => 'select',
 			'title'           => __( 'Form Orientation', 'rapidology' ),
@@ -290,7 +286,7 @@ $rad_dashboard_options_all = array(
 				'bottom' => 'rad_rapidology_hide_for_rapidbar'
 			),
 			'validation_type' => 'simple_text',
-			'class'           => 'rad_rapidology_hide_for_widget rad_dashboard_form_orientation',
+			'class'           => 'rad_rapidology_hide_for_widget rad_rapidology_hide_for_rapidbar rad_dashboard_form_orientation',
 		),
 		'display_name' => array(
 			'type'            => 'checkbox',
@@ -313,6 +309,16 @@ $rad_dashboard_options_all = array(
 			'display_if'      => 'enable_redirect_form#true',
 			'validation_type' => 'simple_text',
 			'is_wpml_string'  => true,
+		),
+		'rapidbar_popup' => array(
+			'type'            => 'select',
+			'title'           => __( 'Select optin to open', 'rapidology' ),
+			'name'            => 'rapidbar_popup',
+			'value'           => $valid_optins,
+			'default'         => 'empty',
+			'validation_type' => 'simple_text',
+			'class'           => 'rad_dashboard_select_optin rad_rapidology_for_rapidbar',
+			'hint_text'		  => __('If selected, redirect will not happen. Will only display popup or flyin forms that show on everything.', 'rapidology'),
 		),
 		'name_fields' => array(
 			'type'            => 'select',
@@ -400,6 +406,15 @@ $rad_dashboard_options_all = array(
 			'default'         => 'light',
 			'validation_type' => 'simple_text',
 		),
+		'rapidbar_position' => array(
+			'type'            => 'select',
+			'title'           => __( 'Select rapidbar position', 'rapidology' ),
+			'name'            => 'rapidbar_position',
+			'value'           => $rapidbar_position,
+			'default'         => 'stickytop',
+			'validation_type' => 'simple_text',
+			'class'           => 'rad_dashboard_select_rapidbar_position',
+		),
 	),
 
 	'optin_styling' => array(
@@ -434,7 +449,7 @@ $rad_dashboard_options_all = array(
 			'type'            => 'select',
 			'title'           => __( 'Text Color', 'rapidology' ),
 			'name'            => 'header_text_color',
-			'class'           => 'rad_dashboard_text_color rad_rapidology_for_rapidbar',
+			'class'           => 'rad_dashboard_text_color',
 			'value'           => array(
 				'light' => __( 'Light Text', 'rapidology' ),
 				'dark'  => __( 'Dark Text', 'rapidology' ),
@@ -620,7 +635,6 @@ $rad_dashboard_options_all = array(
 			'type'  	=> 'section_start',
 			'title' 	=> __( 'Success Redirect', 'rapidology' ),
 			'class' 	=> 'rad_rapidology_success_redirect',
-			'display_if'=> 'enable_redirect_form#false'
 		),
 		'success_url' => array(
 			'type'            => 'input_field',
@@ -663,7 +677,7 @@ $rad_dashboard_options_all = array(
 		'section_start' => array(
 			'type'  => 'section_start',
 			'title' => __( 'Load-in settings', 'rapidology' ),
-			'class' => 'rad_dashboard_for_popup',
+			'class' => 'rad_dashboard_for_popup rad_dashboard_for_rapidbar',
 		),
 		'load_animation' => array(
 			'type'            => 'select',
@@ -686,6 +700,7 @@ $rad_dashboard_options_all = array(
 			'class'           => 'rad_rapidology_load_in_animation',
 			'default'         => 'fadein',
 			'validation_type' => 'simple_text',
+			'class'			  => 'rad_dashboard_hide_for_rapidbar',
 		),
 		'trigger_auto' => array(
 			'type'            => 'checkbox',
@@ -712,6 +727,7 @@ $rad_dashboard_options_all = array(
 			'default'         => false,
 			'conditional'     => 'idle_timeout',
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'idle_timeout' => array(
 			'type'            => 'input_field',
@@ -722,6 +738,7 @@ $rad_dashboard_options_all = array(
 			'default'         => '15',
 			'display_if'      => 'true',
 			'validation_type' => 'number',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'post_bottom' => array(
 			'type'            => 'checkbox',
@@ -729,6 +746,7 @@ $rad_dashboard_options_all = array(
 			'name'            => 'post_bottom',
 			'default'         => '1',
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'comment_trigger' => array(
 			'type'            => 'checkbox',
@@ -736,6 +754,7 @@ $rad_dashboard_options_all = array(
 			'name'            => 'comment_trigger',
 			'default'         => false,
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
         'exit_trigger' => array(
             'type'            => 'checkbox',
@@ -743,6 +762,7 @@ $rad_dashboard_options_all = array(
             'name'            => 'exit_trigger',
             'default'         => false,
             'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
         ),
 		'trigger_scroll' => array(
 			'type'            => 'checkbox',
@@ -751,6 +771,7 @@ $rad_dashboard_options_all = array(
 			'default'         => false,
 			'conditional'     => 'scroll_pos',
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'scroll_pos' => array(
 			'type'            => 'input_field',
@@ -761,6 +782,7 @@ $rad_dashboard_options_all = array(
 			'default'         => '50',
 			'display_if'      => 'true',
 			'validation_type' => 'number',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'purchase_trigger' => array(
 			'type'            => 'checkbox',
@@ -769,6 +791,7 @@ $rad_dashboard_options_all = array(
 			'default'         => false,
 			'hint_text'       => __( 'Display on "Thank you" page of WooCommerce after purchase', 'rapidology' ),
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'session' => array(
 			'type'            => 'checkbox',
@@ -777,6 +800,7 @@ $rad_dashboard_options_all = array(
 			'default'         => false,
 			'validation_type' => 'boolean',
 			'conditional'     => 'session_duration',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'session_duration' => array(
 			'type'            => 'input_field',
@@ -787,6 +811,7 @@ $rad_dashboard_options_all = array(
 			'default'         => '1',
 			'validation_type' => 'number',
 			'display_if'      => 'true',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'hide_mobile' => array(
 			'type'            => 'checkbox',
@@ -802,7 +827,8 @@ $rad_dashboard_options_all = array(
 			'hint_text'       => __( 'Adds new onclick shortcode option to Rapidology editor when editing a page / post', 'rapidology' ),
 			'default'         => false,
 			'validation_type' => 'boolean',
-			'class'			  => 'rad_rapidology_click_trigger'
+			'class'			  => 'rad_rapidology_click_trigger',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 	),
 
@@ -1187,6 +1213,7 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'image_upload' ][ 'hide_mobile' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'optin_styling' ][ 'section_start' ],
+			$rad_dashboard_options_all[ 'form_setup' ][ 'rapidbar_position' ],
 			$rad_dashboard_options_all[ 'optin_styling' ][ 'header_bg_color' ],
 			$rad_dashboard_options_all[ 'optin_styling' ][ 'header_font' ],
 			$rad_dashboard_options_all[ 'optin_styling' ][ 'body_font' ],
@@ -1199,6 +1226,7 @@ $rad_assigned_options = array(
 		$rad_dashboard_options_all[ 'form_setup' ][ 'section_start' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'form_orientation' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'redirect_url' ],
+			$rad_dashboard_options_all[ 'form_setup' ][ 'rapidbar_popup' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'display_name' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'name_fields' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'name_text' ],
@@ -1206,6 +1234,7 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'form_setup' ][ 'last_name' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'email_text' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'button_text' ],
+		$rad_dashboard_options_all[ 'form_setup' ][ 'display_as_link' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'form_styling' ][ 'section_start' ],
 			$rad_dashboard_options_all[ 'form_styling' ][ 'field_orientation' ],

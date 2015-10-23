@@ -56,4 +56,38 @@ $show_name_fields =  array(
 	'emma'
 );
 
+
+/**
+ * Get all optins that are valid for rapidbars for dropdown in the admin
+ */
+
+$all_optins = get_option('rad_rapidology_options');
+$valid_optins = array(
+	'nopopup'	=> 'Select Optin'
+);
+//array to check optin type against
+$allowed_optins = array(
+	'pop_up',
+	'flyin'
+);
+$i=0;
+
+foreach($all_optins as $optin => $options){
+
+	if(in_array($options['optin_type'], $allowed_optins) && $options['optin_status'] == 'active' && $options['display_on'][0] == 'everything'){
+		$valid_optins[$optin] = $options['optin_name'];
+		$i++;
+	}
+}
+
+/**
+ * Rapidbar position and sticky or not
+ */
+
+$rapidbar_position = array(
+	'stickytop'			=> 'Sticky on top',
+	'stickybottom'		=> 'Sticky on bottom',
+	'nonsticktop'		=> 'Static top',
+	'nonstickbottom'	=> 'Static bottom'
+);
 ?>

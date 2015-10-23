@@ -104,7 +104,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		// Register save settings function for ajax request
 		add_action( 'wp_ajax_rad_rapidology_save_settings', array( $this, 'rapidology_save_settings' ) );
-		add_action ('wp_ajax_rad_rapidology_save_redirect_lists', array($this, 'rapidology_save_redirect_list') );
 
 		add_action( 'admin_enqueue_scripts', array( $this, 'register_scripts' ) );
 
@@ -266,26 +265,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 		return true;
 	}
 
-	function rapidology_save_redirect_list(){
-		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
-		$name = sanitize_file_name($_POST['list_name']);
-		$lists = array();
-
-		$lists[ 0 ]['name']              = $name;
-		$lists[ 0 ]['subscribers_count'] = 0;
-		$lists[ 0 ]['growth_week']       = 0;
-		$current_lists = get_site_option('rapidology_redirect_lists');
-		$current_lists = json_decode($current_lists, true);
-		if(is_array($current_lists)){
-			$update_lists = array_merge($current_lists, $lists);
-		}else{
-			$update_lists = $lists;
-		}
-		$update_lists = json_encode($update_lists);
-		update_site_option('rapidology_redirect_lists', $update_lists);
-		die('success');
-
-	}
 
 	function rapidology_save_settings() {
 		RAD_Rapidology::dashboard_save_settings();
@@ -652,6 +631,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 	}
 
 	function generate_premade_grid() {
+		$isRapidBar = '';
+		$isRedirect = '';
 		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
 		$isRapidBar = $_POST['isRapidBar'];
 		$isRedirect = $_POST['isRedirect'];
@@ -694,6 +675,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Gets the layouts data, converts it to json string and passes back to js script to fill the form with predefined values
 	 */
 	function get_premade_values() {
+		$isRapidBar = '';
+		$isRedirect = '';
 		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
 		$premade_data_json = str_replace( '\\', '', $_POST['premade_data_array'] );
 		$premade_data      = json_decode( $premade_data_json, true );
@@ -1826,9 +1809,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 								esc_html__( 'Growth rate', 'rapidology' )
 							);
 						}
-						if ( 'redirect' === $service ) {
-							$value['is_authorized'] = 'true';
-						}
 						$output .= sprintf(
 							'<li class="rad_dashboard_optins_item rad_dashboard_optins_item" data-account_name="%1$s" data-service="%2$s">
 								<div class="rad_dashboard_table_acc_name rad_dashboard_table_column">%3$s</div>
@@ -2110,7 +2090,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					)
 						: '',
 					$child_row, //#15
-					( 'empty' == $value['email_provider'] || ( 'custom_html' !== $value['email_provider'] && 'empty' == $value['email_list'] ) )
+					( 'empty' == $value['email_provider'] || ( 'custom_html' !== $value['email_provider'] && 'redirect' !== $value['email_provider'] && 'empty' == $value['email_list'] ) )
 						? ' rad_rapidology_no_account'
 						: '' //#16
 				);
@@ -2723,10 +2703,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 								$activecampaign = new rapidology_activecampaign();
 								$error_message = $activecampaign->get_active_campagin_forms($details['url'], $details['api_key'], $name);
 								break;
-							case 'redirect':
-								$redirect = new rapidology_redirect();
-								$error_message = $redirect->redirect_authorize($name);
-								break;
 						}
 					}
 
@@ -2805,10 +2781,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$error_message = '';
 
 		switch ( $service ) {
-			case 'redirect' :
-				$redirect = new rapidology_redirect();
-				$error_message = $redirect->redirect_authorize(  $name );
-				break;
 			case 'mailchimp' :
 				$mailchimp = new rapidology_mailchimp();
 				$error_message = $mailchimp->get_mailchimp_lists( $api_key, $name );
@@ -3126,14 +3098,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$form_fields = $this->generate_new_account_form( $service );
 
 			printf(
-				'<li class="select rad_dashboard_select_account rad_dashboard_new_account">
+				'<li class="select rad_dashboard_select_account rad_dashboard_new_account ">
 					%3$s
-					<button class="rad_dashboard_icon authorize_service" data-service="%2$s">%1$s</button>
+					<button class="rad_dashboard_icon authorize_service %4$s" data-service="%2$s">%1$s</button>
 					<span class="spinner"></span>
 				</li>',
 				__( 'Add Account', 'rapidology' ),
 				esc_attr( $service ),
-				$form_fields
+				$form_fields,
+				($service == 'redirect') ? ' hidden_item' : ''
 			);
 		}
 
@@ -4241,7 +4214,25 @@ class RAD_Rapidology extends RAD_Dashboard {
 				if ( $this->check_applicability( $optin_id ) ) {
 					$displayCookie = 'rad_rapidology_subscribed_to_'.$optin_id.$details['email_list'];
 					if(!isset($_COOKIE[$displayCookie])){
-						$content = '<div class="rad_rapidology_rapidbar">'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>';
+						$content = sprintf(
+							'<div class="rad_rapidology_rapidbar %1$s%3$s %4$s" %2$s>'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>',
+							isset( $details['trigger_auto'] ) && true == $details['trigger_auto'] ? 'rad_rapidology_rapidbar_trigger_auto' : '',
+							isset( $details['trigger_auto'] ) && true == $details['trigger_auto']
+								? sprintf( 'data-delay="%1$s"', esc_attr( $details['load_delay'] ) )
+								: '',
+							( 'no_border' !== $details['border_orientation'] )
+								? sprintf(
+								' rad_rapidology_border_%1$s%2$s',
+								esc_attr( $details['border_style'] ),
+								'full' !== $details['border_orientation']
+									? ' rad_rapidology_border_position_' . $details['border_orientation']
+									: ''
+							)
+								: '',
+							esc_attr($details['rapidbar_position'])
+						);
+
+
 					}
 				}
 			}
@@ -4295,7 +4286,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$output .= sprintf(
 			'<div class="rad_rapidology_rapidbar_form rad_rapidology_optin rad_rapidology_%1$s%9$s">
 				%10$s
-				<div class="rad_rapidology_form_container rad_rapidology_rapidbar_container%3$s%4$s%5$s%6$s%7$s%8$s%11$s">
+				<div class="rad_rapidology_form_container rad_rapidology_rapidbar_container%3$s%5$s%6$s%7$s%8$s%11$s">
 					%2$s
 				</div>
 

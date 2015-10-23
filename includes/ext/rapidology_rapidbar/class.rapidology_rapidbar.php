@@ -66,8 +66,8 @@ class rapidology_rapidbar
 
 		$is_single_name = (isset($details['display_name']) && '1' == $details['display_name']) ? false : true;
 		$output = sprintf('
-			<div class="rad_rapidology_rapidbar_form_container_wrapper clearfix">
 			%14$s
+			<div class="rad_rapidology_rapidbar_form_container_wrapper clearfix">
 				<div class="rad_rapidology_rapidbar_header_outer">
 					<div class="rad_rapidology_rapidbar_form_header%13$s">
 						%3$s
@@ -149,7 +149,7 @@ class rapidology_rapidbar
 						<p class="rad_rapidology_rapidbar_input rad_rapidology_subscribe_email %16$s">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_type="rapidbar" data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-success_delay="%18$s" class="%14$s">
+						<button data-optin_type="rapidbar" data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-success_delay="%18$s" %19$s class="%14$s%20$s">
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -199,7 +199,10 @@ class rapidology_rapidbar
 				$details['enable_redirect_form'] == true ? esc_attr($details['redirect_url']) : '',#15
 				$details['enable_redirect_form'] == true ? 'hidden_item' : '',#16
 				isset($details['success_url']) ? esc_url($details['success_url']) : '',#17 //you will notice both 15 and 17 exist in the dat-redirect_url attribute. This is because both should never be set at the same time.
-				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '' #18
+				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '', #18
+				isset($details['rapidbar_popup']) && $details['rapidbar_popup'] !='nopopup' ? sprintf(
+				'data-popup_id = %1$s', $details['rapidbar_popup']) : '', #19
+				$details['display_as_link'] == true ? ' btnaslink_'.$details['button_text_color'].'' : ''#20
 			),
 			'' != $success_text
 				? stripslashes(esc_html($success_text))
@@ -222,7 +225,7 @@ class rapidology_rapidbar
 				esc_attr($details['header_text_color'])
 			)
 				: ' rad_rapidology_header_text_dark', //#14
-			self::get_power_button($details['header_text_color']) #14
+			self::get_power_button($details['header_text_color']) #15
 		);
 
 		return $output;
@@ -275,163 +278,96 @@ class rapidology_rapidbar
 				}
 			}
 		}
-
-		if (isset($single_optin['form_button_color']) && '' !== $single_optin['form_button_color']) {
+		//print_r($single_optin);die();
+		if (isset($single_optin['form_button_color']) && '' !== $single_optin['form_button_color'] && $single_optin['display_as_link'] != 1) {
 			$custom_css .= $form_class . ' .rad_rapidology_rapidbar_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ';
 		}
 
 		if (isset($single_optin['border_color']) && '' !== $single_optin['border_color'] && 'no_border' !== $single_optin['border_orientation']) {
-			if ('breakout_edge' === $single_optin['edge_style']) {
-				switch ($single_optin['border_style']) {
-					case 'letter' :
-						$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_letter .rad_rapidology_header_outer { background: repeating-linear-gradient( 135deg, ' . $single_optin['border_color'] . ', ' . $single_optin['border_color'] . ' 10px, #fff 10px, #fff 20px, #f84d3b 20px, #f84d3b 30px, #fff 30px, #fff 40px ) !important; } ';
-						break;
+			$rapidbar_class = '.rad_rapidology_rapidbar';
+			switch ($single_optin['border_style']) {
+				case 'letter' :
+					$custom_css .= $rapidbar_class . '.rad_rapidology_border_letter { background: repeating-linear-gradient( 135deg, ' . $single_optin['border_color'] . ', ' . $single_optin['border_color'] . ' 10px, #fff 10px, #fff 20px, #f84d3b 20px, #f84d3b 30px, #fff 30px, #fff 40px ) !important; } ';
+					break;
 
-					case 'double' :
-						$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_double .rad_rapidology_form_header { -moz-box-shadow: inset 0 0 0 6px ' . $single_optin['header_bg_color'] . ', inset 0 0 0 8px ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 0 0 6px ' . $single_optin['header_bg_color'] . ', inset 0 0 0 8px ' . $single_optin['border_color'] . '; box-shadow: inset 0 0 0 6px ' . $single_optin['header_bg_color'] . ', inset 0 0 0 8px ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
+				case 'double' :
+					$custom_css .= $rapidbar_class . '.rad_rapidology_border_double { -moz-box-shadow: inset 0 0 0 6px ' . $single_optin['header_bg_color'] . ', inset 0 0 0 8px ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 0 0 6px ' . $single_optin['header_bg_color'] . ', inset 0 0 0 8px ' . $single_optin['border_color'] . '; box-shadow: inset 0 0 0 6px ' . $single_optin['header_bg_color'] . ', inset 0 0 0 8px ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
 
-						switch ($single_optin['border_orientation']) {
-							case 'top' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_double.rad_rapidology_border_position_top .rad_rapidology_form_header { -moz-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-								break;
+					switch ($single_optin['border_orientation']) {
+						case 'top' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_double.rad_rapidology_border_position_top { -moz-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
+							break;
 
-							case 'right' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_double.rad_rapidology_border_position_right .rad_rapidology_form_header { -moz-box-shadow: inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-								break;
+						case 'right' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_double.rad_rapidology_border_position_right { -moz-box-shadow: inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
+							break;
 
-							case 'bottom' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_double.rad_rapidology_border_position_bottom .rad_rapidology_form_header { -moz-box-shadow: inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-								break;
+						case 'bottom' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_double.rad_rapidology_border_position_bottom { -moz-box-shadow: inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
+							break;
 
-							case 'left' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_double.rad_rapidology_border_position_left .rad_rapidology_form_header { -moz-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-								break;
+						case 'left' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_double.rad_rapidology_border_position_left { -moz-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
+							break;
 
-							case 'top_bottom' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_double.rad_rapidology_border_position_top_bottom .rad_rapidology_form_header { -moz-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . ', inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . ', inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . ', inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-								break;
+						case 'top_bottom' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_double.rad_rapidology_border_position_top_bottom { -moz-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . ', inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . ', inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . ', inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
+							break;
 
-							case 'left_right' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_double.rad_rapidology_border_position_left_right .rad_rapidology_form_header { -moz-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . ', inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . ', inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . ', inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-						}
-						break;
+						case 'left_right' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_double.rad_rapidology_border_position_left_right { -moz-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . ', inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . ', inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . ', inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
+					}
+					break;
 
-					case 'inset' :
-						$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_inset .rad_rapidology_form_header { -moz-box-shadow: inset 0 0 0 3px ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 0 0 3px ' . $single_optin['border_color'] . '; box-shadow: inset 0 0 0 3px ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
+				case 'inset' :
+					$custom_css .= $rapidbar_class . '.rad_rapidology_border_inset { -moz-box-shadow: inset 0 0 0 3px ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 0 0 3px ' . $single_optin['border_color'] . '; box-shadow: inset 0 0 0 3px ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
 
-						switch ($single_optin['border_orientation']) {
-							case 'top' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_inset.rad_rapidology_border_position_top .rad_rapidology_form_header { -moz-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-								break;
+					switch ($single_optin['border_orientation']) {
+						case 'top' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_inset.rad_rapidology_border_position_top { -moz-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
+							break;
 
-							case 'right' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_inset.rad_rapidology_border_position_right .rad_rapidology_form_header { -moz-box-shadow: inset -3px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset -3px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset -3px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-								break;
+						case 'right' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_inset.rad_rapidology_border_position_right { -moz-box-shadow: inset -3px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset -3px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset -3px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
+							break;
 
-							case 'bottom' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_inset.rad_rapidology_border_position_bottom .rad_rapidology_form_header { -moz-box-shadow: inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-								break;
+						case 'bottom' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_inset.rad_rapidology_border_position_bottom { -moz-box-shadow: inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
+							break;
 
-							case 'left' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_inset.rad_rapidology_border_position_left .rad_rapidology_form_header { -moz-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-								break;
+						case 'left' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_inset.rad_rapidology_border_position_left { -moz-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
+							break;
 
-							case 'top_bottom' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_inset.rad_rapidology_border_position_top_bottom .rad_rapidology_form_header { -moz-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . ', inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . ', inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . ', inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-								break;
+						case 'top_bottom' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_inset.rad_rapidology_border_position_top_bottom { -moz-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . ', inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . ', inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . ', inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
+							break;
 
-							case 'left_right' :
-								$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_inset.rad_rapidology_border_position_left_right .rad_rapidology_form_header { -moz-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . ', inset -3px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . ', inset -3px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . ', inset -3px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-						}
-						break;
+						case 'left_right' :
+							$custom_css .= $rapidbar_class . '.rad_rapidology_border_inset.rad_rapidology_border_position_left_right { -moz-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . ', inset -3px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . ', inset -3px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . ', inset -3px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
+					}
+					break;
 
-					case 'solid' :
-						$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_solid .rad_rapidology_form_header { border-color: ' . $single_optin['border_color'] . ' !important } ';
-						break;
+				case 'solid' :
+					$custom_css .= $rapidbar_class . '.rad_rapidology_border_solid { border-color: ' . $single_optin['border_color'] . ' !important; border-style: solid !important;  } ';
+					break;
 
-					case 'dashed' :
-						$custom_css .= $form_class . ' .breakout_edge.rad_rapidology_border_dashed .rad_rapidology_form_header { border-color: ' . $single_optin['border_color'] . ' !important } ';
-						break;
-				}
-			} else {
-				switch ($single_optin['border_style']) {
-					case 'letter' :
-						$custom_css .= $form_class . ' .rad_rapidology_border_letter { background: repeating-linear-gradient( 135deg, ' . $single_optin['border_color'] . ', ' . $single_optin['border_color'] . ' 10px, #fff 10px, #fff 20px, #f84d3b 20px, #f84d3b 30px, #fff 30px, #fff 40px ) !important; } ';
-						break;
-
-					case 'double' :
-						$custom_css .= $form_class . ' .rad_rapidology_border_double { -moz-box-shadow: inset 0 0 0 6px ' . $single_optin['header_bg_color'] . ', inset 0 0 0 8px ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 0 0 6px ' . $single_optin['header_bg_color'] . ', inset 0 0 0 8px ' . $single_optin['border_color'] . '; box-shadow: inset 0 0 0 6px ' . $single_optin['header_bg_color'] . ', inset 0 0 0 8px ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-
-						switch ($single_optin['border_orientation']) {
-							case 'top' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_double.rad_rapidology_border_position_top { -moz-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-								break;
-
-							case 'right' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_double.rad_rapidology_border_position_right { -moz-box-shadow: inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-								break;
-
-							case 'bottom' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_double.rad_rapidology_border_position_bottom { -moz-box-shadow: inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-								break;
-
-							case 'left' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_double.rad_rapidology_border_position_left { -moz-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-								break;
-
-							case 'top_bottom' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_double.rad_rapidology_border_position_top_bottom { -moz-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . ', inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . ', inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 8px 0 0 ' . $single_optin['border_color'] . ', inset 0 -6px 0 0 ' . $single_optin['header_bg_color'] . ', inset 0 -8px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-								break;
-
-							case 'left_right' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_double.rad_rapidology_border_position_left_right { -moz-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . ', inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . ', inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset 8px 0 0 0 ' . $single_optin['border_color'] . ', inset -6px 0 0 0 ' . $single_optin['header_bg_color'] . ', inset -8px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['border_color'] . '; } ';
-						}
-						break;
-
-					case 'inset' :
-						$custom_css .= $form_class . ' .rad_rapidology_border_inset { -moz-box-shadow: inset 0 0 0 3px ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 0 0 3px ' . $single_optin['border_color'] . '; box-shadow: inset 0 0 0 3px ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-
-						switch ($single_optin['border_orientation']) {
-							case 'top' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_inset.rad_rapidology_border_position_top { -moz-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-								break;
-
-							case 'right' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_inset.rad_rapidology_border_position_right { -moz-box-shadow: inset -3px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset -3px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset -3px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-								break;
-
-							case 'bottom' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_inset.rad_rapidology_border_position_bottom { -moz-box-shadow: inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-								break;
-
-							case 'left' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_inset.rad_rapidology_border_position_left { -moz-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-								break;
-
-							case 'top_bottom' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_inset.rad_rapidology_border_position_top_bottom { -moz-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . ', inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . ', inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 0 3px 0 0 ' . $single_optin['border_color'] . ', inset 0 -3px 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-								break;
-
-							case 'left_right' :
-								$custom_css .= $form_class . ' .rad_rapidology_border_inset.rad_rapidology_border_position_left_right { -moz-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . ', inset -3px 0 0 0 ' . $single_optin['border_color'] . '; -webkit-box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . ', inset -3px 0 0 0 ' . $single_optin['border_color'] . '; box-shadow: inset 3px 0 0 0 ' . $single_optin['border_color'] . ', inset -3px 0 0 0 ' . $single_optin['border_color'] . '; border-color: ' . $single_optin['header_bg_color'] . '; } ';
-						}
-						break;
-
-					case 'solid' :
-						$custom_css .= $form_class . ' .rad_rapidology_border_solid { border-color: ' . $single_optin['border_color'] . ' !important } ';
-						break;
-
-					case 'dashed' :
-						$custom_css .= $form_class . ' .rad_rapidology_border_dashed .rad_rapidology_rapidbar_form_container_wrapper { border-color: ' . $single_optin['border_color'] . ' !important } ';
-						break;
-				}
+				case 'dashed' :
+					$custom_css .= $rapidbar_class . '.rad_rapidology_border_dashed  { border-color: ' . $single_optin['border_color'] . ' !important; } ';
+					break;
 			}
+
 		}
 
-		$custom_css .= isset($single_optin['form_button_color']) && '' !== $single_optin['form_button_color'] ? $form_class . ' .rad_rapidology_rapidbar_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ' : '';
+		$custom_css .= (isset($single_optin['enable_redirect_form']) && $single_optin['enable_redirect_form'] == '1' ) ? '
+		.rad_power_box_mode_rapidbar, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar, rad_power_box_mode_rapidbar .rad_power_logo, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar .rad_power_logo, rad_rapidology_rapidbar, .rad_rapidology_preview_rapidbar, rad_rapidology_rapidbar_form_container_wrapper, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_container_wrapper, rad_rapidology_rapidbar_form .rad_rapidology_form_container, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_container, .rad_rapidology_rapidbar_form_header, .rad_rapidology_rapidbar_form_content, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_header, .rad_rapidology_rapidbar_form_content{ height:35px} .rad_rapidology_rapidbar_form .rad_rapidology_form_text, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text, .rad_rapidology_rapidbar_form .rad_rapidology_form_text p, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p, .rad_power_rapidology a .rad_power_logo:after, .rad_rapidology_preview_rapidbar .rad_power_rapidology a .rad_power_logo:after{line-height:35px !important;} .rad_rapidology_rapidbar_form .rad_rapidology_submit_subscription, .rad_rapidology_rapidbar_form .rad_rapidology_redirect_page, .rad_rapidology_preview_rapidbar  .rad_rapidology_submit_subscription, .rad_rapidology_preview_rapidbar .rad_rapidology_redirect_page{ height: 30px;} .rad_rapidology .rad_rapidology_rapidbar_form .rad_rapidology_close_button, .rad_rapidology_preview_rapidbar .rad_rapidology_close_button{ top: 0 !important;}'
+			:'.rad_power_box_mode_rapidbar, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar, .rad_power_box_mode_rapidbar .rad_power_logo, .rad_rapidology_preview_rapidbar .rad_power_box_mode_rapidbar .rad_power_logo, rad_rapidology_rapidbar, .rad_rapidology_preview_rapidbar, rad_rapidology_rapidbar_form_container_wrapper, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_container_wrapper, rad_rapidology_rapidbar_form .rad_rapidology_form_container, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_container, .rad_rapidology_rapidbar_form_header, .rad_rapidology_rapidbar_form_content, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_header, .rad_rapidology_rapidbar_form_content{ height:50px} .rad_rapidology_rapidbar_form .rad_rapidology_form_text, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text, .rad_rapidology_rapidbar_form .rad_rapidology_form_text p, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p, .rad_power_rapidology a .rad_power_logo:after, .rad_rapidology_preview_rapidbar .rad_power_rapidology a .rad_power_logo:after{line-height:50px !important;} .rad_rapidology_rapidbar_form .rad_rapidology_submit_subscription, .rad_rapidology_rapidbar_form .rad_rapidology_redirect_page, .rad_rapidology_preview_rapidbar  .rad_rapidology_submit_subscription, .rad_rapidology_preview_rapidbar .rad_rapidology_redirect_page{ height: 35px;} .rad_rapidology .rad_rapidology_rapidbar_form .rad_rapidology_close_button, .rad_rapidology_preview_rapidbar .rad_rapidology_close_button (top: 15% !important;)
+		';
+		$custom_css .= isset($single_optin['form_button_color']) && '' !== $single_optin['form_button_color'] && $single_optin['display_as_link'] != 1 ? $form_class . ' .rad_rapidology_rapidbar_form_content button { background-color: ' . $single_optin['form_button_color'] . ' !important; } ' : '';
+		$custom_css .= $single_optin['display_as_link'] == 1 && $single_optin['button_text_color'] == 'light' ? '.btnaslink_light {background-color: transparent !important;  border: none !important; cursor: pointer !important;}' : '';
+		$custom_css .= $single_optin['display_as_link'] == 1 && $single_optin['button_text_color'] == 'dark' ? '.btnaslink_dark {background-color: transparent !important;  border: none !important; cursor: pointer !important;}' : '';
 		$custom_css .= isset($single_optin['header_font']) ? $font_functions->et_gf_attach_font($single_optin['header_font'], $form_class . ' h2, ' . $form_class . ' h2 span, ' . $form_class . ' h2 strong') : '';
 		$custom_css .= isset($single_optin['body_font']) ? $font_functions->et_gf_attach_font($single_optin['body_font'], $form_class . ' p, ' . $form_class . ' p span, ' . $form_class . ' p strong, ' . $form_class . ' form input, ' . $form_class . ' form button span') : '';
-
 		$custom_css .= isset($single_optin['custom_css']) ? ' ' . $single_optin['custom_css'] : '';
 
 
@@ -442,7 +378,7 @@ class rapidology_rapidbar
 	public function register_rapidbar__admin_scripts(){
 		wp_enqueue_style('rapidbar-admin-css',RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/css/admin.css');
 		wp_enqueue_script('rapidbar_admin_js', RAD_RAPIDOLOGY_PLUGIN_URI.  '/includes/ext/rapidology_rapidbar/js/admin.js', array( 'jquery' ), '1.0', true);
-
+		wp_enqueue_style('rapidbar-front-css',RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/css/style.css');
 	}
 	public function register_rapidbar_scripts(){
 		if(is_admin_bar_showing()){
@@ -479,10 +415,12 @@ class rapidology_rapidbar
 	static function generate_preview_popup( $details ) {
 		$output = '';
 		$output = sprintf(
-			'<div class="rad_rapidology_rapidbar rad_rapidology_animated rad_rapidology_preview_rapidbar rad_rapidology_optin">
-				<div class="rad_rapidology_form_container rad_rapidology_animation_fadein rad_rapidology_rapidbar_container%1$s%2$s%3$s%4$s%5$s%6$s">
-					%7$s
-					%8$s
+			'<div class="rapidbar_preview_wrapper">
+				<div class="rad_rapidology_rapidbar rad_rapidology_animated rad_rapidology_preview_rapidbar rad_rapidology_optin %9$s %10$s">
+						<div class="rad_rapidology_form_container rad_rapidology_animation_fadein rad_rapidology_rapidbar_container%1$s%2$s%6$s">
+						%7$s
+						%8$s
+					</div>
 				</div>
 			</div>',
 			'bottom' !== $details['form_orientation'] && 'custom_html' !== $details['email_provider'] && 'widget' !== $details['optin_type']
@@ -502,7 +440,17 @@ class rapidology_rapidbar
 			( 'rounded' == $details['field_corner'] ) ? ' rad_rapidology_rounded' : '',
 			'light' == $details['text_color'] ? ' rad_rapidology_form_text_light' : ' rad_rapidology_form_text_dark',
 			self::generate_form_content( 0, 0, '', $details ),
-			''
+			'',
+			esc_attr($details['rapidbar_position']),
+			( 'no_border' !== $details['border_orientation'] )
+				? sprintf(
+				' rad_rapidology_border_%1$s%2$s',
+				esc_attr( $details['border_style'] ),
+				'full' !== $details['border_orientation']
+					? ' rad_rapidology_border_position_' . $details['border_orientation']
+					: ''
+			)
+				: ''
 		);
 
 		return $output;

@@ -1,26 +1,43 @@
 (function($){
-    //check to see if on click is checked or if it is clicked to enable
-    // the shortcode button
 
-    $body = $('body');
 
-    $(function(){
-        //check if click trigger is checked on load, if so show the shortcode button else hide it.
-       if($('.rad_rapidology_click_trigger input').prop('checked') == 'true'){
-           console.log('show');
-           $('.rad_dashboard_next_shortcode').show();
-       }else{
-           $('.rad_dashboard_next_shortcode').hide();
-       }
-    });
+    $('.newsletter_submit_button').on('click', function(e){
+        e.preventDefault;
+        var emailaddress = $('.newsletter_email').val();
+        var site = window.location + ''; //need to make it a string
+        var urlTest = 'https://2-dot-rapidology-server.appspot.com/signup.json';
+        var server = 'https://rapidology.server.appspot.com/signup.json';
+        var valid = true;
 
-    //trigger shortcode button on click of trigger checkbox
-    $body.on('click', '.rad_rapidology_click_trigger input', function(){
-      var checked = ($(this).prop('checked'));
-      if(checked == 'true'){
-        $('.rad_dashboard_next_shortcode').show();
-      }else{
-          $('.rad_dashboard_next_shortcode').hide();
-      }
-    });
+        //email validation
+        if (!emailaddress || emailaddress.length < 1 || !/^.+@.+\..+$/.test(emailaddress)) {
+            $('.error.email').show();
+            valid = false;
+        }
+
+        if(valid == true){
+            $.ajax({
+                url: urlTest,
+                type: "GET",
+                "content-type": "application/json",
+                dataType: 'jsonp',
+                data: { email: emailaddress, site: site},
+                beforeSend: function(){
+                    $('.loader').show();
+                    $('.error').hide();
+                }
+            })
+            .success(function(response){
+                if(response.status == 'ok'){
+                    $('.loader').hide();
+                    $('.signup_tagline').hide();
+                    $('.rapidology_newsletter_form').hide();
+                    $('.signup_thankyou').show();
+                }else{
+                    $('.error .badresponse').show();
+                }
+            });
+        }
+     });
+
 })(jQuery);

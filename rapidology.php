@@ -557,7 +557,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					esc_html__( 'inline', 'rapidology' ),
 					esc_html__( 'locked content', 'rapidology' ),
 					esc_html__( 'widget', 'rapidology' ),
-					esc_html__( 'rapidbar', 'rapidology' )
+					esc_html__( 'banner', 'rapidology' )
 				);
 
 				$this->display_home_tab_tables();

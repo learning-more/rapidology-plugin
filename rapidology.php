@@ -222,7 +222,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 			'rad_rapidology_options',
 			array( $this, 'options_page' )
 		);
-		add_submenu_page( 'rad_rapidology_options', __( 'Tools & Resources', 'rapidology' ), __( 'Tools & Resources', 'rapidology' ), 'manage_options', 'rad_rapidology_options' );
+		add_submenu_page( 'rad_rapidology_options', __( 'Rapidology', 'rapidology' ), __( 'Tools & Resources', 'rapidology' ), 'manage_options', 'rad_rapidology_options' );
 		add_submenu_page( 'rad_rapidology_options', __( 'Optin Forms', 'rapidology' ), __( 'Optin Forms', 'rapidology' ), 'manage_options', 'admin.php?page=rad_rapidology_options#tab_rad_dashboard_tab_content_header_home' );
 		add_submenu_page( 'rad_rapidology_options', __( 'Email Accounts', 'rapidology' ), __( 'Email Accounts', 'rapidology' ), 'manage_options', 'admin.php?page=rad_rapidology_options#tab_rad_dashboard_tab_content_header_accounts' );
 		add_submenu_page( 'rad_rapidology_options', __( 'Statistics', 'rapidology' ), __( 'Statistics', 'rapidology' ), 'manage_options', 'admin.php?page=rad_rapidology_options#tab_rad_dashboard_tab_content_header_stats' );

@@ -84,7 +84,7 @@ class rapidology_rapidbar
 					%10$s
 				</div>
 			</div>
-			<span class="rad_rapidology_close_button %13$s"></span>',
+			%15$s',
 			('right' == $details['image_orientation'] || 'left' == $details['image_orientation']) && 'widget' !== $details['optin_type']
 				? sprintf(' split%1$s', 'right' == $details['image_orientation']
 				? ' image_right'
@@ -149,7 +149,7 @@ class rapidology_rapidbar
 						<p class="rad_rapidology_rapidbar_input rad_rapidology_subscribe_email %16$s">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_type="rapidbar" data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-success_delay="%18$s" %19$s class="%14$s%20$s">
+						<button data-optin_type="rapidbar" data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-success_delay="%18$s" %19$s class="rapidbar_submit_button %14$s%20$s">
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -224,8 +224,12 @@ class rapidology_rapidbar
 				' rad_rapidology_header_text_%1$s',
 				esc_attr($details['header_text_color'])
 			)
-				: ' rad_rapidology_header_text_dark', //#14
-			self::get_power_button($details['header_text_color']) #15
+				: ' rad_rapidology_header_text_dark', //#13
+			self::get_power_button($details['header_text_color']), #14 <span class="rad_rapidology_close_button %1$s"></span>
+			(isset($details['allow_dismiss']) && $details['allow_dismiss'] == '1') ? sprintf(
+				'<span class="rad_rapidology_close_button %1$s"></span>',
+				esc_attr($details['header_text_color'])
+			) : '' #15
 		);
 
 		return $output;

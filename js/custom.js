@@ -484,10 +484,13 @@
                                     topLevel.find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
                                     topLevel.find('.rad_rapidology_form_text').remove();
                                     //set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
+                                    rapidbarSubmitPaddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;//set this before the bar is removed so I know how much padding to remove on other functions
                                     this_form.remove();
+                                    setTimeout(function(){
+                                        $('.rad_rapidology_rapidbar').remove();
+                                    }, 3000);
                                     if(redirectUrl.length > 0){
                                         setTimeout(function(){
-                                            $('.rad_rapidology_rapidbar').remove();
                                             window.open(redirectUrl);
                                         }, redirect_delay);
                                     }
@@ -530,8 +533,9 @@
             var container = $(this).parent().parent().parent().parent().parent();
             container.addClass( 'rad_rapidology_exit_animation' );
             update_stats_table( 'con', this_button );
+            rapidbarSubmitPaddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;//set this before the bar is removed so I know how much padding to remove on other functions
             setTimeout( function() {
-                container.remove();
+                $('.rad_rapidology_rapidbar').remove();
             }, 400 );
 
             //set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );

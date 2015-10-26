@@ -32,7 +32,7 @@
 
 .marketing_header h1 {
     font-family: 'Open Sans', sans-serif;
-    font-weight: 700;
+    font-weight: 700 !important;
     margin-left:10px;
     margin-top: 10px;
     font-size: 26px;
@@ -70,6 +70,7 @@
     padding: 0;
     font-size: 14px;
     text-transform: uppercase;
+    font-weight: 700 !important;
 }
 
 .rapidology_marketing_content{
@@ -238,8 +239,5 @@
 @media (min-width: 100em) {
     .rapidology_marketing_main > div{
         width: 450px !important;
-    }
-    .rapidology_marketing_main{
-        flex-grow: 2;
     }
 }

@@ -331,7 +331,6 @@
 				}
 
 			var	values_array = String( current_option.data( 'condition' ) ).split( '#' );
-
 			$.each( values_array, function( key, value ){
 				if ( value == option_value ) {
 					current_option.removeClass( 'rad_dashboard_hidden_option' ).addClass( 'rad_dashboard_visible_option' );
@@ -347,7 +346,6 @@
 						var triggers_count = undefined == current_option.data( 'triggers_count' ) ? 0 : parseInt( current_option.data( 'triggers_count' ) );
 							triggers_count = 0 == triggers_count ? 0 : triggers_count - 1;
 							current_option.data( 'triggers_count', triggers_count );
-
 						if ( 0 == triggers_count ) {
 							current_option.addClass( 'rad_dashboard_hidden_option' ).removeClass( 'rad_dashboard_visible_option' );
 						}

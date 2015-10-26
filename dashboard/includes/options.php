@@ -73,7 +73,17 @@ $rad_dashboard_options_all = array(
 		'section_start' => array(
 			'type'  => 'section_start',
 			'title' => __( 'Form Integration', 'rapidology' ),
-			'class' => 'rad_dashboard_child_hidden',
+			'class' => 'rad_dashboard_child_hidden rad_dashboard_provider_setup_dropdown',
+		),
+		'enable_redirect_form' => array(
+			'type'            => 'checkbox',
+			'title'           => __( 'This is a redirect form', 'rapidology' ),
+			'name'            => 'enable_redirect_form',
+			'default'         => false,
+			'validation_type' => 'boolean',
+			'hint_text'       => __( 'Enabling this will remove all email providers and add a redirect option', 'rapidology' ),
+			'class'			  =>  'rad_dashboard_enable_redirect_form',
+			'conditional'	  =>  'redirect_list_id#email_text#redirect_url',
 		),
 		'email_provider' => array(
 			'type'            => 'select',
@@ -113,7 +123,6 @@ $rad_dashboard_options_all = array(
 			'name'            => 'custom_html',
 			'placeholder'     => __( 'Insert HTML', 'rapidology' ),
 			'default'         => '',
-			'display_if'      => 'custom_html',
 			'validation_type' => 'html',
 		),
 		'disable_dbl_optin' => array(
@@ -129,9 +138,10 @@ $rad_dashboard_options_all = array(
 
 	'optin_title' => array(
 		'section_start' => array(
-			'type'     => 'section_start',
-			'title'    => __( 'Optin title', 'rapidology' ),
-			'subtitle' => __( 'No title will appear if left blank', 'rapidology' ),
+			'type'     	=> 'section_start',
+			'title'    	=> __( 'Optin title', 'rapidology' ),
+			'subtitle' 	=> __( 'No title will appear if left blank', 'rapidology' ),
+			'class'		=> 'rad_rapidology_hide_for_rapidbar',
 		),
 
 		'option' => array(
@@ -169,7 +179,7 @@ $rad_dashboard_options_all = array(
 		'section_start' => array(
 			'type'  => 'section_start',
 			'title' => __( 'Image Settings', 'rapidology' ),
-			'class' => 'rad_dashboard_10_bottom',
+			'class' => 'rad_dashboard_10_bottom rad_rapidology_hide_for_rapidbar',
 		),
 		'image_orientation' => array(
 			'type'            => 'select',
@@ -207,7 +217,7 @@ $rad_dashboard_options_all = array(
 		'section_start' => array(
 			'type'       => 'section_start',
 			'name'       => 'image_upload',
-			'class'      => 'e_no_top_space',
+			'class'      => 'e_no_top_space rad_rapidology_hide_for_rapidbar',
 			'display_if' => 'above#below#right#left',
 		),
 		'image_url' => array(
@@ -249,24 +259,34 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'boolean',
 		),
 	),
-
 	'form_setup' => array(
 		'section_start' => array(
 			'type'  => 'section_start',
 			'title' => __( 'Form setup', 'rapidology' ),
+		),
+		'display_as_link' => array(
+			'type'            => 'checkbox',
+			'title'           => __( 'Display button as link', 'rapidology' ),
+			'name'            => 'display_as_link',
+			'class'           => 'rad_dashboard_display_as_link_checkbox',
+			'default'         => false,
+			'validation_type' => 'boolean',
 		),
 		'form_orientation' => array(
 			'type'            => 'select',
 			'title'           => __( 'Form Orientation', 'rapidology' ),
 			'name'            => 'form_orientation',
 			'value'           => array(
-				'bottom' => __( 'Form On Bottom', 'rapidology' ),
 				'right'  => __( 'Form On Right', 'rapidology' ),
 				'left'   => __( 'Form On Left', 'rapidology' ),
+				'bottom' => __( 'Form On Bottom', 'rapidology' ),
 			),
-			'default'         => 'bottom',
+			'default'         => 'right',
+			'conditional'     => array(
+				'bottom' => 'rad_rapidology_hide_for_rapidbar'
+			),
 			'validation_type' => 'simple_text',
-			'class'           => 'rad_rapidology_hide_for_widget rad_dashboard_form_orientation',
+			'class'           => 'rad_rapidology_hide_for_widget rad_rapidology_hide_for_rapidbar rad_dashboard_form_orientation',
 		),
 		'display_name' => array(
 			'type'            => 'checkbox',
@@ -278,11 +298,33 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'boolean',
 			'display_if'      => 'getresponse#aweber',
 		),
+		'redirect_url' => array(
+			'type'            => 'input_field',
+			'subtype'         => 'text',
+			'name'            => 'redirect_url',
+			'class'           => 'rad_dashboard_redirect_url',
+			'title'           => __( 'Redirect Url', 'rapidology' ),
+			'placeholder'     => __( 'http://example.com', 'rapidology' ),
+			'default'         => '',
+			'display_if'      => 'enable_redirect_form#true',
+			'validation_type' => 'simple_text',
+			'is_wpml_string'  => true,
+		),
+		'rapidbar_popup' => array(
+			'type'            => 'select',
+			'title'           => __( 'Select optin to open', 'rapidology' ),
+			'name'            => 'rapidbar_popup',
+			'value'           => $valid_optins,
+			'default'         => 'empty',
+			'validation_type' => 'simple_text',
+			'class'           => 'rad_dashboard_select_optin rad_rapidology_for_rapidbar',
+			'hint_text'		  => __('If selected, redirect will not happen. Will only display popup or flyin forms that show on everything.', 'rapidology'),
+		),
 		'name_fields' => array(
 			'type'            => 'select',
 			'title'           => __( 'Name Field(s)', 'rapidology' ),
 			'name'            => 'name_fields',
-			'class'           => 'rad_dashboard_name_fields',
+			'class'           => 'rad_dashboard_name_fields rad_rapidology_hide_for_rapidbar',
 			'value'           => array(
 				'no_name'         => __( 'No Name Field', 'rapidology' ),
 				'single_name'     => __( 'Single Name Field', 'rapidology' ),
@@ -291,7 +333,7 @@ $rad_dashboard_options_all = array(
 			'default'         => 'no_name',
 			'conditional'     => 'name_text#last_name#single_name_text',
 			'validation_type' => 'simple_text',
-			'display_if'      => implode( '#', $show_name_fields ),
+			'display_if'      => implode( '#', $show_name_fields ).'#button_redireect#false',
 		),
 		'name_text' => array(
 			'type'            => 'input_field',
@@ -339,6 +381,7 @@ $rad_dashboard_options_all = array(
 			'default'         => '',
 			'validation_type' => 'simple_text',
 			'is_wpml_string'  => true,
+			'display_if'	  => 'enable_redirect_form#false'
 		),
 		'button_text' => array(
 			'type'            => 'input_field',
@@ -363,6 +406,15 @@ $rad_dashboard_options_all = array(
 			'default'         => 'light',
 			'validation_type' => 'simple_text',
 		),
+		'rapidbar_position' => array(
+			'type'            => 'select',
+			'title'           => __( 'Select rapidbar position', 'rapidology' ),
+			'name'            => 'rapidbar_position',
+			'value'           => $rapidbar_position,
+			'default'         => 'stickytop',
+			'validation_type' => 'simple_text',
+			'class'           => 'rad_dashboard_select_rapidbar_position',
+		),
 	),
 
 	'optin_styling' => array(
@@ -374,7 +426,7 @@ $rad_dashboard_options_all = array(
 			'type'            => 'color_picker',
 			'title'           =>  __( 'Background Color', 'rapidology' ),
 			'name'            => 'header_bg_color',
-			'class'           => 'rad_dashboard_optin_bg',
+			'class'           => 'rad_dashboard_optin_bg rad_rapidology_hide_for_rapidbar',
 			'placeholder'     => __( 'Hex Value', 'rapidology' ),
 			'default'         => '',
 			'validation_type' => 'simple_text',
@@ -383,14 +435,14 @@ $rad_dashboard_options_all = array(
 			'type'            => 'font_select',
 			'title'           => __( 'Header Font', 'rapidology' ),
 			'name'            => 'header_font',
-			'class'           => 'rad_dashboard_header_font',
+			'class'           => 'rad_dashboard_header_font rad_rapidology_hide_for_rapidbar',
 			'validation_type' => 'simple_text',
 		),
 		'body_font' => array(
 			'type'            => 'font_select',
 			'title'           => __( 'Body Font', 'rapidology' ),
 			'name'            => 'body_font',
-			'class'           => 'rad_dashboard_body_font',
+			'class'           => 'rad_dashboard_body_font rad_dashboard_for_rapidbar',
 			'validation_type' => 'simple_text',
 		),
 		'header_text_color' => array(
@@ -409,7 +461,7 @@ $rad_dashboard_options_all = array(
 			'type'            => 'select',
 			'title'           => __( 'Corner Style', 'rapidology' ),
 			'name'            => 'corner_style',
-			'class'           => 'rad_dashboard_corner_style',
+			'class'           => 'rad_dashboard_corner_style rad_rapidology_hide_for_rapidbar',
 			'value'           => array(
 				'squared' => __( 'Squared Corners', 'rapidology' ),
 				'rounded' => __( 'Rounded Corners', 'rapidology' ),
@@ -421,7 +473,7 @@ $rad_dashboard_options_all = array(
 			'type'            => 'select',
 			'title'           => __( 'Border Orientation', 'rapidology' ),
 			'name'            => 'border_orientation',
-			'class'           => 'rad_dashboard_border_orientation',
+			'class'           => 'rad_dashboard_border_orientation rad_dashboard_for_rapidbar',
 			'value'           => array(
 				'no_border'  => __( 'No Border', 'rapidology' ),
 				'full'       => __( 'Full Border', 'rapidology' ),
@@ -440,7 +492,7 @@ $rad_dashboard_options_all = array(
 			'type'            => 'color_picker',
 			'title'           =>  __( 'Border Color', 'rapidology' ),
 			'name'            => 'border_color',
-			'class'           => 'rad_dashboard_border_color',
+			'class'           => 'rad_dashboard_border_color rad_dashboard_for_rapidbar',
 			'placeholder'     => __( 'Hex Value', 'rapidology' ),
 			'default'         => '',
 			'display_if'      => 'full#top#left#right#bottom#top_bottom#left_right',
@@ -463,7 +515,7 @@ $rad_dashboard_options_all = array(
 			),
 			'default'         => 'inline',
 			'validation_type' => 'simple_text',
-			'class'           => 'rad_rapidology_hide_for_widget rad_dashboard_field_orientation',
+			'class'           => 'rad_rapidology_hide_for_widget rad_dashboard_field_orientation rad_rapidology_hide_for_rapidbar',
 		),
 		'field_corner' => array(
 			'type'            => 'select',
@@ -481,7 +533,7 @@ $rad_dashboard_options_all = array(
 			'type'            => 'select',
 			'title'           => __( 'Form Text Color', 'rapidology' ),
 			'name'            => 'text_color',
-			'class'           => 'rad_dashboard_form_text_color',
+			'class'           => 'rad_dashboard_form_text_color rad_rapidology_hide_for_rapidbar',
 			'value'           => array(
 				'light' => __( 'Light Text', 'rapidology' ),
 				'dark'  => __( 'Dark Text', 'rapidology' ),
@@ -493,7 +545,7 @@ $rad_dashboard_options_all = array(
 			'type'            => 'color_picker',
 			'title'           =>  __( 'Form Background Color', 'rapidology' ),
 			'name'            => 'form_bg_color',
-			'class'           => 'rad_dashboard_form_bg_color',
+			'class'           => 'rad_dashboard_form_bg_color rad_dashboard_for_rapidbar',
 			'placeholder'     => __( 'Hex Value', 'rapidology' ),
 			'default'         => '',
 			'validation_type' => 'simple_text',
@@ -502,7 +554,7 @@ $rad_dashboard_options_all = array(
 			'type'            => 'color_picker',
 			'title'           =>  __( 'Button Color', 'rapidology' ),
 			'name'            => 'form_button_color',
-			'class'           => 'rad_dashboard_form_button_color',
+			'class'           => 'rad_dashboard_form_button_color rad_dashboard_for_rapidbar',
 			'placeholder'     => __( 'Hex Value', 'rapidology' ),
 			'default'         => '',
 			'validation_type' => 'simple_text',
@@ -522,7 +574,7 @@ $rad_dashboard_options_all = array(
 			'breakout_edge',
 		),
 		'default'         => 'basic_edge',
-		'class'           => 'rad_dashboard_optin_edge',
+		'class'           => 'rad_dashboard_optin_edge rad_rapidology_hide_for_rapidbar',
 		'validation_type' => 'simple_text',
 	),
 
@@ -530,7 +582,7 @@ $rad_dashboard_options_all = array(
 		'type'            => 'select_shape',
 		'title'           => __( 'Choose border style', 'rapidology' ),
 		'name'            => 'border_style',
-		'class'           => 'rad_dashboard_border_style',
+		'class'           => 'rad_dashboard_border_style rad_dashboard_for_rapidbar',
 		'value'           => array(
 			'solid',
 			'dashed',
@@ -547,6 +599,7 @@ $rad_dashboard_options_all = array(
 		'section_start' => array(
 			'type'  => 'section_start',
 			'title' =>__( 'Form Footer Text', 'rapidology' ),
+			'class'	=> 'rad_rapidology_hide_for_rapidbar',
 		),
 		'option' => array(
 			'type'            => 'text',
@@ -569,18 +622,46 @@ $rad_dashboard_options_all = array(
 			'type'            => 'text',
 			'rows'            => '1',
 			'name'            => 'success_message',
-			'class'           => 'rad_dashboard_success_text',
+			'class'           => 'suc rad_dashboard_for_rapidbar',
+			'title'           => __( 'Success Message', 'rapidology' ),
 			'placeholder'     => __( 'You have Successfully Subscribed!', 'rapidology' ),
 			'default'         => '',
 			'validation_type' => 'simple_text',
 			'is_wpml_string'  => true,
 		),
 	),
-
+	'success_redirect' => array(
+		'section_start' => array(
+			'type'  	=> 'section_start',
+			'title' 	=> __( 'Success Redirect', 'rapidology' ),
+			'class' 	=> 'rad_rapidology_success_redirect',
+		),
+		'success_url' => array(
+			'type'            => 'input_field',
+			'subtype'         => 'text',
+			'name'            => 'success_url',
+			'class'           => 'rad_dashboard_success_url',
+			'title'           => __( 'Success redirect url', 'rapidology' ),
+			'placeholder'     => __( 'http://example.com', 'rapidology' ),
+			'default'         => '',
+			'validation_type' => 'simple_text',
+			'is_wpml_string'  => true,
+		),
+		'success_load_delay' => array(
+			'type'            => 'input_field',
+			'subtype'         => 'number',
+			'title'           => __( 'Delay (in seconds) till redirect', 'rapidology' ),
+			'name'            => 'success_load_delay',
+			'hint_text'       => __( 'Define how many seconds you want to wait before the redirect window opens.', 'rapidology' ),
+			'default'         => '5',
+			'validation_type' => 'number',
+		),
+	),
 	'custom_css' => array(
 		'section_start' => array(
 			'type'  => 'section_start',
 			'title' =>__( 'Custom CSS', 'rapidology' ),
+			'class'		=> 'rad_rapidology_hide_for_rapidbar',
 		),
 		'option' => array(
 			'type'            => 'text',
@@ -596,7 +677,7 @@ $rad_dashboard_options_all = array(
 		'section_start' => array(
 			'type'  => 'section_start',
 			'title' => __( 'Load-in settings', 'rapidology' ),
-			'class' => 'rad_dashboard_for_popup',
+			'class' => 'rad_dashboard_for_popup rad_dashboard_for_rapidbar',
 		),
 		'load_animation' => array(
 			'type'            => 'select',
@@ -619,6 +700,7 @@ $rad_dashboard_options_all = array(
 			'class'           => 'rad_rapidology_load_in_animation',
 			'default'         => 'fadein',
 			'validation_type' => 'simple_text',
+			'class'			  => 'rad_dashboard_hide_for_rapidbar',
 		),
 		'trigger_auto' => array(
 			'type'            => 'checkbox',
@@ -645,6 +727,7 @@ $rad_dashboard_options_all = array(
 			'default'         => false,
 			'conditional'     => 'idle_timeout',
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'idle_timeout' => array(
 			'type'            => 'input_field',
@@ -655,6 +738,7 @@ $rad_dashboard_options_all = array(
 			'default'         => '15',
 			'display_if'      => 'true',
 			'validation_type' => 'number',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'post_bottom' => array(
 			'type'            => 'checkbox',
@@ -662,6 +746,7 @@ $rad_dashboard_options_all = array(
 			'name'            => 'post_bottom',
 			'default'         => '1',
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'comment_trigger' => array(
 			'type'            => 'checkbox',
@@ -669,6 +754,7 @@ $rad_dashboard_options_all = array(
 			'name'            => 'comment_trigger',
 			'default'         => false,
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
         'exit_trigger' => array(
             'type'            => 'checkbox',
@@ -676,6 +762,7 @@ $rad_dashboard_options_all = array(
             'name'            => 'exit_trigger',
             'default'         => false,
             'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
         ),
 		'trigger_scroll' => array(
 			'type'            => 'checkbox',
@@ -684,6 +771,7 @@ $rad_dashboard_options_all = array(
 			'default'         => false,
 			'conditional'     => 'scroll_pos',
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'scroll_pos' => array(
 			'type'            => 'input_field',
@@ -694,6 +782,7 @@ $rad_dashboard_options_all = array(
 			'default'         => '50',
 			'display_if'      => 'true',
 			'validation_type' => 'number',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'purchase_trigger' => array(
 			'type'            => 'checkbox',
@@ -702,6 +791,7 @@ $rad_dashboard_options_all = array(
 			'default'         => false,
 			'hint_text'       => __( 'Display on "Thank you" page of WooCommerce after purchase', 'rapidology' ),
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'session' => array(
 			'type'            => 'checkbox',
@@ -710,6 +800,7 @@ $rad_dashboard_options_all = array(
 			'default'         => false,
 			'validation_type' => 'boolean',
 			'conditional'     => 'session_duration',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'session_duration' => array(
 			'type'            => 'input_field',
@@ -720,6 +811,7 @@ $rad_dashboard_options_all = array(
 			'default'         => '1',
 			'validation_type' => 'number',
 			'display_if'      => 'true',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 		'hide_mobile' => array(
 			'type'            => 'checkbox',
@@ -735,6 +827,8 @@ $rad_dashboard_options_all = array(
 			'hint_text'       => __( 'Adds new onclick shortcode option to Rapidology editor when editing a page / post', 'rapidology' ),
 			'default'         => false,
 			'validation_type' => 'boolean',
+			'class'			  => 'rad_rapidology_click_trigger',
+			'class'			  => 'rad_rapidology_hide_for_rapidbar'
 		),
 	),
 
@@ -1034,7 +1128,6 @@ $rad_dashboard_options_all = array(
 		'type'  => 'support',
 		'title' => __( 'Help and Support', 'rapidology' ),
 	),
-
 	'edit_account' => array(
 		'type'  => 'edit_account',
 		'title' => __( 'Edit Account', 'rapidology' ),
@@ -1088,6 +1181,8 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'optin_name' ][ 'option' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'form_integration' ][ 'section_start' ],
+			$rad_dashboard_options_all[ 'form_integration' ][ 'enable_redirect_form' ],
+			$rad_dashboard_options_all[ 'form_integration' ][ 'redirect_list_id' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'email_provider' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'select_account' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'email_list' ],
@@ -1118,6 +1213,7 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'image_upload' ][ 'hide_mobile' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'optin_styling' ][ 'section_start' ],
+			$rad_dashboard_options_all[ 'form_setup' ][ 'rapidbar_position' ],
 			$rad_dashboard_options_all[ 'optin_styling' ][ 'header_bg_color' ],
 			$rad_dashboard_options_all[ 'optin_styling' ][ 'header_font' ],
 			$rad_dashboard_options_all[ 'optin_styling' ][ 'body_font' ],
@@ -1129,6 +1225,8 @@ $rad_assigned_options = array(
 		$rad_dashboard_options_all[ 'border_style' ],
 		$rad_dashboard_options_all[ 'form_setup' ][ 'section_start' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'form_orientation' ],
+			$rad_dashboard_options_all[ 'form_setup' ][ 'redirect_url' ],
+			$rad_dashboard_options_all[ 'form_setup' ][ 'rapidbar_popup' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'display_name' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'name_fields' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'name_text' ],
@@ -1136,6 +1234,7 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'form_setup' ][ 'last_name' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'email_text' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'button_text' ],
+		$rad_dashboard_options_all[ 'form_setup' ][ 'display_as_link' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'form_styling' ][ 'section_start' ],
 			$rad_dashboard_options_all[ 'form_styling' ][ 'field_orientation' ],
@@ -1151,6 +1250,10 @@ $rad_assigned_options = array(
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'success_message' ][ 'section_start' ],
 			$rad_dashboard_options_all[ 'success_message' ][ 'option' ],
+		$rad_dashboard_options_all[ 'end_of_section' ],
+		$rad_dashboard_options_all['success_redirect']['section_start'],
+			$rad_dashboard_options_all[ 'success_redirect' ][ 'success_url' ],
+			$rad_dashboard_options_all[ 'success_redirect' ][ 'success_load_delay' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'custom_css' ][ 'section_start' ],
 			$rad_dashboard_options_all[ 'custom_css' ][ 'option' ],

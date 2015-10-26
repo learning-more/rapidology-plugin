@@ -20,6 +20,10 @@ if ( ! class_exists( 'RAD_Dashboard' ) ) {
 	require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'dashboard/dashboard.php' );
 }
 
+if ( ! class_exists( 'rapidology_rapidbar' ) ) {
+	require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/class.rapidology_rapidbar.php' );
+}
+
 require_once('includes/updater.php');
 require_once('includes/rapidology_functions.php');
 if (is_admin()) { // note the use of is_admin() to double check that this is happening in the admin
@@ -81,9 +85,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_action( 'rad_rapidology_after_main_options', array( $this, 'generate_premade_templates' ) );
 
 		add_action( 'rad_rapidology_after_save_button', array( $this, 'add_next_button' ) );
-
+		do_action('rapidology_ext_init');
 		$plugin_file = plugin_basename( __FILE__ );
 		add_filter( "plugin_action_links_{$plugin_file}", array( $this, 'add_settings_link' ) );
+
 
 
 		$dashboard_args = array(
@@ -259,6 +264,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	function import_settings() {
 		return true;
 	}
+
 
 	function rapidology_save_settings() {
 		RAD_Rapidology::dashboard_save_settings();
@@ -534,6 +540,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 								<div class="optin_select_grey_small"></div>
 								<div class="optin_select_grey_small last"></div>
 							</li>
+
+						</ul>
+						<ul>
+						<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_rapidbar" data-type="rapidbar">
+								<h6>%8$s</h6>
+								<div class="optin_select_blue"></div>
+								<div class="optin_select_grey"></div>
+							</li>
 						</ul>
 					</div>',
 					esc_html__( 'select optin type to begin', 'rapidology' ),
@@ -542,7 +556,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 					esc_html__( 'below post', 'rapidology' ),
 					esc_html__( 'inline', 'rapidology' ),
 					esc_html__( 'locked content', 'rapidology' ),
-					esc_html__( 'widget', 'rapidology' )
+					esc_html__( 'widget', 'rapidology' ),
+					esc_html__( 'rapidbar', 'rapidology' )
 				);
 
 				$this->display_home_tab_tables();
@@ -589,10 +604,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 					)
 				);
 				break;
+
 			case 'support'	:
 				include_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/static_content/marketing.php');
 				break;
-
 		}
 	}
 
@@ -616,9 +631,19 @@ class RAD_Rapidology extends RAD_Dashboard {
 	}
 
 	function generate_premade_grid() {
+		$isRapidBar = '';
+		$isRedirect = '';
 		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
-
-		require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php' );
+		$isRapidBar = $_POST['isRapidBar'];
+		$isRedirect = $_POST['isRedirect'];
+		$layoutFolder = $isRedirect == 'true' ? 'redirect' : 'form';
+		if($isRapidBar == 'true'){
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/premade-layouts.php');
+			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/images/thumb_';
+		}else {
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php');
+			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/images/thumb_';
+		}
 		$output = '';
 
 		if ( isset( $all_layouts ) ) {
@@ -635,7 +660,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					</div>',
 					esc_attr( $layout_id ),
 					0 == $i ? ' rad_rapidology_layout_selected' : '',
-					esc_attr( RAD_RAPIDOLOGY_PLUGIN_URI . '/images/thumb_' . $layout_id . '.svg' )
+					esc_attr(  $imgpath . $layout_id . '.svg' )
 				);
 				$i ++;
 			}
@@ -650,14 +675,20 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Gets the layouts data, converts it to json string and passes back to js script to fill the form with predefined values
 	 */
 	function get_premade_values() {
+		$isRapidBar = '';
+		$isRedirect = '';
 		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
-
 		$premade_data_json = str_replace( '\\', '', $_POST['premade_data_array'] );
 		$premade_data      = json_decode( $premade_data_json, true );
 		$layout_id         = $premade_data['id'];
-
-		require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php' );
-
+		$isRapidBar = $_POST['isRapidBar'];
+		$isRedirect = $_POST['isRedirect'];
+		$layoutFolder = $isRedirect == 'true' ? 'redirect' : 'form';
+		if($isRapidBar == 'true'){
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/premade-layouts.php');
+		}else {
+			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php');
+		}
 		if ( isset( $all_layouts[ $layout_id ] ) ) {
 			$options_set = json_encode( $all_layouts[ $layout_id ] );
 		}
@@ -1620,6 +1651,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 							<p>Select Email Provider</p>
 							<select>
 								<option value="empty" selected>%2$s</option>
+								<option value="redirect">%21$s</option>
 								<option value="activecampaign">%19$s</option>
 								<option value="aweber">%4$s</option>
 								<option value="campaign_monitor">%6$s</option>
@@ -1662,7 +1694,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 				esc_html__( 'HubSpot Lists', 'rapidology' ),#17
 				esc_html__( 'Salesforce', 'rapidology' ),#18
 				esc_html__( 'Active Campaign', 'rapidology' ),#19
-				esc_html__( 'HubSpot Standard', 'rapidology')#20
+				esc_html__( 'HubSpot Standard', 'rapidology'),#20
+				esc_html__( 'Redirect Button', 'rapidology')#21
 
 			);
 		}
@@ -1694,6 +1727,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$all_lists     = array();
 		$name          = str_replace( array( '"', "'" ), '', stripslashes( $name ) );
 
+
+		if($service == 'redirect'){
+			return '';
+		}
 		if ( ! empty( $options_array['accounts'][ $service ][ $name ]['lists'] ) ) {
 			foreach ( $options_array['accounts'][ $service ][ $name ]['lists'] as $id => $list_details ) {
 				$all_lists[] = $list_details['name'];
@@ -1772,7 +1809,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 								esc_html__( 'Growth rate', 'rapidology' )
 							);
 						}
-
 						$output .= sprintf(
 							'<li class="rad_dashboard_optins_item rad_dashboard_optins_item" data-account_name="%1$s" data-service="%2$s">
 								<div class="rad_dashboard_table_acc_name rad_dashboard_table_column">%3$s</div>
@@ -2024,11 +2060,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 					esc_html( $impressions ),
 					esc_html( $conversions ),
 					esc_html( $this->conversion_rate( $optin_id, $conversions, $impressions ) . '%' ), // #5
-					( 'locked' === $value['optin_type'] || 'inline' === $value['optin_type'] )
+					( 'locked' === $value['optin_type'] || 'inline' === $value['optin_type'] || $value['click_trigger'] == '1'  )
 						? sprintf(
-						'<span class="rad_dashboard_icon_shortcode rad_optin_button rad_dashboard_icon" title="%1$s" data-type="%2$s"></span>',
+						'<span class="rad_dashboard_icon_shortcode rad_optin_button rad_dashboard_icon" title="%1$s" data-type="%2$s" data-click_trigger="%3$s"></span>',
 						esc_attr__( 'Generate shortcode', 'rapidology' ),
-						esc_attr( $value['optin_type'] )
+						esc_attr( $value['optin_type'] ),
+						$value['click_trigger'] == '1' ? 'true' : 'false'
 					)
 						: '',
 					'active' === $status ? esc_html__( 'Make Inactive', 'rapidology' ) : esc_html__( 'Make Active', 'rapidology' ),
@@ -2053,7 +2090,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					)
 						: '',
 					$child_row, //#15
-					( 'empty' == $value['email_provider'] || ( 'custom_html' !== $value['email_provider'] && 'empty' == $value['email_list'] ) )
+					( 'empty' == $value['email_provider'] || ( 'custom_html' !== $value['email_provider'] && 'redirect' !== $value['email_provider'] && 'empty' == $value['email_list'] ) )
 						? ' rad_rapidology_no_account'
 						: '' //#16
 				);
@@ -3061,14 +3098,15 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$form_fields = $this->generate_new_account_form( $service );
 
 			printf(
-				'<li class="select rad_dashboard_select_account rad_dashboard_new_account">
+				'<li class="select rad_dashboard_select_account rad_dashboard_new_account ">
 					%3$s
-					<button class="rad_dashboard_icon authorize_service" data-service="%2$s">%1$s</button>
+					<button class="rad_dashboard_icon authorize_service %4$s" data-service="%2$s">%1$s</button>
 					<span class="spinner"></span>
 				</li>',
 				__( 'Add Account', 'rapidology' ),
 				esc_attr( $service ),
-				$form_fields
+				$form_fields,
+				($service == 'redirect') ? ' hidden_item' : ''
 			);
 		}
 
@@ -3281,6 +3319,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 			'stats_nonce'     => wp_create_nonce( 'update_stats' ),
 			'subscribe_nonce' => wp_create_nonce( 'subscribe' ),
 		) );
+
+
 	}
 
 	/**
@@ -3351,7 +3391,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 */
 	function check_applicability( $optin_id ) {
 		$options_array = RAD_Rapidology::get_rapidology_options();
-
 		$display_there = false;
 
 		$optin_type = $options_array[ $optin_id ]['optin_type'];
@@ -3387,8 +3426,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		unset( $current_optin_limits['categories']['previously_saved'] );
 
 		$tax_to_check = $this->get_supported_taxonomies( $current_optin_limits['post_types'] );
-
-		if ( ( 'flyin' == $optin_type || 'pop_up' == $optin_type ) && true == $current_optin_limits['everything_select'] ) {
+		if ( ( 'flyin' == $optin_type || 'pop_up' == $optin_type || 'rapidbar' == $optin_type) && true == $current_optin_limits['everything_select'] ) {
 			if ( is_singular() ) {
 				if ( ( is_singular( 'page' ) && ! in_array( get_the_ID(), $current_optin_limits['pages_exclude'] ) ) || ( ! is_singular( 'page' ) && ! in_array( get_the_ID(), $current_optin_limits['posts_exclude'] ) ) ) {
 					$display_there = true;
@@ -3519,7 +3557,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 		wp_verify_nonce( $_POST['update_stats_nonce'], 'update_stats' );
 		$stats_data_json  = str_replace( '\\', '', $_POST['stats_data_array'] );
 		$stats_data_array = json_decode( $stats_data_json, true );
-
 		RAD_Rapidology::add_stats_record( $stats_data_array['type'], $stats_data_array['optin_id'], $stats_data_array['page_id'], $stats_data_array['list_id'] );
 
 		die();
@@ -3714,10 +3751,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 					%1$s
 					<form method="post" class="clearfix">
 						%3$s
-						<p class="rad_rapidology_popup_input rad_rapidology_subscribe_email">
+						<p class="rad_rapidology_popup_input rad_rapidology_subscribe_email %16$s">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" class="rad_rapidology_submit_subscription">
+						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-success_delay="%18$s" class="%14$s">
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -3762,8 +3799,12 @@ class RAD_Rapidology extends RAD_Dashboard {
 				isset( $details['button_text_color'] ) ? esc_attr( $details['button_text_color'] ) : '', // #10
 				isset( $details['disable_dbl_optin'] ) && '1' === $details['disable_dbl_optin'] ? 'disable' : '',#11
 				esc_attr($pagename),#12
-				esc_attr($hubspot_cookie)#13
-
+				esc_attr($hubspot_cookie),#13
+				$details['enable_redirect_form'] == true ? 'rad_rapidology_redirect_page' : 'rad_rapidology_submit_subscription',#14
+				$details['enable_redirect_form'] == true ? esc_url($details['redirect_url']) : '',#15
+				$details['enable_redirect_form'] == true ? 'hidden_item' : '',#16
+				isset($details['success_url']) ? esc_url($details['success_url']) : '',#17 //you will notice both 15 and 17 exist in the dat-redirect_url attribute. This is because both should never be set at the same time.
+				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '' #18
 			),
 			'' != $success_text
 				? stripslashes( esc_html( $success_text ) )
@@ -3866,13 +3907,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 	/**
 	 * Generates the powered by button html
 	 */
-	function get_power_button( $mode ) {
+	static function get_power_button( $mode ) {
 		return '<div class="rad_power rad_power_mode_' . $mode . '">
 					<span class="rad_power_box_mode_' . $mode . '">
 						<a href="http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=powered-by-badge" target="_blank">Powered by<span class="rad_power_logo">&nbsp</span><span class="rad_power_text">Rapidology</span></a>
 					</span>
 				</div>';
 	}
+
 
 	/**
 	 * Displays the Flyin content on front-end.
@@ -3985,7 +4027,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 						'stacked' == $details['field_orientation'] && 'bottom' == $details['form_orientation'] && ( 'right' == $details['image_orientation'] || 'left' == $details['image_orientation'] )
 							? ' rad_rapidology_flyin_bottom_stacked'
 							: '', //#27
-						$this->get_power_button( 'flyin' ),
+						RAD_Rapidology::get_power_button( 'flyin' ),
 						true == $details['click_trigger']
 							? ' data-click_trigger="' . esc_attr( $details['click_trigger_selector'] ) . '"'
 							: '',#28
@@ -4077,7 +4119,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 							? ' rad_rapidology_before_exit'
 							: '',#21
 
-						$this->get_power_button( 'popup' ),
+						RAD_Rapidology::get_power_button( 'popup' ),
 						isset( $details['click_trigger'] ) && true == $details['click_trigger'] ? ' rad_rapidology_click_trigger' : ''
 					);
 				}
@@ -4093,7 +4135,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 		parse_str( $processed_string, $processed_array );
 		$details     = $processed_array['rad_dashboard'];
 		$fonts_array = array();
-
 		if ( ! isset( $fonts_array[ $details['header_font'] ] ) && isset( $details['header_font'] ) ) {
 			$fonts_array[] = $details['header_font'];
 		}
@@ -4101,8 +4142,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$fonts_array[] = $details['body_font'];
 		}
 
-		$popup_array['popup_code'] = $this->generate_preview_popup( $details );
-		$popup_array['popup_css']  = '<style id="rad_rapidology_preview_css">' . RAD_Rapidology::generate_custom_css( '.rad_rapidology .rad_rapidology_preview_popup', $details ) . '</style>';
+
+		if($details['optin_type'] != 'rapidbar') {
+			$popup_array['popup_code'] = $this->generate_preview_popup( $details );
+			$popup_array['popup_css'] = '<style id="rad_rapidology_preview_css">' . RAD_Rapidology::generate_custom_css('.rad_rapidology .rad_rapidology_preview_popup', $details) . '</style>';
+		}else{
+			$popup_array['popup_code'] = rapidology_rapidbar::generate_preview_popup( $details );
+			$popup_array['popup_css'] = '<style id="rad_rapidology_preview_css">' . rapidology_rapidbar::generate_custom_css('.rad_rapidology .rad_rapidology_preview_rapidbar', $details) . '</style>';
+		}
 		$popup_array['fonts']      = $fonts_array;
 
 		die( json_encode( $popup_array ) );
@@ -4136,8 +4183,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 			( 'rounded' == $details['corner_style'] ) ? ' rad_rapidology_rounded_corners' : '',
 			( 'rounded' == $details['field_corner'] ) ? ' rad_rapidology_rounded' : '',
 			'light' == $details['text_color'] ? ' rad_rapidology_form_text_light' : ' rad_rapidology_form_text_dark',
-			RAD_Rapidology::generate_form_content( 0, 0, $details ),
-			$this->get_power_button( 'popup' )
+			RAD_Rapidology::generate_form_content( 0, 0, '', $details ),
+			RAD_Rapidology::get_power_button( 'popup' )
 		);
 
 		return $output;
@@ -4160,6 +4207,39 @@ class RAD_Rapidology extends RAD_Dashboard {
 		return $content;
 	}
 
+	function display_rapidbar( ) {
+		$optins_set = $this->rapidbar_optins;
+		if ( ! empty( $optins_set ) ) {
+			foreach ( $optins_set as $optin_id => $details ) {
+				if ( $this->check_applicability( $optin_id ) ) {
+					$displayCookie = 'rad_rapidology_subscribed_to_'.$optin_id.$details['email_list'];
+					if(!isset($_COOKIE[$displayCookie])){
+						$content = sprintf(
+							'<div class="rad_rapidology_rapidbar %1$s%3$s %4$s" %2$s>'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>',
+							isset( $details['trigger_auto'] ) && true == $details['trigger_auto'] ? 'rad_rapidology_rapidbar_trigger_auto' : '',
+							isset( $details['trigger_auto'] ) && true == $details['trigger_auto']
+								? sprintf( 'data-delay="%1$s"', esc_attr( $details['load_delay'] ) )
+								: '',
+							( 'no_border' !== $details['border_orientation'] )
+								? sprintf(
+								' rad_rapidology_border_%1$s%2$s',
+								esc_attr( $details['border_style'] ),
+								'full' !== $details['border_orientation']
+									? ' rad_rapidology_border_position_' . $details['border_orientation']
+									: ''
+							)
+								: '',
+							esc_attr($details['rapidbar_position'])
+						);
+
+
+					}
+				}
+			}
+		}
+		echo $content;
+	}
+
 	/**
 	 * Display the form on woocommerce product page.
 	 */
@@ -4175,6 +4255,82 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 	}
 
+
+	/**
+	 * Generates the content for rapidbar form. Used to generate
+	 */
+	function generate_rapidbar_form( $optin_id, $details, $update_stats = true ) {
+		$output = '';
+
+		$page_id           = get_the_ID();
+		$list_id           = $details['email_provider'] . '_' . $details['email_list'];
+		$custom_css_output = '';
+
+		$all_optins       = RAD_Rapidology::get_rapidology_options();
+		$display_optin_id = RAD_Rapidology::choose_form_ab_test( $optin_id, $all_optins );
+
+		if ( $display_optin_id != $optin_id ) {
+			$optin_id = $display_optin_id;
+			$details  = $all_optins[ $optin_id ];
+		}
+		if ( true === $update_stats ) {
+			RAD_Rapidology::add_stats_record( 'imp', $optin_id, $page_id, $list_id );
+		}
+
+			$custom_css        = rapidology_rapidbar::generate_custom_css( '.rad_rapidology .rad_rapidology_' . $display_optin_id, $details );
+			$custom_css_output = '' !== $custom_css ? sprintf( '<style type="text/css">%1$s</style>', $custom_css ) : '';
+
+
+
+
+		$output .= sprintf(
+			'<div class="rad_rapidology_rapidbar_form rad_rapidology_optin rad_rapidology_%1$s%9$s">
+				%10$s
+				<div class="rad_rapidology_form_container rad_rapidology_rapidbar_container%3$s%5$s%6$s%7$s%8$s%11$s">
+					%2$s
+				</div>
+
+			</div>',
+			esc_attr( $optin_id ),
+			rapidology_rapidbar::generate_form_content( $optin_id, $page_id ),
+			'basic_edge' == $details['edge_style'] || '' == $details['edge_style']
+				? ''
+				: sprintf( ' with_edge %1$s', esc_attr( $details['edge_style'] ) ),
+			( 'no_border' !== $details['border_orientation'] )
+				? sprintf(
+				' rad_rapidology_border_%1$s%2$s',
+				esc_attr( $details['border_style'] ),
+				'full' !== $details['border_orientation']
+					? ' rad_rapidology_border_position_' . $details['border_orientation']
+					: ''
+			)
+				: '',
+			( 'rounded' == $details['corner_style'] ) ? ' rad_rapidology_rounded_corners' : '', //#5
+			( 'rounded' == $details['field_corner'] ) ? ' rad_rapidology_rounded' : '',
+			'light' == $details['text_color'] ? ' rad_rapidology_form_text_light' : ' rad_rapidology_form_text_dark',
+			'bottom' !== $details['form_orientation'] && 'custom_html' !== $details['email_provider']
+				? sprintf(
+				' rad_rapidology_form_%1$s',
+				esc_html( $details['form_orientation'] )
+			)
+				: ' rad_rapidology_form_bottom',
+			( isset( $details['hide_mobile_optin'] ) && true == $details['hide_mobile_optin'] )
+				? ' rad_rapidology_hide_mobile_optin'
+				: '',
+			$custom_css_output, //#10
+			( 'no_name' == $details['name_fields'] && ! RAD_Rapidology::is_only_name_support( $details['email_provider'] ) ) || ( RAD_Rapidology::is_only_name_support( $details['email_provider'] ) && $is_single_name )
+				? ' rad_rapidology_inline_1_field'
+				: sprintf(
+				' rad_rapidology_inline_%1$s_fields',
+				'first_last_name' == $details['name_fields'] && ! RAD_Rapidology::is_only_name_support( $details['email_provider'] )
+					? '3'
+					: '2'
+			)
+		);
+
+		return $output;
+	}
+
 	/**
 	 * Generates the content for inline form. Used to generate "Below content", "Inilne" and "Locked content" forms.
 	 */
@@ -4184,8 +4340,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 		$page_id           = get_the_ID();
 		$list_id           = $details['email_provider'] . '_' . $details['email_list'];
 		$custom_css_output = '';
-		$post = get_post();
-		$post_name = $post->post_name;
 
 		$all_optins       = RAD_Rapidology::get_rapidology_options();
 		$display_optin_id = RAD_Rapidology::choose_form_ab_test( $optin_id, $all_optins );
@@ -4245,7 +4399,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					? '3'
 					: '2'
 			),
-			$this->get_power_button( 'inline' )
+			RAD_Rapidology::get_power_button( 'inline' )
 		);
 
 		return $output;
@@ -4703,6 +4857,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 			$below_count    = 0;
 			$after_comment  = 0;
 			$after_purchase = 0;
+			$rapidbar_count	= 0;
 
 			foreach ( $options_array as $optin_id => $details ) {
 				if ( 'accounts' !== $optin_id ) {
@@ -4757,6 +4912,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 								}
 
 								$this->below_post_optins[ $optin_id ] = $details;
+								break;
+							case 'rapidbar' :
+								if ( 0 === $rapidbar_count ) {
+									add_action( 'wp_footer', array( $this, 'display_rapidbar' ), 9999 );
+									$rapidbar_count ++;
+								}
+
+								$this->rapidbar_optins[ $optin_id ] = $details;
 								break;
 						}
 					}

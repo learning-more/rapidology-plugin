@@ -76,5 +76,12 @@ function rapidology_name_splitter($name, $last_name){
 	return $return_array;
 }
 
+//autoloader
+
+function rapidology_ext_autoloader($class) {
+	if(false !== strpos($class, 'rapidology')) {
+		include RAD_RAPIDOLOGY_PLUGIN_DIR.'/includes/ext/'.$class.'/class.' . $class . '.php';
+	}
+}
 
 ?>

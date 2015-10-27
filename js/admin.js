@@ -1043,10 +1043,12 @@
                 $('.rad_dashboard_enable_redirect_form').show();
                 $('.rad_dashboard_select_rapidbar_position').show();
                 $('.rad_dashboard_display_as_link_checkbox').show();
+                $('.rad_rapidology_allow_dismiss').show();
             }else{
                 $('.rad_dashboard_enable_redirect_form').hide();
                 $('.rad_dashboard_select_rapidbar_position').hide();
                 $('.rad_dashboard_display_as_link_checkbox').hide();
+                $('.rad_rapidology_allow_dismiss').hide();
             }
 
 			var $radDashboardNavigation = $('#rad_dashboard_navigation');

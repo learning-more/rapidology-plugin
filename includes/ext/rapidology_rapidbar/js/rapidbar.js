@@ -1,4 +1,4 @@
-//TODO CLEANUP THIS WHOLE FILE, SO MUCH REPETITION IN HERE
+
 jQuery(window).on('load', function () {
     var rapidbar_displayed = jQuery('.rad_rapidology_rapidbar').length;
     var rapidbar_timedelay = jQuery('.rad_rapidology_rapidbar.rad_rapidology_rapidbar_trigger_auto').data('delay');
@@ -23,59 +23,67 @@ jQuery(window).on('load', function () {
         jQuery('body').addClass('rapidbar_bottom_padding');
     }
     //do some fun scroll stuff to add and remove padding with static top bar
-    if(staticTop){
-        jQuery(document).scroll(function() {
-            if((jQuery(document).scrollTop()) > 30){
-                rapidbar_remove_padding();
-            }else{
-                if(rapidbar.admin_bar){
-                    jQuery('.rad_rapidology_rapidbar').css('margin-top', '32px');
-                }
-                if(!jQuery('body').hasClass('padding_added_rapidbar')) {
-                    rapidbar_add_padding();
-                }
-            }
-        });
-    }
+
     //remove padding for top bars
-    if(isTop) {
-        jQuery('.rad_rapidology_redirect_page, .rad_rapidology_rapidbar .rad_rapidology_close_button, .rad_rapidology_rapidbar .rad_rapidology_submit_subscription').on('click', function () {
+    if(isTop || staticTop) {
+        jQuery('.rad_rapidology_rapidbar .rad_rapidology_submit_subscription').on('click', function () {
             setTimeout(rapidbar_remove_padding, 3000); //use set timeout as it is used the other closing functions
+        });
+        jQuery('.rad_rapidology_redirect_page, .rad_rapidology_rapidbar .rad_rapidology_close_button').on('click', function () {
+            setTimeout(rapidbar_remove_padding, 400); //use set timeout as it is used the other closing functions
         });
     }
     replicate_text_color(delay);
 });
 
 function rapidbar_add_padding(){
-    var firstDiv = jQuery('body').find("div:first"); //we are going to assume this is the entire page container
-    var header = jQuery('header'); //we assume this will be your header
-    //now lets fine out what kind of rapidbar it is so we know if we need 35 or 50px of padding
+    if(jQuery('header')) {
+        var header = jQuery('header');
+        //if header exists see if position is fixed if so get its top property so we can add to it
+        if (header && jQuery(header).css('position') == 'fixed') {
+            var current_header_top_space = jQuery(header).css('padding-top');
+        }
+    }
+    //find first div to add padding to for rapidbar
+    var first_div = jQuery('body div:first');
+    var first_div_current_padding = jQuery(first_div).css('padding-top');
     var paddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;
-    var firstDivPadding = firstDiv.css('padding-top');
-    firstDivPadding = parseInt(firstDivPadding.replace('px', '')) + paddingNeeded;
-    var headerPadding = header.css('padding-top');
-    headerPadding = parseInt(headerPadding.replace('px', '')) + paddingNeeded;
-    jQuery(firstDiv).css('padding-top', firstDivPadding);
-    jQuery(header).css('padding-top', headerPadding);
-    jQuery('body').addClass('padding_added_rapidbar');
+    //prepare new values
+    if(current_header_top_space) {
+        var newPaddingHeader = parseInt(current_header_top_space.replace('px', '')) + paddingNeeded;
+        //padding added to header if needed and data attribute to remove later
+        jQuery(header).css('padding-top', newPaddingHeader);
+        jQuery(header).attr('data-rad_padding', paddingNeeded);
+    }
+    var newPaddingDiv = parseInt(first_div_current_padding.replace('px', '')) + paddingNeeded;
+    //add padding to body, adding padding from first div to keep consitancy on site
+    jQuery('body').css('padding-top', newPaddingDiv);
+    jQuery('body').attr('data-rad_padding', paddingNeeded);
+
+    jQuery('body').children().each(function(){
+        var this_el = jQuery(this);
+            if (jQuery(this_el).css('position') == 'fixed') {
+                if(!jQuery(this_el).hasClass('rad_rapidology_rapidbar') && jQuery(this_el).attr('id') != 'wpadminbar') {
+                var current_padding_top_el = jQuery(this_el).css('padding-top');
+                var new_padding_el = parseInt(current_padding_top_el.replace('px', '')) + paddingNeeded;
+                jQuery(this_el).css('padding-top', new_padding_el);
+                jQuery(this_el).attr('data-rad_padding', paddingNeeded);
+            }
+        }
+    });
 }
 
 function rapidbar_remove_padding(){
-    var firstDiv = jQuery('body').find("div:first"); //we are going to assume this is the entire page container
-    var header = jQuery('header'); //we assume this will be your header
-    var firstDivPadding = firstDiv.css('padding-top');
-    //now lets fine out what kind of rapidbar it is so we know if we need 35 or 50px of padding
-    var paddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;
-    firstDivPadding = parseInt(firstDivPadding.replace('px', '')) - paddingNeeded;
-    var headerPadding = header.css('padding-top');
-    headerPadding = parseInt(headerPadding.replace('px', '')) - paddingNeeded;
-    jQuery(firstDiv).css('padding-top', firstDivPadding);
-    jQuery(header).css('padding-top', headerPadding);
-    jQuery('body').removeClass('padding_added_rapidbar');
+    jQuery("[data-rad_padding]").each(function(){
+       var padding_to_remove = jQuery(this).data('rad_padding');
+       var current_padding = jQuery(this).css('padding-top');
+       var new_padding_el = parseInt(current_padding.replace('px', '')) - padding_to_remove;
+       jQuery(this).css('padding-top', new_padding_el);
+    });
 
     var redirectUrl = jQuery('.rad_rapidology_submit_subscription').data('redirect_url');
     if(redirectUrl) { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
-      jQuery('.rad_rapidology_rapidbar').remove();
+        jQuery('.rad_rapidology_rapidbar').remove();
     }
 }
 
@@ -84,15 +92,17 @@ function replicate_text_color(delay){
     //only happens on btns as links
     setTimeout(function(delay){
         jQuery('.rad_rapidology_rapidbar').each(function(){
-           var this_el = jQuery(this);
+            var this_el = jQuery(this);
             var button = jQuery(this_el).find('button'); //find our button on this form
             var btnAsLink = jQuery(button).attr('class').match(/btnaslink/); //make sure button has link class
-            if(btnAsLink.index > 0) { //if the result index from match is > 0 then we can change it, if not we won't.
+            if(btnAsLink && btnAsLink.index > 0) { //if the result index from match is > 0 then we can change it, if not we won't.
                 var barTextEl = jQuery(this_el.find('.rad_rapidology_form_text p span'));
                 var textColor = barTextEl.css('color');
                 if (textColor) {
                     var buttonText = jQuery(this_el.find('.rad_rapidology_button_text'));
-                    jQuery(buttonText).attr('style', 'color: ' + textColor + ' !important');
+                    jQuery(buttonText).attr('style', 'color: ' + textColor + ' !important; text-decoration: underline !important');
+                }else{
+                    jQuery('.rad_rapidology_button_text').attr('style', 'text-decoration: underline !important');
                 }
             }
         });

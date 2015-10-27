@@ -22,8 +22,18 @@ jQuery(window).on('load', function () {
     if(rapidbar_displayed && stickyBottom){
         jQuery('body').addClass('rapidbar_bottom_padding');
     }
-    //do some fun scroll stuff to add and remove padding with static top bar
+    jQuery(window).scroll(function(){
+        var scroll = jQuery(window).scrollTop();
+        if(scroll >= 30){
+          rapidbar_remove_padding(false);
+            jQuery('body').attr('data-rad_padding_added', false);
+        }else if(jQuery('body').attr('data-rad_padding_added') == 'false'){
+            jQuery('body').removeAttr('data-rad_padding_added');
+            rapidbar_add_padding();
 
+        }
+
+    });
     //remove padding for top bars
     if(isTop || staticTop) {
         jQuery('.rad_rapidology_rapidbar .rad_rapidology_submit_subscription').on('click', function () {
@@ -73,7 +83,8 @@ function rapidbar_add_padding(){
     });
 }
 
-function rapidbar_remove_padding(){
+function rapidbar_remove_padding(remove_bar){
+    var removebar = (remove_bar == false ? false : true);
     jQuery("[data-rad_padding]").each(function(){
        var padding_to_remove = jQuery(this).data('rad_padding');
        var current_padding = jQuery(this).css('padding-top');
@@ -81,9 +92,12 @@ function rapidbar_remove_padding(){
        jQuery(this).css('padding-top', new_padding_el);
     });
 
-    var redirectUrl = jQuery('.rad_rapidology_submit_subscription').data('redirect_url');
-    if(redirectUrl) { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
-        jQuery('.rad_rapidology_rapidbar').remove();
+    jQuery('body').removeAttr('data-rad_padding_added');
+    if(removebar == true) {
+        var redirectUrl = jQuery('.rad_rapidology_submit_subscription').data('redirect_url');
+        if (redirectUrl) { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
+            jQuery('.rad_rapidology_rapidbar').remove();
+        }
     }
 }
 

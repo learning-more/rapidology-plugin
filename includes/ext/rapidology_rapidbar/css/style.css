@@ -387,3 +387,8 @@ div[class*="rad_rapidology_border_"]{border-width: 5px !important;}
 .rad_rapidology_rapidbar.rad_rapidology_border_letter { padding: 0 !important; }
 .rad_rapidology_rapidbar .rad_rapidology_rounded_corners.rad_rapidology_border_letter  { border-radius: 5px; }
 
+
+*{
+    transition: padding-top 1s;
+}
+

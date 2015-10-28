@@ -227,7 +227,7 @@ class rapidology_rapidbar
 				: ' rad_rapidology_header_text_dark', //#13
 			self::get_power_button($details['header_text_color']), #14 <span class="rad_rapidology_close_button %1$s"></span>
 			(isset($details['allow_dismiss']) && $details['allow_dismiss'] == '1') ? sprintf(
-				'<span class="rad_rapidology_close_button %1$s"></span>',
+				'<div class="close_ctr"><span class="rad_rapidology_close_button %1$s"></span></div>',
 				esc_attr($details['header_text_color'])
 			) : '' #15
 		);

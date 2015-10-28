@@ -11,23 +11,38 @@
     position: fixed;
     top: 0;
 }
+
+.stickytop_wrapper{
+    position: relative;
+    width:100%;
+    margin: 0 auto;
+}
+.fixed-wrapper {
+    width: 100%;
+    position: absolute;
+    top: 0;
+}
+.sticky_adminbar_push{
+    position: relative;
+    width:100%;
+    height:32px;
+}
 .stickybottom{
     position: fixed;
     bottom: 0;
 }
 .nonsticktop{
-    position: absolute;
-    top: 0;
-}
-.rapidbar_bottom_padding{
-    padding-bottom:30px !important;
+    position: relative;
 }
 .nonstickbottom{
     position:relative;
 }
+.rapidbar_bottom_padding{
+    padding-bottom:30px !important;
+}
 .rad_rapidology_rapidbar{
     width:100vw !important;
-    min-width:750px !important;
+    min-width:100% !important;
     z-index: 9999999999; /*I hate to add this but need reliablity to be ontop over everything else */
 }
 .rad_rapidology_preview_rapidbar{
@@ -36,7 +51,6 @@
     z-index: 9999999999; /*I hate to add this but need reliablity to be ontop over everything else */
 }
 .rad_rapidology_rapidbar_form_container_wrapper{
-    min-width:1000px !important;
     overflow:hidden !important;
     text-align: center;
     max-width:100% !important;
@@ -53,6 +67,7 @@
     -ms-flex-pack: center;
     justify-content: center;
     flex: 0 1 100% !important;
+    flex-flow: row wrap;
 }
 .rad_rapidology_rapidbar_form strong, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form strong{
     font-weight: bold;
@@ -80,6 +95,8 @@
 .rad_rapidology_rapidbar_form .rad_rapidology_form_text p, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p{
     font-size:17px !important;
     text-align: center !important;
+    line-height: 250% !important;
+
 }
 .rad_rapidology_rapidbar_form .rad_rapidology_form_text p strong, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p strong {
     font-weight: bold;
@@ -158,7 +175,7 @@
     color: #fff !important;
 }
 
-.rad_rapidology .rad_rapidology_rapidbar_form .rad_rapidology_close_button, .rad_rapidology_preview_rapidbar .rad_rapidology_close_button{
+.rad_rapidology_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_close_button, .rad_rapidology_preview_rapidbar .rad_rapidology_close_button{
     background-color: transparent !important;
     border: none !important;
     position: relative !important;
@@ -166,6 +183,11 @@
     align-self: flex-end !important;
     width: 30px !important;
     margin-right:15px;
+}
+.rad_rapidology_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_close_button::before{
+    position: relative !important;
+    right: auto !important;
+    top: auto !important;
 }
 
 .rad_rapidology .rad_rapidology_rapidbar_form .rad_rapidology_close_button.dark{
@@ -292,7 +314,6 @@
 .rad_rapidology_preview_rapidbar .rad_rapidology_header_text_dark h2{  color: #898C91 !important;  }
 .rad_rapidology_preview_rapidbar .rad_rapidology_header_text_dark p { color: rgba(137,140,145,0.7) !important; }
 .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form_container_wrapper{
-    min-width:1000px !important;
     overflow:hidden !important;
     text-align: center;
     max-width:100% !important;
@@ -388,7 +409,44 @@ div[class*="rad_rapidology_border_"]{border-width: 5px !important;}
 .rad_rapidology_rapidbar .rad_rapidology_rounded_corners.rad_rapidology_border_letter  { border-radius: 5px; }
 
 
-*{
-    transition: padding-top 1s;
-}
 
+/*-----Responsive------*/
+@media screen and (max-width: 650px){
+
+    .rad_rapidology_rapidbar_form_content form {
+        overflow: hidden !important;
+        max-width: 100% !important;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        -ms-flex-align: center;
+        align-items: center;
+        -webkit-box-pack: center;
+        -webkit-justify-content: flex-end;
+        -ms-flex-pack: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .rad_rapidology_rapidbar_input input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_input input, .rad_rapidology_rapidbar_input.rad_rapidology_subscribe_email{
+        width:200px !important;
+        margin: auto 10px auto; !important;
+        padding: 0 !important;
+        float: none !important;
+    }
+    .rad_rapidology_rapidbar_form .rad_rapidology_submit_subscription, .rad_rapidology_rapidbar_form .rad_rapidology_redirect_page, .rad_rapidology_preview_rapidbar .rad_rapidology_submit_subscription, .rad_rapidology_preview_rapidbar .rad_rapidology_redirect_page{
+        width:190px !important;
+        padding: 0 !important;
+        margin-left:10px !important;
+        margin-top: 10px !important;
+        float: none !important;
+    }
+
+    .rad_rapidology_rapidbar_form .rad_rapidology_form_text p, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p{
+        font-size:14px !important;
+        line-height: 16px !important;
+    }
+}

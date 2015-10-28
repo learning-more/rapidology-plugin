@@ -86,8 +86,6 @@ if(sizeof($all_optins)> 0) {
 
 $rapidbar_position = array(
 	'stickytop'			=> 'Sticky on top',
-	'stickybottom'		=> 'Sticky on bottom',
 	'nonsticktop'		=> 'Static top',
-	'nonstickbottom'	=> 'Static bottom'
 );
 ?>

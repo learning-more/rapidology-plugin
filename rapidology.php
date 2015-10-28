@@ -4900,7 +4900,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 								break;
 							case 'rapidbar' :
 								if ( 0 === $rapidbar_count ) {
-									add_action( 'wp_footer', array( $this, 'display_rapidbar' ), 9999 );
+									add_action( 'wp_head', array( $this, 'display_rapidbar' ), 9999 );
 									$rapidbar_count ++;
 								}
 

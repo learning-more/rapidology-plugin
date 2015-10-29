@@ -1,7 +1,7 @@
 (function($){
 
 
-    $('.newsletter_submit_button').on('click', function(e){
+    $('body').on('click', '.newsletter_submit_button',function(e){
         e.preventDefault;
         var emailaddress = $('.newsletter_email').val();
         var site = window.location + ''; //need to make it a string

@@ -731,6 +731,10 @@
 			return false;
 		});
 
+        $body.on( 'click', '#toplevel_page_rad_rapidology_options ul li a', function(){
+            tinyMCE.remove();
+        });
+
 		function display_image( $popup ) {
 			setTimeout( function() {
 				$popup.find( '.rad_rapidology_image' ).addClass( 'rad_rapidology_visible_image' );

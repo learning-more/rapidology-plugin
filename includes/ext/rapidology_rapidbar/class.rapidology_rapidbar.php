@@ -403,7 +403,7 @@ class rapidology_rapidbar
 	/**
 	 * Generates the powered by button html
 	 */
-	 function get_power_button( $header_text_color ) {
+	 static function get_power_button( $header_text_color ) {
 		if($header_text_color == 'light'){
 			$text_color = 'rad_power_box_mode_rapidbar_light';
 		}else{

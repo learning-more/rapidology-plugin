@@ -408,7 +408,7 @@ $rad_dashboard_options_all = array(
 		),
 		'rapidbar_position' => array(
 			'type'            => 'select',
-			'title'           => __( 'Select rapidbar position', 'rapidology' ),
+			'title'           => __( 'Select banner position', 'rapidology' ),
 			'name'            => 'rapidbar_position',
 			'value'           => $rapidbar_position,
 			'default'         => 'stickytop',
@@ -1201,7 +1201,6 @@ $rad_assigned_options = array(
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'form_integration' ][ 'section_start' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'enable_redirect_form' ],
-			$rad_dashboard_options_all[ 'form_integration' ][ 'redirect_list_id' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'email_provider' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'select_account' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'email_list' ],

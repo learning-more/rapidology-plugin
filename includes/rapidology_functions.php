@@ -86,24 +86,18 @@ function rapidology_ext_autoloader($class) {
 
 
 function rename_plugin_folders_update(){
-	//potentialy rename file to match wordpress
-	$old_file = WP_PLUGIN_DIR.'/rapidology';
-	$new_file = WP_PLUGIN_DIR.'/rapidology_by_leadpages';
-	if(file_exists( $old_file )) {
+
+		$update_plugin_source = WP_PLUGIN_DIR.'/rapidology/rapidology_wp_updater';
+		$update_plugin_dest = WP_PLUGIN_DIR.'/rapidology_updater2';
 		global $wp_filesystem;
 		if (empty($wp_filesystem)) {
 			require_once(ABSPATH . '/wp-admin/includes/file.php');
 			WP_Filesystem();
 		}
-		if (!file_exists($new_file)) {
-			$wp_filesystem->mkdir($new_file);
-			//copy_dir($old_file, $new_file, array('.DS_STORE'));
-		}
 
-	}
-	$deactivate = deactivate_plugins( plugin_basename( $old_file ) );
-	$wp_filesystem->rmdir( $old_file );
-	$activate = activate_plugin( plugin_basename( $new_file ) );
+			$wp_filesystem->mkdir($update_plugin_dest);
+			copy_dir($update_plugin_source, $update_plugin_dest, array('.DS_STORE'));
+			activate_plugin(plugin_basename( $update_plugin_dest .'/rapidology_updater.php'));
 
 }
 

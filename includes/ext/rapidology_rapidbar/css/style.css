@@ -456,7 +456,7 @@ div[class*="rad_rapidology_border_"]{border-width: 5px !important;}
     }
     .rad_rapidology_rapidbar_input input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_input input{
         width:190px !important;
-        margin-bottom:5px !important;
+        margin-bottom:10px !important;
         padding: 0 !important;
         float: none !important;
     }

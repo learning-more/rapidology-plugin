@@ -27,13 +27,17 @@
         new_height = $('.rad_rapidology_rapidbar').height();
         rapidbar_add_padding(new_height);
         replicate_text_color(delay);
+        var text_height = $('.rad_rapidology_rapidbar_form_header').height();
+        rapidbar_responsive_css(text_height);
     });
+
 
 
     $(window).resize(function() {
         new_height = $('.rad_rapidology_rapidbar').height();
-        console.log(new_height);
         rapidbar_add_padding(new_height);
+        var text_height = $('.rad_rapidology_rapidbar_form_header').height();
+        rapidbar_responsive_css(text_height);
     });
 
     function rapidbar_add_padding(height){
@@ -86,10 +90,8 @@
         height = $('.rad_rapidology_rapidbar').height(); //get height of bar
         var removebar = (remove_bar == false ? false : true);
         var header = $('header');
-        console.log($(header).data('rapid_height'));
         if($(header).data('rapid_height')){
             var current_height = $(header).data('rapid_height');
-            console.log(current_height - height);
             $(header).css('margin-top', current_height - height);
         }
         $('.sticky_adminbar_push').css('height', '0');
@@ -113,7 +115,7 @@
         //loop through any rapidbar on the page and set the color appropriately if text color has been changed in the admin editor
         //only happens on btns as links
         setTimeout(function(delay){
-            jQuery('.rad_rapidology_rapidbar').each(function(){
+            $('.rad_rapidology_rapidbar').each(function(){
                 var this_el = jQuery(this);
                 var button = jQuery(this_el).find('button'); //find our button on this form
                 var btnAsLink = jQuery(button).attr('class').match(/btnaslink/); //make sure button has link class
@@ -124,12 +126,28 @@
                         var buttonText = jQuery(this_el.find('.rad_rapidology_button_text'));
                         jQuery(buttonText).attr('style', 'color: ' + textColor + ' !important; text-decoration: underline !important');
                     }else{
-                        jQuery('.rad_rapidology_button_text').attr('style', 'text-decoration: underline !important');
+                        $('.rad_rapidology_button_text').attr('style', 'text-decoration: underline !important');
                     }
                 }
             });
         }, delay);
     }
+
+
+
+    /*------------------------------------------
+     -----fix css for bar on window reisze------
+     ------------------------------------------*/
+
+    function rapidbar_responsive_css(height){
+    console.log('here '+height);
+        if(height > 50){
+            $('.rad_rapidology_rapidbar .rad_rapidology_form_text p').addClass('rapidbar_form_responsive');
+        }else if(height <= 50){
+            $('.rad_rapidology_rapidbar .rad_rapidology_form_text p').removeClass('rapidbar_form_responsive');
+        }
+    }
+
 })( jQuery );
 
 

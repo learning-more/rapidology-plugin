@@ -94,7 +94,7 @@
 .rad_rapidology_rapidbar_form .rad_rapidology_form_text p, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p{
     font-size:17px !important;
     text-align: center !important;
-    line-height: 250% !important;
+    line-height: 50px !important;
 
 }
 .rad_rapidology_rapidbar_form .rad_rapidology_form_text p strong, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p strong {
@@ -447,23 +447,32 @@ div[class*="rad_rapidology_border_"]{border-width: 5px !important;}
         justify-content: center;
         flex-direction: column;
     }
-
-    .rad_rapidology_rapidbar_input input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_input input, .rad_rapidology_rapidbar_input.rad_rapidology_subscribe_email{
-        width:200px !important;
-        margin: auto 10px auto; !important;
+    .rad_rapidology_rapidbar_input{
+        padding-left: 0 !important;
+    }
+    .rad_rapidology_rapidbar_input input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_input input{
+        margin-left: 0 !important;
+        padding: 0 !important;
+    }
+    .rad_rapidology_rapidbar_input input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_input input{
+        width:190px !important;
+        margin-bottom:5px !important;
         padding: 0 !important;
         float: none !important;
     }
     .rad_rapidology_rapidbar_form .rad_rapidology_submit_subscription, .rad_rapidology_rapidbar_form .rad_rapidology_redirect_page, .rad_rapidology_preview_rapidbar .rad_rapidology_submit_subscription, .rad_rapidology_preview_rapidbar .rad_rapidology_redirect_page{
         width:190px !important;
         padding: 0 !important;
-        margin-left:10px !important;
-        margin-top: 10px !important;
+        margin-left:0 !important;
+        margin-top: 0 !important;
+        margin-bottom:10px !important;
         float: none !important;
     }
 
-    .rad_rapidology_rapidbar_form .rad_rapidology_form_text p, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p{
-        font-size:14px !important;
-        line-height: 16px !important;
-    }
+}
+
+.rad_rapidology_rapidbar_form .rad_rapidology_form_text p.rapidbar_form_responsive, .rad_rapidology_preview_rapidbar .rad_rapidology_form_text p.rapidbar_form_responsive{
+    line-height: 20px !important;
+    margin-top:10px !important;
+    margin-bottom: 10px !important;
 }

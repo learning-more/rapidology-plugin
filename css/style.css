@@ -721,13 +721,28 @@
 	border-bottom-left-radius: 10px !important;
 }
 .rad_power_box_mode_flyin {
-	/*border-top-right-radius: 10px !important;
-	border-top-left-radius: 10px !important;*/
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    width: 100% !important;
+    height: 100% !important;
 }
 .rad_power_box_mode_inline {
 	float: right;
 }
 
+.rad_power_mode_popup a{
+    justify-content: flex-end !important;
+}
 .rad_power a {
 	font-family: "Open Sans", Helvetica, Arial, Lucida, sans-serif !important;
     /*color: #ffffff !important;*/
@@ -738,6 +753,18 @@
     vertical-align: middle !important;
     text-decoration: none !important;
     border: none !important;
+    display: -webkit-box !important;
+    display: -webkit-flex !important;
+    display: -ms-flexbox !important;
+    display: flex !important;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
 }
 
 @font-face {
@@ -757,7 +784,7 @@
 	text-decoration: underline !important;
 	font-family: "Open Sans", Helvetica, Arial, Lucida, sans-serif !important;
 
-    font-size: 8px ;
+    font-size: 100% ;
     font-weight: 800 !important;
     /*color: #ffffff !important;*/
 	line-height: 40px !important;
@@ -765,11 +792,11 @@
 
 .rad_power_box_mode_popup a, .rad_power_text_popup  {
     color: #ffffff !important;
-    font-size:14px !important;
+    font-size:13px !important;
 }
 .rad_power_box_mode_flyin a, .rad_power_text_flyin  {
     color:#fff;
-    font-size:10px !important;
+    font-size:13px !important;
     vertical-align: top !important;
 }
 
@@ -781,6 +808,7 @@
     margin-left:5px;
 	line-height: 35px !important;
     vertical-align: middle !important;
+    height:40px !important;
 }
 
 .rad_power_box_mode_flyin a .rad_power_logo:after{

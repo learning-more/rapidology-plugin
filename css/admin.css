@@ -450,7 +450,7 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 	li.rad_dashboard_optin_type:nth-child(3n+1) { clear: both; }
 	li.rad_dashboard_optin_type:nth-last-child(-n+3) { margin-bottom: 40px; }
 
-	.rad_dashboard_visible {	max-height: 460px !important; }
+	.rad_dashboard_visible {	max-height: 620px !important; }
 }
 
 @media screen and (max-width:767px) {
@@ -459,7 +459,7 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 	li.rad_dashboard_optin_type:nth-child(2n+1) { clear: both; ; }
 	li.rad_dashboard_optin_type:nth-last-child(-n+2) { margin-bottom: 40px; }
 
-	.rad_dashboard_visible {	max-height: 615px !important; }
+	.rad_dashboard_visible {	max-height: 780px !important; }
 
 	.rad_dashboard_table_name, .rad_dashboard_table_actions, .rad_dashboard_table_acc_name { width: 70% !important; }
 		.rad_dashboard_table_name, .rad_dashboard_table_name:before { color: #6e768b; }

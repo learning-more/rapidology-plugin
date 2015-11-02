@@ -17,7 +17,7 @@ function rad_marketing_page(){
 					<img src="$imageurl/email-list-building-course.png" name="9_video_course" />
 					<div>
 						<p>The Ultimate Business Owner’s Guide to List-Building</p>
-						<a href = "https://lp.leadpages.co/email-list-building-aff" target="_blank">Download</a>
+						<a href = "https://lp.leadpages.net/webinar-rapidology/" target="_blank">Download</a>
 					</div>
 				</div>
 			</div>
@@ -30,7 +30,7 @@ function rad_marketing_page(){
 					<img src="$imageurl/free-live-training.png" name="live-training" />
 					<div>
 						<p>How to Grow Your List Without Spending All Your Time On Marketing</p>
-						<a href = "https://lp.leadpages.co/ut-conversioncast-1-date-rapidology" target="_blank">Download</a>
+						<a href = "https://lp.leadpages.net/email-list-building-rapidology/" target="_blank">Download</a>
 					</div>
 				</div>
 			</div>
@@ -43,7 +43,7 @@ function rad_marketing_page(){
 					<img src="$imageurl/10-free-images.png" name="free_images" />
 					<div>
 						<p>Grow Your List Faster By Testing These 10 Images On Your Popups</p>
-						<a href = "https://lp.leadpages.co/10-images-rapidology" target="_blank">Download</a>
+						<a href = "https://lp.leadpages.net/10-images-rapidology/" target="_blank">Download</a>
 					</div>
 				</div>
 			</div>
@@ -56,7 +56,7 @@ function rad_marketing_page(){
 					<img src="$imageurl/facebook-ad-course.png" name="facebook_course" />
 					<div>
 						<p>Use Facebook to Grow Your List with the Facebook Advertising System</p>
-						<a href = "https://lp.leadpages.net/facebookadvertising-1/" target="_blank">Download</a>
+						<a href = "https://lp.leadpages.net/facebook-advertising-rapidology/" target="_blank">Download</a>
 					</div>
 				</div>
 			</div>

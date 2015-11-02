@@ -17,7 +17,7 @@ function rad_marketing_page(){
 					<img src="$imageurl/email-list-building-course.png" name="9_video_course" />
 					<div>
 						<p>The Ultimate Business Owner’s Guide to List-Building</p>
-						<a href = "https://lp.leadpages.net/webinar-rapidology/" target="_blank">Download</a>
+						<a href = "https://lp.leadpages.net/email-list-building-rapidology/" target="_blank">Download</a>
 					</div>
 				</div>
 			</div>
@@ -30,7 +30,7 @@ function rad_marketing_page(){
 					<img src="$imageurl/free-live-training.png" name="live-training" />
 					<div>
 						<p>How to Grow Your List Without Spending All Your Time On Marketing</p>
-						<a href = "https://lp.leadpages.net/email-list-building-rapidology/" target="_blank">Download</a>
+						<a href = "https://lp.leadpages.net/webinar-rapidology/" target="_blank">Download</a>
 					</div>
 				</div>
 			</div>

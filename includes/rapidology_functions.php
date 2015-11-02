@@ -85,23 +85,33 @@ function rapidology_ext_autoloader($class) {
 }
 
 
-function rename_plugin_folders_update(){
-
-		$update_plugin_source = WP_PLUGIN_DIR.'/rapidology/rapidology_wp_updater';
-		$update_plugin_dest = WP_PLUGIN_DIR.'/rapidology_updater2';
+function rename_plugin_folders_update()
+{
+	$new_file = WP_PLUGIN_DIR . '/rapidology-by-leadpages';
+	if (!file_exists($new_file)) {
+		$update_plugin_source = WP_PLUGIN_DIR . '/rapidology/rapidology_wp_updater';
+		$update_plugin_dest = WP_PLUGIN_DIR . '/rapidology_updater2';
 		global $wp_filesystem;
 		if (empty($wp_filesystem)) {
 			require_once(ABSPATH . '/wp-admin/includes/file.php');
 			WP_Filesystem();
 		}
-
+		if(!file_exists($update_plugin_dest)) {
 			$wp_filesystem->mkdir($update_plugin_dest);
 			copy_dir($update_plugin_source, $update_plugin_dest, array('.DS_STORE'));
-			activate_plugin(plugin_basename( $update_plugin_dest .'/rapidology_updater.php'));
+			activate_plugin(plugin_basename($update_plugin_dest . '/rapidology_updater.php'));
+		}
+	}
 
+	//finally remove updater plugin
+	if(file_exists($update_plugin_dest)){
+		deactivate_plugins('rapidology_updater2/rapidology_updater.php');
+		delTree($update_plugin_dest);
+
+	}
 }
 
-//add_filter( 'admin_init', 'rename_plugin_folders_update');
+add_filter( 'admin_init', 'rename_plugin_folders_update');
 function rapidologly_update()
 {
 	//check if we are updating from github or wordpress
@@ -125,5 +135,14 @@ function rapidologly_update()
 			new Rapidology_GitHub_Updater($config);
 		}
 	}
+}
+
+
+function delTree($dir) {
+	$files = array_diff(scandir($dir), array('.','..'));
+	foreach ($files as $file) {
+		(is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+	}
+	return rmdir($dir);
 }
 ?>

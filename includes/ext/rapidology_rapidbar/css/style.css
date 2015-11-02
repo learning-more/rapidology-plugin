@@ -6,8 +6,10 @@
     margin-right:auto;
     text-align: center;
 }
-
 .stickytop{
+    position: relative;
+}
+.stickytop_stick{
     position: fixed;
     top: 0;
 }

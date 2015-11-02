@@ -1,21 +1,31 @@
 (function($) {
     //setup some variables to use throughout
     var isSticky = ($('.rad_rapidology_rapidbar').hasClass('stickytop')) ? true : false;
+    var isStickyStuck = ($('.rad_rapidology_rapidbar').hasClass('stickytop_stick')) ? true : false;
     var rapidbar_displayed = jQuery('.rad_rapidology_rapidbar').length;
     var rapidbar_timedelay = jQuery('.rad_rapidology_rapidbar.rad_rapidology_rapidbar_trigger_auto').data('delay');
     var delay = '' !== rapidbar_timedelay ? rapidbar_timedelay * 1000 : 500;
 
-    //put wrapper around sticky bar for relative positioning
-    if(isSticky == true && rapidbar_displayed && rapidbar.admin_bar){
 
-            setTimeout(function () {
-                $('.rad_rapidology_rapidbar').css('margin-top', '32px');
-            }, delay);
-        }
+    if(isSticky == true){
+        $(window).on('scroll', function(){
 
-       $("<div class='sticky_adminbar_push'></div>").insertBefore('.stickytop');
-       $('.stickytop').wrap("<div class='fixed-wrapper'></div>");
-       $('.fixed-wrapper').wrap("<div class='stickytop_wrapper'></div>");
+            if($(window).scrollTop() > 0){
+                $('.rad_rapidology_rapidbar').addClass('stickytop_stick');
+                $('.rad_rapidology_rapidbar').removeClass('stickytop');
+                if(rapidbar.admin_bar) {
+                    $('.rad_rapidology_rapidbar').css('margin-top', '32px');
+                }
+            }else{
+                $('.rad_rapidology_rapidbar').removeClass('stickytop_stick');
+                $('.rad_rapidology_rapidbar').addClass('stickytop');
+                if(rapidbar.admin_bar) {
+                    $('.rad_rapidology_rapidbar').css('margin-top', '0px');
+                }
+            }
+
+        });
+    }
 
 
 

@@ -3785,9 +3785,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 				isset( $details['disable_dbl_optin'] ) && '1' === $details['disable_dbl_optin'] ? 'disable' : '',#11
 				esc_attr($pagename),#12
 				esc_attr($hubspot_cookie),#13
-				$details['enable_redirect_form'] == true ? 'rad_rapidology_redirect_page' : 'rad_rapidology_submit_subscription',#14
-				$details['enable_redirect_form'] == true ? esc_url($details['redirect_url']) : '',#15
-				$details['enable_redirect_form'] == true ? 'hidden_item' : '',#16
+				(isset($details['enable_redirect_form']) && $details['enable_redirect_form'] == true)? 'rad_rapidology_redirect_page' : 'rad_rapidology_submit_subscription',#14
+				(isset($details['enable_redirect_form']) && $details['enable_redirect_form'] == true) ? esc_url($details['redirect_url']) : '',#15
+				(isset($details['enable_redirect_form']) && $details['enable_redirect_form'] == true) ? 'hidden_item' : '',#16
 				isset($details['success_url']) ? esc_url($details['success_url']) : '',#17 //you will notice both 15 and 17 exist in the dat-redirect_url attribute. This is because both should never be set at the same time.
 				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '' #18
 			),

@@ -712,7 +712,6 @@
 		} );
 
 		$body.on( 'click', '.rad_rapidology_preview_popup .rad_rapidology_close_button', function() {
-            alert('test');
 			$( this ).parent().parent().remove();
 			$( '#rad_rapidology_preview_css' ).remove();
 			$( '.rad_dashboard_preview button' ).removeClass( 'rapidology_preview_opened' );

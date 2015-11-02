@@ -232,6 +232,7 @@ Add the desired vendor prefixes and remove unnecessary in your CSS
     font-size:14px;
     display: block;
     width:200px;
+    cursor: pointer !important;
 }
 .privacy_link{
     margin-top:10px;

@@ -92,4 +92,3 @@ $rapidbar_position = array(
 	'nonsticktop'		=> 'Static top',
 );
 ?>
-

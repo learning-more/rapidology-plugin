@@ -81,7 +81,7 @@
      ------------------------------------------*/
 
     // triggers for closing rapidbar
-    jQuery('.rad_rapidology_redirect_page, .rad_rapidology_rapidbar').on('click', function () {
+    jQuery('.rad_rapidology_redirect_page').on('click', function () {
         setTimeout(
             function(){
                 rapidbar_remove_padding(true);
@@ -130,7 +130,7 @@
             if (redirectUrl) { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
                 $('.rad_rapidology_rapidbar').remove();
             }
-        }else if(closebtn == true){
+        }else if(closebtn ==  true){
             $('.rad_rapidology_rapidbar').remove();
         }
     }

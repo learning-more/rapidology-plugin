@@ -81,7 +81,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 			'rad_dashboard_plugin_name'       => 'rapidology',
 			'rad_dashboard_save_button_text'  => __( 'Save & Exit', 'rapidology' ),
 			'rad_dashboard_plugin_class_name' => 'rad_rapidology',
-			'rad_dashboard_options_path'      => RAD_RAPIDOLOGY_PLUGIN_DIR . '/dashboard/includes/options.php',
+			'rad_dashboard_options_path'      => RAD_RAPIDOLOGY_PLUGIN_DIR . 'dashboard/includes/options.php',
 			'rad_dashboard_options_page'      => 'toplevel_page',
 		);
 

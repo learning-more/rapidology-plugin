@@ -189,7 +189,7 @@ class rapidology_rapidbar
 				esc_attr($details['email_provider']), //#5
 				esc_attr($details['email_list']),
 				esc_attr($page_id),
-				'blank',
+				isset($details['account']) ? $details['account'] : '',
 				'' != $button_text ? stripslashes(esc_html($button_text)) : esc_html__('SUBSCRIBE!', 'rapidology'),
 				isset($details['button_text_color']) ? esc_attr($details['button_text_color']) : '', // #10
 				isset($details['disable_dbl_optin']) && '1' === $details['disable_dbl_optin'] ? 'disable' : '',#11

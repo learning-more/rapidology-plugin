@@ -77,7 +77,7 @@ class RAD_Dashboard {
 	}
 
 	function include_options() {
-		require_once( $this->options_path );
+		require( $this->options_path );
 
 		$this->dashboard_sections = $rad_all_sections;
 		$this->assigned_options = $rad_assigned_options;

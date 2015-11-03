@@ -44,7 +44,7 @@ $rad_all_sections = array(
  *
  */
 
-require_once('options_config.php');
+require('options_config.php');
 
 $more_info_hint_text = sprintf(
 	'<a href="%2$s" target="_blank">%1$s</a>',

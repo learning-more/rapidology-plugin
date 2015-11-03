@@ -81,10 +81,17 @@
      ------------------------------------------*/
 
     // triggers for closing rapidbar
-    jQuery('.rad_rapidology_redirect_page, .rad_rapidology_rapidbar .rad_rapidology_close_button').on('click', function () {
+    jQuery('.rad_rapidology_redirect_page, .rad_rapidology_rapidbar').on('click', function () {
         setTimeout(
             function(){
                 rapidbar_remove_padding(true);
+            }, 400); //use set timeout as it is used the other closing functions
+    });
+
+    jQuery('.rad_rapidology_close_button').on('click', function () {
+        setTimeout(
+            function(){
+                rapidbar_remove_padding(true, true);
             }, 400); //use set timeout as it is used the other closing functions
     });
 
@@ -101,7 +108,7 @@
         });
     }
 
-    function rapidbar_remove_padding(remove_bar){
+    function rapidbar_remove_padding(remove_bar, closebtn){
         height = $('.rad_rapidology_rapidbar').height(); //get height of bar
         var removebar = (remove_bar == false ? false : true);
         var header = $('header');
@@ -123,6 +130,8 @@
             if (redirectUrl) { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
                 $('.rad_rapidology_rapidbar').remove();
             }
+        }else if(closebtn == true){
+            $('.rad_rapidology_rapidbar').remove();
         }
     }
 

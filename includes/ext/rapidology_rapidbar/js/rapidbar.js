@@ -34,15 +34,17 @@
     -----------------------------------------*/
     $(window).on('load', function () {
         //set inital heights
-        new_height = $('.rad_rapidology_rapidbar').height();
-        rapidbar_add_padding(new_height);
+        load_delay = delay + 500;
+	//need to delay as if we don't and the bar has a delay we end up with a negative margin
+        setTimeout(function(){
+            new_height = $('.rad_rapidology_rapidbar').height();
+            rapidbar_add_padding(new_height);
+        }, load_delay);
         replicate_text_color(delay);
         var text_height = $('.rad_rapidology_rapidbar_form_header').height();
         rapidbar_responsive_css(text_height);
     });
-
-
-
+    
     $(window).resize(function() {
         new_height = $('.rad_rapidology_rapidbar').height();
         rapidbar_add_padding(new_height);

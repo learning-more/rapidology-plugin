@@ -88,7 +88,7 @@
             }, 400); //use set timeout as it is used the other closing functions
     });
 
-    jQuery('.rad_rapidology_close_button').on('click', function () {
+    jQuery('.rad_rapidology_rapidbar .rad_rapidology_close_button').on('click', function () {
         setTimeout(
             function(){
                 rapidbar_remove_padding(true, true);
@@ -127,10 +127,11 @@
 
         if(removebar == true) {
             var redirectUrl = $('.rad_rapidology_submit_subscription').data('redirect_url');
-            if (redirectUrl) { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
+            if (!redirectUrl) { //dont want to remove if they have a redirect setup with a timer as we want the form to stick around
                 $('.rad_rapidology_rapidbar').remove();
             }
-        }else if(closebtn ==  true){
+        }
+        if(closebtn ==  true){
             $('.rad_rapidology_rapidbar').remove();
         }
     }

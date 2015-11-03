@@ -104,6 +104,7 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 *	Added notification/opt-in banner form
 *	Added page redirect functionality
 * 	Added page open after opt-in functionality
+*	Fixed bug with optin creation not loading tiny MCE if you haven't refreshed the page after leaving an unfinished optin.
 
 **1.2.3** 10/02/2015
 *	Added check for Rapidology body class to ensure no plugins/themes have removed it

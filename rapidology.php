@@ -3375,6 +3375,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return bool
 	 */
 	function check_applicability( $optin_id ) {
+
 		$options_array = RAD_Rapidology::get_rapidology_options();
 		$display_there = false;
 
@@ -4219,10 +4220,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 
 					}
+		echo $content;
 				}
 			}
 		}
-		echo $content;
 	}
 
 	/**

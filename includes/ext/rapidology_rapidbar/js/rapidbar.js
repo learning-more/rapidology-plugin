@@ -80,7 +80,10 @@
 
     // triggers for closing rapidbar
     jQuery('.rad_rapidology_redirect_page, .rad_rapidology_rapidbar .rad_rapidology_close_button').on('click', function () {
-        setTimeout(rapidbar_remove_padding, 400); //use set timeout as it is used the other closing functions
+        setTimeout(
+            function(){
+                rapidbar_remove_padding(true);
+            }, 400); //use set timeout as it is used the other closing functions
     });
 
     //scroll trigger to remove padding
@@ -150,7 +153,6 @@
      ------------------------------------------*/
 
     function rapidbar_responsive_css(height){
-    console.log('here '+height);
         if(height > 50){
             $('.rad_rapidology_rapidbar .rad_rapidology_form_text p').addClass('rapidbar_form_responsive');
         }else if(height <= 50){

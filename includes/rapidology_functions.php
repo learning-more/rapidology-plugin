@@ -111,7 +111,7 @@ function rename_plugin_folders_update()
 	}
 }
 
-add_filter( 'admin_init', 'rename_plugin_folders_update');
+//add_filter( 'admin_init', 'rename_plugin_folders_update');
 function rapidologly_update()
 {
 	//check if we are updating from github or wordpress

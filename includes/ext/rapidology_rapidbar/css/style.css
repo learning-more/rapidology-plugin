@@ -222,7 +222,6 @@
 }
 
 
-
 .rad_rapidology_rapidbar_form .rad_rapidology_form_text_dark input, .rad_rapidology_preview_rapidbar .rad_rapidology_rapidbar_form .rad_rapidology_form_text_dark input{
     background-color: #fff;
     color: rgba(0,0,0,0.6)!important;
@@ -427,6 +426,11 @@ div[class*="rad_rapidology_border_"]{border-width: 5px !important;}
     justify-content: center;
     flex-direction: row;
     width:25px;
+}
+
+.rad_rapidology_rapidbar_form_content form{
+    margin-bottom:0 !important;
+    margin-top: 0 !important;
 }
 
 /*-----Responsive------*/

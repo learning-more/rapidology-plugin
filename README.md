@@ -10,7 +10,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 100% Free List Building & Popup Plugin...With Over 100 Responsive Templates & 6 Different Display Types For Growing Your Email Newsletter
 
-== Description == 
+**Description** 
 [youtube https://www.youtube.com/watch?v=gygc2pHJm3w]
 
 [See more at Rapidology.com](http://www.rapidology.com/ "See more at Rapidology.com")
@@ -55,7 +55,7 @@ Features
 
 \* *Rapidology is a fork of the Bloom Plugin by Elegant Themes released under GNU Public License version 2.0.  The Rapidology Source Code is freely available on [GitHub](https://github.com/LeadPages/rapidology-plugin/ "Rapidology GitHub")*
 
-== Installation ==
+**Installation**
 
 *	Upload folder wp-rapidology.zip to the `/wp-content/plugins/` directory
 *	Activate the plugin through the `Plugins` menu in WordPress
@@ -64,29 +64,29 @@ Features
 *	Enter your access code and begin using Rapidology
 
 
-== Frequently Asked Questions ==
+**Frequently Asked Questions**
 
-= Can I customize the look and feel of the popup? =
+**Can I customize the look and feel of the popup?**
 
 You can use one of our 100+ beautifully designed templates right out of the box, or customize it to your heart’s content. Edit colors, text, images, animations, and even custom CSS.
 
-= Does Rapidology work with my email service provider? =
+**Does Rapidology work with my email service provider?**
 
 Rapidology integrates with AWeber, Emma, Hubspot, ActiveCampaign, SalesForce, MailChimp, Campaign Monitor, Constant Contact, Mad Mimi, Infusionsoft, iContact, GetResponse, mailpoet, feedblitz, SendInBlue, and Ontraport.
 
-= How will these opt-in forms work on mobile? =
+**How will these opt-in forms work on mobile?**
 
 Rapidology is 100% mobile responsive, so your opt-in forms will look great on screens of any size.
 
-= How can I know how my opt-in forms are performing? =
+**How can I know how my opt-in forms are performing?**
 
 Check your analytics dashboard to see at a glance how many times an opt-in form was viewed, the number of opt-ins, and the conversion rate. You can view your stats for each opt-in form, for all your forms combined, or for your forms during a specific time period you choose.
 
-= Can I share my forms with a different account? =
+**Can I share my forms with a different account?**
 
 Rapidology’s import/export function allows you to easily export any opt-in form you have created. This saved form can then be imported into any other WordPress account that has the Rapidology plugin installed.
 
-== Screenshots ==
+**Screenshots**
 
 1.  Customizable opt-in forms - use on any WordPress site. 
 2.  6 different types of opt-in forms available.
@@ -98,7 +98,7 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 8.  Track the success of your opt-in forms.
 9.  Import and Export your opt in forms.
 
-== Changelog ==
+**Changelog**
 
 **1.3** 11/02/2015
 *	Added notification/opt-in banner form

@@ -3433,7 +3433,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				$page_id           = ( is_front_page() && ! is_page() ) ? 'homepage' : get_the_ID();
 				$current_post_type = 'homepage' == $page_id ? 'home' : get_post_type( $page_id );
 
-				if ( is_singular() || ( 'home' == $current_post_type && ( 'flyin' == $optin_type || 'pop_up' == $optin_type ) ) ) {
+				if ( is_singular() || ( 'home' == $current_post_type && ( 'flyin' == $optin_type || 'pop_up' == $optin_type || 'rapidbar' == $optin_type ) ) ) {
 					if ( in_array( $page_id, $current_optin_limits['pages_include'] ) || in_array( (int) $page_id, $current_optin_limits['posts_include'] ) ) {
 						$display_there = true;
 					}

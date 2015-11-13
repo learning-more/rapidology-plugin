@@ -83,7 +83,7 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'boolean',
 			'hint_text'       => __( 'Select this if you do not want your banner to include an email opt-in.', 'rapidology' ),
 			'class'			  =>  'rad_dashboard_enable_redirect_form',
-			'conditional'	  =>  'redirect_list_id#email_text#redirect_url',
+			'conditional'	  =>  'redirect_list_id#email_text#redirect_url#submit_remove',
 		),
 		'email_provider' => array(
 			'type'            => 'select',
@@ -846,6 +846,16 @@ $rad_dashboard_options_all = array(
 			'default'         => true,
 			'validation_type' => 'boolean',
 		),
+		'submit_remove' => array(
+			'type'            => 'checkbox',
+			'title'           => __( 'Remove on redirect', 'rapidology' ),
+			'hint_text'		  => __('Close the banner on link click'),
+			'name'            => 'submit_remove',
+			'class'			  => 'rad_rapidology_submit_removes',
+			'default'         => true,
+			'validation_type' => 'boolean',
+			'display_if'      => 'enable_redirect_form#true'
+		),
 	),
 
 	'flyin_orientation' => array(
@@ -1297,6 +1307,7 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'load_in' ][ 'session_duration' ],
 			$rad_dashboard_options_all[ 'load_in' ][ 'hide_mobile' ],
 			$rad_dashboard_options_all['load_in']['allow_dismiss'],
+			$rad_dashboard_options_all['load_in']['submit_remove'],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'post_types' ][0],
 			$rad_dashboard_options_all[ 'post_types' ][1],

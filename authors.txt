@@ -1,4 +1,17 @@
 /*************************************************************************/
+
+    Copyright 2015 Elegant Themes, Inc.
+
+    All plugin files are licensed under the GNU Public License 2.0 unless
+    specified as otherwise within the file itself. Some files may be
+    licensed under alternative open source licenses such as MIT, BSD
+    or OFL. Refer to individual files for licensing information. If no
+    license is stated, then the file is placed under the GPL 2.0. You
+    will find a copy of the GPL 2.0 below.
+
+/*************************************************************************/
+
+/*************************************************************************/
 /*************************************************************************/
 
    Contributors / Authors text file per GNU

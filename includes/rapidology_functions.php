@@ -88,9 +88,9 @@ function rapidology_ext_autoloader($class) {
 function rename_plugin_folders_update()
 {
 	$new_file = WP_PLUGIN_DIR . '/rapidology-by-leadpages';
+	$update_plugin_source = WP_PLUGIN_DIR . '/rapidology/rapidology_wp_updater';
+	$update_plugin_dest = WP_PLUGIN_DIR . '/rapidology_updater2';
 	if (!file_exists($new_file)) {
-		$update_plugin_source = WP_PLUGIN_DIR . '/rapidology/rapidology_wp_updater';
-		$update_plugin_dest = WP_PLUGIN_DIR . '/rapidology_updater2';
 		global $wp_filesystem;
 		if (empty($wp_filesystem)) {
 			require_once(ABSPATH . '/wp-admin/includes/file.php');
@@ -99,23 +99,30 @@ function rename_plugin_folders_update()
 		if(!file_exists($update_plugin_dest)) {
 			$wp_filesystem->mkdir($update_plugin_dest);
 			copy_dir($update_plugin_source, $update_plugin_dest, array('.DS_STORE'));
-			activate_plugin(plugin_basename($update_plugin_dest . '/rapidology_updater.php'));
 		}
+			activate_plugin(plugin_basename($update_plugin_dest . '/rapidology_updater.php'));
 	}
 
+	$refresh = get_option('update_refresh');
+	if($refresh == true){
+		update_option('update_refresh', false);
+		echo '<script> location.reload(); </script>';
+	}
 	//finally remove updater plugin
-	if(file_exists($update_plugin_dest)){
-		deactivate_plugins('rapidology_updater2/rapidology_updater.php');
-		delTree($update_plugin_dest);
-
+	if ( is_plugin_active( 'rapidology-by-leadpages/rapidology.php') ) {
+		if(file_exists(	$update_plugin_dest = WP_PLUGIN_DIR . '/rapidology_updater2')){
+			deactivate_plugins('rapidology_updater2/rapidology_updater.php');
+			delTree($update_plugin_dest);
+		}
 	}
 }
 
 //add_filter( 'admin_init', 'rename_plugin_folders_update');
 function rapidologly_update()
 {
+	$plugin_name = plugin_basename(dirname(dirname(__FILE__)));
 	//check if we are updating from github or wordpress
-	$update = file_get_contents('https://r0014-2-dot-rapidology-home.appspot.com/download/wp_update.json');
+	$update = file_get_contents('https://rapidology.com/download/wp_update.json');
 	$update = json_decode($update);
 	if (is_admin()) { // note the use of is_admin() to double check that this is happening in the admin
 		if ($update->wordpress_update == false) {

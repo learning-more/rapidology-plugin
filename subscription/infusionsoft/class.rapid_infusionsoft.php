@@ -222,5 +222,3 @@ function subscribe_infusionsoft( $api_key, $app_id, $list_id, $email, $name = ''
 
 	return $error_message;
 }
-
-}

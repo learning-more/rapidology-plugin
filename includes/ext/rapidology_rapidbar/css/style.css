@@ -484,7 +484,10 @@ div[class*="rad_rapidology_border_"]{border-width: 5px !important;}
     .rad_rapidology_rapidbar .rad_rapidology_form_container button{
         width: 190px !important;
         min-width: 190px !important;
-        padding: 0 !important;
+        padding-left:10px !important;
+        padding-right: 10px !important;
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
         margin-left:0 !important;
         margin-top: 0 !important;
         margin-bottom:10px !important;

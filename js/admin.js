@@ -758,30 +758,33 @@
 		}
 
 		function switch_graph( $period, $list_id, $period_changed ) {
-			$.ajax({
+
+            $.ajax({
 				type: 'POST',
 				url: rapidology_settings.ajaxurl,
 				data: {
 					action : 'rapidology_get_stats_graph_ajax',
 					rapidology_stats_nonce : rapidology_settings.rapidology_stats,
 					rapidology_list : $list_id,
-					rapidology_period : $period
+					rapidology_period : $period,
 				},
 				success: function( data ){
 					if ( true === $period_changed ) {
-						$( '.rad_dashboard_lists_stats_graph_container' ).replaceWith( function() {
-							return $( data ).hide().fadeIn();
-						} );
+                        stats = rapidology_settings.chart_stats;
+                        rapidology_chart_init($period, stats, $list_id);
+
 					} else {
-						$( '.rad_dashboard_lists_stats_graph_container' ).replaceWith( data );
+                        stats = rapidology_settings.chart_stats;
+
+                        rapidology_chart_init($period, stats, $list_id);
+
 					}
 
-					$( 'ul.rad_rapidology_graph' ).each( function() {
-						resize ( $( this ) );
-					});
-				}
+				},
 			});
 		}
+
+
 
 		function refresh_stats_table( $id, $orderby, $table ) {
 			$.ajax({
@@ -829,6 +832,8 @@
 						});
 
 						$( '.rad_rapidology_refresh_stats' ).removeClass( 'rad_rapidology_loading' );
+                        stats = rapidology_settings.chart_stats;
+                        rapidology_chart_init(30, stats);
 					}
 				});
 			} else {

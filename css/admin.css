@@ -524,3 +524,17 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
     margin-right:13px;
 }
 
+.rapidology_line_chart {
+    position: relative;
+    top: 70px;
+}
+
+.line_chart_reload{
+    background: url('../images/stats-loader.gif') no-repeat; width: 100px; height: 100px;
+    width:100px;
+    height:100px;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:50px;
+}
+

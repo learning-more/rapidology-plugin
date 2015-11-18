@@ -162,6 +162,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate_plugin' ) );
 		add_action( 'rapidology_lists_auto_refresh', array( $this, 'perform_auto_refresh' ) );
 		add_action( 'rapidology_stats_auto_refresh', array( $this, 'perform_stats_refresh' ) );
+		add_action( 'admin_head', array($this, 'addGoggleChartCode') );
 
 		$this->frontend_register_locations();
 
@@ -1360,16 +1361,22 @@ class RAD_Rapidology extends RAD_Dashboard {
 		return $this->get_compact_number( $subscribers_count );
 	}
 
+
+	function addGoggleChartCode(){
+		?>
+		<script>
+
+		</script>
+		<?php
+	}
+
 	/**
 	 * Generates output for the lists stats graph.
 	 */
 	function generate_lists_stats_graph( $period, $day_or_month, $list_id = '' ) {
 		$all_stats_rows = $this->get_conversions();
-
 		$stats = $this->generate_stats_by_period( $period, $day_or_month, $all_stats_rows, $list_id );
-
 		$output = $this->generate_stats_graph_output( $period, $day_or_month, $stats );
-
 		return $output;
 	}
 
@@ -1382,7 +1389,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		$j                 = 0;
 		$count_subscribers = 0;
-
 		for ( $i = 1; $i <= $period; $i ++ ) {
 			if ( array_key_exists( $j, $input_data ) ) {
 				$count_subtotal = 1;
@@ -1425,41 +1431,18 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * @return string
 	 */
 	function generate_stats_graph_output( $period, $day_or_month, $data ) {
-		$result = '<div class="rad_dashboard_lists_stats_graph_container">';
-		$result .= sprintf(
-			'<ul class="rad_rapidology_graph_%1$s rad_rapidology_graph">',
-			esc_attr( $period )
-		);
+		$result = '<div id="rapidology_line_chart" class="rad_dashboard_lists_stats_graph_container"></div>';
 		$bars_count = 0;
-
 		for ( $i = 1; $i <= $period; $i ++ ) {
-			$result .= sprintf( '<li%1$s>',
-				$period == $i ? ' class="rad_rapidology_graph_last"' : ''
-			);
-
 			if ( array_key_exists( $i, $data ) ) {
-				$result .= sprintf( '<div value="%1$s" class="rad_rapidology_graph_bar">',
-					esc_attr( $data[ $i ]['subtotal'] )
-				);
-
 				$bars_count ++;
-
-				$result .= '</div>';
-			} else {
-				$result .= '<div value="0"></div>';
 			}
-
-			$result .= '</li>';
 		}
-
-		$result .= '</ul>';
-
 		if ( 0 < $bars_count ) {
 			$per_day = round( $data[ 'total_subscribers_' . $period ] / $bars_count, 0 );
 		} else {
 			$per_day = 0;
 		}
-
 		$result .= sprintf(
 			'<div class="rad_rapidology_overall">
 				<span class="total_signups">%1$s | </span>
@@ -2127,13 +2110,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 
 		add_filter( 'admin_body_class', array( $this, 'add_admin_body_class' ) );
-		wp_enqueue_script('jquery-ui-accordion');
+		wp_enqueue_script('rapidology-chart-base', '//www.google.com/jsapi', array(), $this->plugin_version, true );
+		wp_enqueue_script('rapidology-chart-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/chart.js', array( ), $this->plugin_version, true );
 		wp_enqueue_script( 'rad_rapidology-uniform-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/jquery.uniform.min.js', array( 'jquery' ), $this->plugin_version, true );
 		wp_enqueue_style( 'rad-open-sans-700', "{$this->protocol}://fonts.googleapis.com/css?family=Open+Sans:700", array(), $this->plugin_version );
 		wp_enqueue_style( 'rad-montserrat-700', "{$this->protocol}://fonts.googleapis.com/css?family=Montserrat:400,700", array(), $this->plugin_version );
 		wp_enqueue_style( 'rad-rapidology-css', RAD_RAPIDOLOGY_PLUGIN_URI . '/css/admin.css', array(), $this->plugin_version );
 		wp_enqueue_style( 'rad_rapidology-preview-css', RAD_RAPIDOLOGY_PLUGIN_URI . '/css/style.css', array(), $this->plugin_version );
-		wp_enqueue_script( 'rad-rapidology-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/admin.js', array( 'jquery' ), $this->plugin_version, true );
+		wp_enqueue_script( 'rad-rapidology-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/admin.js', array( 'jquery', 'rapidology-chart-base-init' ), $this->plugin_version, true );
 		wp_localize_script( 'rad-rapidology-js', 'rapidology_settings', array(
 			'rapidology_nonce'         => wp_create_nonce( 'rapidology_nonce' ),
 			'ajaxurl'                  => admin_url( 'admin-ajax.php', $this->protocol ),
@@ -2163,7 +2147,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 			'save_inactive_button'     => __( 'Save As Inactive', 'rapidology' ),
 			'cannot_activate_text'     => __( 'You Have Not Added An Email List. Before your opt-in can be activated, you must first add an account and select an email list.', 'rapidology' ),
 			'save_settings'            => wp_create_nonce( 'save_settings' ),
+			'chart_stats'              => $this->get_conversions(),
 		) );
+		wp_enqueue_script('rapidology-chart-base-init', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/googlechart.js', array(), $this->plugin_version, true );
 	}
 
 	/**

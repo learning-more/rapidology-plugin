@@ -66,11 +66,9 @@ function rapidology_drawChart($period, $stats, $list_id){
         window.addEventListener('resize', function(event) {
             var now = Date.now();
             if (now - lastExection < 100) {
-                console.log('less than');
                 jQuery('#rapidology_line_chart').removeAttr('style');
                 return
             }
-            console.log('less than 2');
             jQuery('#rapidology_line_chart').removeAttr('margin-left', '10000px');
             lastExection = Date.now();
 

@@ -3,12 +3,7 @@ google.load('visualization', '1.1', {packages: ['line']});
 function rapidology_chart_init($period, $stats, $list_id){
     google.setOnLoadCallback(rapidology_drawChart);
     rapidology_drawChart($period, $stats, $list_id);
-
-
-
 }
-
-
 
 function rapidology_drawChart($period, $stats, $list_id){
     var data = new google.visualization.DataTable();
@@ -38,13 +33,14 @@ function rapidology_drawChart($period, $stats, $list_id){
             data.addRow([month+'/'+day, converstions]);
         }
     }//end period 30
-
     var options = {
         chart: {
             title: chart_title,
             hAxis:{showTextEvery:1},
         },
+
         vAxis: {minValue:0},
+
     };
     var div = document.createElement("div");
     div.setAttribute('class', 'rapidology_line_chart');
@@ -55,41 +51,23 @@ function rapidology_drawChart($period, $stats, $list_id){
 
     function resizeCharts () {
         // redraw charts, dashboards, etc here
-
-
         chart.draw(data, options);
-
-
     }
     var lastExection = 0;
     if (window.addEventListener) {
         window.addEventListener('resize', function(event) {
             var now = Date.now();
-            if (now - lastExection < 100) {
-                jQuery('#rapidology_line_chart').removeAttr('style');
+            if (now - lastExection < 2000) {
+               setTimeout(function(){
+                   resizeCharts();
+               },500);
                 return
-            }
-            jQuery('#rapidology_line_chart').removeAttr('margin-left', '10000px');
-            lastExection = Date.now();
-
-            setTimeout(function(){
-                jQuery('#rapidology_line_chart').removeAttr('style');
-                resizeCharts();
-            }, 1000);
-
-
-        });
-    }
-    if (window.attachEvent) {
-        window.attachEvent('onresize', function(event){
-            var now = Date.now();
-            if(now - lastExection < 1000){
-                return;
             }
             lastExection = Date.now();
             resizeCharts();
-        }, false);
+        });
     }
+
 
 }
 

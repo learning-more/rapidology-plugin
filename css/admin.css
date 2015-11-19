@@ -527,6 +527,11 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 .rapidology_line_chart {
     position: relative;
     top: 70px;
+    margin-top:20px;
+    margin-bottom:20px;
+}
+#rapidology_line_chart{
+    margin-bottom:70px;
 }
 
 .line_chart_reload{
@@ -536,5 +541,10 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
     margin-left:auto;
     margin-right:auto;
     margin-top:50px;
+}
+@media screen and (max-width: 750px){
+    #rapidology_line_chart{
+        padding-top:50px;
+    }
 }
 

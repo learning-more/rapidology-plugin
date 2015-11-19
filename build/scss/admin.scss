@@ -1,0 +1,2113 @@
+//colors
+$color_storm_gray_approx: #6e768b;
+$black_6: rgba(0, 0, 0, 0.06 );
+$color_big_stone_approx: #14283a;
+$white: #ffffff;
+$color_black_haze_approx: #f3f5f8;
+$seashell: #f1f1f1;
+$color_viking_approx: #4fd1cd;
+$color_chestnut_approx: #bd404d;
+$color_dodger_blue_approx: #1ab6ff;
+$color_cerulean_approx: #009ce5;
+$color_quill_gray_approx: #d1d2d3;
+$color_puerto_rico_approx: #47bcb8;
+$color_tuna_approx: #373942;
+$black_4: rgba(0, 0, 0, 0.04 );
+$color_manatee_approx: #939aaa;
+$color_abbey_approx: #4b4d55;
+$color_sunset_orange_approx: #f45a4a;
+$color_flame_pea_approx: #db5142;
+$color_conifer_approx: #95c551;
+$color_sushi_approx: #89b44b;
+$color_malibu_approx: #72d0fd;
+$color_loblolly_approx: #c2c6d0;
+$color_wild_sand_approx: #f2f3f7;
+$color_storm_dust_approx: #666;
+$black_30: rgba(0,0,0,.3);
+$color_french_gray_approx: #bcc0ca;
+$color_mercury_approx: #e2e4e8;
+$black: black;
+$color_nevada_approx: #636a7d;
+$color_scarpa_flow_approx: #515666;
+$color_trout_approx: #494d5c;
+$black_50: rgba(0,0,0,.5);
+$color_blue_haze_approx: #bdc4d6;
+$color_amethyst_approx: #a24de3;
+$color_mystic_approx: #e8ebf1;
+
+//fonts
+$font_0: rapidology-full-icon-set;
+$font_1: Open Sans;
+$font_2: sans-serif;
+
+//urls
+$url_0: url(../images/edge-basic.svg);
+$url_1: url(../images/edge-carrot.svg);
+$url_2: url(../images/edge-triangle.svg);
+$url_3: url(../images/edge-curved.svg);
+$url_4: url(../images/edge-jagged.svg);
+$url_5: url(../images/edge-breakout.svg);
+$url_6: url(../images/border-basic.svg);
+$url_7: url(../images/border-dashed.svg);
+$url_8: url(../images/border-double.svg);
+$url_9: url(../images/border-inset.svg);
+$url_10: url(../images/border-letter.svg);
+$url_11: url(../images/mad-mimi-logo.svg);
+$url_12: url(../images/mailchimp-logo.svg);
+$url_13: url(../images/hubspot-logo.svg);
+$url_14: url(../images/emma-logo.svg);
+$url_15: url(../images/aweber-logo.svg);
+$url_16: url(../images/mailpoet-logo.svg);
+$url_17: url(../images/sendinblue-logo.svg);
+$url_18: url(../images/icontact-logo.svg);
+$url_19: url(../images/get-response-logo.svg);
+$url_20: url(../images/feedblitz-logo.svg);
+$url_21: url(../images/campaign-monitor-logo.svg);
+$url_22: url(../images/constant-contact-logo.svg);
+$url_23: url(../images/ontraport-logo.svg);
+$url_24: url(../images/infusion-soft-logo.svg);
+$url_25: url(../images/salesforce-logo.svg);
+$url_26: url(../images/activecampaign-logo.svg);
+$url_27: url(../images/test-wave.png);
+$url_28: url(../images/subscribe-loader.gif);
+$url_29: url(../images/stats-loader.gif);
+
+//@extend-elements
+//original selectors
+//.rad_dashboard_row.rad_dashboard_next_design, .rad_dashboard_row.rad_dashboard_next_display, .rad_dashboard_row.rad_dashboard_next_customize, .rad_dashboard_next_shortcode
+%extend_1 {
+  float: right;
+  width: auto;
+  display: none;
+}
+
+//original selectors
+//.rad_dashboard_row.rad_dashboard_new_optin button, .rad_dashboard_row.rad_dashboard_new_account_row button
+%extend_2 {
+  float: right;
+  background-color: $color_chestnut_approx;
+  padding: 15px 20px !important;
+  overflow: visible;
+  background-position: center;
+  min-width: 125px;
+  //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+  transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+}
+
+//original selectors
+//span.rad_dashboard_confirm_delete, span.rad_dashboard_cancel_delete, span.rad_dashboard_confirm_stats
+%extend_3 {
+  font-size: 15px;
+  display: inline-block;
+  padding: 5px 12px;
+  //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+  border-radius: 3px;
+  color: $white;
+  width: 28px;
+  text-align: center;
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+//original selectors
+//.account_settings_fields.rad_visible_settings, .rad_dashboard_edit_account_fields .account_settings_fields
+%extend_4 {
+  max-height: 700px !important;
+  -webkit-transition: height, 0.5s linear;
+  -moz-transition: height, 0.5s linear;
+  -ms-transition: height, 0.5s linear;
+  -o-transition: height, 0.5s linear;
+  //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+  transition: height, 0.5s linear;
+}
+
+//original selectors
+//.rad_dashboard_optin_type_widget .optin_select_blue, .rad_dashboard_optin_type_widget .optin_select_grey_small
+%extend_5 {
+  width: 30%;
+  height: 30%;
+  float: left;
+  margin: 4% 5% 0 0;
+}
+
+//original selectors
+//.rad_dashboard_row .rad_rapidology_clear_stats, .rad_dashboard_row .rad_rapidology_refresh_stats
+%extend_6 {
+  float: right;
+  background-color: $color_viking_approx;
+  padding: 15px 20px !important;
+  overflow: visible;
+  //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+  transition: background 0.3s;
+  -moz-transition: background 0.3s;
+  -webkit-transition: background 0.3s;
+}
+
+//original selectors
+//.rad_rapidology .mce-btn button, .rad_rapidology .mce-btn button:hover, .rad_rapidology .mce-btn, .rad_rapidology .mce-btn:hover, .rad_rapidology .mce-btn-group .mce-first, .rad_rapidology .mce-btn-group .mce-last, .rad_rapidology .mce-panel, .rad_rapidology .mce-container, .rad_rapidology .mce-active, .rad_rapidology .mce-btn.mce-active:hover
+%extend_7 {
+  //Instead of the line below you could use @include text-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+  text-shadow: none;
+  //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+  box-shadow: none;
+  background: none;
+  border: none;
+  background-color: $color_black_haze_approx;
+}
+
+
+div {
+  &#rad_dashboard_header {
+    background-color: $color_big_stone_approx;
+  }
+  &#rad_dashboard_logo {
+    background-color: $color_big_stone_approx;
+  }
+  &#wpcontent {
+    background: $seashell;
+  }
+  &#rad_dashboard_navigation {
+    display: none;
+  }
+}
+.rad_rapidology {
+  #rad_dashboard_wrapper {
+    background-color: $white;
+  }
+  .rad_dashboard_form {
+    textarea {
+      background-color: $color_black_haze_approx;
+    }
+    input {
+      background-color: $color_black_haze_approx;
+    }
+    select {
+      background-color: $color_black_haze_approx;
+      width: 300px !important;
+    }
+  }
+  .rad_dashboard_checkbox {
+    label {
+      background-color: $color_black_haze_approx;
+      &:hover:after {
+        color: $color_viking_approx;
+      }
+    }
+    input[type=checkbox]:checked + label:after {
+      color: $color_viking_approx;
+    }
+  }
+  .rad_dashboard_shape_tile {
+    width: 50px;
+    height: 50px;
+    &:before {
+      display: none;
+    }
+    &.rad_dashboard_shape_breakout_edge {
+      width: 54px;
+    }
+  }
+  .rad_dashboard_shape {
+    margin-right: 40px;
+  }
+  .mce-btn {
+    @extend %extend_7;
+    button {
+      @extend %extend_7;
+      &:hover {
+        @extend %extend_7;
+      }
+    }
+    &:hover {
+      @extend %extend_7;
+    }
+    &.mce-active:hover {
+      @extend %extend_7;
+    }
+  }
+  .mce-btn-group {
+    .mce-first {
+      @extend %extend_7;
+    }
+    .mce-last {
+      @extend %extend_7;
+    }
+  }
+  .mce-panel {
+    @extend %extend_7;
+    border: 1px solid $color_black_haze_approx;
+  }
+  .mce-container {
+    @extend %extend_7;
+  }
+  .mce-active {
+    @extend %extend_7;
+    .mce-ico {
+      color: $color_tuna_approx;
+    }
+  }
+  .mce-ico {
+    color: $color_manatee_approx;
+    //Instead of the line below you could use @include text-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+    text-shadow: none;
+  }
+  .mce-caret {
+    color: $color_manatee_approx;
+    //Instead of the line below you could use @include text-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+    text-shadow: none;
+    border-top: 4px solid $color_manatee_approx;
+  }
+  .mce-toolbar {
+    padding-left: 8px;
+  }
+  #rad_dashboard_header ul li a.current:after {
+    background-color: $white;
+  }
+  #rad_dashboard_navigation li a.current:after {
+    background-color: $white;
+  }
+  .rad_dashboard_single_selectable.rad_dashboard_selected:after {
+    background-color: $color_viking_approx;
+  }
+  .rad_dashboard_row h2 {
+    float: left;
+  }
+  p.rad_dashboard_section_subtitle {
+    margin-top: -3px;
+    margin-left: 5px;
+    float: left;
+  }
+  .rad_dashboard_longinput input {
+    width: 300px !important;
+  }
+}
+body {
+  background: $seashell;
+}
+.toplevel_page_rad_rapidology_options {
+  background-color: $color_chestnut_approx !important;
+}
+button {
+  &.save_account_tab {
+    background-color: $color_dodger_blue_approx;
+    &:hover {
+      background-color: $color_cerulean_approx;
+    }
+  }
+  &.authorize_service {
+    margin-top: 20px;
+  }
+  &.rad_dashboard_icon.rad_rapidology_refresh_stats {
+    margin-right: 10px;
+  }
+}
+.rad_dashboard_save_changes {
+  display: none;
+  button {
+    background-color: $color_dodger_blue_approx;
+    &:hover {
+      background-color: $color_cerulean_approx;
+    }
+  }
+}
+.rad_dashboard_optin_type_locked {
+  .optin_select_blue {
+    height: 30%;
+    margin: 5px 0;
+    &:before {
+      font-family: $font_0;
+      speak: none;
+      font-style: normal;
+      font-weight: normal;
+      font-variant: normal;
+      text-transform: none;
+      font-size: 16px;
+      color: $white;
+      text-align: center;
+      width: 100%;
+      display: inline-block;
+      padding-top: 4px;
+      content: "\e645";
+    }
+  }
+  .optin_select_grey {
+    height: 20%;
+  }
+}
+.rad_dashboard_icon_duplicate {
+  &:before {
+    content: "\e652";
+  }
+  &.clicked_button:after {
+    opacity: 1;
+    top: 40px;
+  }
+}
+.rad_dashboard_icon_indicator_check {
+  cursor: auto !important;
+  color: $color_puerto_rico_approx !important;
+  &:before {
+    content: "\e60d";
+  }
+}
+.rad_dashboard_select_account {
+  button {
+    background-color: $color_viking_approx;
+    &:before {
+      content: "\e64b";
+    }
+    &:hover {
+      background-color: $color_viking_approx;
+    }
+  }
+  .rad_dashboard_account_row {
+    float: none !important;
+    display: block;
+    clear: both;
+  }
+}
+.rad_dashboard_icon_indicator_dot {
+  cursor: auto !important;
+  color: $color_sunset_orange_approx !important;
+  &:before {
+    content: "\e64d";
+  }
+}
+.rad_dashboard_optins_stats {
+  margin-top: 60px;
+  .rad_dashboard_optins_item {
+    .rad_dashboard_table_name:after {
+      content: "\e64d";
+      float: left;
+      margin-right: 10px;
+    }
+    .rad_dashboard_status_active:after {
+      color: $color_viking_approx;
+    }
+    .rad_dashboard_status_inactive:after {
+      color: $color_sunset_orange_approx;
+    }
+  }
+  &.rad_dashboard_pages_stats {
+    margin-bottom: 100px;
+  }
+  .rad_dashboard_table_name.rad_table_header {
+    padding-left: 0;
+    color: $color_tuna_approx;
+    font-size: 16px;
+  }
+}
+.rad_dashboard_sort_button {
+  cursor: pointer;
+  font-weight: bold;
+  position: relative;
+  &:after {
+    content: "\e65f";
+    position: absolute;
+    margin-left: 2px;
+    opacity: 0;
+  }
+  &.active_sorting {
+    color: $color_storm_gray_approx;
+    &:after {
+      opacity: 1;
+    }
+  }
+  &:hover:after {
+    opacity: 1;
+  }
+}
+.rad_dashboard_next_shortcode {
+  @extend %extend_1;
+  button:before {
+    content: "\e660";
+  }
+}
+.rad_dashboard_shape_basic_edge {
+  background-image: $url_0;
+}
+.rad_dashboard_shape_carrot_edge {
+  background-image: $url_1;
+}
+.rad_dashboard_shape_wedge_edge {
+  background-image: $url_2;
+}
+.rad_dashboard_shape_curve_edge {
+  background-image: $url_3;
+}
+.rad_dashboard_shape_zigzag_edge {
+  background-image: $url_4;
+}
+.rad_dashboard_shape_breakout_edge {
+  background-image: $url_5;
+}
+.rad_dashboard_shape_solid {
+  background-image: $url_6;
+}
+.rad_dashboard_shape_dashed {
+  background-image: $url_7;
+}
+.rad_dashboard_shape_double {
+  background-image: $url_8;
+}
+.rad_dashboard_shape_inset {
+  background-image: $url_9;
+}
+.rad_dashboard_shape_letter {
+  background-image: $url_10;
+}
+.rad_dashboard_service_logo_madmimi {
+  background-image: $url_11;
+}
+.rad_dashboard_service_logo_mailchimp {
+  background-image: $url_12;
+}
+.rad_dashboard_service_logo_hubspot {
+  background-image: $url_13;
+}
+.rad_dashboard_service_logo_hubspot-standard {
+  background-image: $url_13;
+}
+.rad_dashboard_service_logo_emma {
+  background-image: $url_14;
+}
+.rad_dashboard_service_logo_aweber {
+  background-image: $url_15;
+}
+.rad_dashboard_service_logo_mailpoet {
+  background-image: $url_16;
+}
+.rad_dashboard_service_logo_sendinblue {
+  background-image: $url_17;
+}
+.rad_dashboard_service_logo_icontact {
+  background-image: $url_18;
+}
+.rad_dashboard_service_logo_getresponse {
+  background-image: $url_19;
+}
+.rad_dashboard_service_logo_feedblitz {
+  background-image: $url_20;
+}
+.rad_dashboard_service_logo_campaign_monitor {
+  background-image: $url_21;
+}
+.rad_dashboard_service_logo_constant_contact {
+  background-image: $url_22;
+}
+.rad_dashboard_service_logo_ontraport {
+  background-image: $url_23;
+}
+.rad_dashboard_service_logo_infusionsoft {
+  background-image: $url_24;
+}
+.rad_dashboard_service_logo_salesforce {
+  background-image: $url_25;
+}
+.rad_dashboard_service_logo_activecampaign {
+  background-image: $url_26;
+}
+.rad_hidden {
+  display: none;
+}
+.rad_dashboard_show_hide {
+  display: inline-block!important;
+  width: 30px !important;
+  height: 30px !important;
+  padding-top: 10px;
+  cursor: pointer;
+  border: thin solid $color_quill_gray_approx;
+  //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+  border-radius: 5px;
+}
+.rad_dashboard_tab_content_header_importexport {
+  .rad_dashboard_row h2 {
+    float: none;
+  }
+  p.rad_dashboard_section_subtitle {
+    float: none;
+    margin-top: -12px;
+    margin-left: 0;
+  }
+}
+.rad_dashboard_row {
+  &.rad_dashboard_next_design {
+    @extend %extend_1;
+  }
+  &.rad_dashboard_next_display {
+    @extend %extend_1;
+  }
+  &.rad_dashboard_next_customize {
+    @extend %extend_1;
+  }
+  &.rad_dashboard_new_optin {
+    margin-bottom: 30px;
+    button {
+      @extend %extend_2;
+      &:hover {
+        background-color: $color_puerto_rico_approx;
+      }
+      &:after {
+        opacity: 0;
+        background-color: $color_tuna_approx;
+        content: '';
+        width: 20px;
+        height: 20px;
+        position: absolute;
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -ms-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+        transition: all 0.8s ease-in-out;
+        -moz-transition: all 0.8s ease-in-out;
+        -webkit-transition: all 0.8s ease-in-out;
+        right: 54px;
+        top: 80px;
+      }
+      &.clicked_button:after {
+        opacity: 1;
+        top: 68px;
+      }
+    }
+  }
+  &.rad_dashboard_optin_select {
+    max-height: 0;
+    margin-bottom: 0;
+    padding: 0 40px;
+    position: relative;
+    overflow: hidden;
+    margin-left: -40px;
+    &.rad_dashboard_visible_div {
+      display: block;
+    }
+    &.rad_dashboard_visible.rad_dashboard_account_add {
+      max-height: 770px !important;
+    }
+  }
+  &.rad_dashboard_accounts_title {
+    margin-bottom: 10px;
+  }
+  &.rad_dashboard_new_account_lists {
+    margin-top: 50px;
+  }
+  .rad_rapidology_clear_stats {
+    background-position: center;
+    min-width: 134px;
+    @extend %extend_6;
+    &:hover {
+      background-color: $color_puerto_rico_approx;
+    }
+  }
+  .rad_rapidology_refresh_stats {
+    @extend %extend_6;
+    &.rad_rapidology_loading {
+      -moz-transition: none;
+      -webkit-transition: none;
+      //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+      transition: none;
+    }
+    &:hover {
+      background-color: $color_puerto_rico_approx;
+    }
+  }
+  &.rad_dashboard_preview {
+    float: right;
+    width: auto;
+    //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+    transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -webkit-transition: all 0.3s;
+    z-index: 9999;
+    button {
+      background: $color_dodger_blue_approx;
+    }
+    &.rad_dashboard_fixed {
+      position: fixed;
+      top: 100px;
+      right: 40px;
+      width: 45px !important;
+      overflow: hidden;
+      //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+      border-radius: 3px;
+      button {
+        padding: 15px 10px 15px 55px;
+        &:before {
+          left: 0;
+        }
+      }
+    }
+  }
+  &.rad_dashboard_new_account_row button {
+    @extend %extend_2;
+    &:hover {
+      background-color: $color_puerto_rico_approx;
+    }
+  }
+}
+.current_tab_rad_dashboard_tab_content_optin_design {
+  .rad_dashboard_row.rad_dashboard_next_display {
+    display: block;
+  }
+  .current_optin_type_locked .rad_dashboard_next_shortcode {
+    display: block;
+  }
+  .current_optin_type_inline .rad_dashboard_next_shortcode {
+    display: block;
+  }
+}
+.rad_dashboard_optin_select {
+  background: $color_tuna_approx;
+  ul {
+    clear: both;
+    margin: 0 auto;
+  }
+  .rad_dashboard_close_button {
+    float: right;
+    position: absolute;
+    top: 15px;
+    right: 18px;
+    cursor: pointer;
+    color: $color_sunset_orange_approx;
+    &:hover {
+      color: $color_flame_pea_approx;
+    }
+  }
+  h3 {
+    margin: 40px 0 20px;
+    color: $white;
+    float: left;
+  }
+}
+ul {
+  &.rad_dashboard_new_account_fields {
+    position: relative;
+    li {
+      height: auto;
+    }
+  }
+  &.rad_rapidology_graph {
+    height: 375px;
+    margin: 0;
+    padding: 0 0 30px 0;
+    display: block;
+    float: left;
+    width: 100%;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 2px;
+    li {
+      background-color: $color_black_haze_approx;
+      height: 375px;
+      position: relative;
+      color: $white;
+      display: block;
+      float: left;
+      padding: 0;
+      -webkit-border-radius: 3px;
+      -moz-border-radius: 3px;
+      //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+      border-radius: 3px;
+      > div {
+        bottom: 0;
+        position: absolute;
+        color: $white;
+        width: 100%;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+        border-radius: 3px;
+        background: $color_sunset_orange_approx;
+      }
+      span {
+        color: $color_manatee_approx;
+        position: absolute;
+        top: -30px;
+        left: 30%;
+      }
+      &.rad_rapidology_graph_last {
+        margin-right: 0;
+      }
+    }
+  }
+  &.rad_dashboard_child_row .rad_dashboard_child_item {
+    border-top: 2px solid $black_4;
+  }
+  &.rad_rapidology_graph_30 li {
+    width: 2.8%;
+    margin-right: .5%;
+  }
+  &.rad_rapidology_graph_12 li {
+    width: 6.9%;
+    margin-right: 1.5%;
+  }
+}
+li {
+  &.rad_dashboard_add_variant {
+    border-top: 2px solid $black_4;
+    padding: 10px 15px 10px 41px;
+    overflow: auto;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    //Instead of the line below you could use @include box-sizing($bs)
+    box-sizing: border-box;
+  }
+  &.rad_dashboard_optins_item_bottom_row {
+    border-top: 3px solid $color_mercury_approx;
+    margin-bottom: 80px;
+    height: 50px;
+    font-weight: bold;
+    font-size: 21px;
+    .rad_dashboard_table_rate.rad_dashboard_table_column {
+      color: $white;
+      background-color: $color_dodger_blue_approx;
+    }
+  }
+  &.rad_dashboard_optin_type {
+    opacity: 0;
+    width: 15%;
+    height: 140px;
+    float: left;
+    padding: 20px;
+    margin: -20px 1.5% 40px 0;
+    cursor: pointer;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    //Instead of the line below you could use @include box-sizing($bs)
+    box-sizing: border-box;
+    //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+    transition: all 0.8s ease-out;
+    -moz-transition: all 0.8s ease-out;
+    -webkit-transition: all 0.8s ease-out;
+    border: none;
+    background-color: $color_nevada_approx;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 3px;
+    &:last-child {
+      margin-left: 0;
+    }
+  }
+  &.rad_dashboard_tab_content_header_edit_account {
+    display: none;
+  }
+  &.rad_dashboard_content_row {
+    cursor: pointer;
+    position: relative;
+    &:hover {
+      background: $color_wild_sand_approx;
+    }
+  }
+  &.rad_table_page_row {
+    background: $color_wild_sand_approx;
+  }
+  &.rad_dashboard_tab_content_side_premade {
+    display: none;
+  }
+  &.rad_dashboard_checkbox.rad_dashboard_on_cat_select {
+    margin-top: 10px;
+  }
+  &.select.rad_dashboard_new_account {
+    height: auto !important;
+    position: relative;
+  }
+  &.rad_table_optin_row.rad_dashboard_optins_item {
+    border-bottom: 2px solid $color_wild_sand_approx;
+  }
+}
+a {
+  &.rad_dashboard_add_var_button {
+    background-color: $color_manatee_approx;
+    padding: 3px 7px;
+    color: $white;
+    text-transform: uppercase;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    display: block;
+    float: left;
+    &:hover {
+      background-color: $color_abbey_approx;
+    }
+  }
+  &.rad_rapidology_graph_button {
+    margin: 0 25px 30px 0;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bold;
+    color: $color_blue_haze_approx;
+    &.rad_rapidology_active_button {
+      color: $color_storm_gray_approx;
+    }
+  }
+}
+span {
+  &.rad_dashboard_icon_abtest {
+    &.clicked_button:before {
+      color: $color_sunset_orange_approx;
+    }
+    &.active_child_optins:before {
+      color: $color_sunset_orange_approx;
+    }
+  }
+  &.rad_dashboard_icon_delete {
+    position: relative;
+  }
+  &.rad_dashboard_confirmation {
+    display: none;
+    position: absolute;
+    left: -53px;
+    top: 24px;
+    background-color: $white;
+    z-index: 999;
+    padding: 12px 15px 17px;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    width: 120px;
+    text-align: center;
+    text-transform: none;
+    color: $color_storm_dust_approx;
+    font-weight: normal !important;
+    font-size: 13px;
+    //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+    box-shadow: 0 4px 20px $black_30;
+    -webkit-box-shadow: 0 4px 20px $black_30;
+    -moz-box-shadow: 0 4px 20px $black_30;
+    &:before {
+      display: block;
+      -webkit-animation: arrow-top .7s;
+      animation: arrow-top .7s;
+      background-color: $white;
+      content: '';
+      width: 20px;
+      height: 20px;
+      right: 50%;
+      margin-right: -10px;
+      top: -5px;
+      position: absolute;
+      -webkit-transform: rotate(45deg);
+      -moz-transform: rotate(45deg);
+      -ms-transform: rotate(45deg);
+      -o-transform: rotate(45deg);
+    }
+  }
+  &.rad_dashboard_confirm_delete {
+    @extend %extend_3;
+    background-color: $color_dodger_blue_approx;
+    margin-right: 10px;
+  }
+  &.rad_dashboard_cancel_delete {
+    @extend %extend_3;
+    background-color: $color_french_gray_approx;
+  }
+  &.rad_dashboard_confirm_stats {
+    @extend %extend_3;
+    background-color: $color_dodger_blue_approx;
+    margin-right: 10px;
+  }
+  &.modal_title {
+    padding: 20px;
+    top: 20px;
+    display: block;
+    position: absolute;
+    left: 90px;
+    font-size: 26px;
+    font-weight: bold;
+    color: $black;
+  }
+  &.rad_rapidology_stats_spinner {
+    position: absolute !important;
+    left: 185px !important;
+    top: 0 !important;
+    background: $url_29 no-repeat;
+    width: 48px;
+    height: 25px;
+    display: none;
+    &.rad_dashboard_spinner_visible {
+      display: block;
+    }
+  }
+  &.spinner.rad_rapidology_premade_spinner {
+    float: left;
+    margin-top: -20px;
+  }
+}
+.child_buttons_right {
+  float: right;
+  a {
+    padding: 3px 7px;
+    background: $color_sunset_orange_approx;
+    color: $white;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    margin-left: 7px;
+    display: inline-block;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 13px;
+    &:hover {
+      background-color: $color_flame_pea_approx;
+    }
+  }
+  .rad_dashboard_pause_test {
+    background: $color_conifer_approx $url_27 repeat-x left top;
+    animation: rad_rapidology_loop_bg 8s linear infinite;
+    -webkit-animation: rad_rapidology_loop_bg 8s linear infinite;
+    &:hover {
+      background-color: $color_sushi_approx;
+    }
+  }
+}
+.rad_dashboard_home_tab_content {
+  margin-bottom: 100px;
+  min-height: 45px;
+}
+.rad_dashboard_table_column {
+  width: 25%;
+  float: left;
+  text-align: center;
+  padding: 13px 15px;
+  text-transform: uppercase;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  //Instead of the line below you could use @include box-sizing($bs)
+  box-sizing: border-box;
+  //Instead of the line below you could use @include word-break($value)
+  word-break: break-word;
+  &:first-child {
+    text-align: left;
+  }
+  &:before {
+    margin-right: 10px !important;
+    color: $color_loblolly_approx;
+  }
+  &.rad_test_conversion {
+    text-align: center;
+    color: $color_malibu_approx;
+    font-weight: bold;
+  }
+}
+.rad_dashboard_tab_content_header_home {
+  div.rad_dashboard_table_column:nth-of-type(n + 2):nth-of-type(-n + 4) {
+    width: 16%;
+  }
+  .rad_dashboard_optins_list > ul > li.rad_dashboard_optins_item:nth-child(even) {
+    background-color: $color_wild_sand_approx;
+  }
+}
+.rad_dashboard_optins_item {
+  .rad_dashboard_table_acc_name {
+    font-weight: bold !important;
+  }
+  .rad_dashboard_table_rate.rad_dashboard_table_column {
+    color: $color_malibu_approx;
+  }
+}
+.rad_dashboard_table_name {
+  font-weight: bold;
+}
+.rad_dashboard_table_rate {
+  font-weight: bold;
+}
+.rad_dashboard_table_actions {
+  width: 27%;
+  text-align: right;
+  position: relative;
+  span.spinner {
+    position: absolute;
+    top: -12px;
+    left: 2px;
+    opacity: 1;
+  }
+}
+.rad_dashboard_optins_list {
+  clear: both;
+  > ul > li {
+    clear: both;
+    .rad_dashboard_table_column {
+      //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+      transition: all 0.3s;
+      -moz-transition: all 0.3s;
+      -webkit-transition: all 0.3s;
+    }
+    &.rad_dashboard_optins_item {
+      height: auto;
+      span {
+        &.rad_dashboard_icon_inactive:hover {
+          color: $color_sunset_orange_approx;
+        }
+        &.rad_dashboard_icon_active:hover {
+          color: $color_puerto_rico_approx;
+        }
+      }
+      .rad_optin_button:hover {
+        color: $color_abbey_approx;
+      }
+    }
+  }
+}
+.rad_dashboard_visible {
+  max-height: 465px !important;
+  -webkit-transition: height, .8s ease-in-out;
+  -moz-transition: height, .8s ease-in-out;
+  -ms-transition: height, .8s ease-in-out;
+  -o-transition: height, .8s ease-in-out;
+  //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+  transition: height, .8s ease-in-out;
+  li.rad_dashboard_optin_type {
+    opacity: 1;
+    margin-top: 0;
+    &:nth-child(1) {
+      -webkit-transition-delay: 0.0s;
+      //Instead of the line below you could use @include transition-delay($delay-1, $delay-2, $delay-3, $delay-4, $delay-5, $delay-6, $delay-7, $delay-8, $delay-9, $delay-10)
+      transition-delay: 0.0s;
+    }
+    &:nth-child(2) {
+      -webkit-transition-delay: 0.1s;
+      //Instead of the line below you could use @include transition-delay($delay-1, $delay-2, $delay-3, $delay-4, $delay-5, $delay-6, $delay-7, $delay-8, $delay-9, $delay-10)
+      transition-delay: 0.1s;
+    }
+    &:nth-child(3) {
+      -webkit-transition-delay: 0.2s;
+      //Instead of the line below you could use @include transition-delay($delay-1, $delay-2, $delay-3, $delay-4, $delay-5, $delay-6, $delay-7, $delay-8, $delay-9, $delay-10)
+      transition-delay: 0.2s;
+    }
+    &:nth-child(4) {
+      -webkit-transition-delay: 0.3s;
+      //Instead of the line below you could use @include transition-delay($delay-1, $delay-2, $delay-3, $delay-4, $delay-5, $delay-6, $delay-7, $delay-8, $delay-9, $delay-10)
+      transition-delay: 0.3s;
+    }
+    &:nth-child(5) {
+      -webkit-transition-delay: 0.4s;
+      //Instead of the line below you could use @include transition-delay($delay-1, $delay-2, $delay-3, $delay-4, $delay-5, $delay-6, $delay-7, $delay-8, $delay-9, $delay-10)
+      transition-delay: 0.4s;
+    }
+    &:nth-child(6) {
+      -webkit-transition-delay: 0.5s;
+      //Instead of the line below you could use @include transition-delay($delay-1, $delay-2, $delay-3, $delay-4, $delay-5, $delay-6, $delay-7, $delay-8, $delay-9, $delay-10)
+      transition-delay: 0.5s;
+    }
+    &:nth-child(7) {
+      -webkit-transition-delay: 0.5s;
+      //Instead of the line below you could use @include transition-delay($delay-1, $delay-2, $delay-3, $delay-4, $delay-5, $delay-6, $delay-7, $delay-8, $delay-9, $delay-10)
+      transition-delay: 0.5s;
+    }
+  }
+}
+.rad_dashboard_account_row {
+  width: auto;
+  clear: both !important;
+  margin-bottom: 10px;
+  display: inline-block;
+  position: relative;
+  height: 30px;
+  label {
+    float: left;
+    width: 200px;
+  }
+  input {
+    float: left;
+    width: 301px !important;
+  }
+}
+.account_settings_fields {
+  overflow: hidden;
+  max-height: 0;
+  clear: both;
+  -webkit-transition: height, 0.5s linear;
+  -moz-transition: height, 0.5s linear;
+  -ms-transition: height, 0.5s linear;
+  -o-transition: height, 0.5s linear;
+  //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+  transition: height, 0.5s linear;
+  &.rad_visible_settings {
+    @extend %extend_4;
+  }
+}
+.rad_dashboard_accounts_content {
+  .rad_dashboard_optins_list {
+    margin-bottom: 70px;
+    li.rad_dashboard_optins_item {
+      background-color: $color_wild_sand_approx;
+    }
+    ul > li:nth-child(n + 3) {
+      border-bottom: 2px solid $color_wild_sand_approx;
+      overflow: auto;
+    }
+  }
+  .rad_dashboard_table_column {
+    font-weight: normal !important;
+    &.rad_dashboard_table_header {
+      font-weight: bold !important;
+    }
+  }
+  .rad_dashboard_table_actions {
+    width: 25%;
+  }
+  li.rad_dashboard_optins_item {
+    overflow: visible !important;
+  }
+}
+.rad_dashboard_disabled_input {
+  background: $white !important;
+}
+.rad_dashboard_aweber_row {
+  max-width: 600px;
+}
+.end_test_table {
+  width: 100% !important;
+  max-height: 450px;
+  overflow: auto;
+  li {
+    float: left;
+    width: 100%;
+    border-bottom: 2px solid $color_mercury_approx;
+  }
+  .rad_dashboard_table_column {
+    width: 48% !important;
+  }
+}
+.rad_rapidology_loading {
+  background-image: $url_28;
+  background-repeat: no-repeat;
+  background-position: center;
+  text-indent: -9999px;
+}
+.current_tab_rad_dashboard_tab_content_header_home {
+  margin-left: 0 !important;
+}
+.optin_select_grey {
+  background: $color_scarpa_flow_approx;
+  //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  width: 100%;
+}
+.optin_select_blue {
+  background: $color_dodger_blue_approx;
+  //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+  border-radius: 3px;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+}
+.rad_dashboard_optin_type_popup {
+  .optin_select_grey {
+    height: 80%;
+    position: relative;
+  }
+  .optin_select_blue {
+    width: 80%;
+    height: 45%;
+    margin: 9%;
+    position: absolute;
+    //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+    box-shadow: 3px 3px 3px $color_trout_approx;
+  }
+}
+.rad_dashboard_optin_type_flyin {
+  position: relative;
+  .optin_select_grey {
+    height: 80%;
+  }
+  .optin_select_blue {
+    width: 20%;
+    height: 40%;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+  }
+}
+.rad_dashboard_optin_type_below {
+  .optin_select_grey {
+    height: 55%;
+  }
+  .optin_select_blue {
+    height: 25%;
+    margin-top: 5px;
+  }
+}
+.rad_dashboard_optin_type_rapidbar {
+  .optin_select_blue {
+    height: 25%;
+  }
+  .optin_select_grey {
+    height: 55%;
+  }
+}
+.rad_dashboard_optin_type_inline {
+  .optin_select_grey {
+    height: 20%;
+  }
+  .optin_select_blue {
+    height: 30%;
+    margin: 5px 0;
+  }
+}
+.rad_dashboard_optin_type_widget {
+  .optin_select_grey {
+    height: 40%;
+    clear: right;
+  }
+  .optin_select_blue {
+    @extend %extend_5;
+  }
+  .optin_select_grey_small {
+    @extend %extend_5;
+    background-color: $color_scarpa_flow_approx;
+    //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    &.last {
+      margin-right: 0;
+    }
+  }
+}
+.rad_optin_button {
+  color: $color_manatee_approx;
+  cursor: pointer;
+  padding-left: 14px;
+  float: right;
+  position: relative;
+}
+.rad_dashboard_hidden {
+  max-height: 0;
+  -webkit-transition: height, .8s ease-in-out;
+  -moz-transition: height, .8s ease-in-out;
+  -ms-transition: height, .8s ease-in-out;
+  -o-transition: height, .8s ease-in-out;
+  //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+  transition: height, .8s ease-in-out;
+}
+.rad_dashboard_for_popup {
+  display: none;
+}
+.rad_dashboard_for_flyin {
+  display: none;
+}
+.rad_dashboard_on_cat_select {
+  display: none;
+}
+.current_optin_type_pop_up {
+  .rad_dashboard_for_popup {
+    display: block;
+  }
+  .rad_dashboard_on_cat_select {
+    display: block;
+  }
+  .display_on_checkboxes {
+    display: block;
+  }
+  .rad_dashboard_optin_edge .rad_dashboard_shape:last-child {
+    display: block;
+  }
+}
+.current_optin_type_flyin {
+  .rad_dashboard_for_popup {
+    display: block;
+  }
+  .rad_dashboard_for_flyin {
+    display: block;
+  }
+  .rad_dashboard_on_cat_select {
+    display: block;
+  }
+  .display_on_checkboxes {
+    display: block;
+  }
+}
+.rad_dashboard_edit_child {
+  .rad_dashboard_child_hidden {
+    display: none;
+  }
+  .current_optin_type_below_post {
+    .rad_dashboard_next_display {
+      display: none;
+    }
+    li.rad_dashboard_tab_content_side_display {
+      display: none;
+    }
+  }
+  .current_optin_type_widget {
+    .rad_dashboard_next_display {
+      display: none;
+    }
+    li.rad_dashboard_tab_content_side_display {
+      display: none;
+    }
+  }
+  .current_optin_type_locked {
+    .rad_dashboard_next_display {
+      display: none;
+    }
+    li.rad_dashboard_tab_content_side_display {
+      display: none;
+    }
+  }
+  .current_optin_type_inline {
+    .rad_dashboard_next_display {
+      display: none;
+    }
+    li.rad_dashboard_tab_content_side_display {
+      display: none;
+    }
+  }
+}
+.current_optin_type_widget {
+  .rad_rapidology_hide_for_widget {
+    display: none;
+  }
+  .rad_dashboard_row.rad_dashboard_next_display {
+    display: none;
+  }
+  .rad_rapidology_widg.rad_only_option {
+    display: block;
+  }
+}
+.rad_rapidology_widget_only_option {
+  display: none;
+}
+.display_on_checkboxes {
+  display: none;
+}
+.rad_dashboard_stats_container {
+  background: $color_black_haze_approx;
+  padding: 30px 20px 20px;
+  .all_stats_column {
+    width: 33.33%;
+    float: left;
+    text-align: center;
+    padding: 20px;
+    line-height: 2em;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    //Instead of the line below you could use @include box-sizing($bs)
+    box-sizing: border-box;
+  }
+}
+.all_stats_column {
+  .caption {
+    display: block;
+  }
+  span.value {
+    font-size: 50px;
+    font-weight: 600;
+  }
+  &.conversion_rate span.value {
+    color: $color_dodger_blue_approx;
+  }
+  &.subscribers span.value {
+    color: $color_sunset_orange_approx;
+  }
+  &.growth_rate span.value {
+    color: $color_viking_approx;
+    span {
+      font-size: 20px;
+    }
+  }
+}
+.rad_dashboard_lists_stats {
+  .rad_dashboard_table_contents {
+    .rad_dashboard_table_conversions {
+      text-transform: none;
+    }
+    .rad_dashboard_table_impressions {
+      text-transform: none;
+    }
+  }
+  .rad_dashboard_optins_item .rad_dashboard_table_name:after {
+    display: none;
+  }
+}
+.rad_rapidology_stats_controls {
+  float: right;
+  position: relative;
+  span {
+    &.rad_dashboard_confirmation {
+      top: 60px;
+      right: 0 !important;
+      left: auto;
+    }
+    &.rad_dashboard_cancel_delete {
+      cursor: pointer;
+    }
+  }
+  .rad_dashboard_confirm_stats {
+    cursor: pointer;
+  }
+}
+@-webkit-keyframes rapidology_tooltip {
+  0% {
+    top: -100px;
+    opacity: 0;
+  }
+  100% {
+    top: -53px;
+    opacity: 1;
+  }
+}
+@keyframes rapidology_tooltip {
+  0% {
+    top: -100px;
+    opacity: 0;
+  }
+  100% {
+    top: -53px;
+    opacity: 1;
+  }
+}
+.rad_rapidology_tooltip {
+  -webkit-animation: rapidology_tooltip .2s ease-in-out;
+  animation: rapidology_tooltip .2s ease-in-out;
+  left: 50%;
+  top: -53px;
+  margin-left: -27px;
+  position: absolute;
+  padding: 10px;
+  background-color: $black_50;
+  width: 30px;
+  z-index: 99;
+  //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+  border-radius: 3px;
+  text-align: center;
+  &:after {
+    border-left: 10px solid rgba(0,0,0,0);
+    border-top: 10px solid $black_50;
+    border-bottom: 10px solid rgba(0,0,0,0);
+    border-right: 10px solid rgba(0,0,0,0);
+    content: '';
+    width: 0;
+    height: 0;
+    left: 41%;
+    margin-left: -5px;
+    bottom: -20px;
+    position: absolute;
+  }
+}
+.rad_rapidology_graph_header {
+  clear: both;
+  h3 {
+    float: left;
+    padding-top: 4px;
+    margin-bottom: 20px;
+  }
+}
+.rad_rapidology_graph_controls {
+  float: right;
+  margin-bottom: 30px;
+}
+.rad_rapidology_overall {
+  display: block;
+  clear: both;
+  text-transform: uppercase;
+  font-weight: bold;
+  span {
+    &.total_signups {
+      color: $color_storm_gray_approx;
+    }
+    &.signups_period {
+      color: $color_blue_haze_approx;
+    }
+  }
+}
+.rad_rapidology_graph_select_list {
+  height: 30px;
+  border: none;
+  font-family: $font_1, $font_2;
+  font-size: 14px;
+  font-weight: 300;
+  color: $color_manatee_approx;
+  letter-spacing: 1px;
+  margin: 0;
+  padding: 10px;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+  border-radius: 2px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  //Instead of the line below you could use @include box-sizing($bs)
+  box-sizing: border-box;
+  background-color: $color_black_haze_approx;
+}
+.rad_dashboard_pages_stats {
+  .rad_dashboard_table_name {
+    width: 50%;
+  }
+  .rad_dashboard_table_pages_rate {
+    font-weight: bold;
+  }
+  .rad_dashboard_optins_list > ul > li.rad_dashboard_optins_item:nth-child(odd) {
+    background-color: $white;
+  }
+}
+.rad_rapidology_hidden_option {
+  display: none !important;
+}
+.rad_rapidology_premade_grid {
+  clear: both;
+  margin-bottom: 50px;
+  &:after {
+    position: relative;
+    clear: both;
+    display: block;
+    content: "";
+  }
+}
+.rad_rapidology_premade_item {
+  width: 19.2%;
+  height: auto;
+  float: left;
+  margin: 0 1% 1% 0;
+  cursor: pointer;
+  padding: 1%;
+  border: 3px solid $white;
+  //Instead of the line below you could use @include border-radius($radius, $vertical-radius)
+  border-radius: 3px;
+  //Instead of the line below you could use @include transition($transition-1, $transition-2, $transition-3, $transition-4, $transition-5, $transition-6, $transition-7, $transition-8, $transition-9, $transition-10)
+  transition: all 0.3s;
+  -moz-transition: all 0.3s;
+  -webkit-transition: all 0.3s;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  //Instead of the line below you could use @include box-sizing($bs)
+  box-sizing: border-box;
+  &:nth-child(5n) {
+    margin-right: 0;
+  }
+  &:hover {
+    border-color: $color_mystic_approx;
+  }
+  &.rad_rapidology_layout_selected {
+    border-color: $color_viking_approx;
+  }
+}
+.rad_rapidology_premade_item_inner {
+  display: block;
+  position: relative;
+  height: 100%;
+  width: 100%;
+  img {
+    width: 100%;
+    margin-bottom: -6px;
+  }
+}
+.rad_dashboard_design_title {
+  float: left;
+  width: 50%;
+}
+.rad_rapidology_preview_popup {
+  display: block !important;
+}
+@-webkit-keyframes rad_rapidology_loop_bg {
+  0% {
+    background-position: 0 -3px;
+  }
+  100% {
+    background-position: -189px -3px;
+  }
+}
+@-moz-keyframes rad_rapidology_loop_bg {
+  0% {
+    background-position: 0 -3px;
+  }
+  100% {
+    background-position: -189px -3px;
+  }
+}
+@-o-keyframes rad_rapidology_loop_bg {
+  0% {
+    background-position: 0 -3px;
+  }
+  100% {
+    background-position: -189px -3px;
+  }
+}
+@keyframes rad_rapidology_loop_bg {
+  0% {
+    background-position: 0 -3px;
+  }
+  100% {
+    background-position: -189px -3px;
+  }
+}
+@media only screen and(max-width: 1366px) {
+  .rad_dashboard_visible {
+    max-height: 620px !important;
+  }
+  li.rad_dashboard_optin_type {
+    &:nth-child(n) {
+      width: 30%;
+      margin-right: 5%;
+      margin-bottom: 5%;
+    }
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+    &:nth-child(3n + 1) {
+      clear: both;
+    }
+    &:nth-last-child(-n + 3) {
+      margin-bottom: 40px;
+    }
+  }
+}
+@media screen and(max-width:767px) {
+  li {
+    &.rad_dashboard_optin_type {
+      &:nth-child(n) {
+        width: 47%;
+        margin-right: 6%;
+        margin-bottom: 6%;
+        clear: none;
+      }
+      &:nth-child(even) {
+        margin-right: 0;
+      }
+      &:nth-child(2n + 1) {
+        clear: both;
+      : ;
+      }
+      &:nth-last-child(-n + 2) {
+        margin-bottom: 40px;
+      }
+    }
+    &.rad_dashboard_add_variant {
+      padding: 10px 15px 0;
+    }
+  }
+  .rad_dashboard_visible {
+    max-height: 780px !important;
+  }
+  .rad_dashboard_table_name {
+    width: 70% !important;
+    color: $color_storm_gray_approx;
+    &:before {
+      color: $color_storm_gray_approx;
+    }
+  }
+  .rad_dashboard_table_actions {
+    width: 70% !important;
+    clear: both;
+    padding-top: 0;
+  }
+  .rad_dashboard_table_acc_name {
+    width: 70% !important;
+  }
+  .rad_dashboard_table_rate {
+    width: 30% !important;
+  }
+  .rad_dashboard_optins_item {
+    .rad_dashboard_table_name {
+      border-right: 2px solid $black_6;
+    }
+    .rad_dashboard_table_actions {
+      border-right: 2px solid $black_6;
+    }
+  }
+  .child_buttons_right {
+    float: left;
+    a {
+      margin: 0 10px 10px 0;
+      float: left;
+    }
+  }
+  .rad_dashboard_accounts_content {
+    .rad_dashboard_table_growth_rate {
+      display: none;
+    }
+    .rad_dashboard_table_actions {
+      border-right: none;
+    }
+    .rad_dashboard_table_subscribers {
+      width: 30%;
+    }
+    .rad_dashboard_optins_item .rad_dashboard_table_subscribers {
+      display: none;
+    }
+    .rad_dashboard_lists_row .rad_dashboard_table_actions {
+      display: none;
+    }
+  }
+  .rad_optin_button {
+    float: left;
+    padding-left: 0;
+    padding-right: 10px;
+  }
+  .rad_rapidology_graph_controls {
+    float: left;
+    width: 100%;
+  }
+  .all_stats_column {
+    .caption {
+      display: inline-block;
+      margin-left: 10px;
+    }
+    span.value {
+      font-size: 40px;
+    }
+  }
+  .rad_rapidology_premade_item {
+    width: 32%;
+    &:nth-child(n) {
+      margin-right: 2%;
+    }
+    &:nth-child(3n) {
+      margin-right: 0;
+    }
+  }
+  .rad_dashboard_pages_stats .rad_dashboard_table_pages_rate {
+    width: 30% !important;
+  }
+  .rad_dashboard_home_tab_content .rad_dashboard_optins_item .rad_dashboard_table_rate {
+    position: relative;
+    bottom: -18px;
+  }
+  a.rad_dashboard_add_var_button {
+    margin: 0 10px 10px 0;
+    float: left;
+  }
+  .rad_dashboard_table_conversions.rad_dashboard_table_column {
+    display: none;
+  }
+  .rad_dashboard_table_impressions.rad_dashboard_table_column {
+    display: none;
+  }
+  .rad_dashboard_icon_duplicate:after {
+    left: 65px;
+  }
+  .rad_dashboard_child_item .rad_dashboard_table_actions {
+    padding-left: 41px;
+  }
+  ul.rad_rapidology_graph {
+    max-height: 200px;
+    li {
+      max-height: 200px;
+      div {
+        max-height: 200px;
+      }
+    }
+  }
+  .rad_dashboard_stats_container .all_stats_column {
+    width: 100%;
+    text-align: left;
+  }
+}
+@media screen and(max-width:480px) {
+  .rad_dashboard_row {
+    &.rad_dashboard_new_optin button {
+      float: left;
+    }
+    &.rad_dashboard_new_account_row button {
+      float: left;
+    }
+  }
+  .all_stats_column {
+    .caption {
+      display: block;
+      margin-left: 0;
+    }
+    span.value {
+      font-size: 50px;
+    }
+  }
+  .rad_rapidology_premade_item {
+    width: 49%;
+    &:nth-child(n) {
+      margin-right: 2%;
+    }
+    &:nth-child(2n) {
+      margin-right: 0;
+    }
+  }
+  .rad_dashboard_new_optin h1 {
+    float: none;
+  }
+  .rad_dashboard_stats_container .all_stats_column {
+    text-align: center;
+  }
+}
+.rad_dashboard_25_bottom {
+  margin-bottom: 25px !important;
+}
+.rad_dashboard_10_bottom {
+  margin-bottom: 10px !important;
+}
+#rad_dashboard_redirect_list_id {
+  width: 40% !important;
+  margin-right: 13px;
+}
+.rapidology_line_chart {
+  position: relative;
+  top: 70px;
+}
+.line_chart_reload {
+  background: $url_29 no-repeat;
+  width: 100px;
+  height: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+#rad_dashboard_wrapper a:focus {
+  -moz-box-shadow: none;
+  -webkit-box-shadow: none;
+  //Instead of the line below you could use @include box-shadow($shadow-1, $shadow-2, $shadow-3, $shadow-4, $shadow-5, $shadow-6, $shadow-7, $shadow-8, $shadow-9, $shadow-10)
+  box-shadow: none;
+}
+.current_tab_rad_dashboard_tab_content_header_importexport input[type="file"] {
+  background: $white;
+}
+.rad_dashboard_icon_rapidology:before {
+  content: "\e650";
+}
+.rad_dashboard_icon_delete:before {
+  content: "\e651";
+}
+.rad_dashboard_icon_header_home:before {
+  content: "\e653";
+}
+.rad_dashboard_icon_header_support:before {
+  content: "\e615";
+}
+.rad_dashboard_icon_inactive:before {
+  content: "\e654";
+}
+.rad_dashboard_icon_setup:before {
+  content: "\e655";
+}
+.rad_dashboard_icon_edit:before {
+  content: "\e655";
+}
+.rad_dashboard_icon_shortcode:before {
+  content: "\e656";
+}
+.rad_dashboard_icon_lock:before {
+  content: "\e645";
+}
+.rad_dashboard_icon_add:before {
+  content: "\e60b";
+}
+.rad_dashboard_icon_cancel:before {
+  content: "\e60c";
+}
+.rad_dashboard_close_button:before {
+  content: "\e60c";
+}
+.rad_dashboard_icon_icon_check:before {
+  content: "\e60d";
+}
+.rad_dashboard_icon_active:before {
+  content: "\e60d";
+}
+.rad_dashboard_icon_aweber:before {
+  content: "\e612";
+}
+.rad_dashboard_preview button:before {
+  content: "\e657";
+}
+.rad_dashboard_icon_display:before {
+  content: "\e657";
+}
+.rad_dashboard_icon_gear:before {
+  content: "\e655";
+}
+.rad_dashboard_icon_email:before {
+  content: "\e615";
+}
+.rad_dashboard_icon_design:before {
+  content: "\e64f";
+}
+.rad_dashboard_icon_header_accounts:before {
+  content: "\e64c";
+}
+.rad_dashboard_icon_edit_account:before {
+  content: "\e648";
+}
+.rad_dashboard_icon_update_lists:before {
+  content: "\e65e";
+}
+.save_account_tab:before {
+  content: "\e647";
+}
+.rad_dashboard_type_flyin:before {
+  content: "\e658";
+}
+.rad_dashboard_type_below_post:before {
+  content: "\e65a";
+}
+.rad_dashboard_type_inline:before {
+  content: "\e65b";
+}
+.rad_dashboard_type_widget:before {
+  content: "\e65d";
+}
+.rad_dashboard_type_pop_up:before {
+  content: "\e65c";
+}
+.rad_dashboard_type_locked:before {
+  content: "\e659";
+}
+.rad_dashboard_icon_abtest:before {
+  content: "\e64e";
+}
+.rad_dashboard_next_design button:before {
+  content: "\e660";
+}
+.rad_dashboard_next_display button:before {
+  content: "\e660";
+}
+.rad_dashboard_next_customize button:before {
+  content: "\e660";
+}
+.rad_dashboard_visible_nav div#rad_dashboard_navigation {
+  display: block;
+}
+.current_tab_rad_dashboard_tab_content_optin_display .rad_dashboard_row.rad_dashboard_save_changes {
+  margin-top: 100px;
+}
+.current_tab_rad_dashboard_tab_content_optin_setup .rad_dashboard_row.rad_dashboard_next_design {
+  display: block;
+}
+.current_tab_rad_dashboard_tab_content_optin_premade .rad_dashboard_row.rad_dashboard_next_customize {
+  display: block;
+}
+.rad_dashboard_new_optin h1 {
+  float: left;
+}
+.rad_dashboard_child_item .rad_dashboard_table_name {
+  padding-left: 41px;
+}
+.rad_dashboard_tab_content_header_stats .rad_dashboard_optins_list > ul > li.rad_dashboard_optins_item:nth-child(odd) {
+  background-color: $color_wild_sand_approx;
+}
+.rad_dashboard_new_account span.spinner {
+  position: absolute;
+  bottom: 13px;
+  left: 160px;
+}
+.rad_dashboard_edit_account_fields .account_settings_fields {
+  @extend %extend_4;
+}
+.rad_dashboard_tab_content_header_accounts .rad_dashboard_new_account_row h1 {
+  float: left;
+}
+.rad_dashboard_accounts_title span {
+  display: inline-block;
+  width: 250px;
+  height: 50px;
+  background-repeat: no-repeat;
+}
+.rad_dashboard_lists_row .rad_dashboard_table_column {
+  text-transform: none;
+}
+.rad_dashboard_table_acc_name.rad_dashboard_table_column.rad_dashboard_table_header {
+  font-size: 17px;
+}
+.rad_dashboard_new_account_fields span.spinner {
+  position: absolute;
+  bottom: 14px;
+  left: 170px;
+}
+.rad_dashboard_networks_modal.rad_dashboard_end_test {
+  .dashboard_icons_container {
+    background: $white;
+    margin-bottom: -5px;
+  }
+  .rad_dashboard_inner_container {
+    width: 470px;
+    max-width: 80%;
+    margin: auto;
+  }
+}
+.rad_test_table_header .rad_dashboard_table_column {
+  font-weight: bold;
+  color: $black;
+  &.rad_test_conversion {
+    color: $black;
+  }
+}
+.rad_dashboard_end_test a.rad_dashboard_ok {
+  margin-right: 200px !important;
+}
+.rad_dashboard_content_row .rad_dashboard_table_column {
+  margin-right: 0;
+  padding-left: 2%;
+}
+.rad_dashboard_form.rad_dashboard_row.rad_no_top_space {
+  margin-top: -50px;
+}
+.rad_dashboard_optin_type h6 {
+  color: $white;
+  text-align: center;
+  font-size: 12px;
+}
+.rad_dashboard_optin_edge .rad_dashboard_shape:last-child {
+  display: none;
+}
+.nav_current_optin_type_widget a#rad_dashboard_tab_content_optin_display {
+  display: none;
+}
+.nav_current_optin_type_inline a#rad_dashboard_tab_content_optin_display {
+  display: none;
+}
+.nav_current_optin_type_locked a#rad_dashboard_tab_content_optin_display {
+  display: none;
+}
+.current_optin_type_inline .rad_dashboard_row.rad_dashboard_next_display {
+  display: none;
+}
+.current_optin_type_locked .rad_dashboard_row.rad_dashboard_next_display {
+  display: none;
+}
+.current_optin_type_rapidbar .display_on_checkboxes {
+  display: block;
+}
+.rad_rapidology_widg.rad_only_option {
+  display: none;
+}
+.display_on_section li {
+  height: auto;
+  min-height: 30px;
+  p {
+    margin-left: 10px;
+  }
+  &.rad_dashboard_checkbox {
+    float: none !important;
+  }
+}
+.categories_include_section li.rad_dashboard_checkbox {
+  float: none !important;
+}
+.rad_dashboard_hidden_nav div {
+  &#rad_dashboard_content {
+    margin-left: 0;
+  }
+  &#rad_dashboard_navigation {
+    display: none;
+  }
+}
+.rad_dashboard_tab_content.rad_dashboard_tab_content_header_stats {
+  position: relative;
+}
+.rad_dashboard_stats_row h1 {
+  float: left;
+}
+.rad_table_page_row .rad_dashboard_table_pages_rate {
+  color: $color_amethyst_approx;
+}
+#rad_dashboard_content.current_tab_rad_dashboard_tab_content_optin_design {
+  padding-right: 85px;
+}
+.rad_rapidology_form_header img {
+  height: auto;
+}

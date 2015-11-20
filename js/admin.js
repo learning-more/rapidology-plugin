@@ -265,9 +265,20 @@
 			return false;
 		});
 
-		$body.on( 'click', '.rad_dashboard_new_optin button', function() {
-			$( '.rad_dashboard_optin_select' ).addClass( 'rad_dashboard_visible' );
-			$( this ).addClass( 'clicked_button' );
+		$body.on( 'click', '.rad_dashboard_new_optin button', function(){
+
+              $('.rad_dashboard_optin_select').dialog({
+                  modal: true,
+                  height:600,
+                  width: 400,
+              });
+
+            $(".rad_dashboard_optin_select").position({
+                my: "center",
+                at: "center",
+                of: "#wpbody-content"
+            });
+
 		});
 
 		$body.on( 'click', '.rad_dashboard_optin_add', function() {

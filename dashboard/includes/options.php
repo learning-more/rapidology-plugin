@@ -124,6 +124,7 @@ $rad_dashboard_options_all = array(
 			'placeholder'     => __( 'Insert HTML', 'rapidology' ),
 			'default'         => '',
 			'validation_type' => 'html',
+			'display_if'      => 'custom_html'
 		),
 		'disable_dbl_optin' => array(
 			'type'            => 'checkbox',

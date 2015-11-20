@@ -2110,6 +2110,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 
 		add_filter( 'admin_body_class', array( $this, 'add_admin_body_class' ) );
+		wp_enqueue_script('jquery-ui-dialog','','','',true);
+		wp_enqueue_script(' jquery-ui-position','','','',true);
 		wp_enqueue_script('rapidology-chart-base', '//www.google.com/jsapi', array(), $this->plugin_version, true );
 		wp_enqueue_script('rapidology-chart-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/chart.js', array( ), $this->plugin_version, true );
 		wp_enqueue_script( 'rad_rapidology-uniform-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/jquery.uniform.min.js', array( 'jquery' ), $this->plugin_version, true );

@@ -1,15 +1,4 @@
 
-ru
-How to use? (ru)
-Autoprefixer CSS online
-Add the desired vendor prefixes and remove unnecessary in your CSS
-.example {
-    display: flex;
-    transition: all .5s;
-    user-select: none;
-    background: linear-gradient(to bottom, white, black);
-}
-
 /*------------------------------------------------*/
 /*-------------------[RapidBar]-----------------*/
 /*------------------------------------------------*/
@@ -279,6 +268,11 @@ Add the desired vendor prefixes and remove unnecessary in your CSS
     text-decoration-color: #939aaa;
 }
 
+.ui-dialog{
+    background: transparent !important;
+
+}
+
 .loader{
     display:none;
     margin-left:10px;
@@ -303,4 +297,3 @@ Add the desired vendor prefixes and remove unnecessary in your CSS
         width: 450px !important;
     }
 }
-                                                                                                                                                                                                                                                                          autoprefixer online PostCSS css vendor prefixes property transition transform perspective user-sAutoprefixer on github by ymatuhin

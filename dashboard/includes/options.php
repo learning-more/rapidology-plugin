@@ -1115,8 +1115,8 @@ $rad_dashboard_options_all = array(
 
 	'setup_title' => array(
 		'type'     => 'main_title',
-		'title'    => __( 'Setup your optin form', 'rapidology' ),
-		'subtitle' => __( 'Name your optin and configure your form integration.', 'rapidology' ),
+		'title'    => __( 'Create New Optin', 'rapidology' ),
+		'subtitle' => __( 'Select your optin and configure form integration.', 'rapidology' ),
 	),
 
 	'design_title' => array(

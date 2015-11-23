@@ -474,6 +474,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Generates the Rapidology's Home, Stats, Accounts tabs. Hooked to Dashboard class
 	 */
 	function generate_home_tab( $option, $dashboard_settings = array() ) {
+
 		switch ( $option['type'] ) {
 			case 'home' :
 				printf( '
@@ -513,7 +514,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 								<div class="optin_select_blue"></div>
 								<div class="optin_select_grey"></div>
 							</li>
-							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_locked" data-type="locked">
+
+						</ul>
+						<ul>
+						<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_locked" data-type="locked">
 								<h6>%6$s</h6>
 								<div class="optin_select_grey"></div>
 								<div class="optin_select_blue"></div>
@@ -526,9 +530,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 								<div class="optin_select_grey_small"></div>
 								<div class="optin_select_grey_small last"></div>
 							</li>
-
-						</ul>
-						<ul>
 						<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_rapidbar" data-type="rapidbar">
 								<h6>%8$s</h6>
 								<div class="optin_select_blue"></div>
@@ -2112,6 +2113,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_filter( 'admin_body_class', array( $this, 'add_admin_body_class' ) );
 		wp_enqueue_script('jquery-ui-dialog','','','',true);
 		wp_enqueue_script(' jquery-ui-position','','','',true);
+		wp_enqueue_style("wp-jquery-ui-dialog");
 		wp_enqueue_script('rapidology-chart-base', '//www.google.com/jsapi', array(), $this->plugin_version, true );
 		wp_enqueue_script('rapidology-chart-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/chart.js', array( ), $this->plugin_version, true );
 		wp_enqueue_script( 'rad_rapidology-uniform-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/jquery.uniform.min.js', array( 'jquery' ), $this->plugin_version, true );

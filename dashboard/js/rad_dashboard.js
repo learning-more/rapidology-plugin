@@ -186,8 +186,6 @@
 	});
 
 
-	//Define global functions to use them in other plugins
-
 	//Sets the current tab in navigation menu
 	window.rad_dashboard_set_current_tab = function set_current_tab( $tab_id, $section ) {
 		var tab = $( 'div.' + $tab_id );

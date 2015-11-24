@@ -942,6 +942,13 @@
 						rapidology_force_upd_stats : $force_upd
 					},
 					beforeSend: function( data ){
+                        $('.stats-collapse').each(function(){
+                           $(this).remove();
+                        });
+                        $('.rad_dashboard_optins_stats').each(function(){
+                            $(this).remove();
+                        });
+
 						if ( ! $force_upd ) {
 							$( '.rad_rapidology_stats_spinner' ).addClass( 'rad_dashboard_spinner_visible' );
 						}

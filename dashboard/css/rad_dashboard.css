@@ -1000,6 +1000,18 @@ p.rad_dashboard_section_subtitle { margin-top: -12px; margin-bottom: 14px; font-
     display: none;
     text-align: center;
 }
-.templates_loading img{
-    height:20px;
+.rad_dashboard_row.rad_dashboard_selection > h1{
+    text-transform: none;
 }
+
+.rad_dashboard_all_time_stats{  display: none;}
+
+.stats-collapse{
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.rad_dashboard_optins_all_table > .rad_dashboard_optins_list{display: none;}
+.rad_dashboard_lists_stats{display: none;}
+.rad_dashboard_pages_stats{display: none;}

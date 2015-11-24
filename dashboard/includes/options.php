@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 //Array of all sections. All sections will be added into sidebar navigation except for the 'header' section.
 $rad_all_sections = array(
 	'optin'  => array(
-		'title'    => __( 'Optin Configuration', 'rapidology' ),
+		'title'    => __( 'Opt-In Configuration', 'rapidology' ),
 		'contents' => array(
 			'setup'   => __( 'Setup', 'rapidology' ),
 			'premade' => __( 'Premade Layouts', 'rapidology' ),
@@ -17,7 +17,7 @@ $rad_all_sections = array(
 	),
 	'header' => array(
 		'contents' => array(
-			'stats'        => __( 'Optin Stats', 'rapidology' ),
+			'stats'        => __( 'Opt-In Stats', 'rapidology' ),
 			'accounts'     => __( 'Accounts settings', 'rapidology' ),
 			'importexport' => __( 'Import & Export', 'rapidology' ),
 			'home'         => __( 'Home', 'rapidology' ),
@@ -56,7 +56,7 @@ $rad_dashboard_options_all = array(
 	'optin_name' => array(
 		'section_start' => array(
 			'type'  => 'section_start',
-			'title' => __( 'Optin Form Name', 'rapidology' ),
+			'title' => __( 'Opt-In Form Name', 'rapidology' ),
 			'hint_text'       => __( 'This name is used to identify your form in the ACTIVE OPT-INS dashboard screen. It won’t appear on the form itself.', 'rapidology' ),
 		),
 
@@ -141,7 +141,7 @@ $rad_dashboard_options_all = array(
 	'optin_title' => array(
 		'section_start' => array(
 			'type'     	=> 'section_start',
-			'title'    	=> __( 'Optin title', 'rapidology' ),
+			'title'    	=> __( 'Opt-In title', 'rapidology' ),
 			'subtitle' 	=> __( 'No title will appear if left blank', 'rapidology' ),
 			'class'		=> 'rad_rapidology_hide_for_rapidbar',
 		),
@@ -161,7 +161,7 @@ $rad_dashboard_options_all = array(
 	'optin_message' => array(
 		'section_start' => array(
 			'type'     => 'section_start',
-			'title'    => __( 'Optin message', 'rapidology' ),
+			'title'    => __( 'Opt-In message', 'rapidology' ),
 			'subtitle' => __( 'No message will appear if left blank', 'rapidology' ),
 		),
 
@@ -228,8 +228,8 @@ $rad_dashboard_options_all = array(
 			'name'            => 'image_url',
 			'class'           => 'rad_dashboard_upload_image',
 			'button_text'     => __( 'Upload an Image', 'rapidology' ),
-			'wp_media_title'  => __( 'Choose an Optin Image', 'rapidology' ),
-			'wp_media_button' => __( 'Set as Optin Image', 'rapidology' ),
+			'wp_media_title'  => __( 'Choose an Opt-In Image', 'rapidology' ),
+			'wp_media_button' => __( 'Set as Opt-In Image', 'rapidology' ),
 			'validation_type' => 'simple_array',
 		),
 		'image_animation' => array(
@@ -311,7 +311,7 @@ $rad_dashboard_options_all = array(
 		),
 		'rapidbar_popup' => array(
 			'type'            => 'select',
-			'title'           => __( 'Select optin to open', 'rapidology' ),
+			'title'           => __( 'Select opt-in to open', 'rapidology' ),
 			'name'            => 'rapidbar_popup',
 			'value'           => $valid_optins,
 			'default'         => 'empty',
@@ -419,7 +419,7 @@ $rad_dashboard_options_all = array(
 	'optin_styling' => array(
 		'section_start' => array(
 			'type'  => 'section_start',
-			'title' => __( 'Optin Styling', 'rapidology' ),
+			'title' => __( 'Opt-In Styling', 'rapidology' ),
 		),
 		'header_bg_color' => array(
 			'type'            => 'color_picker',
@@ -630,7 +630,7 @@ $rad_dashboard_options_all = array(
 		),
 		'enable_success_redirect' => array(
 			'type'            => 'checkbox',
-			'title'           => __( 'Redirect to URL after optin', 'rapidology' ),
+			'title'           => __( 'Redirect to URL after opt-in', 'rapidology' ),
 			'name'            => 'enable_success_redirect',
 			'default'         => false,
 			'conditional'     => 'success_redirect_section',
@@ -1145,7 +1145,7 @@ $rad_dashboard_options_all = array(
 
 	'stats' => array(
 		'type'  => 'stats',
-		'title' => __( 'Optin Stats', 'rapidology' ),
+		'title' => __( 'Opt-In Stats', 'rapidology' ),
 	),
 
 	'accounts' => array(

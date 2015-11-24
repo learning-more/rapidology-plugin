@@ -270,7 +270,7 @@ li.rad_dashboard_content_row:hover { background: #f2f3f7; }
 
 .rad_dashboard_form.rad_dashboard_row.rad_no_top_space { margin-top: -50px; }
 
-.rad_rapidology_loading { background-image: url('../images/subscribe-loader.gif'); background-repeat: no-repeat; background-position: center; text-indent: -9999px; }
+.rad_rapidology_loading { background-image: url('../images/loading-bubbles-white.svg'); background-repeat: no-repeat; background-position: center; text-indent: -9999px; }
 
 .current_tab_rad_dashboard_tab_content_header_home { margin-left: 0 !important; }
 
@@ -346,7 +346,7 @@ li.rad_dashboard_optin_type { border: none; background-color: #14283A; border-ra
 		.all_stats_column.growth_rate span.value { color: #4fd1cd; }
 			.all_stats_column.growth_rate span.value span { font-size: 20px; }
 
-.rad_dashboard_optins_stats { margin-top: 60px; }
+.rad_dashboard_optins_stats { margin-top: 20px; }
 .rad_dashboard_lists_stats .rad_dashboard_table_contents .rad_dashboard_table_conversions, .rad_dashboard_lists_stats .rad_dashboard_table_contents .rad_dashboard_table_impressions { text-transform: none; }
 .rad_dashboard_optins_stats .rad_dashboard_optins_item .rad_dashboard_table_name:after { float: left; margin-right: 10px; }
 .rad_dashboard_optins_stats .rad_dashboard_table_name.rad_table_header { padding-left: 0; color: #373942; font-size: 16px; }

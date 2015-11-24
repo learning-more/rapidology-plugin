@@ -593,6 +593,17 @@
 			return false;
 		});
 
+        $body.on( 'click', '.rad_dashboard_optins_all_table .rad_dashboard_show_hide', function(){
+            $('.rad_dashboard_optins_all_table .rad_dashboard_optins_list').toggle('slow');
+        });
+
+        $body.on( 'click', '.stats-collapse.list-stats', function(){
+            $('.rad_dashboard_lists_stats').toggle('slow');
+        });
+        $body.on( 'click', '.stats-collapse.page-stats', function(){
+            $('.rad_dashboard_pages_stats').toggle('slow');
+        });
+
 		function handle_live_search( $input, $delay, $page, $full_content ) {
 			var $this_input = $input,
 				$search_value = $this_input.val(),

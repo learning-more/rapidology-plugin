@@ -274,7 +274,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 			<div class="rad_dashboard_row rad_dashboard_next_design">
 				<button class="rad_dashboard_icon">%1$s</button>
 			</div>',
-			__( 'Next: Design Your Optin', 'rapidology' )
+			__( 'Next: Design', 'rapidology' )
 		);
 
 		printf( '
@@ -640,7 +640,22 @@ class RAD_Rapidology extends RAD_Dashboard {
 				<img src="$filter_path/layout_sideform.svg" data-form="right" data-img="side"/>
 			</div>
 		</div>
-		<div class="templates_loading"></div>
+		<div class="templates_loading">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100" height="110" fill="#14283a">
+  <circle transform="translate(12 0)" cx="0" cy="16" r="0">
+    <animate attributeName="r" values="0; 20; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0"
+      keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
+  </circle>
+  <circle transform="translate(50 0)" cx="0" cy="16" r="0">
+    <animate attributeName="r" values="0; 20; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0.3"
+      keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
+  </circle>
+  <circle transform="translate(80 0)" cx="0" cy="16" r="0">
+    <animate attributeName="r" values="0; 20; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0.6"
+      keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
+  </circle>
+</svg>
+		</div>
 		<div class="rad_rapidology_premade_grid"></div>
 SOL;
 		die($output);
@@ -765,11 +780,6 @@ SOL;
 					<h3>%1$s</h3>
 					%2$s
 				</div>
-				<div class="rad_dashboard_optins_stats rad_dashboard_optins_all_table">
-					<div class="rad_dashboard_optins_list">
-						%3$s
-					</div>
-				</div>
 				<div class="rad_dashboard_optins_stats rad_dashboard_lists_stats_graph">
 					<div class="rad_rapidology_graph_header">
 						<h3>%6$s</h3>
@@ -781,9 +791,18 @@ SOL;
 					</div>
 					%5$s
 				</div>
+				<div class="rad_dashboard_optins_stats rad_dashboard_optins_all_table">
+				<div class="stats-collapse"><h2 style="display:inline">View Opt-In Stats</h2><span class="dashicons dashicons-arrow-down-alt2 rad_dashboard_show_hide show-hide-icon"></span></div>
+					<div class="rad_dashboard_optins_list">
+						%3$s
+					</div>
+				</div>
+				<div class="stats-collapse list-stats"><h2 style="display:inline">View List Stats</h2><span class="dashicons dashicons-arrow-down-alt2 rad_dashboard_show_hide show-hide-icon"></span></div>
 				<div class="rad_dashboard_optins_stats rad_dashboard_lists_stats">
 					%4$s
 				</div>
+				<div class="stats-collapse page-stats"><h2 style="display:inline">View Page Stats</h2><span class="dashicons dashicons-arrow-down-alt2 rad_dashboard_show_hide show-hide-icon"></span></div>
+
 				%10$s
 			</div>',
 			esc_html__( 'Overview', 'rapidology' ),

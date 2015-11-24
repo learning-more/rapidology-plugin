@@ -495,24 +495,24 @@ class RAD_Rapidology extends RAD_Dashboard {
 							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_popup" data-type="pop_up">
 								<h6>%2$s</h6>
 								<div class="optin_select_grey">
-									<div class="optin_select_blue">
+									<div class="optin_select_light_grey">
 									</div>
 								</div>
 							</li>
 							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_flyin" data-type="flyin">
 								<h6>%3$s</h6>
 								<div class="optin_select_grey"></div>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 							</li>
 							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_below" data-type="below_post">
 								<h6>%4$s</h6>
 								<div class="optin_select_grey"></div>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 							</li>
 							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_inline" data-type="inline">
 								<h6>%5$s</h6>
 								<div class="optin_select_grey"></div>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 								<div class="optin_select_grey"></div>
 							</li>
 
@@ -521,19 +521,19 @@ class RAD_Rapidology extends RAD_Dashboard {
 						<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_locked" data-type="locked">
 								<h6>%6$s</h6>
 								<div class="optin_select_grey"></div>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 								<div class="optin_select_grey"></div>
 							</li>
 							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_widget" data-type="widget">
 								<h6>%7$s</h6>
 								<div class="optin_select_grey"></div>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 								<div class="optin_select_grey_small"></div>
 								<div class="optin_select_grey_small last"></div>
 							</li>
 						<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_rapidbar" data-type="rapidbar">
 								<h6>%8$s</h6>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 								<div class="optin_select_grey"></div>
 							</li>
 						</ul>
@@ -622,6 +622,14 @@ class RAD_Rapidology extends RAD_Dashboard {
 	function generate_template_filter(){
 		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
 		$filter_path = RAD_RAPIDOLOGY_PLUGIN_URI.'/images';
+		$isRapidBar     = '';
+		$isRedirect     = '';
+		$isRapidBar = $_POST['isRapidBar'];
+		$isRedirect = $_POST['isRedirect'];
+		if($isRapidBar == 'true'){
+			$this->generate_premade_grid();
+			die();
+		}
 		$output = '';
 		$output .= <<<SOL
 		<div class="layout_filter_wrapper">
@@ -632,7 +640,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 				<img src="$filter_path/layout_sideform.svg" data-form="right" data-img="side"/>
 			</div>
 		</div>
-		<div class="templates_loading"><img src="$filter_path/new_loader.gif" /></div>;
+		<div class="templates_loading"></div>
 		<div class="rad_rapidology_premade_grid"></div>
 SOL;
 		die($output);
@@ -658,27 +666,35 @@ SOL;
 			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/images/thumb_';
 		}
 
+
+
 		$select_layouts = array();
-		if( isset($all_layouts)){
-			foreach($all_layouts as $id => $array){
-				foreach($array as $key => $value){
-					if($key == 'rad_dashboard_form_orientation'){
-						if($value == $formLocation){
-							$select_layouts[$id] = $array;
+
+
+		if($isRapidBar == 'true'){
+			$select_layouts = $all_layouts;
+		}else {
+			if ( isset( $all_layouts ) ) {
+				foreach ( $all_layouts as $id => $array ) {
+					foreach ( $array as $key => $value ) {
+						if ( $key == 'rad_dashboard_form_orientation' ) {
+							if ( $value == $formLocation ) {
+								$select_layouts[ $id ] = $array;
+							}
 						}
 					}
 				}
 			}
-		}
 
-		//now filter based on img location
-		if($formLocation != 'right') {
-			if ( isset( $select_layouts ) ) {
-				foreach ( $select_layouts as $id => $array ) {
-					foreach ( $array as $key => $value ) {
-						if ( $key == 'rad_dashboard_image_orientation' ) {
-							if ( $value != $imgLocation ) {
-								unset( $select_layouts[ $id ] );
+			//now filter based on img location
+			if ( $formLocation != 'right' ) {
+				if ( isset( $select_layouts ) ) {
+					foreach ( $select_layouts as $id => $array ) {
+						foreach ( $array as $key => $value ) {
+							if ( $key == 'rad_dashboard_image_orientation' ) {
+								if ( $value != $imgLocation ) {
+									unset( $select_layouts[ $id ] );
+								}
 							}
 						}
 					}

@@ -56,15 +56,16 @@ $rad_dashboard_options_all = array(
 	'optin_name' => array(
 		'section_start' => array(
 			'type'  => 'section_start',
-			'title' => __( 'Optin name', 'rapidology' ),
+			'title' => __( 'Optin Form Name', 'rapidology' ),
+			'hint_text'       => __( 'This name is used to identify your form in the ACTIVE OPT-INS dashboard screen. It won’t appear on the form itself.', 'rapidology' ),
 		),
 
 		'option' => array(
 			'type'            => 'text',
 			'rows'            => '1',
 			'name'            => 'optin_name',
-			'placeholder'     => __( 'MyNewOptin', 'rapidology' ),
-			'default'         => __( 'MyNewOptin', 'rapidology' ),
+			'placeholder'     => __( 'Enter Opt-In Form Name', 'rapidology' ),
+			'default'         => __( 'Enter Opt-In Form Name', 'rapidology' ),
 			'validation_type' => 'simple_text',
 		),
 	),
@@ -72,7 +73,7 @@ $rad_dashboard_options_all = array(
 	'form_integration' => array(
 		'section_start' => array(
 			'type'  => 'section_start',
-			'title' => __( 'Form Integration', 'rapidology' ),
+			'title' => __( 'Connect Your Email Service Provider', 'rapidology' ),
 			'class' => 'rad_dashboard_child_hidden rad_dashboard_provider_setup_dropdown',
 		),
 		'enable_redirect_form' => array(
@@ -685,7 +686,7 @@ $rad_dashboard_options_all = array(
 	'load_in' => array(
 		'section_start' => array(
 			'type'  => 'section_start',
-			'title' => __( 'Load-in settings', 'rapidology' ),
+			'title' => __( 'Display and Timing Settings', 'rapidology' ),
 			'class' => 'rad_dashboard_for_popup rad_dashboard_for_rapidbar',
 		),
 		'load_animation' => array(
@@ -1112,24 +1113,24 @@ $rad_dashboard_options_all = array(
 		'name'            => 'child_optins',
 		'validation_type' => 'simple_array',
 	),
-
 	'setup_title' => array(
 		'type'     => 'main_title',
-		'title'    => __( 'Create New Optin', 'rapidology' ),
-		'subtitle' => __( 'Select your optin and configure form integration.', 'rapidology' ),
+		'title'    => __( 'Step 1: Name and Connect Your Form', 'rapidology' ),
+		'subtitle' =>  __( 'Create and publish your new opt-in form in just 4 steps.', 'rapidology'),
+		'subtitle2' =>  __( 'Give your opt-in form a name, then connect it with your Email Service Provider for building your email list.', 'rapidology' ),
 	),
-
 	'design_title' => array(
 		'type'     => 'main_title',
-		'title'    => __( 'Design your optin form', 'rapidology' ),
-		'subtitle' => __( 'Configure your content, layout, and optin styling below.', 'rapidology' ),
+		'title'    => __( 'Step 3: Customize Your Form Template', 'rapidology' ),
+		'subtitle' => __( 'This is your 3rd step in creating your new opt-in form. In this step, you’ll enter the text you want to appear on your form, make style, color and image choices, and more.', 'rapidology' ),
+		'subtitle2' => __( 'Customizing your form is easy, and you can see how it looks as you go by clicking the blue preview button.', 'rapidology' ),
 		'class'    => 'rad_dashboard_design_title',
 	),
 
 	'display_title' => array(
 		'type'     => 'main_title',
-		'title'    => __( 'Display Settings', 'rapidology' ),
-		'subtitle' => __( 'Define when and where to display this optin on your website.', 'rapidology' ),
+		'title'    => __( 'Step 4: Select When and Where Your Form Appears', 'rapidology' ),
+		'subtitle' => __( 'In this final step you can choose a variety of triggers for when your opt-in form displays, and where you want it to show up.', 'rapidology' ),
 	),
 
 	'import_export' => array(
@@ -1167,8 +1168,8 @@ $rad_dashboard_options_all = array(
 
 	'premade_templates_start' => array(
 		'type'     => 'main_title',
-		'title'    => __( 'Choose a template', 'rapidology' ),
-		'subtitle' => __( 'These are just starting points that you can full customize on the next step.', 'rapidology' ),
+		'title'    => __( 'Step 2: Select a Template To Customize', 'rapidology' ),
+		'subtitle' => __( 'Choose a template that best represents your basic style preference. Don’t worry if you can’t find the exact color or image. You’ll be able to customize these elements to your liking in the next step.', 'rapidology' ),
 	),
 
 	'premade_templates_main' => array(

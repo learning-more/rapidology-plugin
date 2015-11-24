@@ -207,12 +207,13 @@ class RAD_Dashboard {
 	 * Generates the output for the hint in dashboard options
 	 * @return string
 	 */
-	function generate_hint( $text, $escape ) {
+	function generate_hint( $text, $escape, $noPadding = false ) {
 		$output = sprintf(
-			'<span class="rad_dashboard_more_info rad_dashboard_icon">
+			'<span class="rad_dashboard_more_info rad_dashboard_icon %2$s">
 				<span class="rad_dashboard_more_text">%1$s</span>
 			</span>',
-			true === $escape ? esc_html( $text ) : $text
+			true === $escape ? esc_html( $text ) : $text,
+			true === $noPadding ? ' no_padding' :''
 		);
 
 		return $output;
@@ -1254,9 +1255,14 @@ class RAD_Dashboard {
 								break;
 
 								case 'section_start' :
+									if(isset($option['hint_text'])) {
+										$hint_output = $this->generate_hint( $option['hint_text'], $escape, true );
+									}else{
+										$hint_output = '';
+									}
 									printf(
 										'%5$s<div class="rad_dashboard_form rad_dashboard_row%2$s%7$s"%3$s%4$s%8$s>
-											%1$s
+											%1$s %9$s
 											%6$s
 											<div style="clear:both;"></div>
 											<ul>',
@@ -1273,7 +1279,8 @@ class RAD_Dashboard {
 											? sprintf('<p class="rad_dashboard_section_subtitle">%1$s</p>', esc_html( $option[ 'subtitle' ] ) )
 											: '',
 										isset( $option[ 'class' ] ) ? ' ' . esc_attr( $option[ 'class' ] ) : '',
-										isset( $option[ 'display_if' ] ) ? ' data-triggers_count="0"': '' //#8
+										isset( $option[ 'display_if' ] ) ? ' data-triggers_count="0"': '', //#8
+										$hint_output
 									);
 								break;
 
@@ -1314,14 +1321,19 @@ class RAD_Dashboard {
 								break;
 
 								case 'main_title' :
+
 									printf(
-										'<div class="rad_dashboard_row rad_dashboard_selection%3$s">
+										'<div class="rad_dashboard_row rad_dashboard_selection%4$s">
 											<h1>%1$s</h1>
 											%2$s
+											%3$s
 										</div>',
 										esc_html( $option[ 'title' ] ),
 										isset( $option[ 'subtitle' ] )
-											? sprintf('<p>%1$s</p>', esc_html( $option[ 'subtitle' ] ) )
+											? sprintf('<p style="padding-bottom: 1em;">%1$s</p>', esc_html( $option[ 'subtitle' ] ) )
+											: '',
+										isset( $option[ 'subtitle2' ] )
+											? sprintf('<p>%1$s</p>', esc_html( $option[ 'subtitle2' ] ) )
 											: '',
 										isset( $option[ 'class' ] )	? ' ' . esc_attr( $option[ 'class' ] ) : ''
 									);
@@ -1513,8 +1525,9 @@ class RAD_Dashboard {
 				} // end if ( $key !== 'header')
 			} // end foreach ( $dashboard_sections as $key => $value )
 		} // end if ( isset( $dashboard_sections ) )
+		do_action( 'rad_' . $this->plugin_name . '_after_save_button' );
 		printf(
-			'<div class="rad_dashboard_row rad_dashboard_save_changes %3$s">
+			'<div class="rad_dashboard_save_changes %3$s">
 				<button class="rad_dashboard_icon"%2$s>%1$s</button>
 				<span class="spinner"></span>
 			</div>
@@ -1526,7 +1539,7 @@ class RAD_Dashboard {
 	 		apply_filters( 'rad_' . $this->plugin_name . '_save_button_class', '' )
 		);
 
-		do_action( 'rad_' . $this->plugin_name . '_after_save_button' );
+
 
 		echo '</form>';
 

@@ -120,12 +120,12 @@
 
 		$body.on( 'click', '.rad_rapidology_open_premade', function() {
 			window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_optin_premade', 'side' );
-			$( '#rad_dashboard_tab_content_optin_design' ).addClass( 'current' );
+			$( '.rad_dashboard_tab_content_side_design #rad_dashboard_tab_content_optin_design' ).addClass( 'current' );
             var isRapidBar = '';
             var isRedirect = '';
             isRapidBar = $('#rad_dashboard_navigation').hasClass('current_optin_type_rapidbar');
             isRedirect = $('.rad_dashboard_enable_redirect_form input').is(':checked'); //need to check if its a redirect form to load the proper layouts
-            premade_grid_cache = '';
+
 			if ( '' == premade_grid_cache ) {
 				$.ajax({
 					type: 'POST',
@@ -134,17 +134,24 @@
 						action : 'rapidology_generate_template_filter',
 						rapidology_premade_nonce : rapidology_settings.rapidology_premade_nonce,
                         isRapidBar  : isRapidBar,
-                        isRedirect  : isRedirect
+                        isRedirect  : isRedirect,
+                        formLocation: '',
+                        imgLocation: '',
 					},
 					beforeSend: function( data ) {
-						$( '.rad_rapidology_premade_spinner' ).addClass( 'rad_dashboard_spinner_visible' );
+						//$( '.rad_rapidology_premade_spinner' ).addClass( 'rad_dashboard_spinner_visible' );
+
 					},
 					success: function( data ) {
+                        $('.layout_filter_wrapper').remove();
+                        $('.templates_loading').remove();
 						premade_grid_cache = data;
 						$( '.rad_rapidology_premade_grid' ).replaceWith( premade_grid_cache );
 					}
 				});
 			} else {
+                $('.layout_filter_wrapper').remove();
+                $('.templates_loading').remove();
 				$( '.rad_rapidology_premade_grid' ).replaceWith( premade_grid_cache );
 			}
 		});
@@ -152,7 +159,7 @@
         $body.on('click', '.layout_filter img', function(){
 
             window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_optin_premade', 'side' );
-            $( '#rad_dashboard_tab_content_optin_design' ).addClass( 'current' );
+            $( '.rad_dashboard_tab_content_side_design #rad_dashboard_tab_content_optin_design' ).addClass( 'current' );
             var isRapidBar = '';
             var isRedirect = '';
             var formLocation = $(this).data('form');
@@ -328,6 +335,7 @@
                 draggable: false,
 
                 create : function() {
+
                     $(window).resize(function() {
                         $(".rad_dashboard_optin_select").position({
                             my : "center",
@@ -494,7 +502,7 @@
 			$( '.rad_dashboard_icon_duplicate' ).removeClass( 'clicked_button' );
 			this_el.addClass( 'clicked_button' );
 
-			var select_type_box = '<div class="rad_dashboard_row rad_dashboard_optin_select"><h3>' + rapidology_settings.optin_type_title + '</h3><span class="rad_dashboard_icon rad_dashboard_close_button"></span><ul data-optin_id="' + parent.data( 'optin_id' ) + '"><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_popup" data-type="pop_up"><h6>pop up</h6><div class="optin_select_grey"><div class="optin_select_blue"></div></div></li><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_flyin" data-type="flyin"><h6>fly in</h6><div class="optin_select_grey"></div><div class="optin_select_blue"></div></li><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_below" data-type="below_post"><h6>below post</h6><div class="optin_select_grey"></div><div class="optin_select_blue"></div></li><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_inline" data-type="inline"><h6>inline</h6><div class="optin_select_grey"></div><div class="optin_select_blue"></div><div class="optin_select_grey"></div></li><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_locked" data-type="locked"><h6>locked content</h6><div class="optin_select_grey"></div><div class="optin_select_blue"></div><div class="optin_select_grey"></div></li><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_widget" data-type="widget"><h6>widget</h6><div class="optin_select_grey"></div><div class="optin_select_blue"></div><div class="optin_select_grey_small"></div><div class="optin_select_grey_small last"></div></li></ul></div>';
+			var select_type_box = '<div class="rad_dashboard_row rad_dashboard_optin_select"><h3>' + rapidology_settings.optin_type_title + '</h3><span class="rad_dashboard_icon rad_dashboard_close_button"></span><ul data-optin_id="' + parent.data( 'optin_id' ) + '"><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_popup" data-type="pop_up"><h6>pop up</h6><div class="optin_select_grey"><div class="optin_select_light_grey"></div></div></li><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_flyin" data-type="flyin"><h6>fly in</h6><div class="optin_select_grey"></div><div class="optin_select_light_grey"></div></li><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_below" data-type="below_post"><h6>below post</h6><div class="optin_select_grey"></div><div class="optin_select_light_grey"></div></li><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_inline" data-type="inline"><h6>inline</h6><div class="optin_select_grey"></div><div class="optin_select_light_grey"></div><div class="optin_select_grey"></div></li><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_locked" data-type="locked"><h6>locked content</h6><div class="optin_select_grey"></div><div class="optin_select_light_grey"></div><div class="optin_select_grey"></div></li><li class="rad_dashboard_optin_type rad_dashboard_optin_duplicate rad_dashboard_optin_type_widget" data-type="widget"><h6>widget</h6><div class="optin_select_grey"></div><div class="optin_select_light_grey"></div><div class="optin_select_grey_small"></div><div class="optin_select_grey_small last"></div></li></ul></div>';
 
 			$( '.rad_dashboard_optins_item .rad_dashboard_optin_select' ).remove();
 
@@ -1073,12 +1081,14 @@
                     var nav =  $('#rad_dashboard_navigation');
                     $(nav).remove();
                     $(nav).insertAfter('.rad_dashboard_tab_content .rad_dashboard_selection');
+                    $('.rad_dashboard_tab_content_side_premade').hide();
                     $('.rad_dashboard_tab_content_optin_design #rad_dashboard_navigation:not(:first)').remove();
 				}
 			});
 		}
 
 		function reset_home_tab() {
+            $('#rad_dashboard_options').hide();
 			$.ajax({
 				type: 'POST',
 				url: rapidology_settings.ajaxurl,
@@ -1528,6 +1538,7 @@
 				success: function( data ) {
 					$spinner.removeClass( 'rad_dashboard_spinner_visible' );
 					window.rad_dashboard_display_warning( data );
+                    $('#rad_dashboard_options').hide();
 					window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_header_home', 'header' );
 					$( '#rad_dashboard_wrapper' ).removeClass( 'rad_dashboard_visible_nav' );
 					reset_home_tab();

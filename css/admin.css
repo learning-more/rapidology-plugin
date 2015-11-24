@@ -13,7 +13,7 @@ body, div#wpcontent { background: #f1f1f1; }
 .rad_rapidology .rad_dashboard_single_selectable.rad_dashboard_selected:after { background-color: #4fd1cd; }
 .current_tab_rad_dashboard_tab_content_header_importexport input[type="file"] { background: #fff; }
 .toplevel_page_rad_rapidology_options{background-color: #BD404D !important;}
-button.save_account_tab, .rad_dashboard_save_changes button { background-color: #1ab6ff; }
+button.save_account_tab, .rad_dashboard_save_changes button { background-color: #939aaa; }
 	button.save_account_tab:hover, .rad_dashboard_save_changes button:hover { background-color: #009ce5; }
 
 
@@ -117,14 +117,14 @@ div#rad_dashboard_navigation { display: none; }
 
 .current_tab_rad_dashboard_tab_content_optin_display .rad_dashboard_row.rad_dashboard_save_changes { margin-top: 100px; }
 
-.rad_dashboard_row.rad_dashboard_next_design, .rad_dashboard_row.rad_dashboard_next_display, .rad_dashboard_row.rad_dashboard_next_customize, .rad_dashboard_next_shortcode { float: right; width: auto; display: none; }
+.rad_dashboard_row.rad_dashboard_next_design, .rad_dashboard_row.rad_dashboard_next_display, .rad_dashboard_row.rad_dashboard_next_customize, .rad_dashboard_next_shortcode { width: auto; display: none; }
 .current_tab_rad_dashboard_tab_content_optin_setup .rad_dashboard_row.rad_dashboard_next_design { display: block; }
 .current_tab_rad_dashboard_tab_content_optin_design .rad_dashboard_row.rad_dashboard_next_display { display: block; }
 .current_tab_rad_dashboard_tab_content_optin_premade .rad_dashboard_row.rad_dashboard_next_customize { display: block; }
 
 .rad_dashboard_new_optin h1 { float: left; }
-.rad_dashboard_row.rad_dashboard_new_optin button, .rad_dashboard_row.rad_dashboard_new_account_row button {  float: right; background-color: #BD404D; padding: 15px 20px !important; overflow: visible; background-position: center; min-width: 125px; transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s; }
-.rad_dashboard_row.rad_dashboard_new_optin button:hover, .rad_dashboard_row.rad_dashboard_new_account_row button:hover { background-color: #47bcb8; }
+.rad_dashboard_row.rad_dashboard_new_optin button, .rad_dashboard_row.rad_dashboard_new_account_row button {  float: right; background-color: #70CFFF; padding: 15px 20px !important; overflow: visible; background-position: center; min-width: 125px; transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s; }
+.rad_dashboard_row.rad_dashboard_new_optin button:hover, .rad_dashboard_row.rad_dashboard_new_account_row button:hover { background-color: #49AFE3 !important; }
 .rad_dashboard_optin_select { background: #fff; border:2px solid #373942; border-radius:10px;}
 .ui-widget-overlay.override {
     background: repeat-x scroll 50% 50% #222222;
@@ -278,29 +278,29 @@ li.rad_dashboard_content_row:hover { background: #f2f3f7; }
 /*---------------[SELECT TYPE BOXES]--------------*/
 /*------------------------------------------------*/
 
-li.rad_dashboard_optin_type { border: none; background-color: #636a7d; border-radius: 3px; width:175px; }
+li.rad_dashboard_optin_type { border: none; background-color: #14283A; border-radius: 3px; width:175px; }
 	.rad_dashboard_optin_type h6 { color: white; text-align: center; font-size: 12px; }
-	.optin_select_grey { background: #515666; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; width: 100%; }
-	.optin_select_blue { background: #00aeff; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+	.optin_select_grey { background: #293948; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; width: 100%; }
+	.optin_select_light_grey { background: #AFB7B9; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
 
 .rad_dashboard_optin_type_popup .optin_select_grey { height: 80%; position: relative; }
-.rad_dashboard_optin_type_popup .optin_select_blue { width: 80%; height: 45%; margin: 9%; position:  absolute; box-shadow: 3px 3px 3px #494d5c; }
+.rad_dashboard_optin_type_popup .optin_select_light_grey { width: 80%; height: 45%; margin: 9%; position:  absolute; box-shadow: 3px 3px 3px #494d5c; }
 .rad_dashboard_optin_type_flyin .optin_select_grey { height: 80%; }
 .rad_dashboard_optin_type_flyin { position: relative; }
-.rad_dashboard_optin_type_flyin .optin_select_blue { width: 20%; height: 40%; position: absolute; right: 0; bottom: 0; }
+.rad_dashboard_optin_type_flyin .optin_select_light_grey { width: 20%; height: 40%; position: absolute; right: 0; bottom: 0; }
 
 .rad_dashboard_optin_type_below .optin_select_grey { height: 55%; }
-.rad_dashboard_optin_type_below .optin_select_blue { height: 25%; margin-top: 5px; }
-.rad_dashboard_optin_type_rapidbar .optin_select_blue {height: 25%;}
+.rad_dashboard_optin_type_below .optin_select_light_grey { height: 25%; margin-top: 5px; }
+.rad_dashboard_optin_type_rapidbar .optin_select_light_grey {height: 25%;}
 .rad_dashboard_optin_type_rapidbar .optin_select_grey {height: 55%;}
 .rad_dashboard_optin_type_inline .optin_select_grey,.rad_dashboard_optin_type_locked .optin_select_grey { height: 20%; }
-.rad_dashboard_optin_type_inline .optin_select_blue,.rad_dashboard_optin_type_locked .optin_select_blue { height: 30%; margin: 5px 0; }
+.rad_dashboard_optin_type_inline .optin_select_light_grey,.rad_dashboard_optin_type_locked .optin_select_light_grey { height: 30%; margin: 5px 0; }
 .rad_dashboard_optin_type_widget .optin_select_grey { height: 40%; clear:right;}
-.rad_dashboard_optin_type_widget .optin_select_blue,.rad_dashboard_optin_type_widget .optin_select_grey_small { width: 30%; height: 30%; float: left; margin: 4% 5% 0 0; }
+.rad_dashboard_optin_type_widget .optin_select_light_grey,.rad_dashboard_optin_type_widget .optin_select_grey_small { width: 30%; height: 30%; float: left; margin: 4% 5% 0 0; }
 .rad_dashboard_optin_type_widget .optin_select_grey_small { background-color: #515666; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
 .rad_dashboard_optin_type_widget .optin_select_grey_small.last { margin-right: 0; }
 
-.rad_dashboard_optin_type_locked .optin_select_blue:before { color: #fff; text-align: center; width: 100%; display: inline-block; padding-top: 4px; }
+.rad_dashboard_optin_type_locked .optin_select_light_grey:before { color: #fff; text-align: center; width: 100%; display: inline-block; padding-top: 4px; }
 
 .rad_optin_button { color: #939aaa; cursor: pointer; padding-left: 14px; float: right; position: relative; }
 
@@ -327,7 +327,7 @@ li.rad_dashboard_optin_type { border: none; background-color: #636a7d; border-ra
 
 
 .display_on_section li { height: auto; min-height: 30px; }
-.display_on_section li p { margin-left: 10px; }
+.display_on_section li p { margin-left: 10px; text-transform: capitalize;}
 .display_on_section li.rad_dashboard_checkbox { float: none !important; }
 .categories_include_section li.rad_dashboard_checkbox { float: none !important; }
 
@@ -410,7 +410,7 @@ li.rad_table_page_row { background: #f2f3f7; }
 .rad_rapidology_hidden_option { display: none !important; }
 
 /* premade layouts grid */
-li.rad_dashboard_tab_content_side_premade { display: none; }
+li.rad_dashboard_tab_content_side_premade { display: none !important; }
 .rad_rapidology_premade_grid { /*max-height: 500px; overflow: auto;*/ clear: both; margin-bottom: 50px; }
 .rad_rapidology_premade_grid:after { position: relative; clear: both; display: block; content: ""; }
 .rad_rapidology_premade_item { width: 19.2%; height: auto; float: left; margin: 0 1% 1% 0; cursor: pointer; padding: 1%; border: 3px solid #FFF; border-radius: 3px; transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }

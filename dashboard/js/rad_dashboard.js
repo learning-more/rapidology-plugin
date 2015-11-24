@@ -422,8 +422,8 @@
 			$this_el.attr( 'href', '#tab_' + $this_el.parent().find( 'ul > li > a' ).first().attr( 'id' ) );
 		});
 
-		$body.on( 'click', 'div#rad_dashboard_navigation > ul > li > a', function() {
-			window.rad_dashboard_set_current_tab ( $( this ).parent().find( 'ul > li > a' ).first().attr( 'id' ), 'side');
+		$body.on( 'click', 'div#rad_dashboard_navigation  a', function() {
+			window.rad_dashboard_set_current_tab ( $( this ).attr( 'id' ), 'side');
 		});
 
 		$body.on( 'click', '#rad_dashboard_navigation ul li ul li > a', function() {

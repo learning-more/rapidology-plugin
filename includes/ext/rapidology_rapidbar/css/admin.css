@@ -210,19 +210,25 @@
 }
 .newsletter_submit_button{
     font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
     text-transform: uppercase;
     background: #ff5e6e;
     text-decoration: none;
     padding: 10px 0;
     color: #fff;
     text-align: center;
-    border-radius:5px;
+    border-radius:20px;
     margin-top:10px;
     font-size:14px;
     display: block;
     width:200px;
     cursor: pointer !important;
 }
+.newsletter_submit_button:hover{
+    color: #fff;
+    background: #BD404D;
+}
+
 .privacy_link{
     margin-top:10px;
     text-align: center;

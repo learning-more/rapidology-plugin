@@ -135,6 +135,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_action( 'wp_ajax_rapidology_clear_stats', array( $this, 'clear_stats' ) );
 
 		add_action( 'wp_ajax_rapidology_get_premade_values', array( $this, 'get_premade_values' ) );
+		add_action( 'wp_ajax_rapidology_generate_template_filter', array( $this, 'generate_template_filter' ) );
 		add_action( 'wp_ajax_rapidology_generate_premade_grid', array( $this, 'generate_premade_grid' ) );
 
 		add_action( 'wp_ajax_rapidology_display_preview', array( $this, 'display_preview' ) );
@@ -617,13 +618,38 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 	}
 
+
+	function generate_template_filter(){
+		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
+		$filter_path = RAD_RAPIDOLOGY_PLUGIN_URI.'/images';
+		$output = '';
+		$output .= <<<SOL
+		<div class="layout_filter_wrapper">
+			<p>Filter by Layout</p>
+			<div class="layout_filter">
+				<img src="$filter_path/layout_bottomform_sidepic.svg" data-form="bottom" data-img="left"/>
+				<img src="$filter_path/layout_bottomform_toppic.svg" data-form="bottom" data-img="above"/>
+				<img src="$filter_path/layout_sideform.svg" data-form="right" data-img="side"/>
+			</div>
+		</div>
+		<div class="templates_loading"><img src="$filter_path/new_loader.gif" /></div>;
+		<div class="rad_rapidology_premade_grid"></div>
+SOL;
+		die($output);
+	}
+
 	function generate_premade_grid() {
-		$isRapidBar = '';
-		$isRedirect = '';
+		$isRapidBar     = '';
+		$isRedirect     = '';
+		$formLocation   = '';
+		$imgLocation    = '';
 		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
 		$isRapidBar = $_POST['isRapidBar'];
 		$isRedirect = $_POST['isRedirect'];
+		$formLocation = ($_POST['formLocation'] != '' ? $_POST['formLocation'] : '');
+		$imgLocation = $_POST['imgLocation'];
 		$layoutFolder = $isRedirect == 'true' ? 'redirect' : 'form';
+		$filter_path = RAD_RAPIDOLOGY_PLUGIN_URI.'/images';
 		if($isRapidBar == 'true'){
 			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/premade-layouts.php');
 			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/images/thumb_';
@@ -631,14 +657,42 @@ class RAD_Rapidology extends RAD_Dashboard {
 			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php');
 			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/images/thumb_';
 		}
-		$output = '';
 
-		if ( isset( $all_layouts ) ) {
+		$select_layouts = array();
+		if( isset($all_layouts)){
+			foreach($all_layouts as $id => $array){
+				foreach($array as $key => $value){
+					if($key == 'rad_dashboard_form_orientation'){
+						if($value == $formLocation){
+							$select_layouts[$id] = $array;
+						}
+					}
+				}
+			}
+		}
+
+		//now filter based on img location
+		if($formLocation != 'right') {
+			if ( isset( $select_layouts ) ) {
+				foreach ( $select_layouts as $id => $array ) {
+					foreach ( $array as $key => $value ) {
+						if ( $key == 'rad_dashboard_image_orientation' ) {
+							if ( $value != $imgLocation ) {
+								unset( $select_layouts[ $id ] );
+							}
+						}
+					}
+				}
+			}
+		}
+
+		$output = '';
+		if ( isset( $select_layouts ) ) {
 			$i = 0;
 
 			$output .= '<div class="rad_rapidology_premade_grid">';
 
-			foreach ( $all_layouts as $layout_id => $layout_options ) {
+			foreach ( $select_layouts as $layout_id => $layout_options ) {
 				$output .= sprintf( '
 					<div class="rad_rapidology_premade_item%2$s rad_rapidology_premade_id_%1$s" data-layout="%1$s">
 						<div class="rad_rapidology_premade_item_inner">

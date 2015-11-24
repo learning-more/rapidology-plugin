@@ -137,7 +137,7 @@ div#rad_dashboard_navigation { display: none; }
 .ui-dialog-titlebar{
     display: none;
 }
-.rad_dashboard_row.rad_dashboard_optin_select { max-height: 0; margin-bottom: 0; padding: 0; position: relative; overflow: hidden;  width:100% !important; display: none; }
+.rad_dashboard_row.rad_dashboard_optin_select { max-height: 0; margin-bottom: 0; padding: 0; position: relative; overflow: hidden;  width:100% !important; max-width: 800px; display: none; }
 .rad_dashboard_row.rad_dashboard_optin_select.rad_dashboard_visible_div { display: block; }
 .rad_dashboard_row.rad_dashboard_new_optin button:after { opacity: 0; background-color: #373942; content:''; width: 20px; height: 20px; position: absolute; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transition: all 0.8s ease-in-out; -moz-transition: all 0.8s ease-in-out; -webkit-transition: all 0.8s ease-in-out; }
 .rad_dashboard_row.rad_dashboard_new_optin button:after { right: 54px; top: 80px; }
@@ -575,3 +575,4 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 .responsive_optin_select_li{
     margin-bottom:20px !important;
 }
+

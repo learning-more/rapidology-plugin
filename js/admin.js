@@ -37,7 +37,6 @@
 			var this_link = $( this ),
 
 				open_link = this_link.attr( 'href' ).split( '#tab_' )[1];
-            console.log(open_link);
 			if ( typeof open_link !== 'undefined' ) {
                 $('.non_marketing_page').show();
 				window.rad_dashboard_set_current_tab( open_link, 'header' );
@@ -49,6 +48,7 @@
                 }
                 if( open_link == 'rad_dashboard_tab_content_header_home' ){
                     $( '#rad_dashboard_wrapper' ).addClass( 'rad_dashboard_hidden_nav' );
+                    $('#rad_dashboard_options').hide();
                 }
 			} else {
 				window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_header_support', 'header' );
@@ -121,15 +121,17 @@
 		$body.on( 'click', '.rad_rapidology_open_premade', function() {
 			window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_optin_premade', 'side' );
 			$( '#rad_dashboard_tab_content_optin_design' ).addClass( 'current' );
-            var isRapidBar = $('#rad_dashboard_navigation').hasClass('current_optin_type_rapidbar');
-            var isRedirect = $('.rad_dashboard_enable_redirect_form input').is(':checked'); //need to check if its a redirect form to load the proper layouts
-
+            var isRapidBar = '';
+            var isRedirect = '';
+            isRapidBar = $('#rad_dashboard_navigation').hasClass('current_optin_type_rapidbar');
+            isRedirect = $('.rad_dashboard_enable_redirect_form input').is(':checked'); //need to check if its a redirect form to load the proper layouts
+            premade_grid_cache = '';
 			if ( '' == premade_grid_cache ) {
 				$.ajax({
 					type: 'POST',
 					url: rapidology_settings.ajaxurl,
 					data: {
-						action : 'rapidology_generate_premade_grid',
+						action : 'rapidology_generate_template_filter',
 						rapidology_premade_nonce : rapidology_settings.rapidology_premade_nonce,
                         isRapidBar  : isRapidBar,
                         isRedirect  : isRedirect
@@ -146,6 +148,46 @@
 				$( '.rad_rapidology_premade_grid' ).replaceWith( premade_grid_cache );
 			}
 		});
+
+        $body.on('click', '.layout_filter img', function(){
+
+            window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_optin_premade', 'side' );
+            $( '#rad_dashboard_tab_content_optin_design' ).addClass( 'current' );
+            var isRapidBar = '';
+            var isRedirect = '';
+            var formLocation = $(this).data('form');
+            var imgLocation = $(this).data('img');
+            $('.rad_rapidology_premade_grid').hide();
+            isRapidBar = $('#rad_dashboard_navigation').hasClass('current_optin_type_rapidbar');
+            isRedirect = $('.rad_dashboard_enable_redirect_form input').is(':checked'); //need to check if its a redirect form to load the proper layouts
+            premade_grid_cache = '';
+            if ( '' == premade_grid_cache ) {
+                $.ajax({
+                    type: 'POST',
+                    url: rapidology_settings.ajaxurl,
+                    data: {
+                        action : 'rapidology_generate_premade_grid',
+                        rapidology_premade_nonce : rapidology_settings.rapidology_premade_nonce,
+                        isRapidBar  : isRapidBar,
+                        isRedirect  : isRedirect,
+                        formLocation: formLocation,
+                        imgLocation: imgLocation,
+                    },
+                    beforeSend: function( data ) {
+                        $( '.templates_loading' ).show();
+                    },
+                    success: function( data ) {
+                        $( '.templates_loading' ).hide();
+                        $('.rad_rapidology_premade_grid').show();
+                        premade_grid_cache = data;
+                        $( '.rad_rapidology_premade_grid' ).replaceWith( premade_grid_cache );
+                    }
+                });
+            } else {
+                $( '.rad_rapidology_premade_grid' ).replaceWith( premade_grid_cache );
+            }
+        });
+
 
 		$body.on( 'click', '.rad_dashboard_next_customize button', function() {
 
@@ -287,14 +329,14 @@
 
                 create : function() {
                     $(window).resize(function() {
-                        $(".rad_dashboard_optin_select").parent().position({
+                        $(".rad_dashboard_optin_select").position({
                             my : "center",
                             at : "center",
                             of : window
                         });
                     });
                     $(window).scroll(function() {
-                        $(".rad_dashboard_optin_select").parent().position({
+                        $(".rad_dashboard_optin_select").position({
                             my : "center",
                             at : "center",
                             of : window
@@ -336,7 +378,6 @@
         });
 		$body.on( 'click', '.rad_dashboard_optin_add', function() {
             $('.rad_dashboard_optin_select').dialog('close');
-            $('#rad_dashboard_options').show();
 			$( '.rad_dashboard_new_optin button' ).addClass( 'rad_rapidology_loading' );
 			reset_options( $( this ), '', true, false, '' );
 		});
@@ -734,6 +775,10 @@
 				this_item.addClass( 'rad_rapidology_layout_selected' );
 
 			$( '.rad_dashboard_next_customize button' ).data( 'selected_layout', this_item.data( 'layout' ) );
+
+            $('html,body').animate({
+                    scrollTop: $(".rad_dashboard_next_customize").offset().top},
+                '2000');
 		});
 
 		$body.on( 'click', '.rad_dashboard_preview button', function() {
@@ -1016,6 +1061,7 @@
 					reset_optin_id : $form_id
 				},
 				success: function( data ){
+                    $('#rad_dashboard_options').show();
 					$( '#rad_dashboard_wrapper_outer' ).replaceWith(data);
 					open_optin_settings( $this_el, $new_form, $is_child, $parent_id );
 
@@ -1026,7 +1072,8 @@
 
                     var nav =  $('#rad_dashboard_navigation');
                     $(nav).remove();
-                    $(nav).insertAfter('.rad_dashboard_selection');
+                    $(nav).insertAfter('.rad_dashboard_tab_content .rad_dashboard_selection');
+                    $('.rad_dashboard_tab_content_optin_design #rad_dashboard_navigation:not(:first)').remove();
 				}
 			});
 		}

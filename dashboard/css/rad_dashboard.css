@@ -85,10 +85,11 @@ p { padding-bottom: 1.7em; }
 /*---------------[MAIN NAVIGATION]----------------*/
 /*------------------------------------------------*/
 
-#rad_dashboard_navigation { width: 100%; height: 100%; text-transform: uppercase; clear:both; }
-    #rad_dashboard_navigation ul li{display: inline-block; border-bottom: 1px solid #373942;}
-        #rad_dashboard_navigation li a { font-size: 14px; font-weight: 400; color: #373942; padding: 18px 15px 18px 20px; display: block; position: relative; text-transform: uppercase; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
-        #rad_dashboard_navigation li a:hover, #rad_dashboard_navigation li a.current{ font-weight: 700; color:#373942; border-bottom: 2px solid #373942; }
+#rad_dashboard_navigation { width: 100%; height: 100%; text-transform: uppercase; clear:both; margin-bottom:20px; }
+    #rad_dashboard_navigation ul li{display: inline-block;}
+        #rad_dashboard_navigation li a { border-bottom: 1px solid #373942; font-size: 14px; font-weight: 400; color: #373942; padding: 18px 15px 18px 20px; display: block; position: relative; text-transform: uppercase; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+        #rad_dashboard_navigation li a:hover{ font-weight: 700; color:#373942; border-bottom: 3px solid #373942; }
+        #rad_dashboard_navigation li a.current{ font-weight: 700; color:#373942; border-bottom: 3px solid #ff5e6d; }
             /*#rad_dashboard_navigation li a.current:after { -webkit-animation: arrow .7s; animation: arrow .7s; content:''; width: 20px; height: 20px; right: -14px; top: 14px; display: block; position: absolute; background-color: #ecf0f6; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); }
             #rad_dashboard_navigation li .current_section { max-height: 600px; }*/
             /*#rad_dashboard_navigation > ul > li > ul { max-height: 0; overflow: hidden; -webkit-transition: all 0.7s ease-in-out; transition: all 0.7s ease-in-out; -moz-transition: all 0.7s ease-in-out; }*/
@@ -962,4 +963,39 @@ p.rad_dashboard_section_subtitle { margin-top: -12px; margin-bottom: 14px; font-
 	display: none !important;
 }
 .rad_act_scr_input_box_company_dropdown_visible {
+}
+
+.layout_filter_wrapper  {
+    max-width:650px;
+    margin: 0 auto;
+}
+.layout_filter_wrapper p{
+    margin-left:10px;
+}
+
+.layout_filter{
+    margin-top: 20px;
+    display:-webkit-box;
+    display:-webkit-flex;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-pack: justify;
+    -webkit-justify-content: center;
+    -ms-flex-pack: justify;
+    justify-content: center;
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+.layout_filter img{
+    width: 200px;
+    height: auto;
+    margin-right:10px;
+    cursor: pointer;
+}
+
+.templates_loading{
+    display: none;
+    text-align: center;
 }

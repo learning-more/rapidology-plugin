@@ -96,6 +96,7 @@ class rapidology_getresponse extends RAD_Rapidology
 				'campaign' => $list,
 				'name' => $name,
 				'email' => $email,
+				'cycle_day' => 0,
 			)
 		);
 

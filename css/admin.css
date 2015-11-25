@@ -1,8 +1,8 @@
 /*------------------------------------------------*/
 /*--------------------[COLORS]--------------------*/
 /*------------------------------------------------*/
-div#rad_dashboard_header { background-color: #14283a; }
-div#rad_dashboard_logo { background-color: #14283a; }
+div#rad_dashboard_header { background-color: #fff; }
+div#rad_dashboard_logo { background-color: #fff; }
 .rad_rapidology #rad_dashboard_wrapper { background-color: #ffffff; }
 #rad_dashboard_wrapper a:focus { -moz-box-shadow: none; -webkit-box-shadow: none; box-shadow: none; }
 .rad_rapidology .rad_dashboard_form textarea,.rad_rapidology .rad_dashboard_form input,.rad_rapidology .rad_dashboard_form select { background-color: #F3F5F8; }
@@ -13,7 +13,7 @@ body, div#wpcontent { background: #f1f1f1; }
 .rad_rapidology .rad_dashboard_single_selectable.rad_dashboard_selected:after { background-color: #4fd1cd; }
 .current_tab_rad_dashboard_tab_content_header_importexport input[type="file"] { background: #fff; }
 .toplevel_page_rad_rapidology_options{background-color: #BD404D !important;}
-button.save_account_tab, .rad_dashboard_save_changes button { background-color: #1ab6ff; }
+button.save_account_tab, .rad_dashboard_save_changes button { background-color: #939aaa; }
 	button.save_account_tab:hover, .rad_dashboard_save_changes button:hover { background-color: #009ce5; }
 
 
@@ -21,7 +21,7 @@ button.save_account_tab, .rad_dashboard_save_changes button { background-color: 
 /*--------------------[ICONS]---------------------*/
 /*------------------------------------------------*/
 .rad_dashboard_optin_type_locked .optin_select_blue:before { font-family: 'rapidology-full-icon-set'; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; font-size: 16px; }
-.rad_dashboard_icon_rapidology:before 			{ content: "\e650"; }
+.rad_dashboard_icon_rapidology:before 			{ content: "\e650"; color: #FF5E6D; }
 .rad_dashboard_icon_delete:before 			{ content: "\e651"; }
 .rad_dashboard_icon_duplicate:before 		{ content: "\e652"; }
 .rad_dashboard_icon_header_home:before 		{ content: "\e653"; }
@@ -117,17 +117,27 @@ div#rad_dashboard_navigation { display: none; }
 
 .current_tab_rad_dashboard_tab_content_optin_display .rad_dashboard_row.rad_dashboard_save_changes { margin-top: 100px; }
 
-.rad_dashboard_row.rad_dashboard_next_design, .rad_dashboard_row.rad_dashboard_next_display, .rad_dashboard_row.rad_dashboard_next_customize, .rad_dashboard_next_shortcode { float: right; width: auto; display: none; }
+.rad_dashboard_row.rad_dashboard_next_design, .rad_dashboard_row.rad_dashboard_next_display, .rad_dashboard_row.rad_dashboard_next_customize, .rad_dashboard_next_shortcode { width: auto; display: none; }
 .current_tab_rad_dashboard_tab_content_optin_setup .rad_dashboard_row.rad_dashboard_next_design { display: block; }
 .current_tab_rad_dashboard_tab_content_optin_design .rad_dashboard_row.rad_dashboard_next_display { display: block; }
 .current_tab_rad_dashboard_tab_content_optin_premade .rad_dashboard_row.rad_dashboard_next_customize { display: block; }
 
 .rad_dashboard_new_optin h1 { float: left; }
-.rad_dashboard_row.rad_dashboard_new_optin button, .rad_dashboard_row.rad_dashboard_new_account_row button {  float: right; background-color: #BD404D; padding: 15px 20px !important; overflow: visible; background-position: center; min-width: 125px; transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s; }
-.rad_dashboard_row.rad_dashboard_new_optin button:hover, .rad_dashboard_row.rad_dashboard_new_account_row button:hover { background-color: #47bcb8; }
-.rad_dashboard_optin_select { background: #373942; }
+.rad_dashboard_row.rad_dashboard_new_optin button, .rad_dashboard_row.rad_dashboard_new_account_row button {  float: right; background-color: #70CFFF; padding: 15px 20px !important; overflow: visible; background-position: center; min-width: 125px; transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s; }
+.rad_dashboard_row.rad_dashboard_new_optin button:hover, .rad_dashboard_row.rad_dashboard_new_account_row button:hover { background-color: #49AFE3 !important; }
+.rad_dashboard_optin_select { background: #fff; border:2px solid #373942; border-radius:10px;}
+.ui-widget-overlay.override {
+    background: repeat-x scroll 50% 50% #222222;
+    opacity:0.3;
+    filter:Alpha(Opacity=15);
+}
 
-.rad_dashboard_row.rad_dashboard_optin_select { max-height: 0; margin-bottom: 0; padding: 0 40px; position: relative; overflow: hidden; margin-left: -40px; }
+
+/** dialog css**/
+.ui-dialog-titlebar{
+    display: none;
+}
+.rad_dashboard_row.rad_dashboard_optin_select { max-height: 0; margin-bottom: 0; padding: 0; position: relative; overflow: hidden;  width:100% !important; max-width: 800px; display: none; }
 .rad_dashboard_row.rad_dashboard_optin_select.rad_dashboard_visible_div { display: block; }
 .rad_dashboard_row.rad_dashboard_new_optin button:after { opacity: 0; background-color: #373942; content:''; width: 20px; height: 20px; position: absolute; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -ms-transform: rotate(45deg); -o-transform: rotate(45deg); transition: all 0.8s ease-in-out; -moz-transition: all 0.8s ease-in-out; -webkit-transition: all 0.8s ease-in-out; }
 .rad_dashboard_row.rad_dashboard_new_optin button:after { right: 54px; top: 80px; }
@@ -149,7 +159,7 @@ span.rad_dashboard_icon_abtest.clicked_button:before, span.rad_dashboard_icon_ab
 .rad_dashboard_table_column { width: 25%; float: left; text-align: center; padding: 13px 15px; text-transform: uppercase; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 	.rad_dashboard_table_column:first-child { text-align: left; }
 .rad_dashboard_tab_content_header_home div.rad_dashboard_table_column:nth-of-type(n+2):nth-of-type(-n+4) { width: 16%; }
-.rad_dashboard_optins_item .rad_dashboard_table_rate.rad_dashboard_table_column { color: #72d0fd; }
+.rad_dashboard_optins_item .rad_dashboard_table_rate.rad_dashboard_table_column { color: #57E6C3; }
 .rad_dashboard_table_name, .rad_dashboard_table_rate { font-weight: bold; }
 .rad_dashboard_child_item .rad_dashboard_table_name {  padding-left: 41px; }
 .rad_dashboard_table_actions { width: 27%; text-align: right; position: relative; }
@@ -164,7 +174,7 @@ span.rad_dashboard_icon_abtest.clicked_button:before, span.rad_dashboard_icon_ab
 	.rad_dashboard_tab_content_header_home .rad_dashboard_optins_list > ul > li.rad_dashboard_optins_item:nth-child(even), .rad_dashboard_tab_content_header_stats .rad_dashboard_optins_list > ul > li.rad_dashboard_optins_item:nth-child(odd) { background-color: #f2f3f7; }
 		.rad_dashboard_optins_list > ul > li.rad_dashboard_optins_item .rad_optin_button:hover { color: #4b4d55; }
 		.rad_dashboard_optins_list > ul > li.rad_dashboard_optins_item span.rad_dashboard_icon_inactive:hover { color: #f45a4a; }
-		.rad_dashboard_optins_list > ul > li.rad_dashboard_optins_item span.rad_dashboard_icon_active:hover { color: #47bcb8; }
+		.rad_dashboard_optins_list > ul > li.rad_dashboard_optins_item span.rad_dashboard_icon_active:hover { color: #57E6C3; }
 
 span.rad_dashboard_icon_delete { position: relative; }
 	span.rad_dashboard_confirmation { display: none; position: absolute; left: -53px; top: 24px; background-color: #fff; z-index: 999; padding: 12px 15px 17px; border-radius: 5px; -webkit-border-radius: 5px; -moz-border-radius: 5px; width: 120px; text-align: center; text-transform: none; color: #666; font-weight: normal !important; font-size: 13px; box-shadow: 0 4px 20px rgba(0,0,0,.3); -webkit-box-shadow: 0 4px 20px rgba(0,0,0,.3); -moz-box-shadow: 0 4px 20px rgba(0,0,0,.3); }
@@ -174,11 +184,10 @@ span.rad_dashboard_icon_delete { position: relative; }
 		span.rad_dashboard_cancel_delete { background-color: #BCC0CA; }
 
 li.rad_dashboard_optins_item_bottom_row { border-top: 3px solid #e2e4e8; margin-bottom: 80px; height: 50px; font-weight: bold; font-size: 21px; }
-li.rad_dashboard_optins_item_bottom_row .rad_dashboard_table_rate.rad_dashboard_table_column { color: #ffffff; background-color: #1ab6ff; }
+li.rad_dashboard_optins_item_bottom_row .rad_dashboard_table_rate.rad_dashboard_table_column { color: #ffffff; background-color: #57E6C3; }
 .rad_dashboard_row.rad_dashboard_new_optin { margin-bottom: 30px; }
-.rad_dashboard_optin_select ul { clear: both; margin: 0 auto; }
-	li.rad_dashboard_optin_type { opacity: 0; width: 15%; height: 140px; float: left; padding: 20px; margin: -20px 1.5% 40px 0; cursor: pointer; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; transition: all 0.8s ease-out; -moz-transition: all 0.8s ease-out; -webkit-transition: all 0.8s ease-out; }
-		li.rad_dashboard_optin_type:last-child { margin-left: 0; }
+.rad_dashboard_optin_select ul { display:flex; flex-wrap: wrap; width:100%; align-items: center; justify-content: flex-start; margin-bottom:30px; }
+	li.rad_dashboard_optin_type { opacity: 0;  padding: 10px; margin-left:10px; margin-right:10px; height: 140px; cursor: pointer; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; transition: all 0.8s ease-out; -moz-transition: all 0.8s ease-out; -webkit-transition: all 0.8s ease-out; }
 			.rad_dashboard_visible li.rad_dashboard_optin_type { opacity: 1; margin-top: 0;}
 				.rad_dashboard_visible li.rad_dashboard_optin_type:nth-child(1) { -webkit-transition-delay: 0.0s; transition-delay: 0.0s; }
 				.rad_dashboard_visible li.rad_dashboard_optin_type:nth-child(2) { -webkit-transition-delay: 0.1s; transition-delay: 0.1s; }
@@ -190,7 +199,7 @@ li.rad_dashboard_optins_item_bottom_row .rad_dashboard_table_rate.rad_dashboard_
 .rad_dashboard_optin_select .rad_dashboard_close_button { float: right; position: absolute; top: 15px; right: 18px; cursor: pointer; color: #f45a4a; }
 	.rad_dashboard_optin_select .rad_dashboard_close_button:hover { color: #db5142; }
 
-.rad_dashboard_optin_select h3 { margin: 40px 0 20px; color: white; float: left; }
+.rad_dashboard_optin_select h3 { margin: 40px 0 30px 10px; color: #373942; float: left; }
 
 li.rad_dashboard_checkbox.rad_dashboard_on_cat_select { margin-top: 10px; }
 .rad_dashboard_select_account button, .rad_dashboard_select_account button:hover { background-color: #4fd1cd; }
@@ -261,7 +270,7 @@ li.rad_dashboard_content_row:hover { background: #f2f3f7; }
 
 .rad_dashboard_form.rad_dashboard_row.rad_no_top_space { margin-top: -50px; }
 
-.rad_rapidology_loading { background-image: url('../images/subscribe-loader.gif'); background-repeat: no-repeat; background-position: center; text-indent: -9999px; }
+.rad_rapidology_loading { background-image: url('../images/loading-bubbles-white.svg'); background-repeat: no-repeat; background-position: center; text-indent: -9999px; }
 
 .current_tab_rad_dashboard_tab_content_header_home { margin-left: 0 !important; }
 
@@ -269,29 +278,29 @@ li.rad_dashboard_content_row:hover { background: #f2f3f7; }
 /*---------------[SELECT TYPE BOXES]--------------*/
 /*------------------------------------------------*/
 
-li.rad_dashboard_optin_type { border: none; background-color: #636a7d; border-radius: 3px; }
+li.rad_dashboard_optin_type { border: none; background-color: #14283A; border-radius: 3px; width:175px; }
 	.rad_dashboard_optin_type h6 { color: white; text-align: center; font-size: 12px; }
-	.optin_select_grey { background: #515666; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; width: 100%; }
-	.optin_select_blue { background: #00aeff; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+	.optin_select_grey { background: #293948; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; width: 100%; }
+	.optin_select_light_grey { background: #AFB7B9; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
 
 .rad_dashboard_optin_type_popup .optin_select_grey { height: 80%; position: relative; }
-.rad_dashboard_optin_type_popup .optin_select_blue { width: 80%; height: 45%; margin: 9%; position:  absolute; box-shadow: 3px 3px 3px #494d5c; }
+.rad_dashboard_optin_type_popup .optin_select_light_grey { width: 80%; height: 45%; margin: 9%; position:  absolute; box-shadow: 3px 3px 3px #494d5c; }
 .rad_dashboard_optin_type_flyin .optin_select_grey { height: 80%; }
 .rad_dashboard_optin_type_flyin { position: relative; }
-.rad_dashboard_optin_type_flyin .optin_select_blue { width: 20%; height: 40%; position: absolute; right: 0; bottom: 0; }
+.rad_dashboard_optin_type_flyin .optin_select_light_grey { width: 20%; height: 40%; position: absolute; right: 0; bottom: 0; }
 
 .rad_dashboard_optin_type_below .optin_select_grey { height: 55%; }
-.rad_dashboard_optin_type_below .optin_select_blue { height: 25%; margin-top: 5px; }
-.rad_dashboard_optin_type_rapidbar .optin_select_blue {height: 25%;}
+.rad_dashboard_optin_type_below .optin_select_light_grey { height: 25%; margin-top: 5px; }
+.rad_dashboard_optin_type_rapidbar .optin_select_light_grey {height: 25%;}
 .rad_dashboard_optin_type_rapidbar .optin_select_grey {height: 55%;}
 .rad_dashboard_optin_type_inline .optin_select_grey,.rad_dashboard_optin_type_locked .optin_select_grey { height: 20%; }
-.rad_dashboard_optin_type_inline .optin_select_blue,.rad_dashboard_optin_type_locked .optin_select_blue { height: 30%; margin: 5px 0; }
+.rad_dashboard_optin_type_inline .optin_select_light_grey,.rad_dashboard_optin_type_locked .optin_select_light_grey { height: 30%; margin: 5px 0; }
 .rad_dashboard_optin_type_widget .optin_select_grey { height: 40%; clear:right;}
-.rad_dashboard_optin_type_widget .optin_select_blue,.rad_dashboard_optin_type_widget .optin_select_grey_small { width: 30%; height: 30%; float: left; margin: 4% 5% 0 0; }
+.rad_dashboard_optin_type_widget .optin_select_light_grey,.rad_dashboard_optin_type_widget .optin_select_grey_small { width: 30%; height: 30%; float: left; margin: 4% 5% 0 0; }
 .rad_dashboard_optin_type_widget .optin_select_grey_small { background-color: #515666; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
 .rad_dashboard_optin_type_widget .optin_select_grey_small.last { margin-right: 0; }
 
-.rad_dashboard_optin_type_locked .optin_select_blue:before { color: #fff; text-align: center; width: 100%; display: inline-block; padding-top: 4px; }
+.rad_dashboard_optin_type_locked .optin_select_light_grey:before { color: #fff; text-align: center; width: 100%; display: inline-block; padding-top: 4px; }
 
 .rad_optin_button { color: #939aaa; cursor: pointer; padding-left: 14px; float: right; position: relative; }
 
@@ -318,7 +327,7 @@ li.rad_dashboard_optin_type { border: none; background-color: #636a7d; border-ra
 
 
 .display_on_section li { height: auto; min-height: 30px; }
-.display_on_section li p { margin-left: 10px; }
+.display_on_section li p { margin-left: 10px; text-transform: capitalize;}
 .display_on_section li.rad_dashboard_checkbox { float: none !important; }
 .categories_include_section li.rad_dashboard_checkbox { float: none !important; }
 
@@ -337,7 +346,7 @@ li.rad_dashboard_optin_type { border: none; background-color: #636a7d; border-ra
 		.all_stats_column.growth_rate span.value { color: #4fd1cd; }
 			.all_stats_column.growth_rate span.value span { font-size: 20px; }
 
-.rad_dashboard_optins_stats { margin-top: 60px; }
+.rad_dashboard_optins_stats { margin-top: 20px; }
 .rad_dashboard_lists_stats .rad_dashboard_table_contents .rad_dashboard_table_conversions, .rad_dashboard_lists_stats .rad_dashboard_table_contents .rad_dashboard_table_impressions { text-transform: none; }
 .rad_dashboard_optins_stats .rad_dashboard_optins_item .rad_dashboard_table_name:after { float: left; margin-right: 10px; }
 .rad_dashboard_optins_stats .rad_dashboard_table_name.rad_table_header { padding-left: 0; color: #373942; font-size: 16px; }
@@ -396,12 +405,12 @@ li.rad_table_page_row { background: #f2f3f7; }
 
 .rad_dashboard_pages_stats .rad_dashboard_table_name { width: 50%; }
 .rad_dashboard_pages_stats .rad_dashboard_table_pages_rate { font-weight: bold; }
-	.rad_table_page_row .rad_dashboard_table_pages_rate { color: #a24de3; }
+	.rad_table_page_row .rad_dashboard_table_pages_rate { color: #57E6C3; }
 
 .rad_rapidology_hidden_option { display: none !important; }
 
 /* premade layouts grid */
-li.rad_dashboard_tab_content_side_premade { display: none; }
+li.rad_dashboard_tab_content_side_premade { display: none !important; }
 .rad_rapidology_premade_grid { /*max-height: 500px; overflow: auto;*/ clear: both; margin-bottom: 50px; }
 .rad_rapidology_premade_grid:after { position: relative; clear: both; display: block; content: ""; }
 .rad_rapidology_premade_item { width: 19.2%; height: auto; float: left; margin: 0 1% 1% 0; cursor: pointer; padding: 1%; border: 3px solid #FFF; border-radius: 3px; transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
@@ -445,19 +454,13 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 /*-----------------[RESPONSIVE]-------------------*/
 /*------------------------------------------------*/
 @media only screen and (max-width: 1366px) {
-	li.rad_dashboard_optin_type:nth-child(n) { width: 30%; margin-right: 5%; margin-bottom: 5%; }
-	li.rad_dashboard_optin_type:nth-child(3n) { margin-right: 0; }
-	li.rad_dashboard_optin_type:nth-child(3n+1) { clear: both; }
-	li.rad_dashboard_optin_type:nth-last-child(-n+3) { margin-bottom: 40px; }
+
 
 	.rad_dashboard_visible {	max-height: 620px !important; }
 }
 
-@media screen and (max-width:767px) {
-	li.rad_dashboard_optin_type:nth-child(n) { width: 47%; margin-right: 6%; margin-bottom: 6%; clear: none; }
-	li.rad_dashboard_optin_type:nth-child(even) { margin-right: 0; }
-	li.rad_dashboard_optin_type:nth-child(2n+1) { clear: both; ; }
-	li.rad_dashboard_optin_type:nth-last-child(-n+2) { margin-bottom: 40px; }
+@media screen and (max-width:1150px) {
+
 
 	.rad_dashboard_visible {	max-height: 780px !important; }
 
@@ -513,6 +516,11 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 /*------------------------------------------------*/
 /*-------------------[Custom Styling]-----------------*/
 /*------------------------------------------------*/
+
+.current_tab_rad_dashboard_tab_content_header_support{
+    margin-right:0 !important;
+}
+
 .rad_dashboard_25_bottom {
     margin-bottom:25px !important;
 }
@@ -546,5 +554,25 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
     #rapidology_line_chart{
         padding-top:50px;
     }
+
+}
+
+
+.responsive_optin_select_70{
+    width:70% !important;
+    margin-left:auto !important;
+    margin-right: auto !important;
+    justify-content: space-around !important;
+}
+
+.responsive_optin_select{
+    width:70% !important;
+    margin-left:auto !important;
+    margin-right: auto !important;
+    justify-content: space-around !important;
+}
+
+.responsive_optin_select_li{
+    margin-bottom:20px !important;
 }
 

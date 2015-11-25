@@ -135,6 +135,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_action( 'wp_ajax_rapidology_clear_stats', array( $this, 'clear_stats' ) );
 
 		add_action( 'wp_ajax_rapidology_get_premade_values', array( $this, 'get_premade_values' ) );
+		add_action( 'wp_ajax_rapidology_generate_template_filter', array( $this, 'generate_template_filter' ) );
 		add_action( 'wp_ajax_rapidology_generate_premade_grid', array( $this, 'generate_premade_grid' ) );
 
 		add_action( 'wp_ajax_rapidology_display_preview', array( $this, 'display_preview' ) );
@@ -273,7 +274,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 			<div class="rad_dashboard_row rad_dashboard_next_design">
 				<button class="rad_dashboard_icon">%1$s</button>
 			</div>',
-			__( 'Next: Design Your Optin', 'rapidology' )
+			__( 'Next: Design', 'rapidology' )
 		);
 
 		printf( '
@@ -474,6 +475,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 	 * Generates the Rapidology's Home, Stats, Accounts tabs. Hooked to Dashboard class
 	 */
 	function generate_home_tab( $option, $dashboard_settings = array() ) {
+
 		switch ( $option['type'] ) {
 			case 'home' :
 				printf( '
@@ -493,45 +495,45 @@ class RAD_Rapidology extends RAD_Dashboard {
 							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_popup" data-type="pop_up">
 								<h6>%2$s</h6>
 								<div class="optin_select_grey">
-									<div class="optin_select_blue">
+									<div class="optin_select_light_grey">
 									</div>
 								</div>
 							</li>
 							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_flyin" data-type="flyin">
 								<h6>%3$s</h6>
 								<div class="optin_select_grey"></div>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 							</li>
 							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_below" data-type="below_post">
 								<h6>%4$s</h6>
 								<div class="optin_select_grey"></div>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 							</li>
 							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_inline" data-type="inline">
 								<h6>%5$s</h6>
 								<div class="optin_select_grey"></div>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 								<div class="optin_select_grey"></div>
 							</li>
-							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_locked" data-type="locked">
+
+						</ul>
+						<ul>
+						<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_locked" data-type="locked">
 								<h6>%6$s</h6>
 								<div class="optin_select_grey"></div>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 								<div class="optin_select_grey"></div>
 							</li>
 							<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_widget" data-type="widget">
 								<h6>%7$s</h6>
 								<div class="optin_select_grey"></div>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 								<div class="optin_select_grey_small"></div>
 								<div class="optin_select_grey_small last"></div>
 							</li>
-
-						</ul>
-						<ul>
 						<li class="rad_dashboard_optin_type rad_dashboard_optin_add rad_dashboard_optin_type_rapidbar" data-type="rapidbar">
 								<h6>%8$s</h6>
-								<div class="optin_select_blue"></div>
+								<div class="optin_select_light_grey"></div>
 								<div class="optin_select_grey"></div>
 							</li>
 						</ul>
@@ -616,13 +618,61 @@ class RAD_Rapidology extends RAD_Dashboard {
 		}
 	}
 
+
+	function generate_template_filter(){
+		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
+		$filter_path = RAD_RAPIDOLOGY_PLUGIN_URI.'/images';
+		$isRapidBar     = '';
+		$isRedirect     = '';
+		$isRapidBar = $_POST['isRapidBar'];
+		$isRedirect = $_POST['isRedirect'];
+		if($isRapidBar == 'true'){
+			$this->generate_premade_grid();
+			die();
+		}
+		$output = '';
+		$output .= <<<SOL
+		<div class="layout_filter_wrapper">
+			<p>Filter by Layout</p>
+			<div class="layout_filter">
+				<img src="$filter_path/layout_bottomform_sidepic.svg" data-form="bottom" data-img="left"/>
+				<img src="$filter_path/layout_bottomform_toppic.svg" data-form="bottom" data-img="above"/>
+				<img src="$filter_path/layout_sideform.svg" data-form="right" data-img="side"/>
+			</div>
+		</div>
+		<div class="templates_loading">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100" height="110" fill="#14283a">
+  <circle transform="translate(12 0)" cx="0" cy="16" r="0">
+    <animate attributeName="r" values="0; 20; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0"
+      keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
+  </circle>
+  <circle transform="translate(50 0)" cx="0" cy="16" r="0">
+    <animate attributeName="r" values="0; 20; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0.3"
+      keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
+  </circle>
+  <circle transform="translate(80 0)" cx="0" cy="16" r="0">
+    <animate attributeName="r" values="0; 20; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0.6"
+      keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
+  </circle>
+</svg>
+		</div>
+		<div class="rad_rapidology_premade_grid"></div>
+SOL;
+		die($output);
+	}
+
 	function generate_premade_grid() {
-		$isRapidBar = '';
-		$isRedirect = '';
+		$isRapidBar     = '';
+		$isRedirect     = '';
+		$formLocation   = '';
+		$imgLocation    = '';
 		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
 		$isRapidBar = $_POST['isRapidBar'];
 		$isRedirect = $_POST['isRedirect'];
+		$formLocation = ($_POST['formLocation'] != '' ? $_POST['formLocation'] : '');
+		$imgLocation = $_POST['imgLocation'];
 		$layoutFolder = $isRedirect == 'true' ? 'redirect' : 'form';
+		$filter_path = RAD_RAPIDOLOGY_PLUGIN_URI.'/images';
 		if($isRapidBar == 'true'){
 			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/premade-layouts.php');
 			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/images/thumb_';
@@ -630,14 +680,50 @@ class RAD_Rapidology extends RAD_Dashboard {
 			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php');
 			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/images/thumb_';
 		}
-		$output = '';
 
-		if ( isset( $all_layouts ) ) {
+
+
+		$select_layouts = array();
+
+
+		if($isRapidBar == 'true'){
+			$select_layouts = $all_layouts;
+		}else {
+			if ( isset( $all_layouts ) ) {
+				foreach ( $all_layouts as $id => $array ) {
+					foreach ( $array as $key => $value ) {
+						if ( $key == 'rad_dashboard_form_orientation' ) {
+							if ( $value == $formLocation ) {
+								$select_layouts[ $id ] = $array;
+							}
+						}
+					}
+				}
+			}
+
+			//now filter based on img location
+			if ( $formLocation != 'right' ) {
+				if ( isset( $select_layouts ) ) {
+					foreach ( $select_layouts as $id => $array ) {
+						foreach ( $array as $key => $value ) {
+							if ( $key == 'rad_dashboard_image_orientation' ) {
+								if ( $value != $imgLocation ) {
+									unset( $select_layouts[ $id ] );
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		$output = '';
+		if ( isset( $select_layouts ) ) {
 			$i = 0;
 
 			$output .= '<div class="rad_rapidology_premade_grid">';
 
-			foreach ( $all_layouts as $layout_id => $layout_options ) {
+			foreach ( $select_layouts as $layout_id => $layout_options ) {
 				$output .= sprintf( '
 					<div class="rad_rapidology_premade_item%2$s rad_rapidology_premade_id_%1$s" data-layout="%1$s">
 						<div class="rad_rapidology_premade_item_inner">
@@ -694,11 +780,6 @@ class RAD_Rapidology extends RAD_Dashboard {
 					<h3>%1$s</h3>
 					%2$s
 				</div>
-				<div class="rad_dashboard_optins_stats rad_dashboard_optins_all_table">
-					<div class="rad_dashboard_optins_list">
-						%3$s
-					</div>
-				</div>
 				<div class="rad_dashboard_optins_stats rad_dashboard_lists_stats_graph">
 					<div class="rad_rapidology_graph_header">
 						<h3>%6$s</h3>
@@ -710,9 +791,18 @@ class RAD_Rapidology extends RAD_Dashboard {
 					</div>
 					%5$s
 				</div>
+				<div class="rad_dashboard_optins_stats rad_dashboard_optins_all_table">
+				<div class="stats-collapse"><h2 style="display:inline">View Opt-In Stats</h2><span class="dashicons dashicons-arrow-down-alt2 rad_dashboard_show_hide show-hide-icon"></span></div>
+					<div class="rad_dashboard_optins_list">
+						%3$s
+					</div>
+				</div>
+				<div class="stats-collapse list-stats"><h2 style="display:inline">View List Stats</h2><span class="dashicons dashicons-arrow-down-alt2 rad_dashboard_show_hide show-hide-icon"></span></div>
 				<div class="rad_dashboard_optins_stats rad_dashboard_lists_stats">
 					%4$s
 				</div>
+				<div class="stats-collapse page-stats"><h2 style="display:inline">View Page Stats</h2><span class="dashicons dashicons-arrow-down-alt2 rad_dashboard_show_hide show-hide-icon"></span></div>
+
 				%10$s
 			</div>',
 			esc_html__( 'Overview', 'rapidology' ),
@@ -2112,6 +2202,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_filter( 'admin_body_class', array( $this, 'add_admin_body_class' ) );
 		wp_enqueue_script('jquery-ui-dialog','','','',true);
 		wp_enqueue_script(' jquery-ui-position','','','',true);
+		wp_enqueue_style("wp-jquery-ui-dialog");
 		wp_enqueue_script('rapidology-chart-base', '//www.google.com/jsapi', array(), $this->plugin_version, true );
 		wp_enqueue_script('rapidology-chart-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/chart.js', array( ), $this->plugin_version, true );
 		wp_enqueue_script( 'rad_rapidology-uniform-js', RAD_RAPIDOLOGY_PLUGIN_URI . '/js/jquery.uniform.min.js', array( 'jquery' ), $this->plugin_version, true );

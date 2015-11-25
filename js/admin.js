@@ -321,6 +321,14 @@
 			return false;
 		});
 
+        $body.on( 'click', '.rad_dashboard_optin_add', function() {
+            $('.rad_dashboard_optin_select').dialog().remove();
+        });
+
+        $body.on( 'click', '.rad_dashboard_close_button', function() {
+            $('.rad_dashboard_optin_select').dialog().remove();
+        });
+
 		$body.on( 'click', '.rad_dashboard_new_optin button', function() {
 
             $('.rad_dashboard_optin_select').dialog({
@@ -333,6 +341,9 @@
                 width:"auto",
                 resizable: false,
                 draggable: false,
+                close: function () {
+                    $(this).remove();
+                },
 
                 create : function() {
 
@@ -343,13 +354,7 @@
                             of : window
                         });
                     });
-                    $(window).scroll(function() {
-                        $(".rad_dashboard_optin_select").position({
-                            my : "center",
-                            at : "center",
-                            of : window
-                        });
-                    });
+
                 },
 
 
@@ -385,7 +390,6 @@
             }
         });
 		$body.on( 'click', '.rad_dashboard_optin_add', function() {
-            $('.rad_dashboard_optin_select').dialog('close');
 			$( '.rad_dashboard_new_optin button' ).addClass( 'rad_rapidology_loading' );
 			reset_options( $( this ), '', true, false, '' );
 		});
@@ -486,7 +490,6 @@
 		$body.on( 'click', '.rad_dashboard_optin_select .rad_dashboard_close_button', function() {
 			var this_select = $( this ).parent();
 
-            $('.rad_dashboard_optin_select').dialog('close');
 			this_select.parent().find( '.clicked_button').removeClass( 'clicked_button' );
 		});
 

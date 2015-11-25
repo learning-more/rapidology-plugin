@@ -270,7 +270,7 @@ li.rad_dashboard_content_row:hover { background: #f2f3f7; }
 
 .rad_dashboard_form.rad_dashboard_row.rad_no_top_space { margin-top: -50px; }
 
-.rad_rapidology_loading { background-image: url('../images/loading-bubbles-white.svg'); background-repeat: no-repeat; background-position: center; text-indent: -9999px; }
+.rad_rapidology_loading { background-image: url('../images/loading-bubbles-white.svg'); background-repeat: no-repeat; fill: #ffffff; background-position: center; text-indent: -9999px; }
 
 .current_tab_rad_dashboard_tab_content_header_home { margin-left: 0 !important; }
 

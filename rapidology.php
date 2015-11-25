@@ -3267,8 +3267,8 @@ SOL;
 				$form_fields = $sendinblue->draw_sendinblue_form($form_fields, $service, $field_values);
 				break;
 			case 'campaign_monitor' :
-				$mailchimp = new rapidology_campaign_monitor();
-				$mailchimp->draw_campaign_monitor_form($form_fields, $service, $field_values);
+				$campaign_monitor = new rapidology_campaign_monitor();
+				$form_fields = $campaign_monitor->draw_campaign_monitor_form($form_fields, $service, $field_values);
 				break;
 			case 'feedblitz' :
 				$feedblitz = new rapidology_feedblitz();

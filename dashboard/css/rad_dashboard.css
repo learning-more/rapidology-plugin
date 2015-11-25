@@ -1032,6 +1032,7 @@ p.rad_dashboard_section_subtitle { margin-top: -12px; margin-bottom: 14px; font-
         align-items: flex-start;
         justify-content: center;
         border-top: 2px solid #bdc4d6;
+        padding: 10px 0;
     }
 
     .rapidology_marketing_sidebar.non_marketing_page .signup{

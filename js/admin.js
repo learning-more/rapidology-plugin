@@ -726,6 +726,23 @@
 				switch_graph( period, list_id, false );
 		});
 
+        var lastExection = 0;
+        if (window.addEventListener) {
+            window.addEventListener('resize', function(event) {
+                period = jQuery( 'a.rad_rapidology_graph_button.rad_rapidology_active_button' ).data( 'period' );
+                list_id = jQuery('.rad_rapidology_graph_select_list').val();
+                var now = Date.now();
+                if (now - lastExection < 2000) {
+                    setTimeout(function(){
+                        //switch_graph( period, list_id, false );
+                    },500);
+                    return
+                }
+                lastExection = Date.now();
+                switch_graph( period, list_id, false );
+            });
+        }
+
 		$body.on( 'click', '.rad_dashboard_sort_button:not(.active_sorting)', function(){
 			var this_el = $( this ),
 				orderby = this_el.data( 'order_by' ),

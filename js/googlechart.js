@@ -40,6 +40,7 @@ function rapidology_drawChart($period, $stats, $list_id){
         },
 
         vAxis: {minValue:0},
+        colors:['#57E6C3'],
 
     };
     var div = document.createElement("div");
@@ -49,15 +50,16 @@ function rapidology_drawChart($period, $stats, $list_id){
     var chart = new google.charts.Line(document.querySelector('.rapidology_line_chart'));
     chart.draw(data, options);
 
-    function resizeCharts () {
+    /*function resizeCharts () {
         // redraw charts, dashboards, etc here
         chart.draw(data, options);
     }
     var lastExection = 0;
     if (window.addEventListener) {
         window.addEventListener('resize', function(event) {
+
             var now = Date.now();
-            if (now - lastExection < 2000) {
+            if (now - lastExection < 1500) {
                setTimeout(function(){
                    resizeCharts();
                },500);
@@ -66,8 +68,10 @@ function rapidology_drawChart($period, $stats, $list_id){
             lastExection = Date.now();
             resizeCharts();
         });
-    }
-
-
+    }*/
 }
+
+
+
+
 

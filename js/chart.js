@@ -51,7 +51,6 @@ function chart_data_generate_30(optin_data, list_id){
     var i = 1;
     while(i <= current_day){
         i = i.pad();
-        //TODO: add more items such as pageid etc
         data_array.push({'date': current_year+'-'+current_month+'-'+i, 'month':current_month, 'day':i, 'year':current_year,'converstions': 0});
         i++;
     }
@@ -60,8 +59,8 @@ function chart_data_generate_30(optin_data, list_id){
     }else{
         list_id = list_id;
     }
-    data_id = 0;
-    while(data_id <= 30){
+
+    for(data_id in data_array){
         for(data in optin_data) {
             var record_date = rapid_getInfo(optin_data[data].record_date);
             optin_list_id = optin_data[data].list_id;
@@ -84,7 +83,6 @@ function chart_data_generate_30(optin_data, list_id){
                 }
             }
         }
-        data_id++;
     }
     return data_array;
 }

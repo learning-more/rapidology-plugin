@@ -1657,7 +1657,6 @@
 		});
 
         $body.on( 'click', '.rad_dashboard_show_hide', function(){
-            console.log('click');
             var trigger = $(this).parent().next('.rad_hidden');
             if(trigger.css('display') == 'none'){
                 $(this).removeClass('dashicons-arrow-down-alt2');
@@ -1668,6 +1667,19 @@
                 $(this).addClass('dashicons-arrow-down-alt2');
             }
             trigger.toggle('slow');
+
+        });
+
+        $body.on( 'click', '.stats-collapse .rad_dashboard_show_hide', function(){
+            var trigger = $(this);
+            if(trigger.hasClass('dashicons-arrow-down-alt2')){
+                $(this).removeClass('dashicons-arrow-down-alt2');
+                $(this).addClass('dashicons-arrow-up-alt2');
+            }else{
+                $(this).removeClass('dashicons-arrow-up-alt2');
+                $(this).addClass('dashicons-arrow-down-alt2');
+            }
+            //trigger.toggle('slow');
 
         });
 

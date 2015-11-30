@@ -914,7 +914,7 @@
                         $( '.rad_dashboard_lists_stats_graph_container' ).replaceWith( function() {
                             return $( data ).hide().fadeIn();
                         } );
-                        rapidology_chart_init($period, stats, $list_id);
+                        rapidology_drawChart($period, stats, $list_id);
 
 					} else {
                         $('.rad_rapidology_overall').remove();
@@ -922,7 +922,7 @@
                             return $( data ).hide().fadeIn();
                         } );
                         stats = rapidology_settings.chart_stats;
-                        rapidology_chart_init($period, stats, $list_id);
+                        rapidology_drawChart($period, stats, $list_id);
 
 					}
 

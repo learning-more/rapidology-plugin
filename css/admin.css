@@ -505,7 +505,7 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 
 	ul.rad_rapidology_graph, ul.rad_rapidology_graph li, ul.rad_rapidology_graph li div { max-height: 200px; }
 
-	.rad_rapidology_graph_controls { float: left; width: 100%; }
+	.rad_rapidology_graph_controls {  width: 100%; }
 
 	.rad_dashboard_stats_container .all_stats_column { width: 100%; text-align: left; }
 		.all_stats_column span.value { font-size: 40px; }

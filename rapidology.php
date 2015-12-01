@@ -545,7 +545,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					esc_html__( 'inline', 'rapidology' ),
 					esc_html__( 'locked content', 'rapidology' ),
 					esc_html__( 'widget', 'rapidology' ),
-					esc_html__( 'banner', 'rapidology' )
+					esc_html__( 'bar', 'rapidology' )
 				);
 
 				$this->display_home_tab_tables();
@@ -666,6 +666,7 @@ SOL;
 		$isRedirect     = '';
 		$formLocation   = '';
 		$imgLocation    = '';
+	  	$rapidBarClass  = '';
 		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
 		$isRapidBar = $_POST['isRapidBar'];
 		$isRedirect = $_POST['isRedirect'];
@@ -676,6 +677,7 @@ SOL;
 		if($isRapidBar == 'true'){
 			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/premade-layouts.php');
 			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/includes/ext/rapidology_rapidbar/layouts/'.$layoutFolder.'/images/thumb_';
+		  	$rapidBarClass = ' rapidbar_layouts';
 		}else {
 			require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'includes/premade-layouts.php');
 			$imgpath = RAD_RAPIDOLOGY_PLUGIN_URI . '/images/thumb_';
@@ -721,7 +723,7 @@ SOL;
 		if ( isset( $select_layouts ) ) {
 			$i = 0;
 
-			$output .= '<div class="rad_rapidology_premade_grid">';
+			$output .= '<div class="rad_rapidology_premade_grid'.$rapidBarClass.'">';
 
 			foreach ( $select_layouts as $layout_id => $layout_options ) {
 				$output .= sprintf( '

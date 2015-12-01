@@ -106,7 +106,14 @@ div#rad_dashboard_navigation { display: none; }
 .rad_dashboard_visible_nav div#rad_dashboard_navigation { display: block; }
 .rad_dashboard_save_changes { display: none; }
 
-.rad_rapidology .rad_dashboard_row h2 { float: left; }
+.rad_rapidology .rad_dashboard_row h2 {
+    float: left;
+    font-size:16px;
+    font-weight:400;
+    color: #373942;
+    text-transform: capitalize;
+
+}
 .rad_rapidology p.rad_dashboard_section_subtitle { margin-top: -3px; margin-left: 5px; float: left; }
 .rad_dashboard_tab_content_header_importexport .rad_dashboard_row h2,.rad_dashboard_tab_content_header_importexport p.rad_dashboard_section_subtitle { float: none; }
 .rad_dashboard_tab_content_header_importexport p.rad_dashboard_section_subtitle { margin-top: -12px; margin-left: 0; }
@@ -122,7 +129,13 @@ div#rad_dashboard_navigation { display: none; }
 .current_tab_rad_dashboard_tab_content_optin_design .rad_dashboard_row.rad_dashboard_next_display { display: block; }
 .current_tab_rad_dashboard_tab_content_optin_premade .rad_dashboard_row.rad_dashboard_next_customize { display: block; }
 
-.rad_dashboard_new_optin h1 { float: left; }
+.rad_dashboard_new_optin h1 {
+    float: left;
+    text-transform: none;
+    font-size: 26px;
+    font-weight:400;
+    color: #373942;
+}
 .rad_dashboard_row.rad_dashboard_new_optin button, .rad_dashboard_row.rad_dashboard_new_account_row button {  float: right; background-color: #70CFFF; padding: 15px 20px !important; overflow: visible; background-position: center; min-width: 125px; transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s; }
 .rad_dashboard_row.rad_dashboard_new_optin button:hover, .rad_dashboard_row.rad_dashboard_new_account_row button:hover { background-color: #49AFE3 !important; }
 .rad_dashboard_optin_select { background: #fff; border:2px solid #373942; border-radius:10px;}
@@ -270,7 +283,7 @@ li.rad_dashboard_content_row:hover { background: #f2f3f7; }
 
 .rad_dashboard_form.rad_dashboard_row.rad_no_top_space { margin-top: -50px; }
 
-.rad_rapidology_loading { background-image: url('../images/loading-bubbles-white.svg'); background-repeat: no-repeat; fill: #ffffff; background-position: center; text-indent: -9999px; }
+.rad_rapidology_loading { background-image: url('../images/subscribe-loader.gif'); background-repeat: no-repeat; fill: #ffffff; background-position: center; text-indent: -9999px; }
 
 .current_tab_rad_dashboard_tab_content_header_home { margin-left: 0 !important; }
 
@@ -278,7 +291,7 @@ li.rad_dashboard_content_row:hover { background: #f2f3f7; }
 /*---------------[SELECT TYPE BOXES]--------------*/
 /*------------------------------------------------*/
 
-li.rad_dashboard_optin_type { border: none; background-color: #14283A; border-radius: 3px; width:175px; }
+li.rad_dashboard_optin_type { border: none; background-color: #14283A; width:175px; }
 	.rad_dashboard_optin_type h6 { color: white; text-align: center; font-size: 12px; }
 	.optin_select_grey { background: #293948; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; width: 100%; }
 	.optin_select_light_grey { background: #AFB7B9; border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
@@ -359,7 +372,13 @@ span.rad_rapidology_stats_spinner { position: absolute !important; left: 185px !
 	span.rad_rapidology_stats_spinner.rad_dashboard_spinner_visible { display: block; }
 
 .rad_rapidology_stats_controls { float: right; position: relative; }
-.rad_dashboard_stats_row h1 { float: left; }
+.rad_dashboard_stats_row h1 {
+    float: left;
+    text-transform: none;
+    font-size: 26px;
+    font-weight:400;
+    color: #373942;
+}
 .rad_dashboard_row .rad_rapidology_clear_stats { background-position: center; min-width: 134px; }
 .rad_dashboard_row .rad_rapidology_clear_stats, .rad_dashboard_row .rad_rapidology_refresh_stats {  float: right; background-color: #4fd1cd; padding: 15px 20px !important; overflow: visible; transition: background 0.3s; -moz-transition: background 0.3s; -webkit-transition: background 0.3s; }
 .rad_dashboard_row .rad_rapidology_refresh_stats.rad_rapidology_loading { -moz-transition: none; -webkit-transition: none; transition: none; }
@@ -385,8 +404,8 @@ ul.rad_rapidology_graph li.rad_rapidology_graph_last { margin-right: 0; }
 
 .rad_rapidology_graph_header { clear: both; }
 	.rad_rapidology_graph_header h3 { float: left; padding-top: 4px; margin-bottom: 20px; }
-	.rad_rapidology_graph_controls { float: right; margin-bottom: 30px; }
-		a.rad_rapidology_graph_button { margin: 0 25px 30px 0; display: inline-block; text-transform: uppercase; font-weight: bold; color: #bdc4d6; }
+	.rad_rapidology_graph_controls { margin-bottom: 30px; }
+		a.rad_rapidology_graph_button { margin: 0 25px 30px 10px; display: inline-block; text-transform: uppercase; font-weight: bold; color: #bdc4d6; }
 		a.rad_rapidology_graph_button.rad_rapidology_active_button, .rad_rapidology_overall span.total_signups { color: #6e768b; }
 .rad_rapidology_overall { display: block; clear: both; text-transform: uppercase; font-weight: bold; }
 .rad_rapidology_overall span.signups_period { color: #bdc4d6; }
@@ -486,7 +505,7 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 
 	ul.rad_rapidology_graph, ul.rad_rapidology_graph li, ul.rad_rapidology_graph li div { max-height: 200px; }
 
-	.rad_rapidology_graph_controls { float: left; width: 100%; }
+	.rad_rapidology_graph_controls {  width: 100%; }
 
 	.rad_dashboard_stats_container .all_stats_column { width: 100%; text-align: left; }
 		.all_stats_column span.value { font-size: 40px; }
@@ -534,12 +553,11 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 
 .rapidology_line_chart {
     position: relative;
-    top: 70px;
     margin-top:20px;
     margin-bottom:20px;
 }
 #rapidology_line_chart{
-    margin-bottom:70px;
+    min-height: 200px;
 }
 
 .line_chart_reload{
@@ -575,4 +593,8 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 .responsive_optin_select_li{
     margin-bottom:20px !important;
 }
-
+.rapidbar_layouts{
+    display:flex !important;
+    align-items: center;
+    justify-content: center;
+}

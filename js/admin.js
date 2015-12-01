@@ -125,7 +125,7 @@
             var isRedirect = '';
             isRapidBar = $('#rad_dashboard_navigation').hasClass('current_optin_type_rapidbar');
             isRedirect = $('.rad_dashboard_enable_redirect_form input').is(':checked'); //need to check if its a redirect form to load the proper layouts
-
+            premade_grid_cache = '';
 			if ( '' == premade_grid_cache ) {
 				$.ajax({
 					type: 'POST',
@@ -914,7 +914,7 @@
                         $( '.rad_dashboard_lists_stats_graph_container' ).replaceWith( function() {
                             return $( data ).hide().fadeIn();
                         } );
-                        rapidology_chart_init($period, stats, $list_id);
+                        rapidology_drawChart($period, stats, $list_id);
 
 					} else {
                         $('.rad_rapidology_overall').remove();
@@ -922,7 +922,7 @@
                             return $( data ).hide().fadeIn();
                         } );
                         stats = rapidology_settings.chart_stats;
-                        rapidology_chart_init($period, stats, $list_id);
+                        rapidology_drawChart($period, stats, $list_id);
 
 					}
 
@@ -1657,7 +1657,6 @@
 		});
 
         $body.on( 'click', '.rad_dashboard_show_hide', function(){
-            console.log('click');
             var trigger = $(this).parent().next('.rad_hidden');
             if(trigger.css('display') == 'none'){
                 $(this).removeClass('dashicons-arrow-down-alt2');
@@ -1668,6 +1667,19 @@
                 $(this).addClass('dashicons-arrow-down-alt2');
             }
             trigger.toggle('slow');
+
+        });
+
+        $body.on( 'click', '.stats-collapse .rad_dashboard_show_hide', function(){
+            var trigger = $(this);
+            if(trigger.hasClass('dashicons-arrow-down-alt2')){
+                $(this).removeClass('dashicons-arrow-down-alt2');
+                $(this).addClass('dashicons-arrow-up-alt2');
+            }else{
+                $(this).removeClass('dashicons-arrow-up-alt2');
+                $(this).addClass('dashicons-arrow-down-alt2');
+            }
+            //trigger.toggle('slow');
 
         });
 

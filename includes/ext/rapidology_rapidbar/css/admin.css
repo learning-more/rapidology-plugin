@@ -166,13 +166,14 @@
     padding-left:10px;
 }
 .signup .header{
-    font-weight:700;
+    font-weight:400;
     font-size:16px;
     text-align: center;
     color: #373942;
     font-style: normal;
     margin-top:20px;
-    margin-bottom:0 !important
+    margin-bottom:0 !important;
+    text-transform: uppercase;
 }
 .signup p{
     margin-left:10px;
@@ -217,7 +218,7 @@
     padding: 10px 0;
     color: #fff;
     text-align: center;
-    border-radius:20px;
+    border-radius:23px;
     margin-top:10px;
     font-size:14px;
     display: block;
@@ -249,7 +250,7 @@
 }
 
 .quick_links .header{
-    font-weight:700;
+    font-weight:400;
     font-size:16px;
     text-align: center;
     color: #373942;

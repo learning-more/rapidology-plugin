@@ -125,7 +125,7 @@
             var isRedirect = '';
             isRapidBar = $('#rad_dashboard_navigation').hasClass('current_optin_type_rapidbar');
             isRedirect = $('.rad_dashboard_enable_redirect_form input').is(':checked'); //need to check if its a redirect form to load the proper layouts
-
+            premade_grid_cache = '';
 			if ( '' == premade_grid_cache ) {
 				$.ajax({
 					type: 'POST',

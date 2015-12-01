@@ -322,16 +322,20 @@
 		});
 
         $body.on( 'click', '.rad_dashboard_optin_add', function() {
-            $('.rad_dashboard_optin_select').dialog().remove();
+            $('.rad_dashboard_optin_select').dialog("close");
         });
 
         $body.on( 'click', '.rad_dashboard_close_button', function() {
-            $('.rad_dashboard_optin_select').dialog().remove();
+            $('.rad_dashboard_optin_select').dialog("close")
         });
 
 		$body.on( 'click', '.rad_dashboard_new_optin button', function() {
+            $('.rad_dashboard_optin_select').dialog("open");
+            $('li.rad_dashboard_optin_type').css('opacity', 1);
+        });
 
             $('.rad_dashboard_optin_select').dialog({
+                autoOpen:false,
                 modal: true,
                 position:{
                     my: "center center",
@@ -341,9 +345,7 @@
                 width:"auto",
                 resizable: false,
                 draggable: false,
-                close: function () {
-                    $(this).remove();
-                },
+               
 
                 create : function() {
 
@@ -356,11 +358,9 @@
                     });
 
                 },
-
-
             });
-            $('li.rad_dashboard_optin_type').css('opacity', 1);
-		});
+
+
 
         $(function(){
             var windowWidth = $(window).width();

@@ -154,6 +154,7 @@ function chart_data_generate_12(optin_data, list_id){
 
     }
     return data_array;
+    console.log(data_array);
 }
 
 function rapid_getInfo(dateTime){

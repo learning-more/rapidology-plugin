@@ -18,7 +18,7 @@ function rapidology_drawChart($period, $stats, $list_id){
             var date    = chartData[rowData].date;
             var converstions = chartData[rowData].converstions;
             if(month != 0){
-                data.addRow([month.pad()+'/'+year, converstions]);
+                data.addRow([month+'/'+year, converstions]);
             }
         }
     }else if($period == 30){
@@ -26,7 +26,7 @@ function rapidology_drawChart($period, $stats, $list_id){
         var chart_title = 'Optins Past 30 Days';
         for(var rowData in chartData){
             var year    = chartData[rowData].year;
-            var month   = chartData[rowData].month;
+            var month   = chartData[rowData].month + 0;
             var day     = chartData[rowData].day;
             var date    = chartData[rowData].date;
             var converstions = chartData[rowData].converstions;

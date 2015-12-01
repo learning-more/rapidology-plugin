@@ -969,9 +969,9 @@ SOL;
 									<div style="clear: both;"></div>
 								</li>
 							</ul>',
-							__( 'My Optins', 'rapidology' ),
-							__( 'Impressions', 'rapidology' ),
-							__( 'Conversions', 'rapidology' ),
+							__( 'Opt-In Form', 'rapidology' ),
+							__( 'Views', 'rapidology' ),
+							__( 'Opt-Ins', 'rapidology' ),
 							__( 'Conversion Rate', 'rapidology' )
 						);
 					}
@@ -2017,9 +2017,9 @@ SOL;
 									<div class="rad_dashboard_table_actions rad_dashboard_table_column"></div>
 									<div style="clear: both;"></div>
 								</li>',
-						esc_html__( 'Optin Name', 'rapidology' ),
-						esc_html__( 'Impressions', 'rapidology' ),
-						esc_html__( 'Conversions', 'rapidology' ),
+						esc_html__( 'Opt-In Form', 'rapidology' ),
+						esc_html__( 'Views', 'rapidology' ),
+						esc_html__( 'Opt-Ins', 'rapidology' ),
 						esc_html__( 'Conversion Rate', 'rapidology' )
 					);
 				}

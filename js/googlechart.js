@@ -14,7 +14,7 @@ function rapidology_drawChart($period, $stats, $list_id){
         var chart_title = 'Optins Past 12 Months'
         for(var rowData in chartData){
             var year    = chartData[rowData].year;
-            var month   = chartData[rowData].month - 0;
+            var month   = chartData[rowData].month;
             var date    = chartData[rowData].date;
             var converstions = chartData[rowData].converstions;
             if(month != 0){
@@ -26,7 +26,7 @@ function rapidology_drawChart($period, $stats, $list_id){
         var chart_title = 'Optins Past 30 Days';
         for(var rowData in chartData){
             var year    = chartData[rowData].year;
-            var month   = chartData[rowData].month - 1;
+            var month   = chartData[rowData].month;
             var day     = chartData[rowData].day;
             var date    = chartData[rowData].date;
             var converstions = chartData[rowData].converstions;

@@ -14,7 +14,7 @@ function daysInMonth(month,year) {
 
 function chart_data_generate_30(optin_data, list_id){
     var today = new Date();
-    var current_month = today.getMonth() + 1;
+    var current_month = javascript_month_converstion(today.getMonth());
     var current_year = today.getFullYear();
     var current_day = today.getDate();
     var previous_month_required = false; //boolean to check if we had to go back to previous month
@@ -25,16 +25,10 @@ function chart_data_generate_30(optin_data, list_id){
         var previous_month_required = true;
 
         var days_from_previous_month =  30 - current_day; //returns how many days we will need from the previous month, need 29 so 30 day results will include today and not be 31 days
-        if(current_month == 0){//0 is jan
-            var previous_year = current_year - 1;
-            var previous_month = 11;
-            var days_previous_month = daysInMonth(previous_month, previous_year);
-        }else{
-            var previous_month = current_month -1;
-            var previous_year = current_year;
-            var days_previous_month = daysInMonth(previous_month, current_year);
-        }
-        var starting_date_previous_month = days_previous_month - days_from_previous_month;
+        var previous_month = current_month -1;
+        var previous_year = current_year;
+        var days_previous_month = daysInMonth(previous_month, current_year);//how many days were in previous month
+        var starting_date_previous_month = days_previous_month - days_from_previous_month; //get starting date from previous month based on the amount of days in the month - days needed
     }
 
     data_array = [];
@@ -42,11 +36,9 @@ function chart_data_generate_30(optin_data, list_id){
         while(starting_date_previous_month <= days_previous_month){
             starting_date_previous_month = starting_date_previous_month.pad();
             data_array.push({'date': previous_year+'-'+previous_month+'-'+starting_date_previous_month, 'month':previous_month, 'day':starting_date_previous_month, 'year':previous_year, 'converstions': 0, 'list_ids':[]});
-
             starting_date_previous_month++;
         }
     }
-
     //add remaining days from this month
     var i = 1;
     while(i <= current_day){
@@ -88,9 +80,8 @@ function chart_data_generate_30(optin_data, list_id){
 }
 
 function chart_data_generate_12(optin_data, list_id){
-
     var today = new Date();
-    var current_month = today.getMonth() + 1;
+    var current_month = javascript_month_converstion(today.getMonth());
     var current_year = today.getFullYear();
     var previous_year_required = false; //boolean to check if we had to go back to previous month
     var data_array = [];
@@ -118,8 +109,9 @@ function chart_data_generate_12(optin_data, list_id){
         }
         //get number of current years months needed
         var current_months_required = 12 - Math.abs(previous_months_needed);
+    }else{
+        var current_months_required = 12;
     }
-
     for( i = 1; i <= current_months_required; i++ ){
         i = i.pad();
         data_array.push({'date': current_year+'-'+i, 'month':i, 'year': current_year,'converstions': 0});
@@ -174,3 +166,45 @@ function rapid_getInfo(dateTime){
     return optin_date_object;
 }
 
+function javascript_month_converstion(month){
+    var actual_value = 1; //base actual value
+    switch(month){
+        case 0:
+            actual_value = 1;
+        break;
+        case 1:
+            actual_value = 2;
+        break;
+        case 2:
+            actual_value = 3;
+        break;
+        case 3:
+            actual_value = 4;
+        break;
+        case 4:
+            actual_value = 5;
+        break;
+        case 5:
+            actual_value = 6;
+        break;
+        case 6:
+            actual_value = 7;
+        break;
+        case 7:
+            actual_value = 8;
+        break;
+        case 8:
+            actual_value = 9;
+        break;
+        case 9:
+            actual_value = 10;
+        break;
+        case 10:
+            actual_value = 11;
+        break;
+        case 11:
+            actual_value = 12;
+        break;
+    }
+    return actual_value;
+}

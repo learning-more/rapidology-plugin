@@ -158,7 +158,7 @@ li.rad_dashboard_auto_height { height: auto; }
 	.rad_dashboard_form ul.inline li:last-of-type { margin-right: 0; }
 .rad_dashboard_form ul.inline li p { width: auto; margin-left: 10px; }
 
-.rad_dashboard_form input, .rad_dashboard_form select, .rad_dashboard_form textarea, .rad_social_networks input,p.rad_social_checkmark_holder { text-transform: capitalize!important; height: 30px; float: left; border: none; background-color: #FFF; font-family: 'Open Sans', sans-serif; font-size: 14px; font-weight: 400; color: #939AAA; letter-spacing: 1px; margin: 0; padding: 10px; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+.rad_dashboard_form input, .rad_dashboard_form select, .rad_dashboard_form textarea, .rad_social_networks input,p.rad_social_checkmark_holder { text-transform: capitalize; height: 30px; float: left; border: none; background-color: #FFF; font-family: 'Open Sans', sans-serif; font-size: 14px; font-weight: 400; color: #939AAA; letter-spacing: 1px; margin: 0; padding: 10px; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 .rad_dashboard_form input { padding: 0 10px; }
 
 .rad_dashboard_longinput input { width: 350px !important; }
@@ -1047,4 +1047,8 @@ p.rad_dashboard_section_subtitle { margin-top: -12px; margin-bottom: 14px; font-
     .rapidology_marketing_sidebar.non_marketing_page .quick_links{
         border-left: none;
     }
+}
+
+.rad_dashboard_success_url, .rad_dashboard_redirect_url{
+    text-transform: lowercase !important;
 }

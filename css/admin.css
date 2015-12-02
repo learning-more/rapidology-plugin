@@ -442,7 +442,7 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
 
 /* preview */
 #rad_dashboard_content.current_tab_rad_dashboard_tab_content_optin_design { padding-right: 85px; }
-.rad_dashboard_design_title { float: left; width: 50%; }
+
 .rad_dashboard_row.rad_dashboard_preview { float: right; width: auto; transition: all 0.3s; -moz-transition: all 0.3s; -webkit-transition: all 0.3s; z-index: 9999; }
 .rad_dashboard_row.rad_dashboard_preview button { background: #00aeff; }
 	.rad_dashboard_row.rad_dashboard_preview.rad_dashboard_fixed { position: fixed; top: 100px; right: 40px; width: 45px !important; overflow: hidden; border-radius: 3px; }

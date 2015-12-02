@@ -334,31 +334,33 @@
             $('li.rad_dashboard_optin_type').css('opacity', 1);
         });
 
+        $(window).ready(function() {
             $('.rad_dashboard_optin_select').dialog({
-                autoOpen:false,
+                autoOpen: false,
                 modal: true,
-                position:{
+                position: {
                     my: "center center",
                     at: "center center",
                     of: window,
                 },
-                width:"auto",
+                width: "auto",
                 resizable: false,
                 draggable: false,
-               
 
-                create : function() {
 
-                    $(window).resize(function() {
+                create: function () {
+
+                    $(window).resize(function () {
                         $(".rad_dashboard_optin_select").position({
-                            my : "center",
-                            at : "center",
-                            of : window
+                            my: "center",
+                            at: "center",
+                            of: window
                         });
                     });
 
                 },
             });
+        });
 
 
 

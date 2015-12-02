@@ -35,7 +35,6 @@
 		var $body = $( 'body' );
 		$body.on( 'click', '#toplevel_page_rad_rapidology_options li a', function() {
 			var this_link = $( this ),
-
 				open_link = this_link.attr( 'href' ).split( '#tab_' )[1];
 			if ( typeof open_link !== 'undefined' ) {
                 $('.non_marketing_page').show();
@@ -49,6 +48,7 @@
                 if( open_link == 'rad_dashboard_tab_content_header_home' ){
                     $( '#rad_dashboard_wrapper' ).addClass( 'rad_dashboard_hidden_nav' );
                     $('#rad_dashboard_options').hide();
+                    init_optin_modal();
                 }
 			} else {
 				window.rad_dashboard_set_current_tab( 'rad_dashboard_tab_content_header_support', 'header' );
@@ -325,16 +325,23 @@
             $('.rad_dashboard_optin_select').dialog("close");
         });
 
+        $body.on( 'click', '.rad_dashboard_icon_edit', function() {
+            //$('.rad_dashboard_optin_select').dialog("close");
+        });
+
+
         $body.on( 'click', '.rad_dashboard_close_button', function() {
             $('.rad_dashboard_optin_select').dialog("close")
         });
 
 		$body.on( 'click', '.rad_dashboard_new_optin button', function() {
+            init_optin_modal();
             $('.rad_dashboard_optin_select').dialog("open");
             $('li.rad_dashboard_optin_type').css('opacity', 1);
         });
 
-        $(window).ready(function() {
+        function init_optin_modal() {
+
             $('.rad_dashboard_optin_select').dialog({
                 autoOpen: false,
                 modal: true,
@@ -347,7 +354,7 @@
                 resizable: false,
                 draggable: false,
 
-
+                close: function(){ $( this ).dialog( "close" ); $('.ui-dialog').remove(); },
                 create: function () {
 
                     $(window).resize(function () {
@@ -360,7 +367,8 @@
 
                 },
             });
-        });
+        }
+
 
 
 
@@ -1130,6 +1138,7 @@
 					try {
 						tinymce.remove();
 					} catch (e) {}
+                    init_optin_modal();
 				}
 			});
 		}

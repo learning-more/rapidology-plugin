@@ -1711,7 +1711,6 @@ SOL;
 							<p>Select Email Provider</p>
 							<select>
 								<option value="empty" selected>%2$s</option>
-								<option value="redirect">%21$s</option>
 								<option value="activecampaign">%19$s</option>
 								<option value="aweber">%4$s</option>
 								<option value="campaign_monitor">%6$s</option>

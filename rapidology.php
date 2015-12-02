@@ -641,16 +641,16 @@ class RAD_Rapidology extends RAD_Dashboard {
 			</div>
 		</div>
 		<div class="templates_loading">
-		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="100" height="110" fill="#14283a">
-  <circle transform="translate(12 0)" cx="0" cy="16" r="0">
+		<svg xmlns="http://www.w3.org/2000/svg" viewBox="-5 -15 120 120" width="150" height="150" fill="#14283a">
+  <circle transform="translate(14 0)" cx="0" cy="14" r="0">
     <animate attributeName="r" values="0; 20; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0"
       keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
   </circle>
-  <circle transform="translate(50 0)" cx="0" cy="16" r="0">
+  <circle transform="translate(50 0)" cx="0" cy="14" r="0">
     <animate attributeName="r" values="0; 20; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0.3"
       keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
   </circle>
-  <circle transform="translate(80 0)" cx="0" cy="16" r="0">
+  <circle transform="translate(80 0)" cx="0" cy="14" r="0">
     <animate attributeName="r" values="0; 20; 0; 0" dur="1.2s" repeatCount="indefinite" begin="0.6"
       keytimes="0;0.2;0.7;1" keySplines="0.2 0.2 0.4 0.8;0.2 0.6 0.4 0.8;0.2 0.6 0.4 0.8" calcMode="spline" />
   </circle>

@@ -3,7 +3,7 @@ function rad_marketing_page(){
 	$imageurl = RAD_PLUGIN_IMAGE_DIR;
 	$html = <<<BOH
 	<div class="marketing_header">
-		<h1>NEED MORE HELP BUILDING OUT YOUR EMAIL LIST?</h1>
+		<h1>Need More Help Building Out Your Email List?</h1>
 		<p>We have the resources to get the most out of your marketing efforts.</p>
 	</div>
 	<div class="marketing_wrapper">

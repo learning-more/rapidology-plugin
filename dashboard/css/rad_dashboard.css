@@ -1052,6 +1052,12 @@ p.rad_dashboard_section_subtitle { margin-top: -12px; margin-bottom: 14px; font-
 .rad_dashboard_success_url, .rad_dashboard_redirect_url{
     text-transform: lowercase !important;
 }
-.rad_dashboard_provider_setup_dropdown input{
+.rad_dashboard_provider_setup_dropdown input {
     text-transform: none !important;
+}
+.rad_dashboard_new_account_row > h1, .rad_dashboard_row > h1{
+    text-transform: none;
+    font-size: 26px;
+    font-weight:400;
+    color: #373942;
 }

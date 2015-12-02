@@ -42,10 +42,10 @@
 
 .marketing_header h1 {
     font-family: 'Open Sans', sans-serif;
-    font-weight: 700 !important;
-    margin-left:10px;
-    margin-top: 10px;
+    text-transform: none;
     font-size: 26px;
+    font-weight:400;
+    color: #373942;
 }
 .marketing_header p{
     font-family: 'Open Sans', sans-serif;

@@ -484,7 +484,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 						<input type="hidden" name="action" value="new_optin" />
 					</div>',
 					esc_html__( 'new optin', 'rapidology' ),
-					esc_html__( 'Active Optins', 'rapidology' )
+					esc_html__( 'Active Opt-Ins', 'rapidology' )
 				);
 				printf( '
 					<div class="rad_dashboard_row rad_dashboard_optin_select">
@@ -2168,9 +2168,9 @@ SOL;
 			if ( 'inactive' === $status ) {
 				printf( '
 					<div class="rad_dashboard_row">
-						<h1>%1$s</h1>
+						<h1 class="inactive-optins">%1$s</h1>
 					</div>',
-					esc_html__( 'Inactive Optins', 'rapidology' )
+					esc_html__( 'Inactive Opt-Ins', 'rapidology' )
 				);
 			}
 

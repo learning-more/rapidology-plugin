@@ -129,7 +129,7 @@ div#rad_dashboard_navigation { display: none; }
 .current_tab_rad_dashboard_tab_content_optin_design .rad_dashboard_row.rad_dashboard_next_display { display: block; }
 .current_tab_rad_dashboard_tab_content_optin_premade .rad_dashboard_row.rad_dashboard_next_customize { display: block; }
 
-.rad_dashboard_new_optin h1 {
+.rad_dashboard_new_optin h1, .inactive-optins {
     float: left;
     text-transform: none;
     font-size: 26px;

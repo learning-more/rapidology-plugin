@@ -102,7 +102,6 @@ class rapidology_aweber extends RAD_Rapidology
 					'name'  => $name,
 				)
 			);
-			print_r($new_subscriber);die();
 			$error_message = 'success';
 		} catch ( Exception $exc ) {
 			$error_message = $exc->message;

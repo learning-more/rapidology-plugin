@@ -37,9 +37,15 @@ function rapidology_drawChart($period, $stats, $list_id){
         chart: {
             title: chart_title,
             hAxis:{showTextEvery:1},
+            vAxis:{
+              viewWindowMode:"explicity",
+                viewWindow:{
+                  min:0
+                },
+            },
         },
-
-        vAxis: {minValue:0},
+        height: 300,
+        
         colors:['#57E6C3'],
 
     };

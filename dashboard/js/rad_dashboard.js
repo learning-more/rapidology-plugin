@@ -188,6 +188,11 @@
 
 	//Sets the current tab in navigation menu
 	window.rad_dashboard_set_current_tab = function set_current_tab( $tab_id, $section ) {
+        if( $tab_id != 'rad_dashboard_tab_content_optin_design' ){
+            $('.rad_dashboard_preview button').prop("disabled",true);
+        }else{
+            $('.rad_dashboard_preview button').removeProp('disabled');
+        }
 		var tab = $( 'div.' + $tab_id );
 		var current = $( 'a.current' );
 
@@ -196,14 +201,12 @@
 
 		$( 'div.rad_dashboard_tab_content' ).removeClass( 'rad_tab_selected' );
 		$( tab ).addClass( 'rad_tab_selected' );
-
 		//If the tab is in opened section, then we don't need to toggle current_section class
 		if ( '' != $section ) {
 			var current_section = $( 'ul.current_section' );
 
 			current_section.removeClass( 'current_section' );
 		}
-
 		//Hide save button from the header section since there is nothing to save
 		if ( 'header' == $section ) {
 			$( '.rad_dashboard_save_changes' ).css( { 'display' : 'none' } );
@@ -217,6 +220,8 @@
 		var $radDashboardContent = $('#rad_dashboard_content');
 		$radDashboardContent.removeAttr( 'class' );
 		$radDashboardContent.addClass( 'current_tab_' + $tab_id );
+
+
 	};
 
 	//Generates image upload window

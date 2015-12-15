@@ -3862,9 +3862,14 @@ SOL;
 				isset($details['success_url']) ? esc_url($details['success_url']) : '',#17 //you will notice both 15 and 17 exist in the dat-redirect_url attribute. This is because both should never be set at the same time.
 				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '' #18
 			),
-			'' != $success_text
-				? stripslashes( esc_html( $success_text ) )
-				: esc_html__( 'You have Successfully Subscribed!', 'rapidology' ), //#10
+		  '' != $success_text
+			? html_entity_decode( wp_kses( stripslashes( $success_text ), array(
+			'a'      => array(),
+			'br'     => array(),
+			'span'   => array(),
+			'strong' => array(),
+		  ) ) )
+			: esc_html__( 'You have Successfully Subscribed!', 'rapidology' ), //#10
 			$formatted_footer,
 			'custom_html' == $details['email_provider']
 				? sprintf(

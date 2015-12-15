@@ -70,21 +70,6 @@ class IntegrationsTestCampaignMonitor extends WP_UnitTestCase {
 	//accepting Already subscribed as a satisfactory result as it indicated we had communicated with the api and recieved a response and api call is working as expected
 	$this->assertNotEquals($expectedResult, $results, $results);
   }
-  /*
-
-
-  function test_subscribe_active_campaign_success(){
-	$this->assertInstanceOf($this->instance, $this->integration);
-	$form_id = '1435';
-	$first_name = 'Rapidology';
-	$last_name = 'Integration Test';
-	$email = 'integration_test@ave81test.com';
-	$lists = ['10']; //needs to be an array
-	$results = $this->integration->subscribe_active_campaign($this->url, $this->apiKey, $first_name , $last_name, $email, $lists, $form_id, true);
-	$expectedResult = 'success';
-	$this->assertEquals($expectedResult, $results, 'We could not successfully subscribe to active campaign. HINT: email address may already be a contact.');
-  }
-*/
 
 }
 

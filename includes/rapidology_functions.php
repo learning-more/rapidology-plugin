@@ -6,9 +6,10 @@
 */
 function rapidology_on_click_intent( $atts, $content = null ) {
 	extract(shortcode_atts(array(
-		"optin_id" => '0'
+		"optin_id" => '0',
+	  	"display"	=>'inline'
 	), $atts));
-	return '<div class="rad_rapidology_click_trigger_element"  data-optin_id="'.$optin_id.'">'.$content.'</div>';
+	return '<span style="display:'.$display.';" class="rad_rapidology_click_trigger_element"  data-optin_id="'.$optin_id.'">'.$content.'</span>';
 }
 
 add_shortcode("rapidology_on_click_intent", "rapidology_on_click_intent");

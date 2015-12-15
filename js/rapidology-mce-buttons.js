@@ -57,7 +57,7 @@
                         'text' : optin_title,
                         'onclick' : function() {
                             if ( 'empty' !== optin_id ) {
-                                return_text = '[rapidology_on_click_intent optin_id='+ optin_id + '] [/rapidology_on_click_intent]';
+                                return_text = '[rapidology_on_click_intent optin_id='+ optin_id + ' display=inline] [/rapidology_on_click_intent]';
                                 ed.insertContent(return_text);
                             }
                         }

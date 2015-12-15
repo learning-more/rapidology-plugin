@@ -37,7 +37,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
      * @param $transport The transport to use. Used for dependency injection
      * @access public
      */
-    function CS_REST_Clients(
+    function __construct(
     $client_id,
     $auth_details,
     $protocol = 'https',

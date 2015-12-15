@@ -133,6 +133,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_action( 'wp_ajax_rapidology_pick_winner_optin', array( $this, 'pick_winner_optin' ) );
 
 		add_action( 'wp_ajax_rapidology_clear_stats', array( $this, 'clear_stats' ) );
+	    add_action( 'wp_ajax_rapidology_clear_stats_single_optin', array( $this, 'clear_stats_single_optin' ) );
+
 
 		add_action( 'wp_ajax_rapidology_get_premade_values', array( $this, 'get_premade_values' ) );
 		add_action( 'wp_ajax_rapidology_generate_template_filter', array( $this, 'generate_template_filter' ) );
@@ -876,6 +878,23 @@ SOL;
 		$wpdb->query( $sql );
 	}
 
+  /**
+   * Removes stats data from DB for single optin
+   * @return void
+   */
+  function clear_stats_single_optin() {
+	wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
+
+	global $wpdb;
+	$optin_id = sanitize_text_field($_POST['optin_id']);
+	$table_name = $wpdb->prefix . 'rad_rapidology_stats';
+
+	// construct sql query to mark removed options as removed in stats DB
+	$sql = "DELETE FROM $table_name WHERE optin_id = '$optin_id'";
+
+	$wpdb->query( $sql );
+  }
+
 	/**
 	 * Generates the Lists menu for Lists stats graph
 	 * @return string
@@ -965,13 +984,15 @@ SOL;
 									<div class="rad_dashboard_table_impressions rad_dashboard_table_column rad_dashboard_icon rad_dashboard_sort_button" data-order_by="impressions">%2$s</div>
 									<div class="rad_dashboard_table_conversions rad_dashboard_table_column rad_dashboard_icon rad_dashboard_sort_button" data-order_by="conversions">%3$s</div>
 									<div class="rad_dashboard_table_rate rad_dashboard_table_column rad_dashboard_icon rad_dashboard_sort_button active_sorting" data-order_by="conversion_rate">%4$s</div>
+									<div class="rad_dashboard_table_name rad_dashboard_table_column">%5$s</div>
 									<div style="clear: both;"></div>
 								</li>
 							</ul>',
 							__( 'Opt-In Form', 'rapidology' ),
 							__( 'Views', 'rapidology' ),
 							__( 'Opt-Ins', 'rapidology' ),
-							__( 'Conversion Rate', 'rapidology' )
+							__( 'Conversion Rate', 'rapidology' ),
+						    __('Clear Stats', 'rapidology')
 						);
 					}
 
@@ -1011,6 +1032,7 @@ SOL;
 						<div class="rad_dashboard_table_impressions rad_dashboard_table_column">%2$s</div>
 						<div class="rad_dashboard_table_conversions rad_dashboard_table_column">%3$s</div>
 						<div class="rad_dashboard_table_rate rad_dashboard_table_column">%4$s</div>
+						<div class="rad_dashboard_table_column"><span data-optin_id="%7$s" class="dashicons dashicons-no clear_individual_stat"></span></div>
 						<div style="clear: both;"></div>
 					</li>',
 					esc_html( $details['name'] ),
@@ -1018,7 +1040,8 @@ SOL;
 					esc_html( $details['conversions'] ),
 					esc_html( $details['conversion_rate'] ) . '%',
 					esc_attr( $details['type'] ),
-					esc_attr( $status )
+					esc_attr( $status ),
+				    esc_html($id)
 				);
 			}
 		}

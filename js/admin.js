@@ -464,6 +464,29 @@
 			});
 		});
 
+        $body.on('click', '.clear_individual_stat', function(){
+            var optin_id = $(this).data('optin_id');
+            $.ajax({
+                type: 'POST',
+                url: rapidology_settings.ajaxurl,
+                data: {
+                    action : 'rapidology_clear_stats_single_optin',
+                    rapidology_stats_nonce : rapidology_settings.rapidology_stats,
+                    optin_id: optin_id
+                },
+                beforeSend: function( data ){
+                    $( '.rad_rapidology_stats_spinner' ).addClass( 'rad_dashboard_spinner_visible' );
+                    $( 'html, body' ).animate( { scrollTop :  0 }, 400 );
+                },
+                success: function( data ){
+
+                    refresh_stats_tab( true );
+                    $( '.rad_rapidology_stats_spinner' ).removeClass( 'rad_dashboard_spinner_visible' );
+
+                }
+            });
+        });
+
 		$body.on( 'click', '.rad_rapidology_refresh_stats', function() {
 			var $this = $(this),
 				button_width = $this.width();
@@ -960,6 +983,7 @@
 
 		function refresh_stats_tab( $force_upd ) {
 			if ( ! $( '.rad_dashboard_stats_ready' ).length || true == $force_upd ) {
+                $( '.rad_rapidology_stats_spinner' ).addClass( 'rad_dashboard_spinner_visible' );
 				//make sure that graphs start loading from the 0 height to avoid weird jumping of bars
 				$( '.rad_dashboard_lists_stats_graph_container ul li div' ).css( 'height', '0' );
 
@@ -984,9 +1008,6 @@
 						}
 					},
 					success: function( data ){
-						if ( ! $force_upd ) {
-							$( '.rad_rapidology_stats_spinner' ).removeClass( 'rad_dashboard_spinner_visible' );
-						}
 
 						$( '.rad_dashboard_stats_contents' ).replaceWith( data );
 
@@ -995,6 +1016,7 @@
 						});
 
 						$( '.rad_rapidology_refresh_stats' ).removeClass( 'rad_rapidology_loading' );
+                        $( '.rad_rapidology_stats_spinner' ).removeClass( 'rad_dashboard_spinner_visible' );
                         stats = rapidology_settings.chart_stats;
                         rapidology_chart_init(30, stats);
 					}

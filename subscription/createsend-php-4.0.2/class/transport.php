@@ -58,6 +58,7 @@ class CS_REST_BaseTransport {
         
         return array($headers, $result); 
     }
+
 }
 /**
  * Provide HTTP request functionality via cURL extensions
@@ -70,7 +71,7 @@ class CS_REST_CurlTransport extends CS_REST_BaseTransport {
     var $_curl_zlib;
 
     function __construct($log) {
-        $this->CS_REST_BaseTransport($log);
+        parent::__construct($log);
         
         $curl_version = curl_version();
         $this->_curl_zlib = isset($curl_version['libz_version']);
@@ -159,7 +160,9 @@ class CS_REST_CurlTransport extends CS_REST_BaseTransport {
         if(!$response && $response !== '') {
             $this->_log->log_message('Error making request with curl_error: '.curl_errno($ch),
                 get_class($this), CS_REST_LOG_ERROR);
-            trigger_error('Error making request with curl_error: '.curl_error($ch), E_USER_ERROR);
+
+            require_once dirname(__FILE__).'/exceptions.php';
+            throw new CurlException(curl_error($ch), curl_errno($ch));
         }
         
         list( $headers, $result ) = $this->split_and_inflate($response, $inflate_response);
@@ -218,7 +221,7 @@ class CS_REST_SocketTransport extends CS_REST_BaseTransport {
     var $_socket_wrapper;
 
     function __construct($log, $socket_wrapper = NULL) {
-        $this->CS_REST_BaseTransport($log);
+        parent::__construct($log);
 
         if(is_null($socket_wrapper)) {
             $socket_wrapper = new CS_REST_SocketWrapper();

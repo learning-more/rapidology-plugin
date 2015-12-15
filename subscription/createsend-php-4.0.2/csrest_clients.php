@@ -47,7 +47,7 @@ class CS_REST_Clients extends CS_REST_Wrapper_Base {
     $serialiser = NULL,
     $transport = NULL) {
         	
-        $this->CS_REST_Wrapper_Base($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
+        parent::__construct($auth_details, $protocol, $debug_level, $host, $log, $serialiser, $transport);
         $this->set_client_id($client_id);
     }
 

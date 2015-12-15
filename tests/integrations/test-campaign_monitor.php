@@ -18,7 +18,6 @@ class IntegrationsTestCampaignMonitor extends WP_UnitTestCase {
 
   function test_campaign_monitor_lists_success(){
 	//ensure object is created and is instance of the correct provider
-	echo $this->instance;
 	$this->assertInstanceOf($this->instance, $this->integration);
 	//setup items needed to make http call Should we mock this out?
 	$result = $this->integration->get_campaign_monitor_lists($this->apiKey, $this->name);
@@ -28,7 +27,6 @@ class IntegrationsTestCampaignMonitor extends WP_UnitTestCase {
 
   function test_campaign_monitor_lists_fail(){
 	//ensure object is created and is instance of the correct provider
-	echo $this->instance;
 	$this->assertInstanceOf($this->instance, $this->integration);
 	//setup items needed to make http call Should we mock this out?
 	$result = $this->integration->get_campaign_monitor_lists($this->badApiKey, $this->name);

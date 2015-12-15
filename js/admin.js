@@ -1094,6 +1094,15 @@
 					"forecolor | bold italic | alignleft aligncenter alignright"
 				]
 			});
+
+            tinymce.init({
+                mode : 'specific_textareas',
+                editor_selector : 'success_message',
+                menubar : false,
+                toolbar: [
+                    "bold italic"
+                ]
+            });
 		}
 
 		function reset_options( $this_el, $form_id, $new_form, $is_child, $parent_id ) {

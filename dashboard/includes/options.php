@@ -622,7 +622,6 @@ $rad_dashboard_options_all = array(
 			'rows'            => '1',
 			'name'            => 'success_message',
 			'class'           => 'success_message',
-			'title'           => __( 'Success Message', 'rapidology' ),
 			'placeholder'     => __( 'You Have Successfully Subscribed!', 'rapidology' ),
 			'default'         => '',
 			'validation_type' => 'html',

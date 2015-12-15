@@ -18,7 +18,7 @@ class IntegrationsTestActiveCampaign extends WP_UnitTestCase {
 	//ensure object is created and is instance of the correct provider
 	$this->assertInstanceOf('rapidology_activecampaign', $this->integration);
 	//setup items needed to make http call Should we mock this out?
-	$result = $this->integration->get_aweber_lists($this->url, $this->apiKey, $this->name);
+	$result = $this->integration->get_active_campagin_forms($this->url, $this->apiKey, $this->name);
 	$expectedResult = 'success';
 	$this->assertEquals($expectedResult, $result, 'Test for getting Active Campaign forms failed');
   }

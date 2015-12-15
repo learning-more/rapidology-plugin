@@ -42,7 +42,7 @@ p { padding-bottom: 1.7em; }
 
 #rad_dashboard_wrapper { background-color: #ECF0F6; overflow: hidden; box-shadow: 0px 1px 3px 0px rgba( 0, 0, 0, 0.06 ); position: relative; z-index: 0; margin-bottom: 100px; -webkit-border-radius: 3px; -moz-border-radius: 3px; border-radius: 3px;}
 
-#rad_dashboard_content { display: flex; position: relative;  padding: 60px 40px 0; min-height: 600px; }
+#rad_dashboard_content { display: flex; position: relative;  padding: 10px 40px 0; min-height: 600px; }
 
 .rad_dashboard_row { margin-bottom: 20px; float: left; width: 100%; }
 

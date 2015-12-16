@@ -125,6 +125,7 @@ class Rapidology_SalesforceAPI extends APIAbstract {
         curl_setopt($ch, CURLOPT_SSLVERSION, 4);
 
         $login = curl_exec($ch);
+
         $login = explode("\n", $login);
         $login = json_decode($login[count($login)-1]);
         //echo 'Auth response: '; print_r($data); echo '<br/>';
@@ -134,7 +135,11 @@ class Rapidology_SalesforceAPI extends APIAbstract {
 
         // Set the access token
 //        if($this->return_type === self::RETURN_OBJECT) {
-        $this->access_token = $login->access_token;
+	  if(isset($login->access_token)){
+		  $this->access_token = $login->access_token;
+		}else{
+		  return 'Could not login';
+		}
 //        } elseif($this->return_type === self::RETURN_ARRAY_A) {
 //            $this->access_token = $login['access_token'];
 //        }

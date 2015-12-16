@@ -100,8 +100,10 @@ class rapidology_salesforce extends RAD_Rapidology{
 		}
 		//instantiate new salesforce class and login with your user. User needs to have access to campagins and leads
 		$salesforce = new Rapidology_SalesforceAPI($url, $version, $client_key, $client_secret);
-
-		$salesforce->login($username_sf, $password_sf, $token);
+		$log_in = $salesforce->login($username_sf, $password_sf, $token);
+		if($log_in == 'Could not login'){
+		  return $log_in;
+		}
 
 		//perform soql query to get all lead information
 		$campagins = $salesforce->searchSOQL('select id, name, NumberOfLeads, NumberOfContacts from campaign where EndDate >= TODAY or EndDate = null');
@@ -140,12 +142,22 @@ class rapidology_salesforce extends RAD_Rapidology{
 			$last_name = 'WebLead';
 		}
 
+		preg_match("/na[0-9]+/", $url, $matches);
+		//if matches from preg_match is 0 that means that there is something wrong with the url
+		if(sizeof($matches) == 0){
+		  $error_message = "Please check your instance name. It should be naXX. <br /> This will  be the first part url you are at once you login to salesforce.";
+		  return $error_message;
+		}
+		$url = 'https://'.$matches[0].'.salesforce.com';
+
 		//test to make sure the url appears to be properly formatted
 
 		//instantiate new salesforce class and login with your user. User needs to have access to campagins and leads
 		$salesforce = new Rapidology_SalesforceAPI($url, $version, $client_key, $client_secret);
-		$salesforce->login($username_sf, $password_sf, $token);
-		//perform soql query to see if email is already assigned to a lead
+		$log_in = $salesforce->login($username_sf, $password_sf, $token);
+		if($log_in == 'Could not login'){
+		  return $log_in;
+		}	  	//perform soql query to see if email is already assigned to a lead
 		$current_lead = $salesforce->searchSOQL("select id from lead where email = '".$email."'");
 
 		$current = $current_lead->totalSize;

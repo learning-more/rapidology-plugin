@@ -121,6 +121,7 @@ class Rapidology_SalesforceAPI extends APIAbstract {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $http_params);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type : application/x-www-form-urlencoded"));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	  	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($ch, CURLOPT_SSLVERSION, 4);
 
         $login = curl_exec($ch);

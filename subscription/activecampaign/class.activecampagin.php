@@ -475,9 +475,108 @@ class rapidology_active_campagin
 	$result = json_decode($response);
 	return $result;
   }
+
+  function contact_view_email($email){
+	$url = $this->url;
+
+
+	$params = array(
+	  'api_key'    => $this->api_key,
+	  'api_action' => 'contact_view_email',
+	  'api_output' => 'json',
+	  'email'      => $email,
+	);
+
+	// This section takes the input fields and converts them to the proper format
+	$query = "";
+	foreach( $params as $key => $value ) $query .= $key . '=' . urlencode($value) . '&';
+	$query = rtrim($query, '& ');
+
+	// clean up the url
+	$url = rtrim($url, '/ ');
+
+	// define a final API request - GET
+	$api = $url . '/admin/api.php?' . $query;
+
+	$request = curl_init($api); // initiate curl object
+	curl_setopt($request, CURLOPT_HEADER, 0); // set to 0 to eliminate header info from response
+	curl_setopt($request, CURLOPT_RETURNTRANSFER, 1); // Returns response data instead of TRUE(1)
+	//curl_setopt($request, CURLOPT_SSL_VERIFYPEER, FALSE); // uncomment if you get no gateway response and are using HTTPS
+	curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
+
+	$response = (string)curl_exec($request); // execute curl fetch and store results in $response
+
+	// additional options may be required depending upon your server configuration
+	// you can find documentation on curl options at http://www.php.net/curl_setopt
+	curl_close($request); // close curl object
+
+
+	$result = json_decode($response);
+	if(isset($result->id)){
+	  return $result->id;
+	}else{
+	  return 'false';
+	}
+  }
+
+  function update_contact($contact_id, $first_name, $last_name, $email, $lists_array, $url){
+	// By default, this sample code is designed to get the result from your ActiveCampaign installation and print out the result
+	$url = $this->url;
+
+
+	$params = array(
+	  'api_key'      => $this->api_key,
+	  'api_action'   => 'contact_edit',
+	  'api_output'   => 'json',
+	);
+
+	// here we define the data we are posting in order to perform an update
+	$post_fields = array(
+	  'id'                       => $contact_id, // example contact ID to modify
+	  'email'                    => $email,
+	  'first_name'               => $first_name,
+	  'last_name'                => $last_name,
+	);
+	foreach($lists_array as $list){
+	  $post_fields["p[$list]"] = $list;
+	  $post_fields['status'] = 1;
+	  $post_fields["instantresponders[$list]"] = 0;
+	}
+
+	// This section takes the input fields and converts them to the proper format
+	$query = "";
+	foreach( $params as $key => $value ) $query .= $key . '=' . urlencode($value) . '&';
+	$query = rtrim($query, '& ');
+
+	// This section takes the input data and converts it to the proper format
+	$data = "";
+	foreach( $post_fields as $key => $value ) $data .= $key . '=' . urlencode($value) . '&';
+	$data = rtrim($data, '& ');
+
+	// clean up the url
+	$url = rtrim($url, '/ ');
+
+	// define a final API request - GET
+	$api = $url . '/admin/api.php?' . $query;
+
+	$request = curl_init($api); // initiate curl object
+	curl_setopt($request, CURLOPT_HEADER, 0); // set to 0 to eliminate header info from response
+	curl_setopt($request, CURLOPT_RETURNTRANSFER, 1); // Returns response data instead of TRUE(1)
+	curl_setopt($request, CURLOPT_POSTFIELDS, $data); // use HTTP POST to send form data
+	//curl_setopt($request, CURLOPT_SSL_VERIFYPEER, FALSE); // uncomment if you get no gateway response and are using HTTPS
+	curl_setopt($request, CURLOPT_FOLLOWLOCATION, true);
+
+	$response = (string)curl_exec($request); // execute curl fetch and store results in $response
+
+	curl_close($request); // close curl object
+
+
+  	$result = json_decode($response);
+	return($result->result_code);
+
+
+
+  }
 }
-
-
-
 
 ?>

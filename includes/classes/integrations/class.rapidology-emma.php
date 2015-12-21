@@ -99,12 +99,11 @@ class rapidology_emma extends RAD_Rapidology
 		);
 		try {
 			$emma->membersAddSingle( $args );
-
 			return $error_message = "success";
 		} catch ( exception $e ) {
 			$error_message = $e;
 
-			return $error_message;
+			return 'Unable to be added to list';
 		}
 
 	}

@@ -5,12 +5,21 @@ include(RAD_RAPIDOLOGY_PLUGIN_DIR.'/includes/classes/integrations/class.rapidolo
 class IntegrationsTestActiveCampaign extends WP_UnitTestCase {
 
   function setup() {
+	$path = dirname(dirname(dirname(dirname(dirname(plugin_dir_path(__FILE__))))));
+	include($path.'/testCreds.php');
 	// replace this with some actual testing code
-	$this->integration = new rapidology_activecampaign();
-	$this->apiKey = '59e7111ad66787d1442747ddc53695a7a7231cb8fa8a93feba3e6bfba856e74fa8534ad6';
-	$this->url = 'https://leadpages.api-us1.com';
-	$this->name = 'ActiveCampaignGetFormsTest';
-	$this->badApiKey = 'badkey';
+	$this->instance 	= $testCreds->activecampaign->instance;
+	$this->integration 	= new $this->instance();
+	$this->apiKey 		= $testCreds->activecampaign->apiKey;
+	$this->url 			= $testCreds->activecampaign->url;
+	$this->name 		= $testCreds->activecampaign->name;
+	$this->badApiKey 	= $testCreds->activecampaign->badApiKey;
+
+	$this->form_id		=$testCreds->activecampaign->form_id;
+	$this->first_name	=$testCreds->activecampaign->first_name;
+	$this->last_name	=$testCreds->activecampaign->last_name;
+	$this->email		=$testCreds->activecampaign->email;
+	$this->lists		=$testCreds->activecampaign->lists;
   }
 
 
@@ -34,12 +43,7 @@ class IntegrationsTestActiveCampaign extends WP_UnitTestCase {
 
   function test_subscribe_active_campaign_success(){
 	$this->assertInstanceOf('rapidology_activecampaign', $this->integration);
-	$form_id = '1435';
-	$first_name = 'Rapidology';
-	$last_name = 'Integration Test';
-	$email = 'integration_test@ave81test.com';
-	$lists = ['10']; //needs to be an array
-	$results = $this->integration->subscribe_active_campaign($this->url, $this->apiKey, $first_name , $last_name, $email, $lists, $form_id, true);
+	$results = $this->integration->subscribe_active_campaign($this->url, $this->apiKey, $this->first_name , $this->last_name, $this->email, $this->lists, $this->form_id);
 	$expectedResult = 'success';
 	$this->assertEquals($expectedResult, $results, 'We could not successfully subscribe to active campaign. HINT: email address may already be a contact.');
   }

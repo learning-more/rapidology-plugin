@@ -5,13 +5,19 @@ include(RAD_RAPIDOLOGY_PLUGIN_DIR.'/includes/classes/integrations/class.rapidolo
 class IntegrationsTestCampaignMonitor extends WP_UnitTestCase {
 
   function setup() {
-	// replace this with some actual testing code
-	//test account is under brandon.braner@ave81.com
-	$this->instance = 'rapidology_campaign_monitor';
-	$this->integration = new $this->instance();
-	$this->apiKey = '59aa1cf985e1b529a19f69aa1c786ff6';
-	$this->name = 'CampaignMonitorTest';
-	$this->badApiKey = 'badkey';
+	$path = dirname(dirname(dirname(dirname(dirname(plugin_dir_path(__FILE__))))));
+	include($path.'/testCreds.php');
+
+	$this->instance 	= $testCreds->campaignmonitior->instance;
+	$this->integration 	= new $this->instance();
+	$this->apiKey 		= $testCreds->campaignmonitior->apiKey;
+	$this->name 		= $testCreds->campaignmonitior->name;
+	$this->badApiKey 	= $testCreds->campaignmonitior->badApiKey;
+	$this->email 		= $testCreds->campaignmonitior->email;
+	$this->first_name	= $testCreds->campaignmonitior->first_name;
+	$this->last_name	= $testCreds->campaignmonitior->last_name;
+	$this->list_id		= $testCreds->campaignmonitior->list_id;
+	$this->bademail		= $testCreds->campaignmonitior->bademail;
 
   }
 
@@ -36,11 +42,8 @@ class IntegrationsTestCampaignMonitor extends WP_UnitTestCase {
 
   function test_subscribe_campaign_monitor_success(){
 	$this->assertInstanceOf($this->instance, $this->integration);
-	$first_name = 'Rapidology';
-	$last_name = 'Integration Test';
-	$email = 'integration_test@ave81test.com';
-	$list_id = '6f5c2b6b5b7da3e8b97ed04fa3961fed';
-	$results = $this->integration->subscribe_campaign_monitor( $this->apiKey, $email, $list_id, $name = '' );
+
+	$results = $this->integration->subscribe_campaign_monitor( $this->apiKey, $this->email, $this->list_id);
 	$expectedResult = 'success';
 	//accepting Already subscribed as a satisfactory result as it indicated we had communicated with the api and recieved a response and api call is working as expected
 	$this->assertEquals($expectedResult, $results, $results);
@@ -53,7 +56,7 @@ class IntegrationsTestCampaignMonitor extends WP_UnitTestCase {
 	$last_name = 'Integration Test';
 	$email = 'integration_test@ave81test.com';
 	$list_id = '6f5c2b6b5b7da3e8b97ed04fa3961fed-invalidkey';
-	$results = $this->integration->subscribe_campaign_monitor( $this->apiKey, $email, $list_id, $name = '' );
+	$results = $this->integration->subscribe_campaign_monitor( $this->badApiKey, $this->email, $this->list_id);
 	$expectedResult = 'success';
 	//accepting Already subscribed as a satisfactory result as it indicated we had communicated with the api and recieved a response and api call is working as expected
 	$this->assertNotEquals($expectedResult, $results, $results);
@@ -65,7 +68,7 @@ class IntegrationsTestCampaignMonitor extends WP_UnitTestCase {
 	$last_name = 'Integration Test';
 	$email = 'integration_test@ave81testcom';//ommited . before .com as that could be a common mistake and should make api fail
 	$list_id = '6f5c2b6b5b7da3e8b97ed04fa3961fed-invalidkey';
-	$results = $this->integration->subscribe_campaign_monitor( $this->apiKey, $email, $list_id, $name = '' );
+	$results = $this->integration->subscribe_campaign_monitor( $this->apiKey, $this->bademail, $this->list_id);
 	$expectedResult = 'success';
 	//accepting Already subscribed as a satisfactory result as it indicated we had communicated with the api and recieved a response and api call is working as expected
 	$this->assertNotEquals($expectedResult, $results, $results);

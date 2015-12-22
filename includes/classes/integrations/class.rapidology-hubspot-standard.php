@@ -51,6 +51,11 @@ class rapidology_hubspot_standard extends RAD_Rapidology
 		$key = 'KEY '.$api_key;
 		$forms      	= new HubSpot_Forms_Rapidology($api_key);
 		$all_forms		= $forms->get_forms();
+
+	  	//return error if $allforms returns an error
+	    if($all_forms->status =='error'){
+		  return $all_forms->message;
+		}
 		//array to hold valid forms to return
 		$valid_forms	= array();
 		//only fields accepted for rapidology, check against and make sure other forms are not required
@@ -108,7 +113,6 @@ class rapidology_hubspot_standard extends RAD_Rapidology
 		if(!class_exists('HubSpot_Forms_Rapidology')){
 			include_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.forms.php' );
 		}
-
 		$names_array = rapidology_name_splitter($name, $last_name);
 		$name = $names_array['name'];
 		$last_name = $names_array['last_name'];
@@ -118,18 +122,21 @@ class rapidology_hubspot_standard extends RAD_Rapidology
 			'email'		=> $email
 		);
 		$context = array(
-			'hutk' => $cookie,
+			'hutk' 		=> $cookie,
 			'ipAddress'	=> $_SERVER['REMOTE_ADDR'],
 			'pageUrl'	=> $_SERVER['HTTP_HOST'],
 			'pageName'	=> $post_name
 		);
-		$forms      	= new HubSpot_Forms_Rapidology($api_key);
-		$submitted_form = $forms->submit_form($account_id, $list_id, $submitted_form_fields, $context);
-		if($submitted_form->error){
-			$error_message = 'There was an error submitting your form';
-		}else{
-			$error_message = 'success';
-		}
+		$forms = new HubSpot_Forms_Rapidology($api_key);
+
+		$forms->submit_form($account_id, $list_id, $submitted_form_fields, $context);
+
+	  	 if($forms->getLastStatus() >= 400){
+		   $error_message = 'There was an issue submitting your form';
+		 }else{
+		   $error_message = 'success';
+		 }
+
 		return $error_message;
 	}
 }

@@ -63,7 +63,7 @@ class rapidology_hubspot extends RAD_Rapidology
 			return $error_message;
 
 		} catch ( exception $e ) {
-			$error_message = $e;
+			$error_message = 'Error getting lists';
 
 			return $error_message;
 		}
@@ -80,13 +80,18 @@ class rapidology_hubspot extends RAD_Rapidology
 		$contacts = new HubSpot_Contacts_Rapidology( $api_key );
 		$lists    = new HubSpot_Lists_Rapidology( $api_key );
 
-
 		//see if contact exists
 		$contact_exists = false;
 		$contact_id     = '';
 		$error_message  = '';
 
 		$contactByEmail = $contacts->get_contact_by_email( $email );
+
+	  	if(is_object($contactByEmail) && isset($contactByEmail->status ) && $contactByEmail->status == 'error'){
+			if($contactByEmail->message != 'contact does not exist') { //dont error on this so it can go through creating the contact;
+			  return $contactByEmail->message;
+			}
+		}
 
 		if ( ! empty( $contactByEmail ) && isset( $contactByEmail->vid ) ) {
 			$contact_exists = true;
@@ -111,11 +116,14 @@ class rapidology_hubspot extends RAD_Rapidology
 
 		$added_contacts = $lists->add_contacts_to_list( $contacts_to_add, $list_id );
 		$response       = json_decode( $added_contacts );
-
 		if ( ! empty( $response->updated ) ) {
 			$error_message = 'success';
-		} else {
-			$error_message = 'Email address already exists in list';
+		} elseif( sizeof( $response->discarded ) > 0) {
+		  $args =  array('email' => $email, 'firstname' => $name, 'lastname' => $last_name );
+		  $update_contact = $contacts->update_contact($contact_id, $args);
+		  return 'success';
+		}else{
+		  return 'Something went wrong. Please try again later';
 		}
 
 		return $error_message;

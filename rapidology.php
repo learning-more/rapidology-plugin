@@ -836,14 +836,10 @@ SOL;
 	 */
 	function reset_stats() {
 		wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
-		$force_update = ! empty( $_POST['rapidology_force_upd_stats'] ) ? sanitize_text_field( $_POST['rapidology_force_upd_stats'] ) : '';
 
-		if ( get_option( 'rad_rapidology_stats_cache' ) && 'true' !== $force_update ) {
-			$output = get_option( 'rad_rapidology_stats_cache' );
-		} else {
-			$output = $this->generate_stats_tab();
-			update_option( 'rad_rapidology_stats_cache', $output );
-		}
+		$output = $this->generate_stats_tab();
+		update_option( 'rad_rapidology_stats_cache', $output );
+
 
 		if ( ! wp_get_schedule( 'rapidology_stats_auto_refresh' ) ) {
 			wp_schedule_event( time(), 'daily', 'rapidology_stats_auto_refresh' );
@@ -884,7 +880,7 @@ SOL;
    */
   function clear_stats_single_optin() {
 	wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
-
+	delete_option( 'rad_rapidology_stats_cache' );
 	global $wpdb;
 	$optin_id = sanitize_text_field($_POST['optin_id']);
 	$table_name = $wpdb->prefix . 'rad_rapidology_stats';

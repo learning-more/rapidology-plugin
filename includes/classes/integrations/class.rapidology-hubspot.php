@@ -77,6 +77,10 @@ class rapidology_hubspot extends RAD_Rapidology
 		if ( ! class_exists( 'HubSpot_Contacts_Rapidology' ) ) {
 			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.contacts.php' );
 		}
+
+	  	if( !is_email( $email ) ){
+		  return 'Email address does not appear to be valid';
+		}
 		$contacts = new HubSpot_Contacts_Rapidology( $api_key );
 		$lists    = new HubSpot_Lists_Rapidology( $api_key );
 

@@ -125,7 +125,7 @@ class rapidology_hubspot_standard extends RAD_Rapidology
 		);
 		$forms      	= new HubSpot_Forms_Rapidology($api_key);
 		$submitted_form = $forms->submit_form($account_id, $list_id, $submitted_form_fields, $context);
-		if($submitted_form['error']){
+		if($submitted_form->error){
 			$error_message = 'There was an error submitting your form';
 		}else{
 			$error_message = 'success';

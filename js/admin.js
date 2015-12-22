@@ -479,7 +479,7 @@
                     $( 'html, body' ).animate( { scrollTop :  0 }, 400 );
                 },
                 success: function( data ){
-
+                    location.reload();
                     refresh_stats_tab( true );
                     $( '.rad_rapidology_stats_spinner' ).removeClass( 'rad_dashboard_spinner_visible' );
 

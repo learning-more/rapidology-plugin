@@ -70,6 +70,6 @@ class IntegrationsTestHubspotStandard extends WP_UnitTestCase {
 	$this->assertInstanceOf($this->instance, $this->integration);
 	$result = $this->integration->submit_hubspot_form($this->apiKey, $this->account_id,  $this->bademail, $this->list_id, $this->first_name, $this->last_name, $this->post_name, $this->cookie);
 	$expectedResult = 'success';//expected result if the api key were good
-	$this->assertEquals($expectedResult, $result, $result);//passed result in as error as that is what the plugin will return
+	$this->assertNotEquals($expectedResult, $result, $result);//passed result in as error as that is what the plugin will return
   }
 }

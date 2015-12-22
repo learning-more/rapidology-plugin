@@ -113,6 +113,10 @@ class rapidology_hubspot_standard extends RAD_Rapidology
 		if(!class_exists('HubSpot_Forms_Rapidology')){
 			include_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/hubspot/class.forms.php' );
 		}
+	   //ensure email is formatted correctly
+		if(!is_email( $email )){
+		  return 'There appears to be an issue with your email address';
+		}
 		$names_array = rapidology_name_splitter($name, $last_name);
 		$name = $names_array['name'];
 		$last_name = $names_array['last_name'];

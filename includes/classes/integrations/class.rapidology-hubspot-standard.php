@@ -51,9 +51,8 @@ class rapidology_hubspot_standard extends RAD_Rapidology
 		$key = 'KEY '.$api_key;
 		$forms      	= new HubSpot_Forms_Rapidology($api_key);
 		$all_forms		= $forms->get_forms();
-
 	  	//return error if $allforms returns an error
-	    if($all_forms->status =='error'){
+	    if(is_object($all_forms) && $all_forms->status =='error'){
 		  return $all_forms->message;
 		}
 		//array to hold valid forms to return

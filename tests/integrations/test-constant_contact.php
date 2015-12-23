@@ -89,8 +89,8 @@ class IntegrationsTestActiveCampaign extends WP_UnitTestCase {
 	//ensure this is instance of class
 	$this->assertInstanceof($this->instance, $this->integration);
 	//bad email is missing .com should fail
-	$result = $this->integration->subscribe_constant_contact( $this->emailBad, $this->apiKeyBad, $this->token, $this->list_id, $this->first_name, $this->last_name);
-	//we expect success back from the method call if it is successful, this should not return success. Should return a 4xx code
+	$result = $this->integration->subscribe_constant_contact( $this->emailBad, $this->apiKey, $this->token, $this->list_id, $this->first_name, $this->last_name);
+	//we expect success back from the method call if it is successful, this should not return success. Should return a 4xx codeclear
 	$expectedResult = 'success';
 	$this->assertNotEquals($expectedResult, $result, $result);
   }

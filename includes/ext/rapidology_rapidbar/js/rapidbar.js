@@ -82,6 +82,7 @@
         if(submit_remove == true) {
             setTimeout(
                 function () {
+                    console.log('here');
                     rapidbar_remove_padding(true);
                 }, 400); //use set timeout as it is used the other closing functions
         }

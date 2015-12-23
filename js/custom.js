@@ -446,6 +446,7 @@
                 optin_id = this_button.data( 'optin_id' );
                 optin_type = (this_button.data('optin_type') == 'rapidbar' ? 'rapidbar' : 'standard');
                 redirectUrl = this_button.data( 'redirect_url' );
+                redirectTab = this_button.data( 'redirect_tab' );
                 redirect_delay = this_button.data( 'success_delay' ) + '000';
                 redirect_delay = parseInt(redirect_delay);
 			    this_form.find( '.rad_rapidology_subscribe_email input' ).removeClass( 'rad_rapidology_warn_field' );
@@ -493,7 +494,11 @@
                                     }, 3000);
                                     if(redirectUrl.length > 0){
                                         setTimeout(function(){
-                                            window.open(redirectUrl);
+                                            if(redirectTab == 'new_tab') {
+                                                window.open(redirectUrl);
+                                            }else{
+                                                window.location.href = redirectUrl;
+                                            }
                                         }, redirect_delay);
                                     }
                                 }
@@ -505,7 +510,11 @@
                                     if(redirectUrl.length > 0) {
                                         setTimeout(function () {
                                             $('.rad_rapidology_visible').remove();
-                                            window.open(redirectUrl);
+                                            if(redirectTab == 'new_tab') {
+                                                window.open(redirectUrl);
+                                            }else{
+                                                window.location.href = redirectUrl;
+                                            }
                                         }, redirect_delay);
                                     }
 								}
@@ -533,6 +542,9 @@
             type        = this_button.data( 'optin_type' );
             var popup_id = $(this).data('popup_id');
             var redirectUrl = $(this).data('redirect_url');
+            redirectTab = this_button.data( 'redirect_tab' );
+            redirect_delay = this_button.data( 'success_delay' ) + '000';
+            redirect_delay = parseInt(redirect_delay);
             var container = $(this).parent().parent().parent().parent().parent();
             container.addClass( 'rad_rapidology_exit_animation' );
             update_stats_table( 'con', this_button );
@@ -544,7 +556,13 @@
                 var optin = $('.rad_rapidology_' + popup_id);
                 make_popup_visible(optin, 0, '', '');
             }else {
-                window.open(redirectUrl);
+                if (redirectUrl.length > 0) {
+                    if (redirectTab == 'new_tab') {
+                        window.open(redirectUrl);
+                    } else {
+                        window.location.href = redirectUrl;
+                    }
+                }
             }
         });
 

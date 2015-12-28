@@ -22,7 +22,9 @@ class IntegrationsTestInfusionsoft extends WP_UnitTestCase {
 
   }
 
-
+  /**
+   * group success
+   */
 	function test_get_infusionsoft_lists_success(){
 	  //ensure object is created and is instance of the correct provider
 	  $this->assertInstanceOf($this->instance, $this->integration);

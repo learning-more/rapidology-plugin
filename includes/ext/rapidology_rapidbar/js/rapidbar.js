@@ -189,7 +189,7 @@
             }
         });
     }
-    
+
     $body.on('click', '.rapidbar_consent_form .accept_consent', function(){
         if($('.rapidbar_consent_form .accept_consent').prop('checked')){
             $('.consent_error').hide();

@@ -170,7 +170,7 @@
 
 
     /*------------------------------------------
-     -----fix css for bar on window reisze------
+     -----fix css for bar on window resize------
      ------------------------------------------*/
 
     function rapidbar_responsive_css(height){

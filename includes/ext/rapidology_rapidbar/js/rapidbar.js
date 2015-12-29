@@ -189,17 +189,7 @@
             }
         });
     }
-
-    $body.on( 'click', '.rapidbar_submit_button.cursor-not-allowed', function(e) {
-        e.preventDefault();
-        $('.consent_error').show();
-        if ($('.rapidbar_consent_form').hasClass('rapid_consent_closed')) {
-            $('.rapidbar_consent_form').removeClass('rapid_consent_closed');
-            $('.rapidbar_consent_form').addClass('rapid_consent');
-        }
-        e.preventBubble(); //prevent form submission bubble
-    });
-
+    
     $body.on('click', '.rapidbar_consent_form .accept_consent', function(){
         if($('.rapidbar_consent_form .accept_consent').prop('checked')){
             $('.consent_error').hide();

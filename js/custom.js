@@ -460,6 +460,14 @@
                 redirect_delay = parseInt(redirect_delay);
 			    this_form.find( '.rad_rapidology_subscribe_email input' ).removeClass( 'rad_rapidology_warn_field' );
 
+            if(this_button.hasClass('cursor-not-allowed')){
+                    $('.consent_error').show();
+                    if ($('.rapidbar_consent_form').hasClass('rapid_consent_closed')) {
+                        $('.rapidbar_consent_form').removeClass('rapid_consent_closed');
+                        $('.rapidbar_consent_form').addClass('rapid_consent');
+                    }
+                return;
+            }
 			if ( '' == email ) {
 				this_form.find( '.rad_rapidology_subscribe_email input' ).addClass( 'rad_rapidology_warn_field' );
 			} else {

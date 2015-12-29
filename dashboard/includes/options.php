@@ -84,7 +84,7 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'boolean',
 			'hint_text'       => __( 'Select this if you do not want your banner to include an email opt-in.', 'rapidology' ),
 			'class'			  =>  'rad_dashboard_enable_redirect_form',
-			'conditional'	  =>  'redirect_list_id#email_text#redirect_url#submit_remove,#enable_success_redirect',
+			'conditional'	  =>  'redirect_list_id#email_text#redirect_url#submit_remove,#enable_success_redirect#enable_consent',
 		),
 		'email_provider' => array(
 			'type'            => 'select',
@@ -389,6 +389,38 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'simple_text',
 			'is_wpml_string'  => true,
 			'display_if'	  => 'enable_redirect_form#false'
+		),
+		'enable_consent' => array(
+		  'type'            => 'checkbox',
+		  'title'           => __( 'Optin Consent', 'rapidology' ),
+		  'name'            => 'enable_consent',
+		  'default'         => false,
+		  'class' 		  => 'rad_rapidology_enable_consent',
+		  'validation_type' => 'boolean',
+		  'display_if'      => 'enable_redirect_form#false',
+		  'conditional'     => 'consent_text#consent_color',
+		),
+		'consent_text' => array(
+		  'type'            => 'text',
+		  'subtype'         => 'text',
+		  'name'            => 'consent_text',
+		  'class'           => 'rad_dashboard_consent_text',
+		  'title'           => __( 'Consent Text', 'rapidology' ),
+		  'placeholder'     => __( 'Yes, I consent to receiving direct marketing from this website.', 'rapidology' ),
+		  'default'         => __( 'Yes, I consent to receiving direct marketing from this website.', 'rapidology' ),
+		  'validation_type' => 'simple_text',
+		  'is_wpml_string'  => true,
+		  'display_if'	  => 'enable_consent#true'
+		),
+		'consent_color' => array(
+		  'type'            => 'color_picker',
+		  'title'           =>  __( 'Conesent Text Color', 'rapidology' ),
+		  'name'            => 'consent_color',
+		  'class'           => 'rad_dashboard_consent_color rad_rapidology_hide_for_rapidbar',
+		  'placeholder'     => __( 'Hex Value', 'rapidology' ),
+		  'default'         => '',
+		  'validation_type' => 'simple_text',
+		  'display_if'	  	=> 'enable_consent#true'
 		),
 		'button_text' => array(
 			'type'            => 'input_field',
@@ -1278,6 +1310,9 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'form_setup' ][ 'last_name' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'email_text' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'button_text' ],
+	  		$rad_dashboard_options_all[ 'form_setup' ][ 'enable_consent' ],
+	  		$rad_dashboard_options_all[ 'form_setup' ][ 'consent_color' ],
+	  		$rad_dashboard_options_all[ 'form_setup' ][ 'consent_text' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'display_as_link' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'form_styling' ][ 'section_start' ],

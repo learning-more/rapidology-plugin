@@ -3829,11 +3829,15 @@ SOL;
 						<p class="rad_rapidology_popup_input rad_rapidology_subscribe_email %16$s">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-redirect_tab="%19$s" data-success_delay="%18$s" class="%14$s">
+
+						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-redirect_tab="%19$s" data-success_delay="%18$s" class="%14$s%22$s" %20$s>
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
-					</form>',
+						<div class="consent_wrapper" style="margin-top:10px;">%21$s</div>
+					</form>
+
+					',
 				'basic_edge' == $details['edge_style'] || '' == $details['edge_style']
 					? ''
 					: RAD_Rapidology::get_the_edge_code( $details['edge_style'], 'widget' == $details['optin_type'] ? 'bottom' : $details['form_orientation'] ),
@@ -3880,7 +3884,13 @@ SOL;
 				(isset($details['enable_redirect_form']) && $details['enable_redirect_form'] == true) ? 'hidden_item' : '',#16
 				isset($details['success_url']) ? esc_url($details['success_url']) : '',#17 //you will notice both 15 and 17 exist in the dat-redirect_url attribute. This is because both should never be set at the same time.
 				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '', #18
-				(isset($details['redirect_new_tab']) && $details['redirect_new_tab'] == true) ? 'new_tab' : 'current'#19
+				(isset($details['redirect_new_tab']) && $details['redirect_new_tab'] == true) ? 'new_tab' : 'current',#19
+				(isset($details['enable_consent']) && $details['enable_consent'] == true) ? 'disabled="true"' : '',#20
+			    (isset($details['enable_consent']) && $details['enable_consent'] == true) ?
+				  '<div class="consent"><input type="checkbox" name="accept_consent" class="accept_consent">'.
+				  '<span class="consent_text" style="margin-bottom:0 !important; color:'.$details['consent_color'].'; font-weight:400 !important;">'.$details['consent_text'].'</span></div>'
+				   : '',#21
+			  	(isset($details['enable_consent']) && $details['enable_consent'] == true) ? ' cursor-not-allowed' : ''#22
 			),
 		  '' != $success_text
 			? html_entity_decode( wp_kses( stripslashes( $success_text ), array(
@@ -4028,8 +4038,9 @@ SOL;
 							<div class="rad_rapidology_form_container%7$s%8$s%9$s%10$s%12$s%13$s%14$s%15$s%23$s%24$s%25$s">
 		
 								%11$s
-								%27$s
+
 							</div>
+							%27$s
 						</div>',
 						true == $details['post_bottom'] ? ' rad_rapidology_trigger_bottom' : '',
 						isset( $details['trigger_idle'] ) && true == $details['trigger_idle'] ? ' rad_rapidology_trigger_idle' : '',

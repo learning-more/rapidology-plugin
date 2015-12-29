@@ -4307,11 +4307,13 @@ SOL;
 					$displayCookie = 'rad_rapidology_subscribed_to_'.$optin_id.$details['email_list'];
 					if(!isset($_COOKIE[$displayCookie])){
 						$content = sprintf(
-							'<div class="rad_rapidology_rapidbar %1$s%3$s %4$s" %2$s>'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>',
-							isset( $details['trigger_auto'] ) && true == $details['trigger_auto'] ? 'rad_rapidology_rapidbar_trigger_auto' : '',
+							'<div class="rad_rapidology_rapidbar %1$s%3$s %4$s" %2$s>'. $this->generate_rapidbar_form( $optin_id, $details ) . '
+							%5$s
+							</div>',
+							isset( $details['trigger_auto'] ) && true == $details['trigger_auto'] ? 'rad_rapidology_rapidbar_trigger_auto' : '',#1
 							isset( $details['trigger_auto'] ) && true == $details['trigger_auto']
 								? sprintf( 'data-delay="%1$s"', esc_attr( $details['load_delay'] ) )
-								: '',
+								: '',#2
 							( 'no_border' !== $details['border_orientation'] )
 								? sprintf(
 								' rad_rapidology_border_%1$s%2$s',
@@ -4320,8 +4322,15 @@ SOL;
 									? ' rad_rapidology_border_position_' . $details['border_orientation']
 									: ''
 							)
-								: '',
-							esc_attr($details['rapidbar_position'])
+								: '',#3
+							esc_attr($details['rapidbar_position']),#4
+						  (isset($details['enable_consent']) && $details['enable_consent'] == true) ?
+							'
+							<div class="consent_error" style="background-color:'.$details['form_bg_color'].'">Please check consent box</div>
+							<div class="rapid_consent_closed rapidbar_consent_form" style="background-color:'.$details['form_bg_color'].'"><input type="checkbox" name="accept_consent" class="accept_consent">'.
+							'<span class="consent_text" style="margin-bottom:0 !important; color:'.$details['consent_color'].'; font-weight:400 !important;">'.$details['consent_text'].'</span>
+							</div>'
+							: ''#5
 						);
 
 

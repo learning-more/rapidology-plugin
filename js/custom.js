@@ -479,6 +479,8 @@
 						this_button.find( '.rad_rapidology_subscribe_loader' ).css( { 'display' : 'block' } );
 					},
 					success: function( data ) {
+                        $('.rapidbar_consent_form').hide();//hide rapidbar consent text
+                        $('.consent_wrapper').hide();//hide all other forms consent text
 						this_button.removeClass( 'rad_rapidology_button_text_loading' );
 						this_button.find( '.rad_rapidology_subscribe_loader' ).css( { 'display' : 'none' } );
 						if ( data ) {

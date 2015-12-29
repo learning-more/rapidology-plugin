@@ -110,6 +110,15 @@
 
     function rapidbar_remove_padding(remove_bar, closebtn){
         height = $('.rad_rapidology_rapidbar').height(); //get height of bar
+        if( $('.rapidbar_consent_form') && $('.consent_error').is(":visible") ){
+            consent_height = $('.rapidbar_consent_form').height();
+            height = height - consent_height;
+        }
+        if( $('.consent_error') && $('.consent_error').is(":visible") ){
+            consent_error_height = $('.consent_error').height();
+            console.log(consent_error_height);
+            height = height - consent_error_height;
+        }
         var removebar = (remove_bar == false ? false : true);
         var header = $('header');
         if($(header).data('rapid_height')){

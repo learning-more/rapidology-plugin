@@ -2,7 +2,7 @@
 
 include(RAD_RAPIDOLOGY_PLUGIN_DIR.'/includes/classes/integrations/class.rapidology-constant_contact.php');
 
-class IntegrationsTestActiveCampaign extends WP_UnitTestCase {
+class IntegrationsTestConstantContact extends WP_UnitTestCase {
 
   function setup() {
 	$path = dirname(dirname(dirname(dirname(dirname(plugin_dir_path(__FILE__))))));

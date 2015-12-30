@@ -72,7 +72,6 @@ class IntegrationsTestHubspotList extends WP_UnitTestCase {
   function test_hubspot_subscribe_fail_bad_email(){
 	$this->assertInstanceOf($this->instance, $this->integration);
 	$result = $this->integration->hubspot_subscribe($this->apiKey, $this->bademail, $this->list_id, $this->first_name, $this->last_name);
-	print_r($result);
 	$expectedResult = 'success';//expected result if the api key were good
 	$this->assertNotEquals($expectedResult, $result, $result);//passed result in as error as that is what the plugin will return
   }

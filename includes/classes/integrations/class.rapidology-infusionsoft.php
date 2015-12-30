@@ -112,7 +112,9 @@ class rapidology_infusionsoft extends RAD_Rapidology
 		if ( ! function_exists( 'curl_init' ) ) {
 			return __( 'curl_init is not defined ', 'rapidology' );
 		}
-
+		if( !is_email($email) ){
+		  return 'Email address appears to be invalid';
+		}
 		if ( ! class_exists( 'iSDK' ) ) {
 			require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/infusionsoft/isdk.php' );
 		}
@@ -133,14 +135,31 @@ class rapidology_infusionsoft extends RAD_Rapidology
 		$new_contact_id = $infusion_app->addWithDupCheck($contact_details, $checkType = 'Email');
 		$infusion_app->optIn($contact_details['Email']);
 		$response = $infusion_app->grpAssign( $new_contact_id, $list_id );
-		if($response) {
+	  	if($response) {
+		  //contact added
 			$error_message = 'success';
 		}else{
-			$error_message = esc_html__( 'Already In List', 'rapidology' );
+			//update contact if no $response
+		  $contact_id = $this->get_contact_id($infusion_app, $email);
+		  $updated_contact = $this->update_contact($infusion_app, $contact_details, $contact_id);
+		  if($updated_contact){
+			$error_message = 'success';
+		  }
 		}
 
 
 		return $error_message;
+	}
+
+  	protected function get_contact_id($infusion_app, $email){
+	  $returnFields = array('Id');
+	  $data = $infusion_app->findByEmail($email, $returnFields);
+	  return $data[0]['Id'];
+	}
+
+  	protected function update_contact($infusion_app, $contact_details, $contact_id){
+		$result = $infusion_app->updateCon($contact_id, $contact_details);
+	    return $result;
 	}
 
 }

@@ -864,11 +864,11 @@
 
 }
 .consent{
-    /*display:flex;
-    align-items:center;*/
+    display:flex;
+    align-items:center;
 }
 .accept_consent{
-    /*align-self: flex-start;*/
+    align-self: flex-start;
     width: 25px !important;
     height: 25px;
     display: inline !important;

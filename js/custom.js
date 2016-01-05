@@ -84,6 +84,7 @@
 		//separate function for the setTimeout to make it work properly within the loop.
 		function make_popup_visible( $popup, $delay, $cookie_exp, $cookie_content ){
 			if ( ! $popup.hasClass( 'rad_rapidology_visible' ) ) {
+                $('.accept_consent').removeAttr('checked');
 				setTimeout( function() {
 					$popup.addClass( 'rad_rapidology_visible rad_rapidology_animated' );
 					$stats_data_container = 0 != $popup.find( '.rad_rapidology_custom_html_form' ).length ? $popup.find( '.rad_rapidology_custom_html_form' ) : $popup.find( '.rad_rapidology_submit_subscription' );

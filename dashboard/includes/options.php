@@ -84,7 +84,7 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'boolean',
 			'hint_text'       => __( 'Select this if you do not want your banner to include an email opt-in.', 'rapidology' ),
 			'class'			  =>  'rad_dashboard_enable_redirect_form',
-			'conditional'	  =>  'redirect_list_id#email_text#redirect_url#submit_remove,#enable_success_redirect#enable_consent',
+			'conditional'	  =>  'redirect_list_id#email_text#redirect_url#submit_remove,#enable_success_redirect#enable_consent#redirect_new_tab_bar',
 		),
 		'email_provider' => array(
 			'type'            => 'select',
@@ -316,6 +316,7 @@ $rad_dashboard_options_all = array(
 		  'default'         => false,
 		  'class' 		  	=> 'rad_rapidology_redirect_new_tab_bar',
 		  'validation_type' => 'boolean',
+		  'display_if'		=> 'enable_redirect_form#true',
 		),
 		'rapidbar_popup' => array(
 			'type'            => 'select',

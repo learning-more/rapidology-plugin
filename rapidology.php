@@ -3891,7 +3891,7 @@ SOL;
 				  '<span class="consent_text" style="margin-bottom:0 !important; color:'.$details['consent_color'].'; font-weight:400 !important;">'.$details['consent_text'].'</span></div>'
 				   : '',#21
 			  	(isset($details['enable_consent']) && $details['enable_consent'] == true) ? ' cursor-not-allowed' : '',#22
-			  	(isset($details['redirect_new_window']) && $details['redirect_new_window'] == true) ? 'new_window' : 'current'#23
+			  	(isset($details['redirect_new_window']) && $details['redirect_new_window'] == true) ? 'new_window' : ''#23
 			),
 		  '' != $success_text
 			? html_entity_decode( wp_kses( stripslashes( $success_text ), array(

@@ -410,7 +410,7 @@
 				if ( header_height < real_form_height ) {
 					//real_popup_height = this_popup.find( 'form' ).innerHeight() + 30 + $message_space;
 				    real_popup_height = real_form_height;
-                    $('.rad_rapidology .rad_rapidology_form_container .rad_rapidology_form_content').css({'padding-top':'0', 'padding-bottom': '0'});
+                    $('.rad_rapidology .rad_rapidology_form_container .rad_rapidology_form_content').css({'padding-top':'40', 'padding-bottom': '40'});
                     var topFix = consent_height;
                     $('.rad_rapidology .rad_rapidology_form_left .rad_rapidology_form_content form, .rad_rapidology .rad_rapidology_form_right .rad_rapidology_form_content form').css({'top': '-'+topFix+'px'});
                 } else {
@@ -456,7 +456,7 @@
                 optin_id = this_button.data( 'optin_id' );
                 optin_type = (this_button.data('optin_type') == 'rapidbar' ? 'rapidbar' : 'standard');
                 redirectUrl = this_button.data( 'redirect_url' );
-                redirectTab = this_button.data( 'redirect_tab' );
+                redirectTab = this_button.data( 'redirect' );
                 redirect_delay = this_button.data( 'success_delay' ) + '000';
                 redirect_delay = parseInt(redirect_delay);
 			    this_form.find( '.rad_rapidology_subscribe_email input' ).removeClass( 'rad_rapidology_warn_field' );
@@ -516,6 +516,8 @@
                                         setTimeout(function(){
                                             if(redirectTab == 'new_tab') {
                                                 window.open(redirectUrl);
+                                            }else if(redirectTab == 'new_window'){
+                                                window.open(redirectUrl, '_blank', 'toolbar=1,location=0,menubar=1');
                                             }else{
                                                 window.location.href = redirectUrl;
                                             }
@@ -527,11 +529,12 @@
 									this_form.parent().find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
 									this_form.remove();
 									set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
-                                    if(redirectUrl.length > 0) {
-                                        setTimeout(function () {
-                                            $('.rad_rapidology_visible').remove();
+                                    if(redirectUrl.length > 0){
+                                        setTimeout(function(){
                                             if(redirectTab == 'new_tab') {
                                                 window.open(redirectUrl);
+                                            }else if(redirectTab == 'new_window'){
+                                                window.open(redirectUrl, '_blank', 'toolbar=1,location=0,menubar=1');
                                             }else{
                                                 window.location.href = redirectUrl;
                                             }
@@ -562,7 +565,7 @@
             type        = this_button.data( 'optin_type' );
             var popup_id = $(this).data('popup_id');
             var redirectUrl = $(this).data('redirect_url');
-            redirectTab = this_button.data( 'redirect_tab' );
+            redirectTab = this_button.data( 'redirect' );
             redirect_delay = this_button.data( 'success_delay' ) + '000';
             redirect_delay = parseInt(redirect_delay);
             var container = $(this).parent().parent().parent().parent().parent();
@@ -576,12 +579,12 @@
                 var optin = $('.rad_rapidology_' + popup_id);
                 make_popup_visible(optin, 0, '', '');
             }else {
-                if (redirectUrl.length > 0) {
-                    if (redirectTab == 'new_tab') {
-                        window.open(redirectUrl);
-                    } else {
-                        window.location.href = redirectUrl;
-                    }
+                if(redirectTab == 'new_tab') {
+                    window.open(redirectUrl);
+                }else if(redirectTab == 'new_window'){
+                    window.open(redirectUrl, '_blank', 'toolbar=1,location=0,menubar=1');
+                }else{
+                    window.location.href = redirectUrl;
                 }
             }
         });

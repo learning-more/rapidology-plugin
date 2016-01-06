@@ -715,6 +715,14 @@ $rad_dashboard_options_all = array(
 		  'class' 		  => 'rad_rapidology_redirect_new_tab',
 		  'validation_type' => 'boolean',
 		),
+		'redirect_new_window' => array(
+		  'type'            => 'checkbox',
+		  'title'           => __( 'Open redirect in new window', 'rapidology' ),
+		  'name'            => 'redirect_new_window',
+		  'default'         => false,
+		  'class' 		  => 'rad_rapidology_redirect_new_window',
+		  'validation_type' => 'boolean',
+		),
 	),
 	'custom_css' => array(
 		'section_start' => array(
@@ -1336,6 +1344,7 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'success_redirect' ][ 'success_url' ],
 			$rad_dashboard_options_all[ 'success_redirect' ][ 'success_load_delay' ],
 	  		$rad_dashboard_options_all[ 'success_redirect' ][ 'redirect_new_tab' ],
+	  		$rad_dashboard_options_all[ 'success_redirect' ][ 'redirect_new_window' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'custom_css' ][ 'section_start' ],
 			$rad_dashboard_options_all[ 'custom_css' ][ 'option' ],

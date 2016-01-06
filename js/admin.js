@@ -907,6 +907,31 @@
 			return false;
 		} );
 
+        //uncheck redirect buttons if the other is checked non redirect bar
+        $body.on('click', '.rad_rapidology_redirect_new_window input', function(){
+            if($('.rad_rapidology_redirect_new_tab input').is(':checked')){
+                $('.rad_rapidology_redirect_new_tab input').removeAttr('checked');
+            };
+        });
+        $body.on('click', '.rad_rapidology_redirect_new_tab input', function(){
+            if($('.rad_rapidology_redirect_new_window input').is(':checked')){
+                $('.rad_rapidology_redirect_new_window input').removeAttr('checked');
+            };
+        });
+        //uncheck redirect buttons if the other is checked  redirect bar
+        $body.on('click', '.rad_rapidology_redirect_new_window_bar input', function(){
+            if($('.rad_rapidology_redirect_new_tab_bar input').is(':checked')){
+                $('.rad_rapidology_redirect_new_tab_bar input').removeAttr('checked');
+            };
+        });
+        $body.on('click', '.rad_rapidology_redirect_new_tab_bar input', function(){
+            if($('.rad_rapidology_redirect_new_window_bar input').is(':checked')){
+                $('.rad_rapidology_redirect_new_window_bar input').removeAttr('checked');
+            };
+        });
+
+
+
 		$body.on( 'click', '.rad_rapidology_preview_popup .rad_rapidology_close_button', function() {
 			$( this ).parent().parent().remove();
 			$( '#rad_rapidology_preview_css' ).remove();

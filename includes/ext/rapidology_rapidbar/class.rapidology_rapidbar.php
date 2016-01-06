@@ -148,7 +148,7 @@ class rapidology_rapidbar
 						<p class="rad_rapidology_rapidbar_input rad_rapidology_subscribe_email %16$s">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_type="rapidbar" data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-redirect="%22$s%25$s%26$s%27$s" data-success_delay="%18$s" %19$s %21$s class="rapidbar_submit_button %14$s%20$s%24$s" %23$s>
+						<button data-optin_type="rapidbar" data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-redirect="%25$s" data-success_delay="%18$s" %19$s %21$s class="rapidbar_submit_button %14$s%20$s%24$s" %23$s>
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -206,9 +206,9 @@ class rapidology_rapidbar
 				(isset($details['redirect_new_tab_bar']) && $details['redirect_new_tab_bar'] == true) ? 'new_tab' : '', #22
 			  	(isset($details['enable_consent']) && $details['enable_consent'] == true) ? '' : '',#23
 			  	(isset($details['enable_consent']) && $details['enable_consent'] == true) ? ' cursor-not-allowed' : '',#24
-			  	(isset($details['redirect_new_window_bar']) && $details['redirect_new_window_bar'] == true) ? 'new_window' : '', #25
-			  	(isset($details['redirect_new_window']) && $details['redirect_new_window'] == true) ? 'new_window' : '',#26
-			  	(isset($details['redirect_new_tab']) && $details['redirect_new_tab'] == true) ? 'new_tab' : ''#27
+			    (isset($details['enable_redirect_form']) && $details['enable_redirect_form'] == true) ? esc_attr($details['redirect_bar']) : esc_attr($details['redirect_standard'])#25
+
+
 			),
 			'' != $success_text
 				? stripslashes(esc_html($success_text))

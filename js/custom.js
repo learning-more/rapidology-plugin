@@ -481,7 +481,6 @@
 			if ( '' == email ) {
 				this_form.find( '.rad_rapidology_subscribe_email input' ).addClass( 'rad_rapidology_warn_field' );
 			} else {
-                $(this_button).prop('disabled', true);
 				$subscribe_data = JSON.stringify({ 'list_id' : list_id, 'account_name' : account_name, 'service' : service, 'name' : name, 'email' : email, 'page_id' : page_id, 'optin_id' : optin_id, 'last_name' : last_name, 'dbl_optin' : disable_dbl_optin, 'post_name' : post_name, 'cookie' : cookie });
 				$.ajax({
 					type: 'POST',
@@ -553,7 +552,6 @@
 							}
 							define_popup_position( this_form.parent().parent().parent().parent(), false, 50 );
 						}
-                        $(this_button).prop('disabled', false);
 					}
 				});
 			}
@@ -602,10 +600,18 @@
             var parent = $(this).parent().parent().parent().get( 0 ).tagName;
             var button = $(parent + ' .rad_rapidology_submit_subscription');
             if($('.accept_consent').prop('checked')){
-                button.prop('disabled', false);
                 button.removeClass('cursor-not-allowed');
             }else{
-                button.prop('disabled', true);
+                button.addClass('cursor-not-allowed');
+            }
+        });
+
+        $body.on('click', '.consent_wrapper .accept_consent', function(){
+            var parent = $(this).parent().parent().parent().get( 0 ).tagName;
+            var button = $(parent + ' .rad_rapidology_submit_subscription');
+            if($(this).prop('checked')){
+                button.removeClass('cursor-not-allowed');
+            }else{
                 button.addClass('cursor-not-allowed');
             }
         });

@@ -79,11 +79,12 @@ class rapidology_activecampaign extends RAD_Rapidology
 
 	function subscribe_active_campaign($url, $api_key, $first_name , $last_name, $email, $lists, $form_id){
 		require_once(RAD_RAPIDOLOGY_PLUGIN_DIR .'subscription/activecampaign/class.activecampagin.php');
-	  $error_message = '';
+	  	$error_message = '';
 		$ac_requests = new rapidology_active_campagin($url, $api_key);
 	  	//check for email already exist as contact
 	  	$existing = $ac_requests->contact_view_email($email);
-	  	if($existing != false){//existing will hold id of contact
+	  	echo $existing;
+	  	if($existing > 0){//existing will hold id of contact
 		  $result =$ac_requests->update_contact($existing, $first_name, $last_name, $email, $lists, $url);
 		  if($result == 1){
 			$error_message = 'success';

@@ -417,7 +417,7 @@ $rad_dashboard_options_all = array(
 		  'class' 		  => 'rad_rapidology_enable_consent',
 		  'validation_type' => 'boolean',
 		  'display_if'      => 'enable_redirect_form#false',
-		  'conditional'     => 'consent_text#consent_color',
+		  'conditional'     => 'consent_text#consent_color#consent_error',
 		),
 		'consent_text' => array(
 		  'type'            => 'text',
@@ -440,6 +440,18 @@ $rad_dashboard_options_all = array(
 		  'default'         => '',
 		  'validation_type' => 'simple_text',
 		  'display_if'	  	=> 'enable_consent#true'
+		),
+		'consent_error' => array(
+		  'type'            => 'input_field',
+		  'subtype'         => 'text',
+		  'name'            => 'consent_error',
+		  'class'           => 'rad_dashboard_consent_error',
+		  'title'           => __( 'Consent Error Text', 'rapidology' ),
+		  'placeholder'     => __( 'Please provide consent.', 'rapidology' ),
+		  'default'         => __( 'Please provide consent.', 'rapidology' ),
+		  'validation_type' => 'simple_text',
+		  'is_wpml_string'  => true,
+		  'display_if'	  => 'enable_consent#true'
 		),
 		'button_text' => array(
 			'type'            => 'input_field',
@@ -1350,6 +1362,7 @@ $rad_assigned_options = array(
 	  		$rad_dashboard_options_all[ 'form_setup' ][ 'enable_consent' ],
 	  		$rad_dashboard_options_all[ 'form_setup' ][ 'consent_color' ],
 	  		$rad_dashboard_options_all[ 'form_setup' ][ 'consent_text' ],
+	  		$rad_dashboard_options_all[ 'form_setup' ][ 'consent_error' ],
 			$rad_dashboard_options_all[ 'form_setup' ][ 'display_as_link' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 		$rad_dashboard_options_all[ 'form_styling' ][ 'section_start' ],

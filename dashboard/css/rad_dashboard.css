@@ -166,7 +166,7 @@ li.rad_dashboard_auto_height { height: auto; }
 	.rad_dashboard_form input:focus, .rad_dashboard_form select:focus, .rad_dashboard_form textarea:focus, .rad_social_networks input:focus, button:focus { outline: none; }
 	.rad_dashboard_form input[type=text] { width: 60px; }
 	.rad_dashboard_form select { width: 140px; }
-	.rad_dashboard_form textarea { width: 100%; height:inherit; }
+	.rad_dashboard_form textarea { width: 100%; height:inherit; margin-bottom:10px;}
 	.rad_dashboard_form input[type=checkbox] { visibility: hidden; position: absolute; }
 		.rad_dashboard_checkbox label { float: left; cursor: pointer; width: 30px; height: 30px; background: #FFF; text-align: center; -webkit-border-radius: 2px; -moz-border-radius: 2px; border-radius: 2px; }
 			.rad_dashboard_checkbox label:after {	color: rgba(147, 154, 170, 0); line-height: 30px; text-align: center; }

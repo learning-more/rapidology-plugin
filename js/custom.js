@@ -462,10 +462,19 @@
 			    this_form.find( '.rad_rapidology_subscribe_email input' ).removeClass( 'rad_rapidology_warn_field' );
 
             if(this_button.hasClass('cursor-not-allowed')){
-                    $('.consent_error').show();
-                    if ($('.rapidbar_consent_form').hasClass('rapid_consent_closed')) {
-                        $('.rapidbar_consent_form').removeClass('rapid_consent_closed');
-                        $('.rapidbar_consent_form').addClass('rapid_consent');
+                    //find the top level parent of but button clicked to find the error message for this specific form
+                    var parents = this_form.parents();
+                    parents.each(function(){
+                       if($(this).hasClass('rad_rapidology_optin') || $(this).hasClass('rad_rapidology_rapidbar')){
+                           top_parent = $(this);
+                       }
+                    });
+                    var error_message = top_parent.find('.consent_error');
+                    var consent_form = top_parent.find('.rapidbar_consent_form') ;
+                    $(error_message).show();
+                    if ($(consent_form).hasClass('rapid_consent_closed')) {
+                        $(consent_form).removeClass('rapid_consent_closed');
+                        $(consent_form).addClass('rapid_consent');
                     }
                 return;
             }

@@ -3885,8 +3885,9 @@ SOL;
 				isset($details['success_url']) ? esc_url($details['success_url']) : '',#17 //you will notice both 15 and 17 exist in the dat-redirect_url attribute. This is because both should never be set at the same time.
 				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '', #18
 				(isset($details['redirect_new_tab']) && $details['redirect_new_tab'] == true) ? 'new_tab' : '',#19
-				(isset($details['enable_consent']) && $details['enable_consent'] == true) ? 'disabled="true"' : '',#20
+				(isset($details['enable_consent']) && $details['enable_consent'] == true) ? '' : '',#20 placeholder so we dont have to renumber items
 			    (isset($details['enable_consent']) && $details['enable_consent'] == true) ?
+				  '<div class="consent_error" style="background-color:'.$details['form_bg_color'].'">Please check consent box</div>'.
 				  '<div class="consent"><input type="checkbox" name="accept_consent" class="accept_consent">'.
 				  '<span class="consent_text" style="margin-bottom:0 !important; color:'.$details['consent_color'].'; font-weight:400 !important;">'.$details['consent_text'].'</span></div>'
 				   : '',#21

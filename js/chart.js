@@ -25,8 +25,12 @@ function chart_data_generate_30(optin_data, list_id){
         var previous_month_required = true;
 
         var days_from_previous_month =  30 - current_day; //returns how many days we will need from the previous month, need 29 so 30 day results will include today and not be 31 days
-        var previous_month = current_month -1;
-        var previous_year = current_year;
+        if(current_month == 1){
+            previous_month = 12
+        }else{
+            var previous_month = current_month -1;
+        }
+        var previous_year = current_year - 1;
         var days_previous_month = daysInMonth(previous_month, current_year);//how many days were in previous month
         var starting_date_previous_month = days_previous_month - days_from_previous_month; //get starting date from previous month based on the amount of days in the month - days needed
     }
@@ -42,8 +46,9 @@ function chart_data_generate_30(optin_data, list_id){
     //add remaining days from this month
     var i = 1;
     while(i <= current_day){
-        i = i.pad();
-        data_array.push({'date': current_year+'-'+current_month+'-'+i, 'month':current_month, 'day':i, 'year':current_year,'converstions': 0});
+        var d = i.pad();
+        var m = current_month.pad();
+        data_array.push({'date': current_year+'-'+m+'-'+d, 'month':current_month, 'day':d, 'year':current_year,'converstions': 0});
         i++;
     }
     if(list_id === undefined){
@@ -51,7 +56,6 @@ function chart_data_generate_30(optin_data, list_id){
     }else{
         list_id = list_id;
     }
-
     for(data_id in data_array){
         for(data in optin_data) {
             var record_date = rapid_getInfo(optin_data[data].record_date);
@@ -91,6 +95,7 @@ function chart_data_generate_12(optin_data, list_id){
         previous_year_required	= true;
         previous_months_needed = current_month - 12;
         previous_months_needed = Math.abs(previous_months_needed); //change negative number to positive;
+        const_previous_months_needs = previous_months_needed //need a constant set for the next loop. previous months needed gets counted down to 1 below
         var previous_year = current_year - 1;
 
         //make array with month number representation needed from previous year
@@ -101,14 +106,13 @@ function chart_data_generate_12(optin_data, list_id){
             previous_months_needed--;
         }
     }
-
     if(previous_year_required == true){
         for(month in previous_months){
             var month = previous_months[month].pad();
             data_array.push({'date': previous_year+'-'+month, 'month':month, 'year':previous_year,'converstions': 0});
         }
         //get number of current years months needed
-        var current_months_required = 12 - Math.abs(previous_months_needed);
+        var current_months_required = 12 - Math.abs(const_previous_months_needs);
     }else{
         var current_months_required = 12;
     }

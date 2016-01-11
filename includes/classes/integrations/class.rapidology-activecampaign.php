@@ -83,7 +83,6 @@ class rapidology_activecampaign extends RAD_Rapidology
 		$ac_requests = new rapidology_active_campagin($url, $api_key);
 	  	//check for email already exist as contact
 	  	$existing = $ac_requests->contact_view_email($email);
-	  	echo $existing;
 	  	if($existing > 0){//existing will hold id of contact
 		  $result =$ac_requests->update_contact($existing, $first_name, $last_name, $email, $lists, $url);
 		  if($result == 1){

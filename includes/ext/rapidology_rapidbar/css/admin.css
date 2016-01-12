@@ -1,15 +1,4 @@
 
-ru
-How to use? (ru)
-Autoprefixer CSS online
-Add the desired vendor prefixes and remove unnecessary in your CSS
-.example {
-    display: flex;
-    transition: all .5s;
-    user-select: none;
-    background: linear-gradient(to bottom, white, black);
-}
-
 /*------------------------------------------------*/
 /*-------------------[RapidBar]-----------------*/
 /*------------------------------------------------*/
@@ -53,10 +42,10 @@ Add the desired vendor prefixes and remove unnecessary in your CSS
 
 .marketing_header h1 {
     font-family: 'Open Sans', sans-serif;
-    font-weight: 700 !important;
-    margin-left:10px;
-    margin-top: 10px;
+    text-transform: none;
     font-size: 26px;
+    font-weight:400;
+    color: #373942;
 }
 .marketing_header p{
     font-family: 'Open Sans', sans-serif;
@@ -177,13 +166,14 @@ Add the desired vendor prefixes and remove unnecessary in your CSS
     padding-left:10px;
 }
 .signup .header{
-    font-weight:700;
+    font-weight:400;
     font-size:16px;
     text-align: center;
     color: #373942;
     font-style: normal;
     margin-top:20px;
-    margin-bottom:0 !important
+    margin-bottom:0 !important;
+    text-transform: uppercase;
 }
 .signup p{
     margin-left:10px;
@@ -221,19 +211,25 @@ Add the desired vendor prefixes and remove unnecessary in your CSS
 }
 .newsletter_submit_button{
     font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
     text-transform: uppercase;
     background: #ff5e6e;
     text-decoration: none;
     padding: 10px 0;
     color: #fff;
     text-align: center;
-    border-radius:5px;
+    border-radius:23px;
     margin-top:10px;
     font-size:14px;
     display: block;
     width:200px;
     cursor: pointer !important;
 }
+.newsletter_submit_button:hover{
+    color: #fff;
+    background: #BD404D;
+}
+
 .privacy_link{
     margin-top:10px;
     text-align: center;
@@ -254,7 +250,7 @@ Add the desired vendor prefixes and remove unnecessary in your CSS
 }
 
 .quick_links .header{
-    font-weight:700;
+    font-weight:400;
     font-size:16px;
     text-align: center;
     color: #373942;
@@ -277,6 +273,11 @@ Add the desired vendor prefixes and remove unnecessary in your CSS
     -webkit-text-decoration-color: #939aaa;
     -moz-text-decoration-color: #939aaa;
     text-decoration-color: #939aaa;
+}
+
+.ui-dialog{
+    background: transparent !important;
+
 }
 
 .loader{
@@ -303,4 +304,3 @@ Add the desired vendor prefixes and remove unnecessary in your CSS
         width: 450px !important;
     }
 }
-                                                                                                                                                                                                                                                                          autoprefixer online PostCSS css vendor prefixes property transition transform perspective user-sAutoprefixer on github by ymatuhin

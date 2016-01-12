@@ -5,11 +5,11 @@
     var rapidbar_displayed = jQuery('.rad_rapidology_rapidbar').length;
     var rapidbar_timedelay = jQuery('.rad_rapidology_rapidbar.rad_rapidology_rapidbar_trigger_auto').data('delay');
     var delay = '' !== rapidbar_timedelay ? rapidbar_timedelay * 1000 : 500;
+    var submit_remove = $('.rad_rapidology_redirect_page').data('submit_remove');
 
 
     if(isSticky == true){
         $(window).on('scroll', function(){
-
             if($(window).scrollTop() > 0){
                 $('.rad_rapidology_rapidbar').addClass('stickytop_stick');
                 $('.rad_rapidology_rapidbar').removeClass('stickytop');
@@ -23,11 +23,8 @@
                     $('.rad_rapidology_rapidbar').css('margin-top', '0px');
                 }
             }
-
         });
     }
-
-
 
     /*---------------------------------------
     ------------Adding heights for bar-------
@@ -75,17 +72,19 @@
         $('.sticky_adminbar_push').css('height', '32');
     }
 
-
     /*------------------------------------------
      ------------removing heights for bar-------
      ------------------------------------------*/
 
     // triggers for closing rapidbar
     jQuery('.rad_rapidology_redirect_page').on('click', function () {
-        setTimeout(
-            function(){
-                rapidbar_remove_padding(true);
-            }, 400); //use set timeout as it is used the other closing functions
+        var submit_remove = $('.rad_rapidology_redirect_page').data('submit_remove');//will be true of false to pass into remove padding to keep bar from being removed
+        if(submit_remove == true) {
+            setTimeout(
+                function () {
+                    rapidbar_remove_padding(true);
+                }, 400); //use set timeout as it is used the other closing functions
+        }
     });
 
     jQuery('.rad_rapidology_rapidbar .rad_rapidology_close_button').on('click', function () {

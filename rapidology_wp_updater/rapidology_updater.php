@@ -47,7 +47,7 @@ function activate_new_rapidology() {
 	}
 }
 
-register_activation_hook( __FILE__, 'rapidology_updater' );
-add_action('admin_init', 'rapidology_updater');
-add_action('admin_init', 'activate_new_rapidology');
+//register_activation_hook( __FILE__, 'rapidology_updater' );
+//add_action('admin_init', 'rapidology_updater');
+//add_action('admin_init', 'activate_new_rapidology');
 

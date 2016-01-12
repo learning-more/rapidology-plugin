@@ -534,9 +534,7 @@
             container.addClass( 'rad_rapidology_exit_animation' );
             update_stats_table( 'con', this_button );
             rapidbarSubmitPaddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;//set this before the bar is removed so I know how much padding to remove on other functions
-            setTimeout( function() {
-                $('.rad_rapidology_rapidbar').remove();
-            }, 400 );
+
 
             //set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
             if(popup_id) {

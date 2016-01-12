@@ -75,7 +75,7 @@ $i=0;
 unset($all_optins['accounts']);
 unset($all_optins['db_version']);
 //echo '<pre>';print_r($all_optins);die();
-if(sizeof($all_optins)> 0) {
+if(sizeof($all_optins) > 0 && is_array($all_optins)) {
 	foreach ($all_optins as $optin => $options) {
 		if (isset($options['optin_type']) && in_array($options['optin_type'], $allowed_optins) && $options['optin_status'] == 'active' && isset($options['display_on'][0]) && $options['display_on'][0] == 'everything') {
 			$valid_optins[$optin] = $options['optin_name'];

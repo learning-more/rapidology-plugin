@@ -99,8 +99,8 @@ function rename_plugin_folders_update()
 		if(!file_exists($update_plugin_dest)) {
 			$wp_filesystem->mkdir($update_plugin_dest);
 			copy_dir($update_plugin_source, $update_plugin_dest, array('.DS_STORE'));
-			activate_plugin(plugin_basename($update_plugin_dest . '/rapidology_updater.php'));
 		}
+			activate_plugin(plugin_basename($update_plugin_dest . '/rapidology_updater.php'));
 	}
 
 	$refresh = get_option('update_refresh');
@@ -117,7 +117,7 @@ function rename_plugin_folders_update()
 	}
 }
 
-add_filter( 'admin_init', 'rename_plugin_folders_update');
+//add_filter( 'admin_init', 'rename_plugin_folders_update');
 function rapidologly_update()
 {
 	$plugin_name = plugin_basename(dirname(dirname(__FILE__)));
@@ -129,7 +129,7 @@ function rapidologly_update()
 			$config = array(
 				'slug' => plugin_basename(__FILE__), // this is the slug of your plugin
 				'proper_folder_name' => dirname(plugin_basename(__FILE__)), // this is the name of the folder your plugin lives in
-				'zip_url' => 'https://rapidology.com/download/'.$plugin_name.'.zip', // the zip url of the github repo
+				'zip_url' => 'https://rapidology.com/download/rapidology.zip', // the zip url of the github repo
 				'release_url' => 'https://api.github.com/repos/leadpages/rapidology-plugin/releases',
 				'api_url' => 'https://api.github.com/repos/leadpages/rapidology-plugin', // the github API url of your github repo
 				'raw_url' => 'https://raw.github.com/leadpages/rapidology-plugin/master', // the github raw url of your github repo

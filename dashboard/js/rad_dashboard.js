@@ -186,8 +186,6 @@
 	});
 
 
-	//Define global functions to use them in other plugins
-
 	//Sets the current tab in navigation menu
 	window.rad_dashboard_set_current_tab = function set_current_tab( $tab_id, $section ) {
 		var tab = $( 'div.' + $tab_id );
@@ -424,8 +422,8 @@
 			$this_el.attr( 'href', '#tab_' + $this_el.parent().find( 'ul > li > a' ).first().attr( 'id' ) );
 		});
 
-		$body.on( 'click', 'div#rad_dashboard_navigation > ul > li > a', function() {
-			window.rad_dashboard_set_current_tab ( $( this ).parent().find( 'ul > li > a' ).first().attr( 'id' ), 'side');
+		$body.on( 'click', 'div#rad_dashboard_navigation  a', function() {
+			window.rad_dashboard_set_current_tab ( $( this ).attr( 'id' ), 'side');
 		});
 
 		$body.on( 'click', '#rad_dashboard_navigation ul li ul li > a', function() {
@@ -594,6 +592,17 @@
 
 			return false;
 		});
+
+        $body.on( 'click', '.rad_dashboard_optins_all_table .rad_dashboard_show_hide', function(){
+            $('.rad_dashboard_optins_all_table .rad_dashboard_optins_list').toggle('slow');
+        });
+
+        $body.on( 'click', '.stats-collapse.list-stats', function(){
+            $('.rad_dashboard_lists_stats').toggle('slow');
+        });
+        $body.on( 'click', '.stats-collapse.page-stats', function(){
+            $('.rad_dashboard_pages_stats').toggle('slow');
+        });
 
 		function handle_live_search( $input, $delay, $page, $full_content ) {
 			var $this_input = $input,

@@ -56,7 +56,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		add_action( 'admin_init', array( $this, 'execute_footer_text' ) );
 
-		add_action('admin_init', 'rapidologly_update');
+		add_action('admin_init', array($this,'rapidologly_update' ) );
 
 		add_filter( 'rad_rapidology_import_sub_array', array( $this, 'import_settings' ) );
 		add_filter( 'rad_rapidology_import_array', array( $this, 'import_filter' ) );
@@ -189,6 +189,33 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 	function define_page_name() {
 		return $this->_options_pagename;
+	}
+
+	function rapidologly_update()
+	{
+
+		$plugin_name = plugin_basename(dirname(dirname(__FILE__)));
+		//check if we are updating from github or wordpress
+		$update = file_get_contents('https://rapidology.com/download/wp_update.json?version=4');
+		$update = json_decode($update);
+		if (is_admin()) { // note the use of is_admin() to double check that this is happening in the admin
+			if ($update->wordpress_update == false) {
+				$config = array(
+					'slug' => plugin_basename(__FILE__), // this is the slug of your plugin
+					'proper_folder_name' => dirname(plugin_basename(__FILE__)), // this is the name of the folder your plugin lives in
+					'zip_url' => 'https://rapidology.com/download/rapidology.zip', // the zip url of the github repo
+					'release_url' => 'https://api.github.com/repos/leadpages/rapidology-plugin/releases',
+					'api_url' => 'https://api.github.com/repos/leadpages/rapidology-plugin', // the github API url of your github repo
+					'raw_url' => 'https://raw.github.com/leadpages/rapidology-plugin/master', // the github raw url of your github repo
+					'github_url' => 'https://github.com/leadpages/rapidology-plugin', // the github url of your github repo
+					'sslverify' => true, // wether WP should check the validity of the SSL cert when getting an update, see https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/2 and https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/4 for details
+					'requires' => '3.5', // which version of WordPress does your plugin require?
+					'tested' => '4.3', // which version of WordPress is your plugin tested up to?
+					'readme' => 'README.md' // which file to use as the readme for the version number
+				);
+				new Rapidology_GitHub_Updater($config);
+			}
+		}
 	}
 
 	/**

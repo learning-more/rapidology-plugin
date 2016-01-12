@@ -105,7 +105,7 @@ class rapidology_getresponse extends RAD_Rapidology
 			$result = 'success';
 		} else {
 			if (isset($result['error']['message'])) {
-			  if($result['error']['message'] == 'Contact already queued for target campaign'){
+			  if($result['error']['message'] == 'Contact already added to target campaign'){
 				$result = 'success';
 			  }else {
 				$result = $result['error']['message'];

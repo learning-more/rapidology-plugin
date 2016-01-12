@@ -100,7 +100,7 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 
 **Changelog**
 
-**1.4** 12/02/2015
+**1.4** 01/16/2016
 *	Broad UI changes to improve user experience and flow
 *	Improved Stats and Analytics Reporting
 * 	Bar feature added to allow/disallow close on button/link

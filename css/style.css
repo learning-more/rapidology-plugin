@@ -666,7 +666,9 @@
 	.rad_rapidology .rad_rapidology_optin .breakout_edge.rad_rapidology_border_dashed.rad_rapidology_form_bottom .rad_rapidology_form_header:before { width: 95%; }
 	.rad_rapidology .rad_rapidology_optin .breakout_edge.rad_rapidology_border_dashed .rad_rapidology_form_header:before, .rad_rapidology .rad_rapidology_optin .breakout_edge.rad_rapidology_border_dashed.rad_rapidology_form_left .rad_rapidology_form_header:before, .rad_rapidology .rad_rapidology_optin .breakout_edge.rad_rapidology_border_dashed.rad_rapidology_form_right .rad_rapidology_form_header:before { margin-top: -2.5%; }
 }
-
+@media screen and ( max-width: 767px ){
+    .rad_rapidology .rad_rapidology_form_container form{ margin-top:10px; }
+}
 @media screen and ( min-width: 768px ) {
 .rad_rapidology .rad_rapidology_form_container.rad_rapidology_form_right .rad_rapidology_form_content, .rad_rapidology .rad_rapidology_form_container.rad_rapidology_form_left .rad_rapidology_form_content { width: 34%; position: absolute; height: 100%; float: none; }
 .rad_rapidology .rad_rapidology_form_left .rad_rapidology_3_fields form, .rad_rapidology .rad_rapidology_form_right .rad_rapidology_3_fields form { height: 200px; }

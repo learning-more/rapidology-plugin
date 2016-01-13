@@ -259,7 +259,7 @@
     vertical-align: middle !important;
 }
 
-.rad_rapidology_rapidbar_form_header  .rad_rapidology_success_message, .rad_rapidology_success_container.rad_rapidology_animate_success{
+.rad_rapidology_rapidbar_form_header  .rad_rapidology_success_message, .rad_rapidology_rapidbar_form_header .rad_rapidology_success_container.rad_rapidology_animate_success{
     margin-top:0 !important;
     height:100% !important;
     width: 100% !important;

@@ -100,6 +100,17 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 
 == Changelog ==
 
+**1.4.0.1** 01/17/2016
+*	Fixed bad response code coming back from Aweber integrations
+*	Fixed broken success ui when a form was submitted properly
+
+**1.4** 01/16/2016
+*	Broad UI changes to improve user experience and flow
+*	Improved Stats and Analytics Reporting
+* 	Bar feature added to allow/disallow close on button/link
+* 	GetResponse integration fix to allow linking to auto-responder
+* 	Custom HTML form bug fix
+
 **1.3** 11/02/2015
 *	Added notification/opt-in banner form
 *	Added page redirect functionality

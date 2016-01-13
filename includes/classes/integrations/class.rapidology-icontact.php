@@ -59,6 +59,7 @@ class rapidology_icontact extends RAD_Rapidology
 
 		$account_data = $this->icontacts_remote_request( $request_account_id_url, $app_id, $username, $password );
 
+
 		if ( is_array( $account_data ) ) {
 			$account_id = $account_data['accounts'][0]['accountId'];
 
@@ -119,6 +120,9 @@ class rapidology_icontact extends RAD_Rapidology
 	function subscribe_icontact( $app_id, $username, $password, $folder_id, $account_id, $list_id, $email, $name = '', $last_name = '' ) {
 		$check_subscription_url = esc_url_raw( 'https://app.icontact.com/icp/a/' . $account_id . '/c/' . $folder_id . '/contacts?email=' . rawurlencode( $email ) );
 		$is_subscribed          = $this->icontacts_remote_request( $check_subscription_url, $app_id, $username, $password );
+		if( !is_email($email) ){
+		  return 'Email address appears to be invalid';
+		}
 		if ( is_array( $is_subscribed ) ) {
 			if ( empty( $is_subscribed['contacts'] ) ) {
 				$add_body           = '[{
@@ -146,7 +150,14 @@ class rapidology_icontact extends RAD_Rapidology
 					$error_message = $added_account;
 				}
 			} else {
-				$error_message = __( 'Already subscribed', 'rapidology' );
+			  	$contact_id = $is_subscribed['contacts'][0]['contactId'];
+			  	$update_url = esc_url_raw( 'https://app.icontact.com/icp/a/' . $account_id . '/c/' . $folder_id . '/contacts/'.$contact_id );
+			  	$result = $this->icontacts_remote_request( $update_url, $app_id, $username, $password );
+			    if($result['contact']) {
+				  $error_message = 'success';
+				}else{
+				  $error_message = 'Error please try again';
+				}
 			}
 		} else {
 			$error_message = $is_subscribed;

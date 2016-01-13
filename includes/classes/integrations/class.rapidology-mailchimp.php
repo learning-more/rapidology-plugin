@@ -90,7 +90,7 @@ class rapidology_mailchimp extends RAD_Rapidology{
 	  'is_authorized' => 'true',
 	) );
 
-
+	$error_message = 'success';
 	return $error_message;
   }
 
@@ -141,8 +141,11 @@ class rapidology_mailchimp extends RAD_Rapidology{
 	  require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/mailchimp/mailchimp.php' );
 	}
 
+	$validApiStruct = strpos($api_key, '-');
+	if($validApiStruct == false){
+	  return 'Please check structure of api key. Must contain -';
+	}
 	$mailchimp = new MailChimp_Rapidology( $api_key );
-
 	$email = array( 'email' => $email );
 	$double_optin = '' === $disable_dbl ? 'true' : 'false';
 
@@ -152,10 +155,11 @@ class rapidology_mailchimp extends RAD_Rapidology{
 	);
 
 	$retval = $mailchimp->call( 'lists/subscribe', array(
-	  'id'         => $list_id,
-	  'email'      => $email,
-	  'double_optin' => $double_optin,
-	  'merge_vars' => $merge_vars,
+	  'id'         		=> $list_id,
+	  'email'      		=> $email,
+	  'double_optin' 	=> $double_optin,
+	  'merge_vars' 		=> $merge_vars,
+	  'update_existing' => 'true',
 	) );
 
 	if ( isset( $retval['error'] ) ) {

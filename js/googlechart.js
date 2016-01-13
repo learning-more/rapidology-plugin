@@ -45,7 +45,7 @@ function rapidology_drawChart($period, $stats, $list_id){
             },
         },
         height: 300,
-        
+
         colors:['#57E6C3'],
 
     };

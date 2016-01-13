@@ -83,7 +83,9 @@ class rapidology_getresponse extends RAD_Rapidology
 		if (!function_exists('curl_init')) {
 			return;
 		}
-
+		if( !is_email($email) ){
+		  return 'Email appears to be invalid';
+		}
 		require_once(RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/getresponse/jsonrpcclient.php');
 		$api_url = 'http://api2.getresponse.com';
 
@@ -99,12 +101,15 @@ class rapidology_getresponse extends RAD_Rapidology
 				'cycle_day' => 0,
 			)
 		);
-
 		if (isset($result['result']['queued']) && 1 == $result['result']['queued']) {
 			$result = 'success';
 		} else {
 			if (isset($result['error']['message'])) {
+			  if($result['error']['message'] == 'Contact already added to target campaign'){
+				$result = 'success';
+			  }else {
 				$result = $result['error']['message'];
+			  }
 			} else {
 				$result = 'unknown error';
 			}

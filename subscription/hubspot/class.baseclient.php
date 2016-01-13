@@ -227,6 +227,7 @@ class HubSpot_BaseClient
         $this->setLastStatusFromCurl($ch);
         curl_close($ch);
 
+	   //output appears to be empty if there is a succes, check the result of getlastStatusFromCurl
         if ( $errno > 0 )
             throw new HubSpot_Exception('cURL error: ' . $error);
         else

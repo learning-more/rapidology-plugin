@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Rapidology By LeadPages
  * Plugin URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
- * Version: 1.4
+ * Version: 1.4.1
  * Description: 100% Free List Building & Popup Plugin...With Over 100 Responsive Templates & 6 Different Display Types For Growing Your Email Newsletter
  * Author: Rapidology
  * Author URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
@@ -56,7 +56,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		add_action( 'admin_init', array( $this, 'execute_footer_text' ) );
 
-		add_action('admin_init', 'rapidologly_update');
+		add_action('admin_init', array( $this,'rapidologly_update' ) );
 
 		add_filter( 'rad_rapidology_import_sub_array', array( $this, 'import_settings' ) );
 		add_filter( 'rad_rapidology_import_array', array( $this, 'import_filter' ) );
@@ -133,6 +133,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_action( 'wp_ajax_rapidology_pick_winner_optin', array( $this, 'pick_winner_optin' ) );
 
 		add_action( 'wp_ajax_rapidology_clear_stats', array( $this, 'clear_stats' ) );
+	    add_action( 'wp_ajax_rapidology_clear_stats_single_optin', array( $this, 'clear_stats_single_optin' ) );
+
 
 		add_action( 'wp_ajax_rapidology_get_premade_values', array( $this, 'get_premade_values' ) );
 		add_action( 'wp_ajax_rapidology_generate_template_filter', array( $this, 'generate_template_filter' ) );
@@ -189,6 +191,33 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 	function define_page_name() {
 		return $this->_options_pagename;
+	}
+
+	function rapidologly_update()
+	{
+
+		$plugin_name = plugin_basename(dirname(dirname(__FILE__)));
+		//check if we are updating from github or wordpress
+		$update = file_get_contents('https://rapidology.com/download/wp_update.json?version=4');
+		$update = json_decode($update);
+		if (is_admin()) { // note the use of is_admin() to double check that this is happening in the admin
+			if ($update->wordpress_update == false) {
+				$config = array(
+					'slug' => plugin_basename(__FILE__), // this is the slug of your plugin
+					'proper_folder_name' => dirname(plugin_basename(__FILE__)), // this is the name of the folder your plugin lives in
+					'zip_url' => 'https://rapidology.com/download/rapidology.zip', // the zip url of the github repo
+					'release_url' => 'https://api.github.com/repos/leadpages/rapidology-plugin/releases',
+					'api_url' => 'https://api.github.com/repos/leadpages/rapidology-plugin', // the github API url of your github repo
+					'raw_url' => 'https://raw.github.com/leadpages/rapidology-plugin/master', // the github raw url of your github repo
+					'github_url' => 'https://github.com/leadpages/rapidology-plugin', // the github url of your github repo
+					'sslverify' => true, // wether WP should check the validity of the SSL cert when getting an update, see https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/2 and https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/4 for details
+					'requires' => '3.5', // which version of WordPress does your plugin require?
+					'tested' => '4.3', // which version of WordPress is your plugin tested up to?
+					'readme' => 'README.md' // which file to use as the readme for the version number
+				);
+				new Rapidology_GitHub_Updater($config);
+			}
+		}
 	}
 
 	/**
@@ -834,14 +863,10 @@ SOL;
 	 */
 	function reset_stats() {
 		wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
-		$force_update = ! empty( $_POST['rapidology_force_upd_stats'] ) ? sanitize_text_field( $_POST['rapidology_force_upd_stats'] ) : '';
 
-		if ( get_option( 'rad_rapidology_stats_cache' ) && 'true' !== $force_update ) {
-			$output = get_option( 'rad_rapidology_stats_cache' );
-		} else {
-			$output = $this->generate_stats_tab();
-			update_option( 'rad_rapidology_stats_cache', $output );
-		}
+		$output = $this->generate_stats_tab();
+		update_option( 'rad_rapidology_stats_cache', $output );
+
 
 		if ( ! wp_get_schedule( 'rapidology_stats_auto_refresh' ) ) {
 			wp_schedule_event( time(), 'daily', 'rapidology_stats_auto_refresh' );
@@ -875,6 +900,23 @@ SOL;
 
 		$wpdb->query( $sql );
 	}
+
+  /**
+   * Removes stats data from DB for single optin
+   * @return void
+   */
+  function clear_stats_single_optin() {
+	wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
+	delete_option( 'rad_rapidology_stats_cache' );
+	global $wpdb;
+	$optin_id = sanitize_text_field($_POST['optin_id']);
+	$table_name = $wpdb->prefix . 'rad_rapidology_stats';
+
+	// construct sql query to mark removed options as removed in stats DB
+	$sql = "DELETE FROM $table_name WHERE optin_id = '$optin_id'";
+
+	$wpdb->query( $sql );
+  }
 
 	/**
 	 * Generates the Lists menu for Lists stats graph
@@ -965,13 +1007,15 @@ SOL;
 									<div class="rad_dashboard_table_impressions rad_dashboard_table_column rad_dashboard_icon rad_dashboard_sort_button" data-order_by="impressions">%2$s</div>
 									<div class="rad_dashboard_table_conversions rad_dashboard_table_column rad_dashboard_icon rad_dashboard_sort_button" data-order_by="conversions">%3$s</div>
 									<div class="rad_dashboard_table_rate rad_dashboard_table_column rad_dashboard_icon rad_dashboard_sort_button active_sorting" data-order_by="conversion_rate">%4$s</div>
+									<div class="rad_dashboard_table_name rad_dashboard_table_column">%5$s</div>
 									<div style="clear: both;"></div>
 								</li>
 							</ul>',
 							__( 'Opt-In Form', 'rapidology' ),
 							__( 'Views', 'rapidology' ),
 							__( 'Opt-Ins', 'rapidology' ),
-							__( 'Conversion Rate', 'rapidology' )
+							__( 'Conversion Rate', 'rapidology' ),
+						    __('Clear Stats', 'rapidology')
 						);
 					}
 
@@ -1011,6 +1055,7 @@ SOL;
 						<div class="rad_dashboard_table_impressions rad_dashboard_table_column">%2$s</div>
 						<div class="rad_dashboard_table_conversions rad_dashboard_table_column">%3$s</div>
 						<div class="rad_dashboard_table_rate rad_dashboard_table_column">%4$s</div>
+						<div class="rad_dashboard_table_column"><span data-optin_id="%7$s" class="dashicons dashicons-no clear_individual_stat"></span></div>
 						<div style="clear: both;"></div>
 					</li>',
 					esc_html( $details['name'] ),
@@ -1018,7 +1063,8 @@ SOL;
 					esc_html( $details['conversions'] ),
 					esc_html( $details['conversion_rate'] ) . '%',
 					esc_attr( $details['type'] ),
-					esc_attr( $status )
+					esc_attr( $status ),
+				    esc_html($id)
 				);
 			}
 		}
@@ -3810,11 +3856,15 @@ SOL;
 						<p class="rad_rapidology_popup_input rad_rapidology_subscribe_email %16$s">
 							<input placeholder="%2$s">
 						</p>
-						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-success_delay="%18$s" class="%14$s">
+
+						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-redirect="%19$s" data-success_delay="%18$s" class="%14$s%22$s" %20$s>
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
-					</form>',
+						<div class="consent_wrapper" style="margin-top:10px;">%21$s</div>
+					</form>
+
+					',
 				'basic_edge' == $details['edge_style'] || '' == $details['edge_style']
 					? ''
 					: RAD_Rapidology::get_the_edge_code( $details['edge_style'], 'widget' == $details['optin_type'] ? 'bottom' : $details['form_orientation'] ),
@@ -3860,11 +3910,24 @@ SOL;
 				(isset($details['enable_redirect_form']) && $details['enable_redirect_form'] == true) ? esc_url($details['redirect_url']) : '',#15
 				(isset($details['enable_redirect_form']) && $details['enable_redirect_form'] == true) ? 'hidden_item' : '',#16
 				isset($details['success_url']) ? esc_url($details['success_url']) : '',#17 //you will notice both 15 and 17 exist in the dat-redirect_url attribute. This is because both should never be set at the same time.
-				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '' #18
+				isset($details['success_load_delay']) ? esc_attr($details['success_load_delay']) : '', #18
+				esc_attr($details['redirect_standard']),#19
+				(isset($details['enable_consent']) && $details['enable_consent'] == true) ? '' : '',#20 placeholder so we dont have to renumber items
+			    (isset($details['enable_consent']) && $details['enable_consent'] == true) ?
+				  '<div class="consent_error" style="background-color:'.$details['form_bg_color'].'">Please check consent box</div>'.
+				  '<div class="consent"><input type="checkbox" name="accept_consent" class="accept_consent">'.
+				  '<span class="consent_text" style="margin-bottom:0 !important; color:'.$details['consent_color'].'; font-weight:400 !important;">'.$details['consent_text'].'</span></div>'
+				   : '',#21
+			  	(isset($details['enable_consent']) && $details['enable_consent'] == true) ? ' cursor-not-allowed' : ''#22
 			),
-			'' != $success_text
-				? stripslashes( esc_html( $success_text ) )
-				: esc_html__( 'You have Successfully Subscribed!', 'rapidology' ), //#10
+		  '' != $success_text
+			? html_entity_decode( wp_kses( stripslashes( $success_text ), array(
+			'a'      => array(),
+			'br'     => array(),
+			'span'   => array(),
+			'strong' => array(),
+		  ) ) )
+			: esc_html__( 'You have Successfully Subscribed!', 'rapidology' ), //#10
 			$formatted_footer,
 			'custom_html' == $details['email_provider']
 				? sprintf(
@@ -4003,8 +4066,9 @@ SOL;
 							<div class="rad_rapidology_form_container%7$s%8$s%9$s%10$s%12$s%13$s%14$s%15$s%23$s%24$s%25$s">
 		
 								%11$s
-								%27$s
+
 							</div>
+							%27$s
 						</div>',
 						true == $details['post_bottom'] ? ' rad_rapidology_trigger_bottom' : '',
 						isset( $details['trigger_idle'] ) && true == $details['trigger_idle'] ? ' rad_rapidology_trigger_idle' : '',
@@ -4271,11 +4335,13 @@ SOL;
 					$displayCookie = 'rad_rapidology_subscribed_to_'.$optin_id.$details['email_list'];
 					if(!isset($_COOKIE[$displayCookie])){
 						$content = sprintf(
-							'<div class="rad_rapidology_rapidbar %1$s%3$s %4$s" %2$s>'. $this->generate_rapidbar_form( $optin_id, $details ) . '</div>',
-							isset( $details['trigger_auto'] ) && true == $details['trigger_auto'] ? 'rad_rapidology_rapidbar_trigger_auto' : '',
+							'<div class="rad_rapidology_rapidbar %1$s%3$s %4$s" %2$s>'. $this->generate_rapidbar_form( $optin_id, $details ) . '
+							%5$s
+							</div>',
+							isset( $details['trigger_auto'] ) && true == $details['trigger_auto'] ? 'rad_rapidology_rapidbar_trigger_auto' : '',#1
 							isset( $details['trigger_auto'] ) && true == $details['trigger_auto']
 								? sprintf( 'data-delay="%1$s"', esc_attr( $details['load_delay'] ) )
-								: '',
+								: '',#2
 							( 'no_border' !== $details['border_orientation'] )
 								? sprintf(
 								' rad_rapidology_border_%1$s%2$s',
@@ -4284,8 +4350,15 @@ SOL;
 									? ' rad_rapidology_border_position_' . $details['border_orientation']
 									: ''
 							)
-								: '',
-							esc_attr($details['rapidbar_position'])
+								: '',#3
+							esc_attr($details['rapidbar_position']),#4
+						  (isset($details['enable_consent']) && $details['enable_consent'] == true) ?
+							'
+							<div class="consent_error" style="background-color:'.$details['form_bg_color'].'">Please check consent box</div>
+							<div class="rapid_consent_closed rapidbar_consent_form" style="background-color:'.$details['form_bg_color'].'"><input type="checkbox" name="accept_consent" class="accept_consent">'.
+							'<span class="consent_text" style="margin-bottom:0 !important; color:'.$details['consent_color'].'; font-weight:400 !important;">'.$details['consent_text'].'</span>
+							</div>'
+							: ''#5
 						);
 
 

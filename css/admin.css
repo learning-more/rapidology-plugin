@@ -169,7 +169,7 @@ span.rad_dashboard_icon_abtest.clicked_button:before, span.rad_dashboard_icon_ab
 	.child_buttons_right .rad_dashboard_pause_test:hover { background-color: #89b44b; }
 
 .rad_dashboard_home_tab_content { margin-bottom: 100px; min-height: 45px; }
-.rad_dashboard_table_column { width: 25%; float: left; text-align: center; padding: 13px 15px; text-transform: uppercase; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+.rad_dashboard_table_column { width: 20%; float: left; text-align: center; padding: 13px 15px; text-transform: uppercase; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
 	.rad_dashboard_table_column:first-child { text-align: left; }
 .rad_dashboard_tab_content_header_home div.rad_dashboard_table_column:nth-of-type(n+2):nth-of-type(-n+4) { width: 16%; }
 .rad_dashboard_optins_item .rad_dashboard_table_rate.rad_dashboard_table_column { color: #57E6C3; }
@@ -200,7 +200,7 @@ li.rad_dashboard_optins_item_bottom_row { border-top: 3px solid #e2e4e8; margin-
 li.rad_dashboard_optins_item_bottom_row .rad_dashboard_table_rate.rad_dashboard_table_column { color: #ffffff; background-color: #57E6C3; }
 .rad_dashboard_row.rad_dashboard_new_optin { margin-bottom: 30px; }
 .rad_dashboard_optin_select ul { display:flex; flex-wrap: wrap; width:100%; align-items: center; justify-content: flex-start; margin-bottom:30px; }
-	li.rad_dashboard_optin_type { opacity: 0;  padding: 10px; margin-left:10px; margin-right:10px; height: 140px; cursor: pointer; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; transition: all 0.8s ease-out; -moz-transition: all 0.8s ease-out; -webkit-transition: all 0.8s ease-out; }
+	li.rad_dashboard_optin_type { opacity: 0;  padding: 10px; margin-left:10px; margin-right:10px; margin-botom:10px; height: 140px; cursor: pointer; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; transition: all 0.8s ease-out; -moz-transition: all 0.8s ease-out; -webkit-transition: all 0.8s ease-out; }
 			.rad_dashboard_visible li.rad_dashboard_optin_type { opacity: 1; margin-top: 0;}
 				.rad_dashboard_visible li.rad_dashboard_optin_type:nth-child(1) { -webkit-transition-delay: 0.0s; transition-delay: 0.0s; }
 				.rad_dashboard_visible li.rad_dashboard_optin_type:nth-child(2) { -webkit-transition-delay: 0.1s; transition-delay: 0.1s; }
@@ -597,4 +597,7 @@ span.spinner.rad_rapidology_premade_spinner { float: left; margin-top: -20px; }
     display:flex !important;
     align-items: center;
     justify-content: center;
+}
+.clear_individual_stat{
+    cursor: pointer;
 }

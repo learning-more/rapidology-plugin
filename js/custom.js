@@ -84,6 +84,7 @@
 		//separate function for the setTimeout to make it work properly within the loop.
 		function make_popup_visible( $popup, $delay, $cookie_exp, $cookie_content ){
 			if ( ! $popup.hasClass( 'rad_rapidology_visible' ) ) {
+                $('.accept_consent').removeAttr('checked');
 				setTimeout( function() {
 					$popup.addClass( 'rad_rapidology_visible rad_rapidology_animated' );
 					$stats_data_container = 0 != $popup.find( '.rad_rapidology_custom_html_form' ).length ? $popup.find( '.rad_rapidology_custom_html_form' ) : $popup.find( '.rad_rapidology_submit_subscription' );
@@ -369,6 +370,12 @@
 				dashed_offset = this_popup.hasClass( 'rad_rapidology_border_dashed' ) ? 4 : 0,
 				form_height = this_popup.find( 'form' ).innerHeight() + $message_space,
 				form_add = true == $just_loaded ? 5 : 0;
+                consent_height = this_popup.find( '.consent_wrapper').height();
+                real_form_height = form_height + consent_height;
+
+
+                //this_popup.find('form').css({'height': form_height + consent_height});
+
 
 			var header_height = undefined;
 			if ( this_popup.find( '.rad_rapidology_form_header' ).hasClass('split' ) ) {
@@ -380,7 +387,6 @@
 			}
 
 			this_popup.css( { 'max-height' : popup_max_height } );
-
 			if ( this_popup.hasClass( 'rad_rapidology_popup_container' ) ) {
 				var top_position = $( window ).height() / 2 - this_popup.innerHeight() / 2;
 				this_popup.css( { 'top' : top_position + 'px' } );
@@ -401,9 +407,13 @@
 					this_popup.find( '.rad_rapidology_form_container_wrapper' ).css( { 'height' : real_popup_height - 30 + dashed_offset } );
 				}
 			} else {
-				if ( header_height < form_height ) {
-					real_popup_height = this_popup.find( 'form' ).innerHeight() + 30 + $message_space;
-				} else {
+				if ( header_height < real_form_height ) {
+					//real_popup_height = this_popup.find( 'form' ).innerHeight() + 30 + $message_space;
+				    real_popup_height = real_form_height;
+                    $('.rad_rapidology .rad_rapidology_form_container .rad_rapidology_form_content').css({'padding-top':'40', 'padding-bottom': '40'});
+                    var topFix = consent_height;
+                    $('.rad_rapidology .rad_rapidology_form_left .rad_rapidology_form_content form, .rad_rapidology .rad_rapidology_form_right .rad_rapidology_form_content form').css({'top': '-'+topFix+'px'});
+                } else {
 					real_popup_height = header_height + 30;
 				}
 
@@ -426,6 +436,7 @@
 		}
 
 		$body.on( 'click', '.rad_rapidology_submit_subscription', function() {
+
 			perform_subscription( $( this ), '', '', '', '' );
 			return false;
 		});
@@ -445,10 +456,28 @@
                 optin_id = this_button.data( 'optin_id' );
                 optin_type = (this_button.data('optin_type') == 'rapidbar' ? 'rapidbar' : 'standard');
                 redirectUrl = this_button.data( 'redirect_url' );
+                redirectTab = this_button.data( 'redirect' );
                 redirect_delay = this_button.data( 'success_delay' ) + '000';
                 redirect_delay = parseInt(redirect_delay);
 			    this_form.find( '.rad_rapidology_subscribe_email input' ).removeClass( 'rad_rapidology_warn_field' );
 
+            if(this_button.hasClass('cursor-not-allowed')){
+                    //find the top level parent of but button clicked to find the error message for this specific form
+                    var parents = this_form.parents();
+                    parents.each(function(){
+                       if($(this).hasClass('rad_rapidology_optin') || $(this).hasClass('rad_rapidology_rapidbar')){
+                           top_parent = $(this);
+                       }
+                    });
+                    var error_message = top_parent.find('.consent_error');
+                    var consent_form = top_parent.find('.rapidbar_consent_form') ;
+                    $(error_message).show();
+                    if ($(consent_form).hasClass('rapid_consent_closed')) {
+                        $(consent_form).removeClass('rapid_consent_closed');
+                        $(consent_form).addClass('rapid_consent');
+                    }
+                return;
+            }
 			if ( '' == email ) {
 				this_form.find( '.rad_rapidology_subscribe_email input' ).addClass( 'rad_rapidology_warn_field' );
 			} else {
@@ -467,6 +496,8 @@
 						this_button.find( '.rad_rapidology_subscribe_loader' ).css( { 'display' : 'block' } );
 					},
 					success: function( data ) {
+                        $('.rapidbar_consent_form').hide();//hide rapidbar consent text
+                        $('.consent_wrapper').hide();//hide all other forms consent text
 						this_button.removeClass( 'rad_rapidology_button_text_loading' );
 						this_button.find( '.rad_rapidology_subscribe_loader' ).css( { 'display' : 'none' } );
 						if ( data ) {
@@ -491,7 +522,13 @@
                                     }, 3000);
                                     if(redirectUrl.length > 0){
                                         setTimeout(function(){
-                                            window.open(redirectUrl);
+                                            if(redirectTab == 'new_tab') {
+                                                window.open(redirectUrl);
+                                            }else if(redirectTab == 'new_window'){
+                                                window.open(redirectUrl, '_blank', 'toolbar=1,location=0,menubar=1');
+                                            }else{
+                                                window.location.href = redirectUrl;
+                                            }
                                         }, redirect_delay);
                                     }
                                 }
@@ -500,10 +537,15 @@
 									this_form.parent().find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
 									this_form.remove();
 									set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
-                                    if(redirectUrl.length > 0) {
-                                        setTimeout(function () {
-                                            $('.rad_rapidology_visible').remove();
-                                            window.open(redirectUrl);
+                                    if(redirectUrl.length > 0){
+                                        setTimeout(function(){
+                                            if(redirectTab == 'new_tab') {
+                                                window.open(redirectUrl);
+                                            }else if(redirectTab == 'new_window'){
+                                                window.open(redirectUrl, '_blank', 'toolbar=1,location=0,menubar=1');
+                                            }else{
+                                                window.location.href = redirectUrl;
+                                            }
                                         }, redirect_delay);
                                     }
 								}
@@ -530,6 +572,9 @@
             type        = this_button.data( 'optin_type' );
             var popup_id = $(this).data('popup_id');
             var redirectUrl = $(this).data('redirect_url');
+            redirectTab = this_button.data( 'redirect' );
+            redirect_delay = this_button.data( 'success_delay' ) + '000';
+            redirect_delay = parseInt(redirect_delay);
             var container = $(this).parent().parent().parent().parent().parent();
             container.addClass( 'rad_rapidology_exit_animation' );
             update_stats_table( 'con', this_button );
@@ -541,7 +586,33 @@
                 var optin = $('.rad_rapidology_' + popup_id);
                 make_popup_visible(optin, 0, '', '');
             }else {
-                window.open(redirectUrl);
+                if(redirectTab == 'new_tab') {
+                    window.open(redirectUrl);
+                }else if(redirectTab == 'new_window'){
+                    window.open(redirectUrl, '_blank', 'toolbar=1,location=0,menubar=1');
+                }else{
+                    window.location.href = redirectUrl;
+                }
+            }
+        });
+
+        $body.on('click', '.accept_consent', function(){
+            var parent = $(this).parent().parent().parent().get( 0 ).tagName;
+            var button = $(parent + ' .rad_rapidology_submit_subscription');
+            if($('.accept_consent').prop('checked')){
+                button.removeClass('cursor-not-allowed');
+            }else{
+                button.addClass('cursor-not-allowed');
+            }
+        });
+
+        $body.on('click', '.consent_wrapper .accept_consent', function(){
+            var parent = $(this).parent().parent().parent().get( 0 ).tagName;
+            var button = $(parent + ' .rad_rapidology_submit_subscription');
+            if($(this).prop('checked')){
+                button.removeClass('cursor-not-allowed');
+            }else{
+                button.addClass('cursor-not-allowed');
             }
         });
 
@@ -554,7 +625,10 @@
 			}
 		});
 	});
+
 })(jQuery);
+
+
 //once the window is loaded make sure that the body tag has the required class for rapidology to work
 (function($){
     $(window).load(function(){

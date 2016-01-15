@@ -201,8 +201,8 @@ class RAD_Rapidology extends RAD_Dashboard {
 	}
 
 	function rapidology_update_source() {
-	  $update = file_get_contents('https://rapidology.com/download/wp_update.json?version=11');
-	  $update = json_decode($update);
+	  $update = wp_remote_get('https://rapidology.com/download/wp_update.json?version=4');
+	  $update = json_decode($update['body']);
 	  update_option( 'rapidology_update_source', $update->wordpress_update );
 	}
 

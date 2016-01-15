@@ -161,10 +161,16 @@ class RAD_Rapidology extends RAD_Dashboard {
 		if($pagenow == 'plugins.php' || isset($_GET['page']) && $_GET['page']=='rad_rapidology_options'){
 			add_action( 'admin_notices', 'rapid_version_check' );
 		}
+
+		if ( ! wp_next_scheduled( 'rapidology_update_source_check' ) ) {
+		  wp_schedule_event( time(), 'daily', 'rapidology_update_source_check' );
+		}
+
 		register_activation_hook( __FILE__, array( $this, 'activate_plugin' ) );
 		register_deactivation_hook( __FILE__, array( $this, 'deactivate_plugin' ) );
 		add_action( 'rapidology_lists_auto_refresh', array( $this, 'perform_auto_refresh' ) );
 		add_action( 'rapidology_stats_auto_refresh', array( $this, 'perform_stats_refresh' ) );
+	  	add_action( 'rapidology_update_source_check', array($this, 'rapidology_update_source' ));
 
 		$this->frontend_register_locations();
 
@@ -172,12 +178,13 @@ class RAD_Rapidology extends RAD_Dashboard {
 			add_action( "admin_head-$hook", array( $this, 'tiny_mce_vars' ) );
 			add_action( "admin_head-$hook", array( $this, 'add_mce_button_filters' ) );
 		}
-
 	}
 
 	function activate_plugin() {
 		// schedule lists auto update daily
 		wp_schedule_event( time(), 'daily', 'rapidology_lists_auto_refresh' );
+
+		wp_schedule_event( time(), 'daily', 'rapidology_update_source_check' );
 
 		//install the db for stats
 		$this->db_install();
@@ -193,15 +200,19 @@ class RAD_Rapidology extends RAD_Dashboard {
 		return $this->_options_pagename;
 	}
 
-	function rapidologly_update()
-	{
+	function rapidology_update_source() {
+	  $update = file_get_contents('https://rapidology.com/download/wp_update.json?version=11');
+	  $update = json_decode($update);
+	  update_option( 'rapidology_update_source', $update->wordpress_update );
+	}
 
+	function rapidologly_update(  )
+	{
 		$plugin_name = plugin_basename(dirname(dirname(__FILE__)));
 		//check if we are updating from github or wordpress
-		$update = file_get_contents('https://rapidology.com/download/wp_update.json?version=4');
-		$update = json_decode($update);
+		$update = get_option( 'rapidology_update_source', false );
 		if (is_admin()) { // note the use of is_admin() to double check that this is happening in the admin
-			if ($update->wordpress_update == false) {
+			if ($update == false) {
 				$config = array(
 					'slug' => plugin_basename(__FILE__), // this is the slug of your plugin
 					'proper_folder_name' => dirname(plugin_basename(__FILE__)), // this is the name of the folder your plugin lives in

@@ -3925,7 +3925,7 @@ SOL;
 				esc_attr($details['redirect_standard']),#19
 				(isset($details['enable_consent']) && $details['enable_consent'] == true) ? '' : '',#20 placeholder so we dont have to renumber items
 			    (isset($details['enable_consent']) && $details['enable_consent'] == true) ?
-				  '<div class="consent_error" style="background-color:'.$details['form_bg_color'].'">Please check consent box</div>'.
+				  '<div class="consent_error" style="background-color:'.$details['form_bg_color'].'">'.$details['consent_error'].'</div>'.
 				  '<div class="consent"><input type="checkbox" name="accept_consent" class="accept_consent">'.
 				  '<span class="consent_text" style="margin-bottom:0 !important; color:'.$details['consent_color'].'; font-weight:400 !important;">'.$details['consent_text'].'</span></div>'
 				   : '',#21
@@ -4365,7 +4365,7 @@ SOL;
 							esc_attr($details['rapidbar_position']),#4
 						  (isset($details['enable_consent']) && $details['enable_consent'] == true) ?
 							'
-							<div class="consent_error" style="background-color:'.$details['form_bg_color'].'">Please check consent box</div>
+							<div class="consent_error" style="background-color:'.$details['form_bg_color'].'">'.$details['consent_error'].'</div>
 							<div class="rapid_consent_closed rapidbar_consent_form" style="background-color:'.$details['form_bg_color'].'"><input type="checkbox" name="accept_consent" class="accept_consent">'.
 							'<span class="consent_text" style="margin-bottom:0 !important; color:'.$details['consent_color'].'; font-weight:400 !important;">'.$details['consent_text'].'</span>
 							</div>'

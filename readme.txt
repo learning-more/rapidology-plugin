@@ -11,7 +11,7 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 100% Free List Building & Popup Plugin...With Over 100 Responsive Templates & 6 Different Display Types For Growing Your Email Newsletter
 
 == Description == 
-
+[youtube https://www.youtube.com/watch?v=gygc2pHJm3w]
 
 [See more at Rapidology.com](http://www.rapidology.com/ "See more at Rapidology.com")
 
@@ -99,13 +99,16 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 9.  Import and Export your opt in forms.
 
 == Changelog ==
-**1.4** 12/02/2015
+**1.4.0.1** 01/17/2016
+*	Fixed bad response code coming back from Aweber integrations
+*	Fixed broken success ui when a form was submitted properly
+
+**1.4** 01/16/2016
 *	Broad UI changes to improve user experience and flow
 *	Improved Stats and Analytics Reporting
 * 	Bar feature added to allow/disallow close on button/link
 * 	GetResponse integration fix to allow linking to auto-responder
 * 	Custom HTML form bug fix
-
 
 **1.3** 11/02/2015
 *	Added notification/opt-in banner form

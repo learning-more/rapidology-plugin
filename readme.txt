@@ -99,6 +99,12 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 9.  Import and Export your opt in forms.
 
 == Changelog ==
+**1.4.1 Changelog - 1/21/16**
+*	A consent checkbox is now available for all Rapidology forms
+*   Allow a user to redirect to current page (default) , new window or new tab.
+*   On-Click trigger now supports inline and block elements
+*	Allow clearing of stats for individual opt-ins
+
 **1.4.0.1** 01/17/2016
 *	Fixed bad response code coming back from Aweber integrations
 *	Fixed broken success ui when a form was submitted properly

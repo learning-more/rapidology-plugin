@@ -47,7 +47,7 @@ class rapidology_activecampaign extends RAD_Rapidology
 		require_once(RAD_RAPIDOLOGY_PLUGIN_DIR .'subscription/activecampaign/class.activecampagin.php');
 		$ac_requests = new rapidology_active_campagin($url, $api_key);
 		$forms = $ac_requests->rapidology_get_ac_forms();
-		if($forms['status'] == 'error'){
+		if(@$forms['status'] == 'error'){
 			$error_message = $forms['message'];
 			return $error_message;
 		}
@@ -67,6 +67,7 @@ class rapidology_activecampaign extends RAD_Rapidology
 			'is_authorized' => 'true',
 		));
 		$error_message = 'success';
+
 		return $error_message;
 
 	}
@@ -78,10 +79,27 @@ class rapidology_activecampaign extends RAD_Rapidology
 
 	function subscribe_active_campaign($url, $api_key, $first_name , $last_name, $email, $lists, $form_id){
 		require_once(RAD_RAPIDOLOGY_PLUGIN_DIR .'subscription/activecampaign/class.activecampagin.php');
+	  	$error_message = '';
 		$ac_requests = new rapidology_active_campagin($url, $api_key);
-		$result = $ac_requests->rapidology_submit_ac_form($form_id, $first_name, $last_name, $email, $lists, $url );
-		$error_message = $result;
-		return $error_message['message'];
+	  	//check for email already exist as contact
+	  	$existing = $ac_requests->contact_view_email($email);
+	  	if($existing > 0){//existing will hold id of contact
+		  $result =$ac_requests->update_contact($existing, $first_name, $last_name, $email, $lists, $url);
+		  if($result == 1){
+			$error_message = 'success';
+		  }
+		}else{
+		  $result = $ac_requests->rapidology_submit_ac_form($form_id, $first_name, $last_name, $email, $lists, $url );
+		  $error_message = 'success';
+		}
 
+	  	if($error_message != 'success'){
+		  $error_message = 'Something went wrong, please try again later';
+		}
+
+		return $error_message;
 	}
+
+
+
 }

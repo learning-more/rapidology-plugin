@@ -120,7 +120,9 @@ class rapidology_campaign_monitor extends RAD_Rapidology
 		$is_subscribed = $wrap->get( $email );
 
 		if ( $is_subscribed->was_successful() ) {
-			$error_message = __( 'Already subscribed', 'rapidology' );
+		  //switched error message to success as they do not need to know they were already subscribed when the submit the opt in
+			//$error_message = __( 'Already subscribed', 'rapidology' );
+		  $error_message = 'success';
 		} else {
 			$result = $wrap->add( array(
 				'EmailAddress' => $email,
@@ -130,7 +132,7 @@ class rapidology_campaign_monitor extends RAD_Rapidology
 			if ( $result->was_successful() ) {
 				$error_message = 'success';
 			} else {
-				$error_message = $result->response->message;
+				$error_message = $result->response->Message;
 			}
 		}
 

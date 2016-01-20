@@ -12,8 +12,8 @@
 
 /*************************************************************************/
 
-LeadPages ™
-Elegant Themes, Inc.
+LeadPages ™.
+Elegant Themes, Inc. Bloom Plugin
 
 
 Additional OpenSource projects used in development

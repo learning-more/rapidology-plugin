@@ -1218,7 +1218,7 @@ class RAD_Dashboard {
 											</li>',
 											esc_attr( $current_option_name ),
 											checked( $current_option_value['auto_select'], 1, false ),
-											__( 'Automatically check categories created in future', 'rad_dashboard' )
+											__( 'Automatically Check Categories Created In Future', 'rad_dashboard' )
 										);
 
 										foreach ( $checkbox_array as $id => $name ) {

@@ -1,1 +1,6 @@
 .idea
+tests/_output/*
+rapidology/bin/*
+install-wp-tests.sh
+”
+”,

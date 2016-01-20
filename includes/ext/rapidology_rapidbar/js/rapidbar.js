@@ -6,7 +6,7 @@
     var rapidbar_timedelay = jQuery('.rad_rapidology_rapidbar.rad_rapidology_rapidbar_trigger_auto').data('delay');
     var delay = '' !== rapidbar_timedelay ? rapidbar_timedelay * 1000 : 500;
     var submit_remove = $('.rad_rapidology_redirect_page').data('submit_remove');
-
+    var $body = $('body');
 
     if(isSticky == true){
         $(window).on('scroll', function(){
@@ -82,6 +82,7 @@
         if(submit_remove == true) {
             setTimeout(
                 function () {
+                    console.log('here');
                     rapidbar_remove_padding(true);
                 }, 400); //use set timeout as it is used the other closing functions
         }
@@ -109,6 +110,15 @@
 
     function rapidbar_remove_padding(remove_bar, closebtn){
         height = $('.rad_rapidology_rapidbar').height(); //get height of bar
+        if( $('.rapidbar_consent_form') && $('.consent_error').is(":visible") ){
+            consent_height = $('.rapidbar_consent_form').height();
+            height = height - consent_height;
+        }
+        if( $('.consent_error') && $('.consent_error').is(":visible") ){
+            consent_error_height = $('.consent_error').height();
+            console.log(consent_error_height);
+            height = height - consent_error_height;
+        }
         var removebar = (remove_bar == false ? false : true);
         var header = $('header');
         if($(header).data('rapid_height')){
@@ -160,7 +170,7 @@
 
 
     /*------------------------------------------
-     -----fix css for bar on window reisze------
+     -----fix css for bar on window resize------
      ------------------------------------------*/
 
     function rapidbar_responsive_css(height){
@@ -171,6 +181,29 @@
         }
     }
 
+
+    /*------------------------------------------
+     -----consent for rapidbar------
+     ------------------------------------------*/
+    if('.rapidbar_consent_form') {
+        $(".rad_rapidology_rapidbar_input input").keyup(function () {
+            if($(this).val().length > 0) {
+                if ($('.rapidbar_consent_form').hasClass('rapid_consent_closed')) {
+                    $('.rapidbar_consent_form').removeClass('rapid_consent_closed');
+                    $('.rapidbar_consent_form').addClass('rapid_consent');
+                }
+            }else{
+                $('.rapidbar_consent_form').removeClass('rapid_consent');
+                $('.rapidbar_consent_form').addClass('rapid_consent_closed');
+            }
+        });
+    }
+
+    $body.on('click', '.rapidbar_consent_form .accept_consent', function(){
+        if($('.rapidbar_consent_form .accept_consent').prop('checked')){
+            $('.consent_error').hide();
+        }
+    });
 })( jQuery );
 
 

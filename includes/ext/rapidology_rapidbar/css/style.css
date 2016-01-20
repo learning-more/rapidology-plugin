@@ -500,3 +500,31 @@ div[class*="rad_rapidology_border_"]{border-width: 5px !important;}
     margin-top:10px !important;
     margin-bottom: 10px !important;
 }
+
+/**CONSENT FORM**/
+
+.rapid_consent{
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    transition-property: all;
+    transition-duration: .5s;
+}
+.rapid_consent_closed{
+    display:none;
+}
+
+.rapid_consent .accept_consent{
+    align-self: flex-start;
+}
+.rapid_consent .consent_text{
+    width:700px;
+}
+.consent_error{
+    color:red;
+    text-align: center;
+    display:none;
+}
+.disabled_click{
+    z-index: 999;
+}

@@ -101,7 +101,6 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 
 **Changelog**
 
-== Changelog ==
 **1.4.1 Changelog - 1/21/16**
 *	A consent checkbox is now available for all Rapidology forms
 *   Allow a user to redirect to current page (default) , new window or new tab.

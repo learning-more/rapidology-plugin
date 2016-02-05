@@ -62,7 +62,6 @@ Rapidology is a fork of the Bloom Plugin by Elegant Themes released under GNU Pu
 *	Activate your Rapidology account
 *	Enter your access code and begin using Rapidology
 
-
 ## Frequently Asked Questions
 
 **Can I customize the look and feel of the popup?**
@@ -84,18 +83,6 @@ Check your analytics dashboard to see at a glance how many times an opt-in form 
 **Can I share my forms with a different account?**
 
 Rapidology’s import/export function allows you to easily export any opt-in form you have created. This saved form can then be imported into any other WordPress account that has the Rapidology plugin installed.
-
-**Screenshots**
-
-1.  Customizable opt-in forms - use on any WordPress site. 
-2.  6 different types of opt-in forms available.
-3.  Our new notification and opt-in banner:  RapidBar
-4.  Choose from over 100 templates.
-5.  Customize your form design.
-6.  Customize how your form will be presented on your site.
-7.  Choose from 16 popular email providers.
-8.  Track the success of your opt-in forms.
-9.  Import and Export your opt in forms.
 
 ## Changelog
 

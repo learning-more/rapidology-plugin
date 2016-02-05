@@ -13,8 +13,6 @@ notification bars-no design or coding skills required!
 Requires Wordpress version of at least 3.5, tested up to 4.4.1. The
 current stable tag is 1.4.1.
 
-[Watch this YouTube video explanation!](https://www.youtube.com/watch?v=gygc2pHJm3w)
-
 [See more at Rapidology.com](http://www.rapidology.com/)
 
 Add these seven types of email list-builders to your Wordpress website:

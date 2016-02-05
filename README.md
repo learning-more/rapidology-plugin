@@ -1,24 +1,23 @@
-** Rapidology - by LeadPages **
+# Rapidology - by LeadPages
 
-Plugin Name:  Rapidology - by LeadPages
-Contributors: LeadPages
-Tags: wp popup, wordpress popup plugin, wordpress subscription plugin, responsive opt-in subscription plugin, free optinmonster alternative, list builder, sumome alternative, leadpages, bloom plugin, how to increase email list, email form, scroll box, newsletter, inbound marketing, mailing list, mailchimp, aweber, infusionsoft, campaign monitor, hubspot, salesforce, emma, activecampaign, constant contact, mad mimi, iContact, GetResponse, MailPoet, feedblitz, sendinblue, ontraport, landing page, light box, email list building, subscribers, subscription
-Requires at least: 3.5
-Tested up to: 4.4.1
-Stable tag: 1.4.1
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+License: [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html)
 
-100% Free List Building & Popup Plugin...With Over 100 Responsive Templates & 6 Different Display Types For Growing Your Email Newsletter
+100% free list buildilng and popup WordPress plugin by LeadPages, with
+over 100 responsive templates and 7 different display types for growing
+your email newsletter!
 
-**Description** 
-[youtube https://www.youtube.com/watch?v=gygc2pHJm3w]
+Rapidology is the only 100% free WordPress plugin which lets you
+quickly create beautiful email opt-in forms, popups, widgets, and
+notification bars-no design or coding skills required!
 
-[See more at Rapidology.com](http://www.rapidology.com/ "See more at Rapidology.com")
+Requires Wordpress version of at least 3.5, tested up to 4.4.1. The
+current stable tag is 1.4.1.
 
-Rapidology is the only a 100% free WordPress plugin that lets you quickly create beautiful email opt-in forms, popups, widgets, and notification bars—no design or coding skills required.  We offer over 100 mobile responsive templates and seven different display types for growing your email newsletter.
+[Watch this YouTube video explanation!](https://www.youtube.com/watch?v=gygc2pHJm3w)
 
-Download this free WordPress plugin and add these seven types of email list-builders to your website:
+[See more at Rapidology.com](http://www.rapidology.com/)
+
+Add these seven types of email list-builders to your Wordpress website:
 
 *	Popup Opt-In Forms: Prompt your visitors to opt in without annoying them. You can set Rapidology’s popup opt-in forms to appear automatically after a specific amount of time, after visitors reach a particular point on your page, or even after visitors leave a comment or make a purchase.
 
@@ -38,8 +37,7 @@ You can find out how all of your opt-in forms are performing right inside your R
 
 You can also run split tests with Rapidology’s built-in split testing feature to discover what resonates with your audience and maximize your conversion rates.
 
-
-Features
+# Features
 
 *	Compatible with any WordPress theme
 *	Simple email integration with AWeber, Emma, Hubspot, MailChimp, ActiveCampaign, SalesForce, Campaign Monitor, Constant Contact, Mad Mimi, Infusionsoft, iContact, GetResponse, mailpoet, feedblitz, SendInBlue, and Ontraport
@@ -54,9 +52,9 @@ Features
 *	Insert custom CSS on any opt-in form.
 *	Import/export your custom plugin settings so you can transfer what you’ve created to any other Rapidology account.
 
-\* *Rapidology is a fork of the Bloom Plugin by Elegant Themes released under GNU Public License version 2.0.  The Rapidology Source Code is freely available on [GitHub](https://github.com/LeadPages/rapidology-plugin/ "Rapidology GitHub")*
+Rapidology is a fork of the Bloom Plugin by Elegant Themes released under GNU Public License version 2.0.
 
-**Installation**
+## Installation
 
 *	Upload folder wp-rapidology.zip to the `/wp-content/plugins/` directory
 *	Activate the plugin through the `Plugins` menu in WordPress
@@ -65,7 +63,7 @@ Features
 *	Enter your access code and begin using Rapidology
 
 
-**Frequently Asked Questions**
+## Frequently Asked Questions
 
 **Can I customize the look and feel of the popup?**
 
@@ -99,36 +97,36 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 8.  Track the success of your opt-in forms.
 9.  Import and Export your opt in forms.
 
-**Changelog**
+## Changelog
 
-**1.4.1 Changelog - 1/21/16**
+### 1.4.1 - 01/21/16
 *	A consent checkbox is now available for all Rapidology forms
 *   Allow a user to redirect to current page (default) , new window or new tab.
 *   On-Click trigger now supports inline and block elements
 *	Allow clearing of stats for individual opt-ins
 
-**1.4.0.1** 01/17/2016
+### 1.4.0.1 - 01/17/2016
 *	Fixed bad response code coming back from Aweber integrations
 *	Fixed broken success ui when a form was submitted properly
 
 
-**1.4** 01/16/2016
+### 1.4 - 01/16/2016
 *	Broad UI changes to improve user experience and flow
 *	Improved Stats and Analytics Reporting
 * 	Bar feature added to allow/disallow close on button/link
 * 	GetResponse integration fix to allow linking to auto-responder
 * 	Custom HTML form bug fix
 
-**1.3** 11/02/2015
+### 1.3 - 11/02/2015
 *	Added notification/opt-in banner form
 *	Added page redirect functionality
 * 	Added page open after opt-in functionality
 
-**1.2.3** 10/02/2015
+### 1.2.3 - 10/02/2015
 *	Added check for Rapidology body class to ensure no plugins/themes have removed it
 *	Bug fix for ActiveCampaign Integration
 
-**1.2** 09/28/2015
+### 1.2 - 09/28/2015
 *	Added Salesforce Campaign integration
 *	Added Hubspot Forms integration
 *	Added Active Campaign Forms integration
@@ -136,7 +134,7 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 *	Added MailChimp double optin suppression
 *	Added 10 new predefined layout
 
-**1.1** 09/09/2015
+### 1.1 - 09/09/2015
 *    Added Emma integration
 *    Added Hubspot integration
 *    Added 10 new predefined templates
@@ -148,9 +146,5 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 *	Added a check for screen size for scroll intent. If screen size is greater than or equal to document size(which means you can not scroll) the optin will popup automatically after 5 seconds.
 
 
-**1.0**
+### 1.0
 *	initial release
-
-
-
-== Upgrade Notice ==

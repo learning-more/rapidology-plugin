@@ -37,7 +37,7 @@ You can find out how all of your opt-in forms are performing right inside your R
 
 You can also run split tests with Rapidology’s built-in split testing feature to discover what resonates with your audience and maximize your conversion rates.
 
-# Features
+## Features
 
 *	Compatible with any WordPress theme
 *	Simple email integration with AWeber, Emma, Hubspot, MailChimp, ActiveCampaign, SalesForce, Campaign Monitor, Constant Contact, Mad Mimi, Infusionsoft, iContact, GetResponse, mailpoet, feedblitz, SendInBlue, and Ontraport

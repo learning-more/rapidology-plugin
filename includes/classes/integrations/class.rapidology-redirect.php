@@ -5,6 +5,12 @@ if (!class_exists('RAD_Dashboard')) {
 
 class rapidology_redirect extends RAD_Rapidology{
 
+	public function __construct()
+	{
+		parent::__construct();
+		$this->permissionsCheck();
+	}
+
 	function redirect_authorize($name){
 
 		$current_lists = get_site_option('rapidology_redirect_lists');

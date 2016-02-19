@@ -76,6 +76,12 @@ class RAD_Dashboard {
 		return $fonts_class;
 	}
 
+	function permissionsCheck()
+    {
+        if (!current_user_can('manage_options')) {
+            die(-1);
+        }
+    }
 	function include_options() {
 		require( $this->options_path );
 
@@ -227,7 +233,9 @@ class RAD_Dashboard {
 		$ajax_request = isset( $_POST[ 'message' ] ) ? true : false;
 
 		if ( true === $ajax_request ){
-			wp_verify_nonce( $_POST['generate_warning_nonce'] , 'generate_warning' );
+			if(! wp_verify_nonce( $_POST['generate_warning_nonce'] , 'generate_warning' )){
+                die(-1);
+            }
 		}
 
 		$message = isset( $_POST[ 'message' ] ) ? sanitize_text_field( stripslashes( $_POST[ 'message' ] ) ) : sanitize_text_field( $message );
@@ -278,7 +286,9 @@ class RAD_Dashboard {
 	 * @return string
 	 */
 	function dashboard_save_settings( $options = array() ) {
-		wp_verify_nonce( $_POST['save_settings_nonce'], 'save_settings' );
+		if(! wp_verify_nonce( $_POST['save_settings_nonce'], 'save_settings' )){
+            die(-1);
+        }
 		$options = $_POST['options'];
 		$option_sub_title = isset( $_POST['options_sub_title'] ) ? $_POST['options_sub_title'] : '';
 		$error_message = $this->process_and_update_options( $options, $option_sub_title );
@@ -341,7 +351,9 @@ class RAD_Dashboard {
 	 * @return string
 	 */
 	function execute_live_search() {
-		wp_verify_nonce( $_POST['dashboard_search'] , 'search_nonce' );
+		if(! wp_verify_nonce( $_POST['dashboard_search'] , 'search_nonce' )){
+            die(-1);
+        }
 
 		$search_string = ! empty( $_POST['dashboard_live_search'] ) ? sanitize_text_field( $_POST['dashboard_live_search'] ) : '';
 		$page          = ! empty( $_POST['dashboard_page'] ) ? sanitize_text_field( $_POST['dashboard_page'] ) : 1;
@@ -452,6 +464,7 @@ class RAD_Dashboard {
 	 * @return string
 	 */
 	function process_and_update_options( $options, $option_sub_title = '' ) {
+        $this->permissionsCheck();
 		$this->dashboard_options = $this->get_options_array();
 		$dashboard_options = $this->dashboard_options;
 		$dashboard_sections = $this->dashboard_sections;
@@ -605,6 +618,7 @@ class RAD_Dashboard {
 	 * @return array
 	 */
 	function generate_options_page( $sub_array = '' ) {
+        $this->permissionsCheck();
 		include_once(RAD_RAPIDOLOGY_PLUGIN_DIR.'includes/static_content/marketing_sidebar.php');
 		$this->dashboard_options = $this->get_options_array();
 		$dashboard_options = $this->dashboard_options;
@@ -1643,6 +1657,7 @@ class RAD_Dashboard {
 	}
 
 	function process_settings_export() {
+        $this->permissionsCheck();
 		if( empty( $_POST[ 'rad_dashboard_action' ] ) || 'export_settings' !== $_POST[ 'rad_dashboard_action' ] ) {
 			return;
 		}
@@ -1678,6 +1693,7 @@ class RAD_Dashboard {
 	 * Import array can be modified before importing data using 'rad_<plugin_name>_import_array' filter
 	 */
 	function process_settings_import() {
+        $this->permissionsCheck();
 		if( empty( $_POST[ 'rad_dashboard_action' ] ) || 'import_settings' !== $_POST[ 'rad_dashboard_action' ] ) {
 			return;
 		}

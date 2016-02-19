@@ -206,6 +206,10 @@ class RAD_Rapidology extends RAD_Dashboard {
 	  update_option( 'rapidology_update_source', $update->wordpress_update );
 	}
 
+	function permissionsCheck(){
+
+	}
+
 	function rapidologly_update(  )
 	{
 		$plugin_name = plugin_basename(dirname(dirname(__FILE__)));

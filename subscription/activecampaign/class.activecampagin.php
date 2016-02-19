@@ -187,7 +187,6 @@ class rapidology_active_campagin
    */
   public function rapidology_get_ac_html($forms){
 	$i=0;
-
 	foreach($forms as $form) {
 	  $this->form_id = $form['id'];
 	  $this->api_action = 'form_html';
@@ -324,7 +323,6 @@ class rapidology_active_campagin
 	 * loop through all the form fields that have been recorded check for 1. required (if its not the email field it throws the form out) 2.check for name field, not sure what to do with this yet but I know it will have something to do with the form submitting name fields or not
 	 *
 	 */
-
 	foreach($form_fields as $field){
 	  if(@!in_array($field['input_name'], $this->supported_fields )) {
 		preg_match("/[*]/i", $field['label'], $required);

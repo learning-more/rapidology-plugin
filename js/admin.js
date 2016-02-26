@@ -1025,7 +1025,9 @@
 					rapidology_orderby : $orderby,
 					rapidology_stats_table : $table
 				},
+
 				success: function( data ){
+
 					$( $id ).replaceWith( data );
 				}
 			});

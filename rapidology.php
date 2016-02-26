@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Rapidology By LeadPages
  * Plugin URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
- * Version: 1.4.1
+ * Version: 1.4.2
  * Description: 100% Free List Building & Popup Plugin...With Over 100 Responsive Templates & 6 Different Display Types For Growing Your Email Newsletter
  * Author: Rapidology
  * Author URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
@@ -659,7 +659,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 
 	function generate_template_filter(){
-		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
+		if(! wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' )){
+			die(-1);
+		}
 		$filter_path = RAD_RAPIDOLOGY_PLUGIN_URI.'/images';
 		$isRapidBar     = '';
 		$isRedirect     = '';
@@ -706,7 +708,9 @@ SOL;
 		$formLocation   = '';
 		$imgLocation    = '';
 	  	$rapidBarClass  = '';
-		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
+		if (! wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' )){
+			die(-1);
+		}
 		$isRapidBar = $_POST['isRapidBar'];
 		$isRedirect = $_POST['isRedirect'];
 		$formLocation = ($_POST['formLocation'] != '' ? $_POST['formLocation'] : '');
@@ -788,9 +792,12 @@ SOL;
 	 * Gets the layouts data, converts it to json string and passes back to js script to fill the form with predefined values
 	 */
 	function get_premade_values() {
+		$this->permissionsCheck();
 		$isRapidBar = '';
 		$isRedirect = '';
-		wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' );
+		if(! wp_verify_nonce( $_POST['rapidology_premade_nonce'], 'rapidology_premade' )){
+			die(-1);
+		}
 		$premade_data_json = str_replace( '\\', '', $_POST['premade_data_array'] );
 		$premade_data      = json_decode( $premade_data_json, true );
 		$layout_id         = $premade_data['id'];
@@ -813,6 +820,8 @@ SOL;
 	 * Generates output for the Stats tab
 	 */
 	function generate_stats_tab() {
+
+		$this->permissionsCheck();
 		$options_array = RAD_Rapidology::get_rapidology_options();
 
 		$output = sprintf( '
@@ -873,7 +882,10 @@ SOL;
 	 * @return string
 	 */
 	function reset_stats() {
-		wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
+		$this->permissionsCheck();
+        if(! check_ajax_referer('rapidology_stats_nonce', 'rapidology_stats_nonce')){
+            die(-1);
+        }
 
 		$output = $this->generate_stats_tab();
 		update_option( 'rad_rapidology_stats_cache', $output );
@@ -900,7 +912,10 @@ SOL;
 	 * @return void
 	 */
 	function clear_stats() {
-		wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
+		$this->permissionsCheck();
+		 if(! check_ajax_referer('rapidology_stats_nonce', 'rapidology_stats_nonce')){
+            		die(-1);
+        	 }
 
 		global $wpdb;
 
@@ -917,7 +932,9 @@ SOL;
    * @return void
    */
   function clear_stats_single_optin() {
-	wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
+	 if(! check_ajax_referer('rapidology_stats_nonce', 'rapidology_stats_nonce')){
+            die(-1);
+        }
 	delete_option( 'rad_rapidology_stats_cache' );
 	global $wpdb;
 	$optin_id = sanitize_text_field($_POST['optin_id']);
@@ -1001,6 +1018,7 @@ SOL;
 	 * @return string
 	 */
 	function generate_optins_stats_table( $orderby = 'conversion_rate', $include_header = false ) {
+		$this->permissionsCheck();
 		$options_array     = RAD_Rapidology::get_rapidology_options();
 		$optins_count      = 0;
 		$output            = '';
@@ -1252,6 +1270,7 @@ SOL;
 	 * @return string
 	 */
 	function generate_lists_stats_table( $orderby = 'count', $include_header = false ) {
+		$this->permissionsCheck();
 		$options_array     = RAD_Rapidology::get_rapidology_options();
 		$optins_count      = 0;
 		$output            = '';
@@ -1412,6 +1431,7 @@ SOL;
 	}
 
 	function get_all_stats_pages() {
+		$this->permissionsCheck();
 		global $wpdb;
 
 		$all_pages = array();
@@ -1513,6 +1533,7 @@ SOL;
 	 * Generates output for the lists stats graph.
 	 */
 	function generate_lists_stats_graph( $period, $day_or_month, $list_id = '' ) {
+		$this->permissionsCheck();
 		$all_stats_rows = $this->get_conversions();
 		$stats = $this->generate_stats_by_period( $period, $day_or_month, $all_stats_rows, $list_id );
 		$output = $this->generate_stats_graph_output( $period, $day_or_month, $stats );
@@ -1570,6 +1591,7 @@ SOL;
 	 * @return string
 	 */
 	function generate_stats_graph_output( $period, $day_or_month, $data ) {
+		$this->permissionsCheck();
 		$result = '<div id="rapidology_line_chart" class="rad_dashboard_lists_stats_graph_container"></div>';
 		$bars_count = 0;
 		for ( $i = 1; $i <= $period; $i ++ ) {
@@ -1609,7 +1631,10 @@ SOL;
 	 * Generates the lists stats graph and passes it to jQuery
 	 */
 	function get_stats_graph_ajax() {
-		wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
+		$this->permissionsCheck();
+		 if(! check_ajax_referer('rapidology_stats_nonce', 'rapidology_stats_nonce')){
+            		die(-1);
+        	 }
 		$list_id = ! empty( $_POST['rapidology_list'] ) ? sanitize_text_field( $_POST['rapidology_list'] ) : '';
 		$period  = ! empty( $_POST['rapidology_period'] ) ? sanitize_text_field( $_POST['rapidology_period'] ) : '';
 
@@ -1625,7 +1650,10 @@ SOL;
 	 * Generates the optins stats table and passes it to jQuery
 	 */
 	function refresh_optins_stats_table() {
-		wp_verify_nonce( $_POST['rapidology_stats_nonce'], 'rapidology_stats' );
+		$this->permissionsCheck();
+		 if(! check_ajax_referer('rapidology_stats_nonce', 'rapidology_stats_nonce')){
+            		die(-1);
+        	 }
 		$orderby = ! empty( $_POST['rapidology_orderby'] ) ? sanitize_text_field( $_POST['rapidology_orderby'] ) : '';
 		$table   = ! empty( $_POST['rapidology_stats_table'] ) ? sanitize_text_field( $_POST['rapidology_stats_table'] ) : '';
 
@@ -1672,7 +1700,10 @@ SOL;
 	 * Generates the fields set for new account based on service and passes it to jQuery
 	 */
 	function generate_new_account_fields() {
-		wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' );
+		if(! check_ajax_referer('accounts_tab', 'accounts_tab_nonce')){
+			die(-1);
+		}
+
 		$service = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
 
 		if ( 'empty' == $service ) {
@@ -1701,7 +1732,10 @@ SOL;
 	 * Generates the fields set for account editing form based on service and account name and passes it to jQuery
 	 */
 	function generate_edit_account_page() {
-		wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' );
+		$this->permissionsCheck();
+		 if(! check_ajax_referer('accounts_tab', 'accounts_tab_nonce')){
+			die(-1);
+		 }
 		$edit_account = ! empty( $_POST['rapidology_edit_account'] ) ? sanitize_text_field( $_POST['rapidology_edit_account'] ) : '';
 		$account_name = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
 		$service      = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
@@ -1815,7 +1849,11 @@ SOL;
 	 * Generates the list of Lists for specific account and passes it to jQuery
 	 */
 	function generate_current_lists() {
-		wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' );
+		$this->permissionsCheck();
+		if(! check_ajax_referer('accounts_tab', 'accounts_tab_nonce')){
+			die(-1);
+		}
+
 		$service = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
 		$name    = ! empty( $_POST['rapidology_upd_name'] ) ? sanitize_text_field( $_POST['rapidology_upd_name'] ) : '';
 
@@ -1862,7 +1900,10 @@ SOL;
 	 * Saves the account data during editing/creating account
 	 */
 	function save_account_tab() {
-		wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' )){
+			die(-1);
+		}
 		$service = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
 		$name    = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
 
@@ -1882,6 +1923,7 @@ SOL;
 	 * Generates and displays the table with all accounts for Accounts tab
 	 */
 	function display_accounts_table() {
+		$this->permissionsCheck();
 		$options_array = RAD_Rapidology::get_rapidology_options();
 
 		echo '<div class="rad_dashboard_accounts_content">';
@@ -2007,7 +2049,7 @@ SOL;
 	 * Displays tables of Active and Inactive optins on homepage
 	 */
 	function display_home_tab_tables() {
-
+		$this->permissionsCheck();
 		$options_array = RAD_Rapidology::get_rapidology_options();
 
 		echo '<div class="rad_dashboard_home_tab_content">';
@@ -2024,7 +2066,10 @@ SOL;
 	 * Generates tables of Active and Inactive optins on homepage and passes it to jQuery
 	 */
 	function home_tab_tables() {
-		wp_verify_nonce( $_POST['home_tab_nonce'], 'home_tab' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['home_tab_nonce'], 'home_tab' )){
+			die(-1);
+		}
 		$this->display_home_tab_tables();
 		die();
 	}
@@ -2033,7 +2078,10 @@ SOL;
 	 * Generates accounts tables and passes it to jQuery
 	 */
 	function reset_accounts_table() {
-		wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' )){
+			die(-1);
+		}
 		$this->display_accounts_table();
 		die();
 	}
@@ -2321,7 +2369,10 @@ SOL;
 	 * @return string
 	 */
 	function rapidology_reset_options_page() {
-		wp_verify_nonce( $_POST['reset_options_nonce'], 'reset_options' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['reset_options_nonce'], 'reset_options' )){
+			die(-1);
+		}
 
 		$optin_id           = ! empty( $_POST['reset_optin_id'] )
 			? sanitize_text_field( $_POST['reset_optin_id'] )
@@ -2338,7 +2389,9 @@ SOL;
 	 * @return string
 	 */
 	function duplicate_optin() {
-		wp_verify_nonce( $_POST['duplicate_option_nonce'], 'duplicate_option' );
+		if(! wp_verify_nonce( $_POST['duplicate_option_nonce'], 'duplicate_option' )){
+			die(-1);
+		}
 		$duplicate_optin_id   = ! empty( $_POST['duplicate_optin_id'] ) ? sanitize_text_field( $_POST['duplicate_optin_id'] ) : '';
 		$duplicate_optin_type = ! empty( $_POST['duplicate_optin_type'] ) ? sanitize_text_field( $_POST['duplicate_optin_type'] ) : '';
 
@@ -2352,7 +2405,10 @@ SOL;
 	 * @return string
 	 */
 	function add_variant() {
-		wp_verify_nonce( $_POST['duplicate_option_nonce'], 'duplicate_option' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['duplicate_option_nonce'], 'duplicate_option' )){
+			die(-1);
+		}
 		$duplicate_optin_id = ! empty( $_POST['duplicate_optin_id'] ) ? sanitize_text_field( $_POST['duplicate_optin_id'] ) : '';
 
 		$variant_id = $this->perform_option_duplicate( $duplicate_optin_id, '', true );
@@ -2365,7 +2421,10 @@ SOL;
 	 * @return void
 	 */
 	function ab_test_actions() {
-		wp_verify_nonce( $_POST['ab_test_nonce'], 'ab_test' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['ab_test_nonce'], 'ab_test' )){
+			die(-1);
+		}
 		$parent_id                        = ! empty( $_POST['parent_id'] ) ? sanitize_text_field( $_POST['parent_id'] ) : '';
 		$action                           = ! empty( $_POST['test_action'] ) ? sanitize_text_field( $_POST['test_action'] ) : '';
 		$options_array                    = RAD_Rapidology::get_rapidology_options();
@@ -2396,6 +2455,7 @@ SOL;
 	 * @return string
 	 */
 	function generate_end_test_modal( $parent_id ) {
+		$this->permissionsCheck();
 		$options_array = RAD_Rapidology::get_rapidology_options();
 		$test_optins   = $options_array[ $parent_id ]['child_optins'];
 		$test_optins[] = $parent_id;
@@ -2469,7 +2529,10 @@ SOL;
 	 * @return void
 	 */
 	function pick_winner_optin() {
-		wp_verify_nonce( $_POST['remove_option_nonce'], 'remove_option' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['remove_option_nonce'], 'remove_option' )){
+			die(-1);
+		}
 
 		$winner_id  = ! empty( $_POST['winner_id'] ) ? sanitize_text_field( $_POST['winner_id'] ) : '';
 		$optins_set = ! empty( $_POST['optins_set'] ) ? sanitize_text_field( $_POST['optins_set'] ) : '';
@@ -2515,6 +2578,7 @@ SOL;
 	 * @return void
 	 */
 	function update_stats_for_winner( $optin_id, $winner_id ) {
+		$this->permissionsCheck();
 		global $wpdb;
 
 		$table_name = $wpdb->prefix . 'rad_rapidology_stats';
@@ -2536,6 +2600,7 @@ SOL;
 	 * @return string
 	 */
 	function perform_option_duplicate( $duplicate_optin_id, $duplicate_optin_type = '', $is_child = false ) {
+		$this->permissionsCheck();
 		$new_optin_id = $this->generate_optin_id();
 		$suffix       = true == $is_child ? '_child' : '_copy';
 
@@ -2574,7 +2639,10 @@ SOL;
 	 * Handles optin/account removal function called via jQuery
 	 */
 	function remove_optin() {
-		wp_verify_nonce( $_POST['remove_option_nonce'], 'remove_option' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['remove_option_nonce'], 'remove_option' )){
+			die(-1);
+		}
 
 		$optin_id   = ! empty( $_POST['remove_optin_id'] ) ? sanitize_text_field( $_POST['remove_optin_id'] ) : '';
 		$is_account = ! empty( $_POST['is_account'] ) ? sanitize_text_field( $_POST['is_account'] ) : '';
@@ -2591,6 +2659,7 @@ SOL;
 	 * @return void
 	 */
 	function perform_optin_removal( $optin_id, $is_account = false, $service = '', $parent_id = '', $remove_child = true ) {
+		$this->permissionsCheck();
 		$options_array = RAD_Rapidology::get_rapidology_options();
 
 		if ( '' !== $optin_id ) {
@@ -2672,7 +2741,10 @@ SOL;
 	 * @return void
 	 */
 	function toggle_optin_status() {
-		wp_verify_nonce( $_POST['toggle_status_nonce'], 'toggle_status' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['toggle_status_nonce'], 'toggle_status' )){
+			die(-1);
+		}
 		$optin_id  = ! empty( $_POST['status_optin_id'] ) ? sanitize_text_field( $_POST['status_optin_id'] ) : '';
 		$toggle_to = ! empty( $_POST['status_new'] ) ? sanitize_text_field( $_POST['status_new'] ) : '';
 
@@ -2692,7 +2764,10 @@ SOL;
 	 * @return void
 	 */
 	function add_new_account() {
-		wp_verify_nonce( $_POST['add_account_nonce'], 'add_account' );
+		if(! wp_verify_nonce( $_POST['add_account_nonce'], 'add_account' )){
+			die(-1);
+		}
+
 		$service     = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
 		$name        = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
 		$new_account = array();
@@ -2837,8 +2912,10 @@ SOL;
 	 * @return string
 	 */
 	function authorize_account() {
-
-		wp_verify_nonce( $_POST['get_lists_nonce'], 'get_lists' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['get_lists_nonce'], 'get_lists' )){
+			die(-1);
+		}
 		$service         = ! empty( $_POST['rapidology_upd_service'] ) ? sanitize_text_field( $_POST['rapidology_upd_service'] ) : '';
 		$name            = ! empty( $_POST['rapidology_upd_name'] ) ? sanitize_text_field( $_POST['rapidology_upd_name'] ) : '';
 		$update_existing = ! empty( $_POST['rapidology_account_exists'] ) ? sanitize_text_field( $_POST['rapidology_account_exists'] ) : '';
@@ -2987,7 +3064,10 @@ SOL;
 	 * Handles subscribe action and sends the success or error message to jQuery.
 	 */
 	function subscribe() {
-		wp_verify_nonce( $_POST['subscribe_nonce'], 'subscribe' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['subscribe_nonce'], 'subscribe' )){
+			die(-1);
+		}
 
 		$subscribe_data_json  = str_replace( '\\', '', $_POST['subscribe_data_array'] );
 		$subscribe_data_array = json_decode( $subscribe_data_json, true );
@@ -3161,7 +3241,10 @@ SOL;
 	 * @return string
 	 */
 	function generate_accounts_list() {
-		wp_verify_nonce( $_POST['retrieve_lists_nonce'], 'retrieve_lists' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['retrieve_lists_nonce'], 'retrieve_lists' )){
+			die(-1);
+		}
 		$service     = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
 		$optin_id    = ! empty( $_POST['rapidology_optin_id'] ) ? sanitize_text_field( $_POST['rapidology_optin_id'] ) : '';
 		$new_account = ! empty( $_POST['rapidology_add_account'] ) ? sanitize_text_field( $_POST['rapidology_add_account'] ) : '';
@@ -3230,6 +3313,7 @@ SOL;
 	 * @return string
 	 */
 	function generate_new_account_form( $service, $account_name = '', $display_name = true ) {
+		$this->permissionsCheck();
 		$field_values = '';
 
 		if ( '' !== $account_name ) {
@@ -3353,6 +3437,7 @@ SOL;
 	 * @return string
 	 */
 	function retrieve_accounts_list( $service, $accounts_list = array() ) {
+		$this->permissionsCheck();
 		$options_array = RAD_Rapidology::get_rapidology_options();
 		if ( isset( $options_array['accounts'] ) ) {
 			if ( isset( $options_array['accounts'][ $service ] ) ) {
@@ -3367,7 +3452,9 @@ SOL;
 	 * Generates the list of "Lists" for selected account in the Dashboard. Returns the generated form to jQuery.
 	 */
 	function generate_mailing_lists( $service = '', $account_name = '' ) {
-		wp_verify_nonce( $_POST['retrieve_lists_nonce'], 'retrieve_lists' );
+		if(! wp_verify_nonce( $_POST['retrieve_lists_nonce'], 'retrieve_lists' )){
+			die(-1);
+		}
 		$account_for = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
 		$service     = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
 		$optin_id    = ! empty( $_POST['rapidology_optin_id'] ) ? sanitize_text_field( $_POST['rapidology_optin_id'] ) : '';
@@ -3667,7 +3754,9 @@ SOL;
 	 * @return void
 	 */
 	function handle_stats_adding() {
-		wp_verify_nonce( $_POST['update_stats_nonce'], 'update_stats' );
+		if(! wp_verify_nonce( $_POST['update_stats_nonce'], 'update_stats' )){
+			die(-1);
+		}
 		$stats_data_json  = str_replace( '\\', '', $_POST['stats_data_array'] );
 		$stats_data_array = json_decode( $stats_data_json, true );
 		RAD_Rapidology::add_stats_record( $stats_data_array['type'], $stats_data_array['optin_id'], $stats_data_array['page_id'], $stats_data_array['list_id'] );
@@ -4259,7 +4348,10 @@ SOL;
 	}
 
 	function display_preview() {
-		wp_verify_nonce( $_POST['rapidology_preview_nonce'], 'rapidology_preview' );
+		$this->permissionsCheck();
+		if(! wp_verify_nonce( $_POST['rapidology_preview_nonce'], 'rapidology_preview' )){
+			die(-1);
+		}
 
 		$options          = $_POST['preview_options'];
 		$processed_string = str_replace( array( '%5B', '%5D' ), array( '[', ']' ), $options );
@@ -4290,6 +4382,7 @@ SOL;
 	 * Displays the PopUp preview in dashboard.
 	 */
 	function generate_preview_popup( $details ) {
+		$this->permissionsCheck();
 		$output = '';
 		$output = sprintf(
 			'<div class="rad_rapidology_popup rad_rapidology_animated rad_rapidology_preview_popup rad_rapidology_optin">

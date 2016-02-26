@@ -9,7 +9,8 @@ class rapidology_emma extends RAD_Rapidology
 
 	public function __contruct()
 	{
-
+		parent::__construct();
+		$this->permissionsCheck();
 	}
 
 	public function draw_emma_form($form_fields, $service, $field_values)

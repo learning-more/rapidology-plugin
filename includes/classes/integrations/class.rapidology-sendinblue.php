@@ -9,7 +9,8 @@ class rapidology_sendinblue extends RAD_Rapidology
 
 	public function __contruct()
 	{
-
+		parent::__construct();
+		$this->permissionsCheck();
 	}
 
 

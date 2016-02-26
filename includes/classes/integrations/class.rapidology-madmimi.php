@@ -8,7 +8,8 @@ class rapidology_madmimi extends RAD_Rapidology
 {
 
 	public function __contruct(){
-
+		parent::__construct();
+		$this->permissionsCheck();
 	}
 
 	public function draw_madmimi_form($form_fields, $service, $field_values){

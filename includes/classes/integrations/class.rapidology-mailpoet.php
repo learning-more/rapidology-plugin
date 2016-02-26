@@ -9,7 +9,8 @@ class rapidology_mailpoet extends RAD_Rapidology
 
 	public function __contruct()
 	{
-
+		parent::__construct();
+		$this->permissionsCheck();
 	}
 
 	public function draw_ontraport_form($form_fields, $service, $field_values)

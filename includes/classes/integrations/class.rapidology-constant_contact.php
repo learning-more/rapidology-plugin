@@ -8,7 +8,8 @@ class rapidology_constant_contact extends RAD_Rapidology
 
 	public function __contruct()
 	{
-
+		parent::__construct();
+		$this->permissionsCheck();
 	}
 
 	public function draw_contstant_contact_form($form_fields, $service, $field_values){

@@ -99,6 +99,10 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 9.  Import and Export your opt in forms.
 
 == Changelog ==
+**1.4.2 - 02/26/16**
+* Implemented security fix to prevent user privilege escalation
+* Added support for ActiveCampaign's latest form builder
+
 **1.4.1 Changelog - 1/21/16**
 *	A consent checkbox is now available for all Rapidology forms
 *   Allow a user to redirect to current page (default) , new window or new tab.

@@ -1700,9 +1700,9 @@ SOL;
 	 * Generates the fields set for new account based on service and passes it to jQuery
 	 */
 	function generate_new_account_fields() {
-		 if(! check_ajax_referer('rapidology_stats_nonce', 'rapidology_stats_nonce')){
-		    die(-1);
-		 }
+		if(! check_ajax_referer('accounts_tab', 'accounts_tab_nonce')){
+			die(-1);
+		}
 
 		$service = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
 
@@ -1733,9 +1733,9 @@ SOL;
 	 */
 	function generate_edit_account_page() {
 		$this->permissionsCheck();
-		 if(! check_ajax_referer('rapidology_stats_nonce', 'rapidology_stats_nonce')){
-            		die(-1);
-        	 }
+		 if(! check_ajax_referer('accounts_tab', 'accounts_tab_nonce')){
+			die(-1);
+		 }
 		$edit_account = ! empty( $_POST['rapidology_edit_account'] ) ? sanitize_text_field( $_POST['rapidology_edit_account'] ) : '';
 		$account_name = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
 		$service      = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
@@ -1850,10 +1850,10 @@ SOL;
 	 */
 	function generate_current_lists() {
 		$this->permissionsCheck();
-		if(! wp_verify_nonce( $_POST['accounts_tab_nonce'], 'accounts_tab' )){
+		if(! check_ajax_referer('accounts_tab', 'accounts_tab_nonce')){
 			die(-1);
 		}
-		
+
 		$service = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
 		$name    = ! empty( $_POST['rapidology_upd_name'] ) ? sanitize_text_field( $_POST['rapidology_upd_name'] ) : '';
 
@@ -2767,6 +2767,7 @@ SOL;
 		if(! wp_verify_nonce( $_POST['add_account_nonce'], 'add_account' )){
 			die(-1);
 		}
+
 		$service     = ! empty( $_POST['rapidology_service'] ) ? sanitize_text_field( $_POST['rapidology_service'] ) : '';
 		$name        = ! empty( $_POST['rapidology_account_name'] ) ? sanitize_text_field( $_POST['rapidology_account_name'] ) : '';
 		$new_account = array();

@@ -223,7 +223,7 @@ class RAD_Rapidology extends RAD_Dashboard {
 					'github_url' => 'https://github.com/leadpages/rapidology-plugin', // the github url of your github repo
 					'sslverify' => true, // wether WP should check the validity of the SSL cert when getting an update, see https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/2 and https://github.com/jkudish/WordPress-GitHub-Plugin-Updater/issues/4 for details
 					'requires' => '3.5', // which version of WordPress does your plugin require?
-					'tested' => '4.3', // which version of WordPress is your plugin tested up to?
+					'tested' => '4.4.2', // which version of WordPress is your plugin tested up to?
 					'readme' => 'README.md' // which file to use as the readme for the version number
 				);
 				new Rapidology_GitHub_Updater($config);

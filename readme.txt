@@ -3,7 +3,7 @@ Plugin Name:  Rapidology - by LeadPages
 Contributors: LeadPages
 Tags: wp popup, wordpress popup plugin, wordpress subscription plugin, responsive opt-in subscription plugin, free optinmonster alternative, list builder, sumome alternative, leadpages, bloom plugin, how to increase email list, email form, scroll box, newsletter, inbound marketing, mailing list, mailchimp, aweber, infusionsoft, campaign monitor, hubspot, salesforce, emma, activecampaign, constant contact, mad mimi, iContact, GetResponse, MailPoet, feedblitz, sendinblue, ontraport, landing page, light box, email list building, subscribers, subscription
 Requires at least: 3.5
-Tested up to: 4.4.1
+Tested up to: 4.4.2
 Stable tag: 1.4.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html

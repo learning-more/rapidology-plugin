@@ -83,6 +83,8 @@ Check your analytics dashboard to see at a glance how many times an opt-in form 
 Rapidology’s import/export function allows you to easily export any opt-in form you have created. This saved form can then be imported into any other WordPress account that has the Rapidology plugin installed.
 
 ## Changelog
+###1.4.2.1 - 03/01/16
+* Replaced missing CSS folder
 
 ### 1.4.2 - 02/26/16
 * Implemented security fix to prevent user privilege escalation

@@ -4,7 +4,7 @@ Contributors: LeadPages
 Tags: wp popup, wordpress popup plugin, wordpress subscription plugin, responsive opt-in subscription plugin, free optinmonster alternative, list builder, sumome alternative, leadpages, bloom plugin, how to increase email list, email form, scroll box, newsletter, inbound marketing, mailing list, mailchimp, aweber, infusionsoft, campaign monitor, hubspot, salesforce, emma, activecampaign, constant contact, mad mimi, iContact, GetResponse, MailPoet, feedblitz, sendinblue, ontraport, landing page, light box, email list building, subscribers, subscription
 Requires at least: 3.5
 Tested up to: 4.4.2
-Stable tag: 1.4.2
+Stable tag: 1.4.2.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -99,6 +99,9 @@ Rapidology’s import/export function allows you to easily export any opt-in for
 9.  Import and Export your opt in forms.
 
 == Changelog ==
+**1.4.2.1 - 03/01/16**
+* Replaced missing CSS folder
+
 **1.4.2 - 02/26/16**
 * Implemented security fix to prevent user privilege escalation
 * Added support for ActiveCampaign's latest form builder

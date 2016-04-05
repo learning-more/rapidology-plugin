@@ -79,7 +79,7 @@ class RAD_Dashboard {
 	function permissionsCheck()
     {
         if (!current_user_can('manage_options')) {
-            die(-1);
+            return;
         }
     }
 	function include_options() {

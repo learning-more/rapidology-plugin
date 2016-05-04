@@ -10,8 +10,8 @@ Rapidology is the only 100% free WordPress plugin which lets you
 quickly create beautiful email opt-in forms, popups, widgets, and
 notification bars-no design or coding skills required!
 
-Requires Wordpress version of at least 3.5, tested up to 4.4.2. The
-current stable tag is 1.4.2.2.
+Requires Wordpress version of at least 3.5, tested up to 4.5. The
+current stable tag is 1.4.1.
 
 [See more at Rapidology.com](http://www.rapidology.com/)
 

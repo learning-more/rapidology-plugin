@@ -4,14 +4,21 @@
 		$( '.rad_rapidology_custom_html_form input[type="radio"], .rad_rapidology_custom_html_form input[type="checkbox"]' ).uniform();
 
 		var $body = $('body');
+
 		$body.on( 'click', 'span.rad_rapidology_close_button', function(){
 			var container = $( this ).parent().parent();
 
 			container.addClass( 'rad_rapidology_exit_animation' );
 
-			setTimeout( function() {
-				container.remove();
-			}, 400 );
+			if(container.hasClass('rad_rapidology_click_trigger')){
+				setTimeout( function() {
+					container.removeClass('rad_rapidology_visible');
+				}, 400 );
+			}else{
+				setTimeout( function() {
+					container.remove();
+				}, 400 );
+			}
 
 			$( 'body' ).removeClass( 'rad_rapidology_popup_active' );
 

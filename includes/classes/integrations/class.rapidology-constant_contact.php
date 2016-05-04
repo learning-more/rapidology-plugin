@@ -135,7 +135,10 @@ class rapidology_constant_contact extends RAD_Rapidology
 				}
 			} else {
 			  if($response['results'][0]['id'] > 0) {
-				$error_message = __('success', 'rapidology');//show a success if they are already subscribed
+				  $contactId = $response['results'][0]['id'];
+				  $error_message = $this->updateContactThatHasBeenRemoved($api_key, $token, $contactId, $list_id);
+
+				  //$error_message = __('success', 'rapidology');//show a success if they are already subscribed
 			  }else{
 				$error_message = __('General Error', 'rapidology');//show a success if they are already subscribed
 			  }
@@ -149,5 +152,58 @@ class rapidology_constant_contact extends RAD_Rapidology
 		}
 
 		return $error_message;
+	}
+
+
+	protected function updateContactThatHasBeenRemoved($apiKey, $token, $contactId, $listId){
+		$request_url = "https://api.constantcontact.com/v2/contacts/{$contactId}?api_key={$apiKey}";
+		$theme_request = wp_remote_get( $request_url, array(
+				'timeout' => 30,
+				'headers' => array(
+						'Authorization' => 'Bearer ' . $token,
+						'content-type'  => 'application/json',
+				),
+		) );
+		$data = wp_remote_retrieve_body($theme_request);
+		$data = json_decode($data, true);
+		$unneededFields = array(
+			'id',
+			'status',
+			'confirmed',
+			'source',
+			'created_date',
+			'modified_date',
+			'source_details',
+		);
+
+		foreach($data as $key => $value){
+			if(in_array($key, $unneededFields)){
+				unset($data[$key]);
+			}
+		}
+		$listToAdd = array(
+			'id' => $listId,
+			'status' => 'ACTIVE'
+		);
+		array_push($data['lists'], $listToAdd);
+
+		//print_r($data);die();
+		$customerData = json_encode($data);
+		$response = wp_remote_post($request_url, array(
+				'timeout' => 30,
+				'headers' => array(
+						'Authorization' => 'Bearer ' . $token,
+						'content-type'  => 'application/json',
+				),
+				'method' => 'PUT',
+				'body' => $customerData
+		));
+
+		$responseCode = $response['response']['code'];
+		if($responseCode == '200'){
+			return 'success';
+		}else{
+			return 'There was an error updating list. Please try again later';
+		}
 	}
 }

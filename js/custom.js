@@ -9,9 +9,15 @@
 
 			container.addClass( 'rad_rapidology_exit_animation' );
 
-			setTimeout( function() {
-				container.remove();
-			}, 400 );
+			if(container.hasClass('rad_rapidology_click_trigger')){
+				setTimeout( function() {
+					container.removeClass('rad_rapidology_visible');
+				}, 400 );
+			}else{
+				setTimeout( function() {
+					container.remove();
+				}, 400 );
+			}
 
 			$( 'body' ).removeClass( 'rad_rapidology_popup_active' );
 

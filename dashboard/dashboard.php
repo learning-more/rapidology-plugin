@@ -644,7 +644,7 @@ class RAD_Dashboard {
 					<div class="rad_act_scr_logo">&nbsp;</div>
 					<div class="rad_act_scr_headline rad_act_scr_mode_get_code">Welcome to <i>Rapidology.</i></div>
 					<div class="rad_act_scr_headline rad_act_scr_mode_act_code"><i>Rapidology</i></div>
-					<div class="rad_act_scr_gift">A Free <span><i>Gift</i></span> From <a href="http://www.leadpages.net?utm_campaign=rp-lp&utm_medium=lock-screen" target="_blank">LeadPages<sup>&reg;</sup></a></div>
+					<div class="rad_act_scr_gift">A Free <span><i>Gift</i></span> From <a href="http://www.leadpages.net?utm_campaign=rp-lp&utm_medium=lock-screen" target="_blank">Leadpages<sup>&reg;</sup></a></div>
 					<div class="rad_act_scr_headline rad_act_scr_mode_act_code">Enter your unique activation code below.</div>
 					<div class="rad_act_scr_message rad_act_scr_mode_get_code">
 						To get started, please enter a few details below so we can send you a unique activation code for plugin access. We’ll also provide you with plugin updates, access to the latest Rapidology designs, and more.
@@ -727,7 +727,7 @@ class RAD_Dashboard {
             <div class="rad_act_scr_logo_thx_you"><img src="'.RAD_PLUGIN_IMAGE_DIR.'/logo.png" /></div>
             <div id="rad_act_scr_thx_you_tagline">
                 <p>Thanks for Joining</p> <h2 class="rad_act_scr_thx_you_rapid">Rapidology</h2>
-                <div class="rad_act_scr_gift">A Free <span><i>Gift</i></span> From <a href="http://www.leadpages.net?utm_campaign=rp-lp&utm_medium=wp-thank-you-screen" target="_blank">LeadPages<sup>&reg;</sup></a></div>
+                <div class="rad_act_scr_gift">A Free <span><i>Gift</i></span> From <a href="http://www.leadpages.net?utm_campaign=rp-lp&utm_medium=wp-thank-you-screen" target="_blank">Leadpages<sup>&reg;</sup></a></div>
             </div>
         </div>
     </div>
@@ -737,7 +737,7 @@ class RAD_Dashboard {
                 <div class="section1_top">
                     <div class="section1_top_left">
                         <p style="font-weight:300; font-size:20px;">FREE LIVE TRAINING:</p>
-                        <p style="font-weight:400; font-size:14px;">With LeadPages<sup>&reg;</sup> Conversion Expert Time Paige</p>
+                        <p style="font-weight:400; font-size:14px;">With Leadpages<sup>&reg;</sup> Conversion Expert Time Paige</p>
                         <h1>4 Steps to Grow Your List Without <br />Spending Your Time on Marketing</h1>
                     </div>
                     <div class="section1_top_right">
@@ -749,7 +749,7 @@ class RAD_Dashboard {
                         <div class="box">
                             <img src="'.RAD_PLUGIN_IMAGE_DIR.'/lp-logo.jpg" />
                             <p style="padding:0; text-align: center">Featuring Strategies by</p>
-                            <p style="padding:0; color:#FF5E6E; text-align: center; font-weight:bold">LeadPages<sup>&reg;</sup></p>
+                            <p style="padding:0; color:#FF5E6E; text-align: center; font-weight:bold">Leadpages<sup>&reg;</sup></p>
                         </div>
                     </div>
                     <div style="clear:both;"></div>

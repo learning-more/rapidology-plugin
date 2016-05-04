@@ -1,6 +1,6 @@
 <?php
 /*
- * Plugin Name: Rapidology By LeadPages
+ * Plugin Name: Rapidology By Leadpages
  * Plugin URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
  * Version: 1.4.2
  * Description: 100% Free List Building & Popup Plugin...With Over 100 Responsive Templates & 6 Different Display Types For Growing Your Email Newsletter
@@ -5167,7 +5167,7 @@ SOL;
 
 	function rad_add_footer_text( $text ) {
 
-		return sprintf( __( $text . ' Rapidology - by LeadPages<sup>&reg;</sup> <a target="_blank" style= "color:#939AAA;" href="%s">Privacy Policy</a> | <a target="_blank" style= "color:#939AAA;" href="%s">Terms of Use</a>' ), $this->privacy_url, $this->tou_url );
+		return sprintf( __( $text . ' Rapidology - by Leadpages<sup>&reg;</sup> <a target="_blank" style= "color:#939AAA;" href="%s">Privacy Policy</a> | <a target="_blank" style= "color:#939AAA;" href="%s">Terms of Use</a>' ), $this->privacy_url, $this->tou_url );
 	}
 
 	function execute_footer_text() {

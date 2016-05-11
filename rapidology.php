@@ -1796,7 +1796,7 @@ SOL;
 								<option value="aweber">%4$s</option>
 								<option value="campaign_monitor">%6$s</option>
 								<option value="constant_contact">%5$s</option>
-								<option value="drip">%23$</option>
+								<option value="drip">%23$s</option>
 								<option value="convertkit">%22$s</option>
 								<option value="emma">%16$s</option>
 								<option value="feedblitz">%14$s</option>

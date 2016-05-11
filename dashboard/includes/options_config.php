@@ -11,6 +11,7 @@ $email_providers_array = array(
 	'campaign_monitor'	=>  'Campaign Monitor' ,
 	'constant_contact'	=>  'Constant Contact' ,
 	'custom_html'		=>  'Custom HTML Form' ,
+	'drip'				=>  'Drip',
 	'emma'				=>  'Emma' ,
 	'feedblitz'			=>  'Feedblitz' ,
 	'getresponse'		=>  'GetResponse' ,

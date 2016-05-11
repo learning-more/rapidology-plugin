@@ -1796,6 +1796,7 @@ SOL;
 								<option value="aweber">%4$s</option>
 								<option value="campaign_monitor">%6$s</option>
 								<option value="constant_contact">%5$s</option>
+								<option value="drip"></option>
 								<option value="emma">%16$s</option>
 								<option value="feedblitz">%14$s</option>
 								<option value="getresponse">%9$s</option>
@@ -1835,7 +1836,8 @@ SOL;
 				esc_html__( 'Salesforce', 'rapidology' ),#18
 				esc_html__( 'Active Campaign', 'rapidology' ),#19
 				esc_html__( 'HubSpot Standard', 'rapidology'),#20
-				esc_html__( 'Redirect Button', 'rapidology')#21
+				esc_html__( 'Redirect Button', 'rapidology'),#21
+                esc_html__( 'Drip', 'rapidology')#22
 
 			);
 		}
@@ -2890,6 +2892,10 @@ SOL;
 								$activecampaign = new rapidology_activecampaign();
 								$error_message = $activecampaign->get_active_campagin_forms($details['url'], $details['api_key'], $name);
 								break;
+                            case 'drip':
+                                $drip = new rapidology_drip();
+                                $error_message = $drip->get_drip_campaigns($details['api_key'], $details['username'], $name);
+                                break;
 						}
 					}
 
@@ -3048,6 +3054,10 @@ SOL;
 			case 'activecampaign':
 				$activecampaign = new rapidology_activecampaign();
 				$error_message = $activecampaign->get_active_campagin_forms($url, $api_key, $name);
+				break;
+			case 'drip':
+				$drip = new rapidology_drip();
+				$error_message = $drip->get_drip_campaigns($api_key, $username, $name);
 				break;
 
 
@@ -3208,6 +3218,14 @@ SOL;
 					$activecampaign = new rapidology_activecampaign();
 					$error_message = $activecampaign->subscribe_active_campaign($url, $api_key, $name , $last_name, $email, $lists, $form_id);
 					break;
+                case 'drip':
+                    $api_key    = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
+                    $account_id	= $options_array['accounts'][ $service ][ $account_name ]['username'];
+                    $lists		= $options_array['accounts'][ $service ][ $account_name ]['lists'][$list_id]['list_ids'];
+                    $form_id	= $list_id;//gets confusing the list_id from rapdiology is actualy the form id in active campaign, and lists are the lists you need to subscribe to based on the form
+                    $drip = new rapidology_drip($api_key);
+                    $error_message = $drip->drip_member_subscribe($api_key, $account_id, $email, $form_id);
+                    break;
 			}
 		} else {
 			$error_message = __( 'Invalid email', 'rapidology' );
@@ -3424,6 +3442,10 @@ SOL;
 			case 'infusionsoft' :
 				$infusionsoft = new rapidology_infusionsoft();
 				$form_fields = $infusionsoft->draw_infusionsoft_form($form_fields, $service, $field_values);
+				break;
+			case 'drip' :
+				$drip = new rapidology_drip();
+				$form_fields = $drip->draw_drip_form($form_fields, $service, $field_values);
 				break;
 		}
 

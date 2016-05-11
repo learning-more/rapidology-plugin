@@ -3063,9 +3063,12 @@ SOL;
 				$activecampaign = new rapidology_activecampaign();
 				$error_message = $activecampaign->get_active_campagin_forms($url, $api_key, $name);
 				break;
-			case 'drip':
-				$drip = new rapidology_drip();
-				$error_message = $drip->get_drip_campaigns($api_key, $username, $name$convertkit = new rapidology_convertkit();
+            case 'drip':
+                $drip = new rapidology_drip();
+                $error_message = $drip->get_drip_campaigns($api_key, $username, $name);
+                break;
+			case 'convertkit':
+				$convertkit = new rapidology_convertkit();
 				$error_message = $convertkit->get_convertkit_lists( $api_key, $name );
 				break;
 
@@ -3233,9 +3236,7 @@ SOL;
                     $lists		= $options_array['accounts'][ $service ][ $account_name ]['lists'][$list_id]['list_ids'];
                     $form_id	= $list_id;//gets confusing the list_id from rapdiology is actualy the form id in active campaign, and lists are the lists you need to subscribe to based on the form
                     $drip = new rapidology_drip($api_key);
-                    $error_message = $drip->drip_member_subscribe($api_key, $account_id, $email, $form_id$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
-					$convertkit = new rapidology_convertkit();
-					$error_message = $convertkit->subscribe_convertkit( $api_key, $list_id, $email, $name, $last_name, $dbl_optin );
+                    $error_message = $drip->drip_member_subscribe($api_key, $account_id, $email, $form_id);
 					break;
 			}
 		} else {

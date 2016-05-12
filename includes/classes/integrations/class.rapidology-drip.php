@@ -18,7 +18,7 @@ class rapidology_drip extends RAD_Rapidology
 		$form_fields .= sprintf( '
 					<div class="rad_dashboard_account_row">
 						<label for="%1$s">%3$s</label>
-						<input type="password" value="%4$s" id="%1$s">
+						<input type="password" value="%6$s" id="%1$s">
 					</div>
 					<div class="rad_dashboard_account_row">
 						<label for="%2$s">%4$s</label>

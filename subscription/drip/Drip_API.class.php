@@ -61,11 +61,12 @@ Class Rapidology_Drip_Api {
 
         $url = $this->api_end_point . "$account_id/campaigns";
         $res = $this->make_request($url, $params);
-
         if (!empty($res['buffer'])) {
             $raw_json = json_decode($res['buffer'], true);
         }
-
+        if(isset($raw_json['errors'][0]['message'])){
+            return $raw_json['errors'][0];
+        }
         // here we distinguish errors from no campaigns.
         // when there's no json that's an error
         $campaigns = empty($raw_json)

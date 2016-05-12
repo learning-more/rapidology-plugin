@@ -54,6 +54,9 @@ class rapidology_drip extends RAD_Rapidology
 			$params		   = array();
 			$params['account_id'] = $username;
 			$response      = $drip->get_campaigns($params);
+            if(!empty($response['code'])){
+                return $response['message'];
+            }
 			$all_lists = array();
 			foreach ($response as $obj){
 				$all_lists[$obj['id']]['name'] = $obj['name'];

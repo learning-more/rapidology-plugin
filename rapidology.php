@@ -3238,6 +3238,11 @@ SOL;
                     $drip = new rapidology_drip($api_key);
                     $error_message = $drip->drip_member_subscribe($api_key, $account_id, $email, $form_id);
 					break;
+		case 'convertkit' :
+				$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
+				$convertkit = new rapidology_convertkit();
+				$error_message = $convertkit->subscribe_convertkit( $api_key, $list_id, $email, $name, $last_name, $dbl_optin );
+				break;
 			}
 		} else {
 			$error_message = __( 'Invalid email', 'rapidology' );

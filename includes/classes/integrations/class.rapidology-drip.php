@@ -77,17 +77,23 @@ class rapidology_drip extends RAD_Rapidology
 
 	}
 
-	function drip_member_subscribe($api_key, $account_id, $email, $list_id){
+	function drip_member_subscribe($api_key, $account_id, $email, $list_id, $name, $last_name){
         if ( ! class_exists( 'Rapidology_Drip_Api' ) ) {
             require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'subscription/drip/Drip_API.class.php' );
         }
 
-        $drip = new Rapidology_Drip_Api( $api_key, false ); //true set for debug
+		$names_array = rapidology_name_splitter($name, $last_name);
+		$name = $names_array['name'] .' '. $names_array['last_name'];
+
+		$drip = new Rapidology_Drip_Api( $api_key, false ); //true set for debug
 		//arguments to pass to send to emma to sign up user
 		$args = array(
 			'email'     => $email,
 			'account_id' => $account_id,
-            'campaign_id' => $list_id
+            'campaign_id' => $list_id,
+			'custom_fields' => array(
+				'name' => $name
+			)
 		);
 		try {
 			$drip->subscribe_subscriber( $args );

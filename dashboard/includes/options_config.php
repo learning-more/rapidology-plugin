@@ -56,7 +56,8 @@ $show_name_fields =  array(
 	'hubspot',
 	'hubspot-standard',
 	'emma',
-	'convertkit'
+	'convertkit',
+	'drip'
 );
 
 

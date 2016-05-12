@@ -3236,7 +3236,7 @@ SOL;
                     $lists		= $options_array['accounts'][ $service ][ $account_name ]['lists'][$list_id]['list_ids'];
                     $form_id	= $list_id;//gets confusing the list_id from rapdiology is actualy the form id in active campaign, and lists are the lists you need to subscribe to based on the form
                     $drip = new rapidology_drip($api_key);
-                    $error_message = $drip->drip_member_subscribe($api_key, $account_id, $email, $form_id);
+                    $error_message = $drip->drip_member_subscribe($api_key, $account_id, $email, $form_id, $name, $last_name);
 					break;
 		case 'convertkit' :
 				$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];

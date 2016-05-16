@@ -61,6 +61,7 @@ Class Rapidology_Drip_Api {
 
         $url = $this->api_end_point . "$account_id/campaigns";
         $res = $this->make_request($url, $params);
+
         if (!empty($res['buffer'])) {
             $raw_json = json_decode($res['buffer'], true);
         }

@@ -83,6 +83,14 @@ Check your analytics dashboard to see at a glance how many times an opt-in form 
 Rapidology’s import/export function allows you to easily export any opt-in form you have created. This saved form can then be imported into any other WordPress account that has the Rapidology plugin installed.
 
 ## Changelog
+###1.4.3 - 5/16/16
+* Added Drip integration
+* Added ConvertKit Integration
+* Updated Leadpages branding
+* Fixed issue on the ability to duplicate Rapidbar
+* Fixed issue with On-click trigger re-triggering
+* Fixed issue in Constant Contact to reactivate a removed contact
+
 ##1.4.2.2 - 04/04/16
 * Fixed bug that prevented users from submitting opt-in forms
 

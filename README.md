@@ -11,7 +11,7 @@ quickly create beautiful email opt-in forms, popups, widgets, and
 notification bars-no design or coding skills required!
 
 Requires Wordpress version of at least 3.5, tested up to 4.5. The
-current stable tag is 1.4.3.
+Current stable tag is 1.4.4.
 
 [See more at Rapidology.com](http://www.rapidology.com/)
 
@@ -83,6 +83,12 @@ Check your analytics dashboard to see at a glance how many times an opt-in form 
 Rapidology’s import/export function allows you to easily export any opt-in form you have created. This saved form can then be imported into any other WordPress account that has the Rapidology plugin installed.
 
 ## Changelog
+
+###1.4.4 - 8/9/16
+* Fixed issue with single word names in the name field being populated as Weblead
+* Fixed issue with Constant Contact submissions not showing success message
+* Fixed issue with Image Orientation not showing on Widget form types
+
 ###1.4.3 - 5/16/16
 * Added Drip integration
 * Added ConvertKit Integration

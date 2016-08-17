@@ -61,7 +61,6 @@ class rapidology_center extends RAD_Rapidology
 
     private function centerSubmitWebhook($url, $submitData)
     {
-
         $curl = curl_init();
         curl_setopt_array($curl, array(
           CURLOPT_URL            => $url,

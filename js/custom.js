@@ -611,7 +611,7 @@
 				data: {
 					action : 'rapidology_center_webhooks',
 					data: submit_data,
-					subscribe_nonce: rapidologySettings.subscribe_nonce
+					center_nonce: rapidologySettings.center_nonce
 				},
 				beforeSend: function (data) {
 
@@ -631,8 +631,8 @@
 				"mapping":[
 					[["email"], "WebhookEvent", "EmailField"],
 					[["first_name"], "WebhookEvent", "FirstNameField"],
-					[["last_name"], "WebhookEvent", "FirstNameField"],
-					[["full_name"], "WebhookEvent", "LastNameField"],
+					[["last_name"], "WebhookEvent", "LastNameField"],
+					[["full_name"], "WebhookEvent", "FullNameField"]
 				]
 			}
 

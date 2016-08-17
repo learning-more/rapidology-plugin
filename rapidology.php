@@ -3267,19 +3267,22 @@ SOL;
 
 	function CenterWebHookSubmit()
 	{
-//		$this->permissionsCheck();
-//		if(! wp_verify_nonce( $_POST['subscribe_nonce'], 'subscribe' )){
-//			die(-1);
-//		}
+		$this->permissionsCheck();
+		check_ajax_referer( 'center_nonce', 'center_nonce' );
+
 
 		require('includes/classes/integrations/class.rapidology-center.php');
 		$center = new rapidology_center();
 		$data = $_POST['data'];
 		$response = $center->subscribeCenter($data);
+		$responseObj = json_decode($response);
 
-		$result = json_encode($response);
-		die(json_encode($response));
-
+		if($responseObj->_status->code == 202){
+			wp_send_json_success($response);
+		}else{
+			wp_send_json_error($response);
+		}
+		exit;
 	}
 
 	/**
@@ -3586,6 +3589,7 @@ SOL;
 			'pageurl'         => ( is_singular( get_post_types() ) ? get_permalink() : '' ),
 			'stats_nonce'     => wp_create_nonce( 'update_stats' ),
 			'subscribe_nonce' => wp_create_nonce( 'subscribe' ),
+			'center_nonce'	  => wp_create_nonce('CenterWebHookSubmit'),
 		) );
 
 

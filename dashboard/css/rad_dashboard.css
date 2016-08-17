@@ -95,7 +95,7 @@ p { padding-bottom: 1.7em; }
             /*#rad_dashboard_navigation > ul > li > ul { max-height: 0; overflow: hidden; -webkit-transition: all 0.7s ease-in-out; transition: all 0.7s ease-in-out; -moz-transition: all 0.7s ease-in-out; }*/
             #rad_dashboard_navigation ul li ul li{display: inline-block};
             #rad_dashboard_navigation li li a { color: #939AAA; height: 50px; padding: 12px 15px 12px 20px; background-color: rgba( 0, 0, 0, 0.3); }
-                    #rad_dashboard_navigation li li a:hover, #rad_dashboard_navigation a.current { font-weight: 700; color:#blue; }
+                    #rad_dashboard_navigation li li a:hover, #rad_dashboard_navigation a.current { font-weight: 700; color:blue; }
                         #rad_dashboard_navigation .rad_dashboard_icon:before { font-size: 16px; position: relative; margin-right: 15px; top: 2px; }
 
 
@@ -1055,4 +1055,9 @@ p.rad_dashboard_section_subtitle { margin-top: -12px; margin-bottom: 14px; font-
     font-size: 26px;
     font-weight:400;
     color: #373942;
+}
+
+.rad_dashboard_center_webhook_url{
+    max-width:300px !important;
+    width:100% !important;
 }

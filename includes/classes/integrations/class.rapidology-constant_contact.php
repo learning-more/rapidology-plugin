@@ -128,7 +128,6 @@ class rapidology_constant_contact extends RAD_Rapidology
 					'body'    => $body_request,
 				) );
 				$response_code = wp_remote_retrieve_response_code( $theme_request );
-				print_r($response_code);die();
 				if ( ! is_wp_error( $theme_request ) && $response_code == 201 ) {
 					$error_message = 'success';
 				} else {

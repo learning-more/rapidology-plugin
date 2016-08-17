@@ -338,7 +338,7 @@ li.rad_dashboard_optin_type { border: none; background-color: #14283A; width:175
 .current_optin_type_pop_up .display_on_checkboxes, .current_optin_type_flyin .display_on_checkboxes, .current_optin_type_rapidbar .display_on_checkboxes { display: block; }
 .rad_rapidology_widg.rad_only_option { display: none; }
 .current_optin_type_widget .rad_rapidology_hide_for_widget { display: none; }
-.current_optin_type_widget .rad_rapidology_widg.rad_only_option { display: block; }
+.current_optin_type_widget .rad_rapidology_widget_only_option{ display: block; }
 
 
 

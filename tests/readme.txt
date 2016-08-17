@@ -8,3 +8,6 @@ https://pippinsplugins.com/unit-tests-wordpress-plugins-setting-up-testing-suite
 
 
 bash bin/install-wp-tests.sh wordpress_test homestead secret rapid.vm latest
+
+##mamp
+bash bin/install-wp-test.sh wordpres_test root root 127.0.0.1 latest

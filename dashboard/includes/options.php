@@ -136,8 +136,16 @@ $rad_dashboard_options_all = array(
 			'validation_type' => 'boolean',
 			'hint_text'       => __( 'Abusing this feature may cause your Mailchimp account to be suspended.', 'rapidology' ),
 		),
+		'center_webhook_url' => array(
+				'type'            => 'input_field',
+				'title'           => __( 'Center Webhook Url', 'rapidology' ),
+				'class'           => 'rad_dashboard_center_webhook_url',
+				'name'            => 'center_webhook_url',
+				'validation_type' => 'simple_text',
+				'default'         => false,
+				'hint_text'       => __( 'Requires a <a href="https://center.io" target="_blank">Center Account</a>', 'rapidology' ),
+		),
 	),
-
 	'optin_title' => array(
 		'section_start' => array(
 			'type'     	=> 'section_start',
@@ -1286,6 +1294,7 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'form_integration' ][ 'email_list' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'custom_html' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'disable_dbl_optin' ],
+			$rad_dashboard_options_all[ 'form_integration' ][ 'center_webhook_url' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 	),
 	'optin_premade_options' => array(

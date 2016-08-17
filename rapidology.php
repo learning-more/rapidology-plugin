@@ -28,7 +28,7 @@ require_once('includes/updater.php');
 require_once('includes/rapidology_functions.php');
 
 class RAD_Rapidology extends RAD_Dashboard {
-	var $plugin_version = '1.4.3';
+	var $plugin_version = '1.4.4';
 	var $db_version = '1.0';
 	var $_options_pagename = 'rad_rapidology_options';
 	var $menu_page;

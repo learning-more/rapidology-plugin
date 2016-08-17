@@ -100,7 +100,6 @@ class rapidology_constant_contact extends RAD_Rapidology
 	  if(!is_email( $email )){
 		return "Email address appears to be incorrect";
 	  }
-		$email = urlencode($email);
 		$request_url   = esc_url_raw( 'https://api.constantcontact.com/v2/contacts?email=' . $email . '&api_key=' . $api_key );
 		$error_message = '';
 
@@ -131,10 +130,8 @@ class rapidology_constant_contact extends RAD_Rapidology
 				if ( ! is_wp_error( $theme_request ) && $response_code == 201 ) {
 					$error_message = 'success';
 				} else {
-					$error_map     = array(
-						"409" => 'Already subscribed'
-					);
-					$error_message = $this->get_error_message( $theme_request, $response_code, $error_map );
+					//already subscrbied should not be an error just let it go through
+					$error_message = 'success';
 				}
 			} else {
 			  if($response['results'][0]['id'] > 0) {

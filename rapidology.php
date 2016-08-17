@@ -2,7 +2,7 @@
 /*
  * Plugin Name: Rapidology By Leadpages
  * Plugin URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
- * Version: 1.4.3
+ * Version: 1.4.4
  * Description: 100% Free List Building & Popup Plugin...With Over 100 Responsive Templates & 6 Different Display Types For Growing Your Email Newsletter
  * Author: Rapidology
  * Author URI: http://www.rapidology.com?utm_campaign=rp-rp&utm_medium=wp-plugin-screen
@@ -147,6 +147,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 
 		add_action( 'wp_ajax_rapidology_subscribe', array( $this, 'subscribe' ) );
 		add_action( 'wp_ajax_nopriv_rapidology_subscribe', array( $this, 'subscribe' ) );
+
+		add_action( 'wp_ajax_rapidology_center_webhooks', array( $this, 'CenterWebHookSubmit' ) );
+		add_action( 'wp_ajax_nopriv_rapidology_center_webhooks', array( $this, 'CenterWebHookSubmit' ) );
 
 		add_action( 'widgets_init', array( $this, 'register_widget' ) );
 
@@ -3258,6 +3261,29 @@ SOL;
 		die( $result );
 	}
 
+	/**
+	 * Send webhook to Center
+	 */
+
+	function CenterWebHookSubmit()
+	{
+		$this->permissionsCheck();
+		check_ajax_referer( 'center_nonce', 'center_nonce' );
+
+
+		require('includes/classes/integrations/class.rapidology-center.php');
+		$center = new rapidology_center();
+		$data = $_POST['data'];
+		$response = $center->subscribeCenter($data);
+		$responseObj = json_decode($response);
+
+		if($responseObj->_status->code == 202){
+			wp_send_json_success($response);
+		}else{
+			wp_send_json_error($response);
+		}
+		exit;
+	}
 
 	/**
 	 * Converts xml data to array
@@ -3563,6 +3589,7 @@ SOL;
 			'pageurl'         => ( is_singular( get_post_types() ) ? get_permalink() : '' ),
 			'stats_nonce'     => wp_create_nonce( 'update_stats' ),
 			'subscribe_nonce' => wp_create_nonce( 'subscribe' ),
+			'center_nonce'	  => wp_create_nonce('CenterWebHookSubmit'),
 		) );
 
 
@@ -4003,7 +4030,7 @@ SOL;
 							<input placeholder="%2$s">
 						</p>
 
-						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-redirect="%19$s" data-success_delay="%18$s" class="%14$s%22$s" %20$s>
+						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-redirect="%19$s" data-success_delay="%18$s" data-center_webhook_url="%23$s" class="%14$s%22$s" %20$s>
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -4064,7 +4091,9 @@ SOL;
 				  '<div class="consent"><input type="checkbox" name="accept_consent" class="accept_consent">'.
 				  '<span class="consent_text" style="margin-bottom:0 !important; color:'.$details['consent_color'].'; font-weight:400 !important;">'.$details['consent_text'].'</span></div>'
 				   : '',#21
-			  	(isset($details['enable_consent']) && $details['enable_consent'] == true) ? ' cursor-not-allowed' : ''#22
+			  	(isset($details['enable_consent']) && $details['enable_consent'] == true) ? ' cursor-not-allowed' : '',#22
+				(isset($details['center_webhook_url']) && !empty($details['center_webhook_url']) ) ? $details['center_webhook_url'] : ''#23
+
 			),
 		  '' != $success_text
 			? html_entity_decode( wp_kses( stripslashes( $success_text ), array(

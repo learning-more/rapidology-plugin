@@ -148,6 +148,9 @@ class RAD_Rapidology extends RAD_Dashboard {
 		add_action( 'wp_ajax_rapidology_subscribe', array( $this, 'subscribe' ) );
 		add_action( 'wp_ajax_nopriv_rapidology_subscribe', array( $this, 'subscribe' ) );
 
+		add_action( 'wp_ajax_rapidology_center_webhooks', array( $this, 'CenterWebHookSubmit' ) );
+		add_action( 'wp_ajax_nopriv_rapidology_center_webhooks', array( $this, 'CenterWebHookSubmit' ) );
+
 		add_action( 'widgets_init', array( $this, 'register_widget' ) );
 
 		add_action( 'after_setup_theme', array( $this, 'register_image_sizes' ) );
@@ -3238,11 +3241,11 @@ SOL;
                     $drip = new rapidology_drip($api_key);
                     $error_message = $drip->drip_member_subscribe($api_key, $account_id, $email, $form_id, $name, $last_name);
 					break;
-		case 'convertkit' :
-				$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
-				$convertkit = new rapidology_convertkit();
-				$error_message = $convertkit->subscribe_convertkit( $api_key, $list_id, $email, $name, $last_name, $dbl_optin );
-				break;
+				case 'convertkit' :
+						$api_key       = $options_array['accounts'][ $service ][ $account_name ]['api_key'];
+						$convertkit = new rapidology_convertkit();
+						$error_message = $convertkit->subscribe_convertkit( $api_key, $list_id, $email, $name, $last_name, $dbl_optin );
+						break;
 			}
 		} else {
 			$error_message = __( 'Invalid email', 'rapidology' );
@@ -3258,6 +3261,26 @@ SOL;
 		die( $result );
 	}
 
+	/**
+	 * Send webhook to Center
+	 */
+
+	function CenterWebHookSubmit()
+	{
+//		$this->permissionsCheck();
+//		if(! wp_verify_nonce( $_POST['subscribe_nonce'], 'subscribe' )){
+//			die(-1);
+//		}
+
+		require('includes/classes/integrations/class.rapidology-center.php');
+		$center = new rapidology_center();
+		$data = $_POST['data'];
+		$response = $center->subscribeCenter($data);
+
+		$result = json_encode($response);
+		die(json_encode($response));
+
+	}
 
 	/**
 	 * Converts xml data to array
@@ -4003,7 +4026,7 @@ SOL;
 							<input placeholder="%2$s">
 						</p>
 
-						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-redirect="%19$s" data-success_delay="%18$s" class="%14$s%22$s" %20$s>
+						<button data-optin_id="%4$s" data-service="%5$s" data-list_id="%6$s" data-page_id="%7$s" data-post_name="%12$s" data-cookie="%13$s" data-account="%8$s" data-disable_dbl_optin="%11$s" data-redirect_url="%15$s%17$s" data-redirect="%19$s" data-success_delay="%18$s" data-center_webhook_url="%23$s" class="%14$s%22$s" %20$s>
 							<span class="rad_rapidology_subscribe_loader"></span>
 							<span class="rad_rapidology_button_text rad_rapidology_button_text_color_%10$s">%9$s</span>
 						</button>
@@ -4064,7 +4087,9 @@ SOL;
 				  '<div class="consent"><input type="checkbox" name="accept_consent" class="accept_consent">'.
 				  '<span class="consent_text" style="margin-bottom:0 !important; color:'.$details['consent_color'].'; font-weight:400 !important;">'.$details['consent_text'].'</span></div>'
 				   : '',#21
-			  	(isset($details['enable_consent']) && $details['enable_consent'] == true) ? ' cursor-not-allowed' : ''#22
+			  	(isset($details['enable_consent']) && $details['enable_consent'] == true) ? ' cursor-not-allowed' : '',#22
+				(isset($details['center_webhook_url']) && !empty($details['center_webhook_url']) ) ? $details['center_webhook_url'] : ''#23
+
 			),
 		  '' != $success_text
 			? html_entity_decode( wp_kses( stripslashes( $success_text ), array(

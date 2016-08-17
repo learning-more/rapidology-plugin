@@ -4,7 +4,8 @@ if ( ! class_exists( 'RAD_Dashboard' ) ) {
 	require_once( RAD_RAPIDOLOGY_PLUGIN_DIR . 'rapidology.php' );
 }
 
-class rapidology_hubspot extends RAD_Rapidology
+class
+rapidology_hubspot extends RAD_Rapidology
 {
 
 	public function __contruct(){

@@ -445,7 +445,6 @@
 		}
 
 		$body.on( 'click', '.rad_rapidology_submit_subscription', function() {
-
 			perform_subscription( $( this ), '', '', '', '' );
 			return false;
 		});
@@ -459,34 +458,36 @@
 				last_name = undefined != this_form.find( '.rad_rapidology_subscribe_last input' ).val() ? this_form.find( '.rad_rapidology_subscribe_last input' ).val() : '',
 				email = this_form.find( '.rad_rapidology_subscribe_email input' ).val(),
 				page_id = this_button.data( 'page_id' ),
-                disable_dbl_optin = this_button.data( 'disable_dbl_optin'),
-                post_name = this_button.data('post_name'),
-                cookie = this_button.data('cookie');
-                optin_id = this_button.data( 'optin_id' );
-                optin_type = (this_button.data('optin_type') == 'rapidbar' ? 'rapidbar' : 'standard');
-                redirectUrl = this_button.data( 'redirect_url' );
-                redirectTab = this_button.data( 'redirect' );
-                redirect_delay = this_button.data( 'success_delay' ) + '000';
-                redirect_delay = parseInt(redirect_delay);
-			    this_form.find( '.rad_rapidology_subscribe_email input' ).removeClass( 'rad_rapidology_warn_field' );
+				webhook_url = this_button.data( 'center_webhook_url' ),
 
-            if(this_button.hasClass('cursor-not-allowed')){
-                    //find the top level parent of but button clicked to find the error message for this specific form
-                    var parents = this_form.parents();
-                    parents.each(function(){
-                       if($(this).hasClass('rad_rapidology_optin') || $(this).hasClass('rad_rapidology_rapidbar')){
-                           top_parent = $(this);
-                       }
-                    });
-                    var error_message = top_parent.find('.consent_error');
-                    var consent_form = top_parent.find('.rapidbar_consent_form') ;
-                    $(error_message).show();
-                    if ($(consent_form).hasClass('rapid_consent_closed')) {
-                        $(consent_form).removeClass('rapid_consent_closed');
-                        $(consent_form).addClass('rapid_consent');
-                    }
-                return;
-            }
+				disable_dbl_optin = this_button.data( 'disable_dbl_optin'),
+				post_name = this_button.data('post_name'),
+				cookie = this_button.data('cookie');
+				optin_id = this_button.data( 'optin_id' );
+				optin_type = (this_button.data('optin_type') == 'rapidbar' ? 'rapidbar' : 'standard');
+				redirectUrl = this_button.data( 'redirect_url' );
+				redirectTab = this_button.data( 'redirect' );
+				redirect_delay = this_button.data( 'success_delay' ) + '000';
+				redirect_delay = parseInt(redirect_delay);
+				this_form.find( '.rad_rapidology_subscribe_email input' ).removeClass( 'rad_rapidology_warn_field' );
+
+					if(this_button.hasClass('cursor-not-allowed')){
+									//find the top level parent of but button clicked to find the error message for this specific form
+									var parents = this_form.parents();
+									parents.each(function(){
+										 if($(this).hasClass('rad_rapidology_optin') || $(this).hasClass('rad_rapidology_rapidbar')){
+												 top_parent = $(this);
+										 }
+									});
+									var error_message = top_parent.find('.consent_error');
+									var consent_form = top_parent.find('.rapidbar_consent_form') ;
+									$(error_message).show();
+									if ($(consent_form).hasClass('rapid_consent_closed')) {
+											$(consent_form).removeClass('rapid_consent_closed');
+											$(consent_form).addClass('rapid_consent');
+									}
+							return;
+					}
 			if ( '' == email ) {
 				this_form.find( '.rad_rapidology_subscribe_email input' ).addClass( 'rad_rapidology_warn_field' );
 			} else {
@@ -505,8 +506,8 @@
 						this_button.find( '.rad_rapidology_subscribe_loader' ).css( { 'display' : 'block' } );
 					},
 					success: function( data ) {
-                        $('.rapidbar_consent_form').hide();//hide rapidbar consent text
-                        $('.consent_wrapper').hide();//hide all other forms consent text
+						$('.rapidbar_consent_form').hide();//hide rapidbar consent text
+						$('.consent_wrapper').hide();//hide all other forms consent text
 						this_button.removeClass( 'rad_rapidology_button_text_loading' );
 						this_button.find( '.rad_rapidology_subscribe_loader' ).css( { 'display' : 'none' } );
 						if ( data ) {
@@ -545,6 +546,7 @@
 									this_form.parent().find( '.rad_rapidology_success_message' ).addClass( 'rad_rapidology_animate_message' );
 									this_form.parent().find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
 									this_form.remove();
+									submit_center_webhook(email, name, last_name, webhook_url);
 									set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
                                     if(redirectUrl.length > 0){
                                         setTimeout(function(){
@@ -566,7 +568,78 @@
 			}
 		}
 
-		$body.on( 'click', '.rad_rapidology_custom_html_form input[type="submit"], .rad_rapidology_custom_html_form button[type="submit"]', function() {
+		function submit_center_webhook(email, name, last_name, url) {
+			var full_name;
+			var first_name = '';
+
+			if(name == null){
+				name = '';
+			}
+
+			//check if last name is blank if so
+			//name is probably the full name
+			//although they could have just left first name blank so this is not full proof
+
+			if(last_name == '')
+			{
+				full_name = name;
+			}else{
+				first_name = name;
+			}
+
+
+			var data =
+			{
+				'email': email,
+				'first_name': first_name,
+				'last_name': last_name,
+				'full_name': full_name,
+			}
+
+			var mapping = build_center_webhook_mapping();
+
+			var submit_data = {
+				url: url,
+				data: data,
+				mapping: mapping
+			}
+			console.log(submit_data);
+			$.ajax({
+				type: 'POST',
+				dataType: 'json',
+				url: rapidologySettings.ajaxurl,
+				data: {
+					action : 'rapidology_center_webhooks',
+					data: submit_data,
+					subscribe_nonce: rapidologySettings.subscribe_nonce
+				},
+				beforeSend: function (data) {
+
+				},
+				success: function(response) {
+					console.log(response);
+				}
+
+			});
+
+		}
+
+		function build_center_webhook_mapping() {
+			//map post fields to the field name in Center
+			// Example: email is our post field EmailField is field name in Center
+			var mapping = {
+				"mapping":[
+					[["email"], "WebhookEvent", "EmailField"],
+					[["first_name"], "WebhookEvent", "FirstNameField"],
+					[["last_name"], "WebhookEvent", "FirstNameField"],
+					[["full_name"], "WebhookEvent", "LastNameField"],
+				]
+			}
+
+			return mapping;
+		}
+
+			$body.on( 'click', '.rad_rapidology_custom_html_form input[type="submit"], .rad_rapidology_custom_html_form button[type="submit"]', function() {
 			var this_button = $( this ),
 				form_container = this_button.closest( '.rad_rapidology_custom_html_form' );
 

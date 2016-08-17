@@ -68,8 +68,9 @@ function rapidology_name_splitter($name, $last_name){
 			$name = $first_name;
 			$last_name = implode(' ', $name_array); //implode all other names into a string and assign to last name
 		}else{
-			$name = '';
-			$last_name = 'WebLead';//generic last name
+			//set firstname equal to name as they look to have only entered 1 word for a name
+			$name = $name;
+			$last_name = '';//generic last name
 		}
 
 	}

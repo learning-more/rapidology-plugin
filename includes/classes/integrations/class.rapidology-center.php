@@ -7,12 +7,11 @@ if (!class_exists('RAD_Dashboard')) {
 class rapidology_center extends RAD_Rapidology
 {
 
-    public function __contruct()
+    public function __construct()
     {
         parent::__construct();
         $this->permissionsCheck();
     }
-
 
     /**
      * submit user to form and lists active campaign
@@ -29,6 +28,13 @@ class rapidology_center extends RAD_Rapidology
         return $response;
     }
 
+    /**
+     * submit mapping for form to center
+     * @param $url
+     * @param $mapping
+     *
+     * @return mixed|string
+     */
     private function centerMapping($url, $mapping)
     {
         $curl = curl_init();
@@ -59,6 +65,13 @@ class rapidology_center extends RAD_Rapidology
         return $response;
     }
 
+    /**
+     * submit webhook to center
+     * @param $url
+     * @param $submitData
+     *
+     * @return mixed|string
+     */
     private function centerSubmitWebhook($url, $submitData)
     {
         $curl = curl_init();
@@ -89,5 +102,4 @@ class rapidology_center extends RAD_Rapidology
         return $response;
 
     }
-
 }

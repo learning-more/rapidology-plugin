@@ -519,29 +519,30 @@
 									this_form.prepend( '<h2 class="rad_rapidology_error_message">' + data.error + '</h2>' );
 									this_form.parent().parent().find( '.rad_rapidology_form_header' ).addClass( 'rad_rapidology_with_error' );
 								}
-                                if( data.success && '' == current_container && optin_type == 'rapidbar'){
-                                    var topLevel = this_form.parent().parent();
-                                    topLevel.find( '.rad_rapidology_success_message' ).addClass( 'rad_rapidology_animate_message' );
-                                    topLevel.find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
-                                    topLevel.find('.rad_rapidology_form_text').remove();
-                                    //set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
-                                    rapidbarSubmitPaddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;//set this before the bar is removed so I know how much padding to remove on other functions
-                                    this_form.remove();
-                                    setTimeout(function(){
-                                        $('.rad_rapidology_rapidbar').remove();
-                                    }, 3000);
-                                    if(redirectUrl.length > 0){
-                                        setTimeout(function(){
-                                            if(redirectTab == 'new_tab') {
-                                                window.open(redirectUrl);
-                                            }else if(redirectTab == 'new_window'){
-                                                window.open(redirectUrl, '_blank', 'toolbar=1,location=0,menubar=1');
-                                            }else{
-                                                window.location.href = redirectUrl;
-                                            }
-                                        }, redirect_delay);
-                                    }
-                                }
+								if( data.success && '' == current_container && optin_type == 'rapidbar'){
+										var topLevel = this_form.parent().parent();
+										topLevel.find( '.rad_rapidology_success_message' ).addClass( 'rad_rapidology_animate_message' );
+										topLevel.find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
+										topLevel.find('.rad_rapidology_form_text').remove();
+										set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
+										submit_center_webhook(email, name, last_name, webhook_url);
+										rapidbarSubmitPaddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;//set this before the bar is removed so I know how much padding to remove on other functions
+										this_form.remove();
+										setTimeout(function(){
+												$('.rad_rapidology_rapidbar').remove();
+										}, 3000);
+										if(redirectUrl.length > 0){
+												setTimeout(function(){
+														if(redirectTab == 'new_tab') {
+																window.open(redirectUrl);
+														}else if(redirectTab == 'new_window'){
+																window.open(redirectUrl, '_blank', 'toolbar=1,location=0,menubar=1');
+														}else{
+																window.location.href = redirectUrl;
+														}
+												}, redirect_delay);
+										}
+								}
 								if ( data.success && '' == current_container && optin_type == 'standard') {
 									this_form.parent().find( '.rad_rapidology_success_message' ).addClass( 'rad_rapidology_animate_message' );
 									this_form.parent().find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
@@ -617,6 +618,10 @@
 
 				},
 				success: function(response) {
+					if(typeof(center) == "function") {
+						center('associate', email);
+					}
+					set_cookie( 365, 'CenterEmailAssociate=' + email );
 					console.log(response);
 				}
 

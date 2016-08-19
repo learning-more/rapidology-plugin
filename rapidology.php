@@ -3268,12 +3268,13 @@ SOL;
 	function CenterWebHookSubmit()
 	{
 		$this->permissionsCheck();
-		check_ajax_referer( 'center_nonce', 'center_nonce' );
+		//check_ajax_referer( 'center_nonce', 'CenterWebHookSubmit' );
 
 
 		require('includes/classes/integrations/class.rapidology-center.php');
 		$center = new rapidology_center();
 		$data = $_POST['data'];
+		//when form is submitted set the email to a session variable to associate the email address for center
 		$response = $center->subscribeCenter($data);
 		$responseObj = json_decode($response);
 

@@ -524,7 +524,7 @@
 										topLevel.find( '.rad_rapidology_success_message' ).addClass( 'rad_rapidology_animate_message' );
 										topLevel.find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
 										topLevel.find('.rad_rapidology_form_text').remove();
-										set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
+										//set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
 										submit_center_webhook(email, name, last_name, webhook_url);
 										rapidbarSubmitPaddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;//set this before the bar is removed so I know how much padding to remove on other functions
 										this_form.remove();
@@ -548,7 +548,7 @@
 									this_form.parent().find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
 									this_form.remove();
 									submit_center_webhook(email, name, last_name, webhook_url);
-									set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
+									//set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
                                     if(redirectUrl.length > 0){
                                         setTimeout(function(){
                                             if(redirectTab == 'new_tab') {
@@ -588,7 +588,6 @@
 				first_name = name;
 			}
 
-
 			var data =
 			{
 				'email': email,
@@ -597,13 +596,11 @@
 				'full_name': full_name,
 			}
 
-			var mapping = build_center_webhook_mapping();
-
 			var submit_data = {
 				url: url,
-				data: data,
-				mapping: mapping
+				data: data
 			}
+
 			console.log(submit_data);
 			$.ajax({
 				type: 'POST',
@@ -621,27 +618,11 @@
 					if(typeof(center) == "function") {
 						center('associate', email);
 					}
-					set_cookie( 365, 'CenterEmailAssociate=' + email );
 					console.log(response);
 				}
 
 			});
 
-		}
-
-		function build_center_webhook_mapping() {
-			//map post fields to the field name in Center
-			// Example: email is our post field EmailField is field name in Center
-			var mapping = {
-				"mapping":[
-					[["email"], "WebhookEvent", "EmailField"],
-					[["first_name"], "WebhookEvent", "FirstNameField"],
-					[["last_name"], "WebhookEvent", "LastNameField"],
-					[["full_name"], "WebhookEvent", "FullNameField"]
-				]
-			}
-
-			return mapping;
 		}
 
 			$body.on( 'click', '.rad_rapidology_custom_html_form input[type="submit"], .rad_rapidology_custom_html_form button[type="submit"]', function() {

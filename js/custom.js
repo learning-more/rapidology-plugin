@@ -525,7 +525,11 @@
 										topLevel.find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
 										topLevel.find('.rad_rapidology_form_text').remove();
 										//set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
-										submit_center_webhook(email, name, last_name, webhook_url);
+									if(typeof(center) == "function") {
+										center('associate', email);
+									}
+									//uncomment to reactivate center webhooks
+									//submit_center_webhook(email, name, last_name, webhook_url);
 										rapidbarSubmitPaddingNeeded =  ( jQuery('.rad_rapidology_rapidbar_form_content button').data('service') == 'redirect') ? 35 : 50;//set this before the bar is removed so I know how much padding to remove on other functions
 										this_form.remove();
 										setTimeout(function(){
@@ -547,7 +551,12 @@
 									this_form.parent().find( '.rad_rapidology_success_message' ).addClass( 'rad_rapidology_animate_message' );
 									this_form.parent().find( '.rad_rapidology_success_container' ).addClass( 'rad_rapidology_animate_success' );
 									this_form.remove();
-									submit_center_webhook(email, name, last_name, webhook_url);
+									if(typeof(center) == "function") {
+										center('associate', email);
+									}
+									//uncomment to reactivate center webhooks
+
+									//submit_center_webhook(email, name, last_name, webhook_url);
 									//set_cookie( 365, 'rad_rapidology_subscribed_to_' + optin_id + list_id + '=true' );
                                     if(redirectUrl.length > 0){
                                         setTimeout(function(){
@@ -615,9 +624,6 @@
 
 				},
 				success: function(response) {
-					if(typeof(center) == "function") {
-						center('associate', email);
-					}
 					console.log(response);
 				}
 

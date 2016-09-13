@@ -145,6 +145,12 @@ $rad_dashboard_options_all = array(
 				'default'         => false,
 				'hint_text'       => __( 'Requires a <a href="https://center.io" target="_blank">Center Account</a>', 'rapidology' ),
 		),
+		'submit_webhhok_button' => array(
+				'type'      => 'button',
+				'title'     => __( 'Connect Center', 'rapidology' ),
+				'link'      => '#',
+				'class'     => 'webhook_authorize rad_dashboard_icon authorize_service',
+		),
 	),
 	'optin_title' => array(
 		'section_start' => array(
@@ -1294,7 +1300,8 @@ $rad_assigned_options = array(
 			$rad_dashboard_options_all[ 'form_integration' ][ 'email_list' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'custom_html' ],
 			$rad_dashboard_options_all[ 'form_integration' ][ 'disable_dbl_optin' ],
-			$rad_dashboard_options_all[ 'form_integration' ][ 'center_webhook_url' ],
+			//$rad_dashboard_options_all[ 'form_integration' ][ 'center_webhook_url' ],
+			//$rad_dashboard_options_all[ 'form_integration' ][ 'submit_webhhok_button' ],
 		$rad_dashboard_options_all[ 'end_of_section' ],
 	),
 	'optin_premade_options' => array(

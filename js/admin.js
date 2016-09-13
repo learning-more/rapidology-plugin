@@ -1855,5 +1855,42 @@
                 }
             });
         });
+
+				$body.on('click', '.webhook_authorize', function(event){
+					event.preventDefault();
+					var url = $('.rad_dashboard_center_webhook_url').val();
+					console.log(url);
+					var data =
+					{
+						'email': '',
+						'first_name': '',
+						'last_name': '',
+						'full_name': '',
+					}
+
+					var submit_data = {
+						url: url,
+						data: data
+					}
+					$.ajax({
+						type: 'POST',
+						dataType: 'json',
+						url: rapidology_settings.ajaxurl,
+						data: {
+							data: submit_data,
+							action : 'rapidology_center_webhooks',
+							center_nonce: rapidology_settings.center_nonce
+						},
+						beforeSend: function (data) {
+
+						},
+						success: function(response) {
+
+							console.log(response);
+						}
+
+					});
+
+				});
 	});
 })(jQuery);

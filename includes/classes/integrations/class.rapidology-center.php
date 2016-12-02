@@ -21,7 +21,7 @@ class rapidology_center extends RAD_Rapidology
     public function subscribeCenter($data)
     {
         $submit_data = $data['data'];
-        $url = "https://stargate-dot-leadpage-test.appspot.com/integration/v1".$data['url'];
+        $url = "https://api-test.leadpages.io/integration/v1".$data['url'];
         $response = $this->centerSubmitWebhook($url, $submit_data);
         return $response;
     }

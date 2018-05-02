@@ -2,7 +2,7 @@
 
 License: [GPLv2 or later](http://www.gnu.org/licenses/gpl-2.0.html)
 
-100% free list buildilng and popup WordPress plugin by Leadpages &reg;, with
+100% free list building and popup WordPress plugin by Leadpages &reg;, with
 over 100 responsive templates and 7 different display types for growing
 your email newsletter!
 
